@@ -14,7 +14,7 @@ public class ThemeUtils {
     public static void changTheme(Activity activity, Theme theme){
         if (activity == null)
             return;
-        int style = R.style.AppTheme;
+        int style = R.style.RedTheme;
         switch (theme){
             case BROWN:
                 style = R.style.BrownTheme;

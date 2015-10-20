@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <variable
+            name="user"
+            type="com.moon.myreadapp.mvvm.models.User" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/left_drawer_width"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?attr/colorPrimary">
+
+        <TextView
+            android:layout_width="@dimen/left_drawer_width"
+            android:layout_height="@dimen/left_user_layout_height"
+            android:gravity="center"
+            android:text="@{user.name}"
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/text_h2" />
+
+        <ListView
+            android:id="@+id/left_drawer_listview"
+            android:layout_width="@dimen/left_drawer_width"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:fadingEdge="none"
+            android:smoothScrollbar="true"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:listSelector="@android:color/transparent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/left_bottom_height"
+            android:background="@color/transparent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置" />
+
+            <TextView
+                android:id="@+id/changeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="夜间" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

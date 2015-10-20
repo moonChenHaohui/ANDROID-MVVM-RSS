@@ -3,4 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_">Activity</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="app_info">Enjoy RSS Read</string>
+
+    <string name="tip_no_login">登录后可以一键同步订阅源</string>
 </resources>

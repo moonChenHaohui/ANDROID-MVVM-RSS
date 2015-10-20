@@ -1,23 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <FrameLayout
-        android:id="@+id/container"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.moon.myreadapp.mvvm.models.User" />
+    </data>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/divde_line"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/activity_nav_bar_height"/>
-    <LinearLayout
-        android:id="@+id/navbar"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/activity_nav_bar_height">
-    </LinearLayout>
-</FrameLayout>
+        android:layout_height="match_parent">
+        <!--The main content view-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/common_toolbar"/>
+            <com.moon.myreadapp.common.pulltorefresh.ui.PullToRefreshListView
+                android:id="@+id/main_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:listSelector="@android:color/transparent" />
+        </LinearLayout>
+        <!-- The navigation drawer -->
+        <include
+            android:id="@+id/left_drawer"
+            layout="@layout/left_drawer_content"
+            android:layout_width="@dimen/left_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
+    </android.support.v4.widget.DrawerLayout>
+</layout>

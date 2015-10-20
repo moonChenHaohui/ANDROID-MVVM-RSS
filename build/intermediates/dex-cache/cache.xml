@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/moon/git/easy-Read-for-RSS.git/app/build/intermediates/exploded-aar/net.steamcrafted/load-toast/1.0.9/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="76c12908494b9f9082211decaae5d380eba25743">
+        <dex dex="/Users/moon/git/easy-Read-for-RSS.git/app/build/intermediates/pre-dexed/debug/classes-aa624cd75ae933fbb50a0336d6b54d8bb72b4f69.jar" />
+    </item>
+
+</items>

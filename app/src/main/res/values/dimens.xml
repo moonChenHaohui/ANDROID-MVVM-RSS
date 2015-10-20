@@ -11,4 +11,13 @@
     <dimen name="text_h3">14dp</dimen>
     <dimen name="text_h4">12dp</dimen>
     <dimen name="text_h5">10dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    
+    <dimen name="normal_padding">16dp</dimen>
+
+
+    <dimen name="left_drawer_width">240dp</dimen>
+    <dimen name="left_user_layout_height">60dp</dimen>
+    <dimen name="left_list_item_height">48dp</dimen>
+    <dimen name="left_bottom_height">60dp</dimen>
 </resources>

@@ -13,14 +13,14 @@ import java.lang.reflect.Field;
  */
 public class ScreenUtils {
 
-    public static DisplayMetrics dm = null;
+    private static DisplayMetrics dm = null;
     private static Resources resources = null;
 
     /**
      * 获取 DisplayMetrics
      * @return
      */
-    private static DisplayMetrics getDisplayMetrics() {
+    public static DisplayMetrics getDisplayMetrics() {
         if (null == dm) {
             dm = getResources().getDisplayMetrics();
         }
@@ -36,7 +36,6 @@ public class ScreenUtils {
 
     private ScreenUtils() {
     }
-
 
     public static int dpToPx(int dp) {
         int px = Math.round(dp * (dm.xdpi / DisplayMetrics.DENSITY_DEFAULT));

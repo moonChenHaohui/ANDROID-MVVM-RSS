@@ -74,7 +74,7 @@ public class RotateLoadingLayout extends LoadingLayout {
         mHeaderTimeViewTitle = (TextView) findViewById(R.id.pull_to_refresh_last_update_time_text);
         
         mArrowImageView.setScaleType(ScaleType.CENTER);
-        mArrowImageView.setImageResource(R.drawable.default_ptr_rotate);
+        //mArrowImageView.setImageResource(R.drawable.default_ptr_rotate);
         
         float pivotValue = 0.5f;    // SUPPRESS CHECKSTYLE
         float toDegree = 720.0f;    // SUPPRESS CHECKSTYLE

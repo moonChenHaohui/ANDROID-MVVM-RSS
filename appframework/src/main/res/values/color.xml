@@ -45,4 +45,13 @@
     <color name="drawer_scrim_color">#88EEEEEE</color>
     <color name="action_bar_title_color">@android:color/white</color>
     <color name="window_background">@android:color/white</color>
+
+
+    <!--main-->
+
+
+
+    <color name="toast_text">#E91E63</color>
+    <color name="toast_progress">#E91E63</color>
+    <color name="toast_background">#ffbebebe</color>
 </resources>

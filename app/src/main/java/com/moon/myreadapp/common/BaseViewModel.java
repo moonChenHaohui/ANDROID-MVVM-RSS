@@ -8,6 +8,8 @@ import com.moon.myreadapp.util.ScreenUtils;
 
 public abstract class BaseViewModel {
 
+
+
     public abstract void initViews();
 
     public abstract void initEvents();
