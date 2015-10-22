@@ -44,14 +44,12 @@ public abstract class BaseActivity extends XActivity implements IView {
     protected void initToolBar (Toolbar toolbar){
         if(toolbar == null) return;
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.action_bar_title_color));
         toolbar.collapseActionView();
         if (getSupportActionBar() != null){
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         toolbar.setContentInsetsRelative(0, 0);
-        toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha);
     }
 
 

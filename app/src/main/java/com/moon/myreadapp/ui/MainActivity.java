@@ -43,6 +43,12 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
+    protected void initToolBar(Toolbar toolbar) {
+        super.initToolBar(toolbar);
+        toolbar.setNavigationIcon(android.R.drawable.ic_dialog_dialer);
+    }
+
+    @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, getLayoutView());
 
@@ -129,9 +135,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
         // Handle your other action bar items...
         int id = item.getItemId();
-        if (id == R.id.action_search) {
-            mainViewModel.getReadAdapter().add(new Channel("add"));
-        }
+
         return super.onOptionsItemSelected(item);
     }
 

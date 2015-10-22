@@ -5,6 +5,7 @@
     <color name="txt_black">#051b28</color>
     <color name="txt_gray_light">#999999</color>
     <color name="txt_gray_dark">#666666</color>
+    <color name="txt_active">#888887</color>
 
     <color name="pic_default">#dcdcdc</color>
     <drawable name="pic_default">#dcdcdc</drawable>

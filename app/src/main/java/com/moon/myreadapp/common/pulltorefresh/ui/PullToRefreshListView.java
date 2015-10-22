@@ -3,6 +3,7 @@ package com.moon.myreadapp.common.pulltorefresh.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
@@ -23,7 +24,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
     private LoadingLayout mLoadMoreFooterLayout;
     /**滚动的监听器*/
     private OnScrollListener mScrollListener;
-    
+
     /**
      * 构造方法
      * 
@@ -61,7 +62,8 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
         ListView listView = new ListView(context);
         mListView = listView;
         listView.setOnScrollListener(this);
-        
+        //mListView.setFooterDividersEnabled(false);
+        mListView.setDivider(null);
         return listView;
     }
     

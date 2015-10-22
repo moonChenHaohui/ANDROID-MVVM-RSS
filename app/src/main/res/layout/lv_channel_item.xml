@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
     <data>
 
         <variable
             name="channel"
             type="com.moon.myreadapp.mvvm.models.Channel" />
     </data>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="@dimen/main_list_item_height"
+        android:minHeight="@dimen/main_list_item_height"
+        android:background="@null">
 
-        <TextView
-            android:id="@+id/author"
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/channel_icon"
+            android:layout_marginTop="@dimen/normal_padding"
+            android:layout_marginLeft="@dimen/normal_padding"
+            android:layout_width="@dimen/img_size_48"
+            android:layout_height="@dimen/img_size_48"
+            fresco:placeholderImage="@color/background_selected"
+            fresco:roundAsCircle="true"
+            fresco:roundingBorderWidth="1px"
+            fresco:roundingBorderColor="@color/divde_line"
+            />
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/channel_name"
+            android:layout_marginLeft="@dimen/normal_half_padding"
+            android:layout_marginRight="80dp"
+            android:layout_toRightOf="@id/channel_icon"
+            android:layout_marginTop="@dimen/normal_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="asdasd"
-            android:textColor="@color/txt_black"
-            android:textSize="@dimen/text_h1" />
-
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{channel.info}"
-            android:paddingTop="10dp"
-            android:textColor="@color/txt_gray_dark"
-            android:textSize="@dimen/text_h3" />
-
-        <TextView
-            android:id="@+id/expanded_btn"
+            android:text="这里显示的是频道名字asdasdsadsadasdasdsadasdasdasdasdasdasdasdasdads"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/txt_active"
+            android:textSize="@dimen/text_h2" />
+        <com.joanzapata.iconify.widget.IconTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/text_h5"
-            android:text="全文"
-            android:textColor="@color/txt_link"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:text="10未读"
+            android:layout_marginRight="@dimen/normal_padding"
+            android:layout_marginTop="@dimen/normal_padding"/>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/channel_info"
+            android:layout_marginLeft="@dimen/normal_half_padding"
+            android:layout_marginRight="@dimen/normal_padding"
+            android:layout_toRightOf="@id/channel_icon"
+            android:layout_below="@id/channel_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="asdasdasdasdasdasdasdasdasdsadasdasdasdasdasdsadasdasdasdas "
+            android:textColor="@color/txt_gray_dark"
+            android:textSize="@dimen/text_h3" />
+        <include layout="@layout/common_divider"
+            android:layout_marginTop="@dimen/normal_half_padding"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@id/channel_info"
+            android:layout_width="match_parent"/>
+    </RelativeLayout>
 </layout>

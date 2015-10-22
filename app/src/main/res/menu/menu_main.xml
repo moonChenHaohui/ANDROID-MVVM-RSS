@@ -2,25 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        android:id="@+id/action_reflash"
+        android:icon="@android:drawable/stat_notify_sync_noanim"
         android:title="search"
         app:showAsAction="ifRoom|collapseActionView">
     </item>
-    <item android:id="@+id/action_more"
-        android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
-        android:title="more"
-        app:showAsAction="ifRoom">
-        <menu>
-            <item
-                android:id="@+id/setting"
-                android:title="setting" />
-            <item
-                android:id="@+id/sync"
-                android:title="sync" />
-            <item
-                android:id="@+id/about"
-                android:title="about" />
-        </menu>
+    <item
+        android:id="@+id/action_add"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="search"
+        app:showAsAction="ifRoom|collapseActionView">
     </item>
 </menu>

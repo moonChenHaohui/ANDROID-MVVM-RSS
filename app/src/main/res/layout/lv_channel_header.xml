@@ -4,10 +4,11 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:minHeight="100dp"
         >
-        <TextView
+        <com.joanzapata.iconify.widget.IconTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="helloword"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="TODO:一个合适的顶部栏 {fa-cog spin}"/>
 </LinearLayout>

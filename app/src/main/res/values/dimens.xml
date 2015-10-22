@@ -25,16 +25,24 @@
     <dimen name="normal_padding">16dp</dimen>
     <dimen name="normal_double_padding">32dp</dimen>
     <dimen name="normal_half_padding">8dp</dimen>
-
-    <dimen name="left_drawer_width">240dp</dimen>
-    <dimen name="left_user_layout_height">60dp</dimen>
-    <dimen name="left_list_item_height">48dp</dimen>
-    <dimen name="left_header_height">120dp</dimen>
-    <dimen name="left_bottom_height">40dp</dimen>
     
+    <dimen name="normal_list_item_small">48dp</dimen>
+    <dimen name="normal_list_item_regular">72dp</dimen>
+    <dimen name="normal_list_item_big">96dp</dimen>
+
     <dimen name="img_size_16">16dp</dimen>
     <dimen name="img_size_48">48dp</dimen>
     <dimen name="img_size_32">32dp</dimen>
     <dimen name="img_size_64">64dp</dimen>
     <dimen name="img_size_128">128dp</dimen>
+
+
+
+    <dimen name="left_drawer_width">240dp</dimen>
+    <dimen name="left_user_layout_height">60dp</dimen>
+    <dimen name="left_list_item_height">@dimen/normal_list_item_small</dimen>
+    <dimen name="left_header_height">120dp</dimen>
+    <dimen name="left_bottom_height">40dp</dimen>
+
+    <dimen name="main_list_item_height">@dimen/normal_list_item_regular</dimen>
 </resources>

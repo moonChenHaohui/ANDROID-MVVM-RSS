@@ -4,8 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    android:minHeight="?attr/actionBarSize"
-    app:navigationIcon="?attr/homeAsUpIndicator"
-    />
+    android:layout_height="?attr/actionBarSize"
+    app:theme="@style/ToolbarTheme"
+    android:background="?attr/colorPrimary"/>
