@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item
+        android:id="@+id/action_reflash"
+        android:icon="@android:drawable/stat_notify_sync_noanim"
+        android:title="search"
+        app:showAsAction="ifRoom|collapseActionView">
+    </item>
+    <item
+        android:id="@+id/action_add"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="search"
+        app:showAsAction="ifRoom|collapseActionView">
+    </item>
+</menu>
