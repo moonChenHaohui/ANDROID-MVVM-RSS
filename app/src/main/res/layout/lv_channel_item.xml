@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="channel"
+            type="com.moon.myreadapp.mvvm.models.Channel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="asdasd"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/text_h1" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{channel.info}"
+            android:paddingTop="10dp"
+            android:textColor="@color/txt_gray_dark"
+            android:textSize="@dimen/text_h3" />
+
+        <TextView
+            android:id="@+id/expanded_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/text_h5"
+            android:text="全文"
+            android:textColor="@color/txt_link"
+            android:visibility="gone" />
+    </LinearLayout>
+</layout>

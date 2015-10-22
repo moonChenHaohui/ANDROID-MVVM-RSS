@@ -1,46 +1,38 @@
 package com.moon.myreadapp.common.adapter;
 
-import android.content.Context;
-import android.media.Image;
+import android.databinding.DataBindingUtil;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseListAdapter;
 import com.moon.myreadapp.databinding.LeftDrawerListItemBinding;
-import com.moon.myreadapp.mvvm.models.BaseMenuItem;
+import com.moon.myreadapp.mvvm.models.MenuItem;
 
 import java.util.List;
 
 /**
  * Created by moon on 15/10/19.
  */
-public class DrawerAdapter extends BaseListAdapter<BaseMenuItem> {
+public class DrawerAdapter extends BaseListAdapter<MenuItem> {
 
-    public DrawerAdapter(Context contex, List<BaseMenuItem> data) {
-        super(contex, data);
+    public DrawerAdapter(List<MenuItem> data) {
+        super(data);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // LeftDrawerListItemBinding binding = LeftDrawerListItemBinding.inflate(mInflater, parent,false);
-        //TODO 使用data binding来操作
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.left_drawer_list_item, null);
-            holder.title = (TextView) convertView.findViewById(R.id.title);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+        LeftDrawerListItemBinding binding;
+        if (convertView == null){
+            binding = DataBindingUtil.inflate(mInflater,R.layout.left_drawer_list_item,parent,false);
+            convertView = binding.getRoot();
+            convertView.setTag(binding);
         }
-        holder.title.setText(getmData().get(position).getTitle());
+        binding = (LeftDrawerListItemBinding)convertView.getTag();
+
+
+        binding.setItem(getmData().get(position));
         return convertView;
     }
 
-    static class ViewHolder {
-        TextView title;
-    }
 }

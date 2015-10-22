@@ -61,7 +61,7 @@ public class ToolBarHelper {
 
     private void initToolBar() {
         /*通过inflater获取toolbar的布局文件*/
-        View toolbar = mInflater.inflate(R.layout.common_toolbar, mContentView);
+        View toolbar = mInflater.inflate(R.layout.common_tool_bar, mContentView);
         mToolBar = (Toolbar) toolbar.findViewById(R.id.toolbar);
     }
 

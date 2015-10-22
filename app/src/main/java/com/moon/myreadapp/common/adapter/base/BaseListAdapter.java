@@ -1,10 +1,11 @@
 package com.moon.myreadapp.common.adapter.base;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.moon.myreadapp.util.Globals;
 
 import java.util.List;
 
@@ -18,11 +19,8 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
     private List<E> mData;
     protected LayoutInflater mInflater;
 
-    public BaseListAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
-    }
-    public BaseListAdapter(Context contex, List<E> data) {
-        this(contex);
+    public BaseListAdapter(List<E> data) {
+        mInflater = LayoutInflater.from(Globals.getApplication());
         mData = data;
     }
 
@@ -66,6 +64,5 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
         notifyDataSetChanged();
     }
     public abstract View getView(int position, View convertView, ViewGroup parent);
-
 
 }
