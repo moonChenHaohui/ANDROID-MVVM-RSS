@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="120dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/edit"
+            android:layout_width="match_parent"
+            android:focusableInTouchMode="true"
+
+            android:focusable="true"
+            android:hint="请输入url:"
+            android:minLines="4"
+            android:maxLines="4"
+            android:gravity="top"
+            android:textSize="@dimen/text_sp12"
+            android:layout_height="100dp" />
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/load"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="32dp"
+            android:textColor="?attr/colorPrimary"
+            android:visibility="gone"
+            android:text="{fa-spinner spin}"/>
+    </FrameLayout>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textSize="@dimen/text_sp14"
+        android:textColor="@color/txt_active"
+        android:text="怎么使用? {fa-question-circle}"/>
+</LinearLayout>

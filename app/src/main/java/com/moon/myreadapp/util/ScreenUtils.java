@@ -38,7 +38,7 @@ public class ScreenUtils {
     }
 
     public static int dpToPx(int dp) {
-        int px = Math.round(dp * (dm.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        int px = Math.round(dp * (getDisplayMetrics().xdpi / DisplayMetrics.DENSITY_DEFAULT));
         return px;
     }
 }

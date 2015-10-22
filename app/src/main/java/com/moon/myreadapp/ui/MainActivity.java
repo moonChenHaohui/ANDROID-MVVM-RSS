@@ -15,11 +15,13 @@ import android.widget.ListView;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.pulltorefresh.ui.PullToRefreshBase;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
-import com.moon.myreadapp.mvvm.models.Channel;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
+import com.moon.myreadapp.util.DialogFractory;
+
+import me.drakeet.materialdialog.MaterialDialog;
 
 public class MainActivity extends BaseActivity implements IMainView {
 
@@ -125,7 +127,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    MaterialDialog mMaterialDialog;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -135,7 +137,11 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
         // Handle your other action bar items...
         int id = item.getItemId();
+        if(id == R.id.action_reflash){
+            DialogFractory.create(this,DialogFractory.Type.AddSubscrible).show();
+        } else if (id == R.id.action_add){
 
+        }
         return super.onOptionsItemSelected(item);
     }
 

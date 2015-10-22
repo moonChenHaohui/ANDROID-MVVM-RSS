@@ -27,5 +27,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.0.1.3'
     compile 'com.android.support:design:23.1.0'
 
-    compile 'net.steamcrafted:load-toast:1.0.9'
+    compile 'me.drakeet.materialdialog:library:1.2.2'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
 }
