@@ -1,8 +1,7 @@
-package com.moon.myreadapp.common.pulltorefresh.ui;
+package com.moon.myreadapp.common.components.pulltorefresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.webkit.WebView;
 
 /**

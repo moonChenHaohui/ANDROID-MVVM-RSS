@@ -1,4 +1,4 @@
-package com.moon.myreadapp.common.pulltorefresh.ui;
+package com.moon.myreadapp.common.components.pulltorefresh;
 
 /**
  * 下拉刷新和上拉加载更多的界面接口
@@ -18,7 +18,7 @@ public interface ILoadingLayout {
         NONE,
         
         /**
-         * When the UI is in a state which means that user is not interacting
+         * When the UI is in base_slide_remain state which means that user is not interacting
          * with the Pull-to-Refresh function.
          */
         RESET,
@@ -36,12 +36,12 @@ public interface ILoadingLayout {
         RELEASE_TO_REFRESH,
         
         /**
-         * When the UI is currently refreshing, caused by a pull gesture.
+         * When the UI is currently refreshing, caused by base_slide_remain pull gesture.
          */
         REFRESHING,
         
         /**
-         * When the UI is currently refreshing, caused by a pull gesture.
+         * When the UI is currently refreshing, caused by base_slide_remain pull gesture.
          */
         @Deprecated
         LOADING,

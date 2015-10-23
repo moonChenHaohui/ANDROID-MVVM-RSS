@@ -1,4 +1,4 @@
-package com.moon.myreadapp.common.pulltorefresh.ui;
+package com.moon.myreadapp.common.components.pulltorefresh;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

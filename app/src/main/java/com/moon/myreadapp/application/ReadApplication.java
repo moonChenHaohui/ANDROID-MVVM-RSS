@@ -1,5 +1,6 @@
 package com.moon.myreadapp.application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.moon.appframework.common.util.SafeAsyncTask;
@@ -13,6 +14,7 @@ public class ReadApplication extends XApplication{
     @Override
     public void onCreate() {
         super.onCreate();
+
         new AppInitTask().execute("start");
     }
 
@@ -22,6 +24,8 @@ public class ReadApplication extends XApplication{
         protected String doInBackground(String... params) {
             //iconify init
             Iconify.with(new FontAwesomeModule());
+            // Fresco init
+            Fresco.initialize(ReadApplication.this);
             return null;
         }
 

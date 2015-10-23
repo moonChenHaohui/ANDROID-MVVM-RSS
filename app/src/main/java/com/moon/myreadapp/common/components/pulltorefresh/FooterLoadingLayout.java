@@ -1,4 +1,4 @@
-package com.moon.myreadapp.common.pulltorefresh.ui;
+package com.moon.myreadapp.common.components.pulltorefresh;
 
 import com.moon.myreadapp.R;
 

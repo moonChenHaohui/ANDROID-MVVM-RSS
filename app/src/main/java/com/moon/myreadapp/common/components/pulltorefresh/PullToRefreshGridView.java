@@ -1,6 +1,6 @@
-package com.moon.myreadapp.common.pulltorefresh.ui;
+package com.moon.myreadapp.common.components.pulltorefresh;
 
-import com.moon.myreadapp.common.pulltorefresh.ui.ILoadingLayout.State;
+import com.moon.myreadapp.common.components.pulltorefresh.ILoadingLayout.State;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -209,7 +209,7 @@ public class PullToRefreshGridView extends PullToRefreshBase<GridView> implement
 
         /**
          * This check should really just be: lastVisiblePosition == lastItemPosition, but ListView
-         * internally uses a FooterView which messes the positions up. For me we'll just subtract
+         * internally uses base_slide_remain FooterView which messes the positions up. For me we'll just subtract
          * one to account for it and rely on the inner condition which checks getBottom().
          */
         if (lastVisiblePosition >= lastItemPosition - 1) {

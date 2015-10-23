@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.moon.appframework.action.EventAction;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.action.XAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.router.XRouter;
 
 import de.halfbit.tinybus.TinyBus;
@@ -52,10 +53,20 @@ public class XDispatcher {
     }
 
     public static void register(Object obj){
-        bus.register(obj);
+        try{
+            if(!bus.hasRegistered(obj)){
+                bus.register(obj);
+            }
+        }catch (Exception e){
+            XLog.e("Bus register ERROR");
+        }
     }
 
     public static void unregister(Object obj){
-        bus.unregister(obj);
+        try{
+            bus.unregister(obj);
+        }catch (Exception e){
+            XLog.e("Bus unregister ERROR");
+        }
     }
 }

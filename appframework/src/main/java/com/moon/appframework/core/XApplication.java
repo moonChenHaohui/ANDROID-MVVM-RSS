@@ -24,8 +24,7 @@ public class XApplication extends Application{
         application = this;
         // Event Bus init
         bus = TinyBus.from(this);
-        // Fresco init
-        Fresco.initialize(this);
+
 
     }
 

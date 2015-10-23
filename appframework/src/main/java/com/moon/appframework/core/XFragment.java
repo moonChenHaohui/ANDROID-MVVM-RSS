@@ -53,7 +53,7 @@ public abstract class XFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-		XApplication.getInstance().bus.register(this);
+		XDispatcher.register(this);
     }
 	
 	@Override
@@ -69,7 +69,7 @@ public abstract class XFragment extends Fragment {
 
     @Override
     public void onStop() {
-		XApplication.getInstance().bus.unregister(this);
+		XDispatcher.unregister(this);
         super.onStop();
     }
 

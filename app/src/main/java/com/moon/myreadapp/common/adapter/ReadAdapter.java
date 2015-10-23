@@ -1,5 +1,6 @@
 package com.moon.myreadapp.common.adapter;
 
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,6 +33,7 @@ public class ReadAdapter extends BaseListAdapter<Channel> {
         binding = (LvChannelItemBinding)convertView.getTag();
 
         binding.setChannel(getmData().get(position));
+        binding.channelIcon.setImageURI(Uri.parse("http://www.logoquan.com/upload/list/20150925/logoquan14453570736.PNG"));
         return convertView;
     }
 }

@@ -1,9 +1,9 @@
-package com.moon.myreadapp.common.pulltorefresh.ui;
+package com.moon.myreadapp.common.components.pulltorefresh;
 
 
 import android.view.View;
 
-import com.moon.myreadapp.common.pulltorefresh.ui.PullToRefreshBase.OnRefreshListener;
+import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase.OnRefreshListener;
 
 /**
  * 定义了拉动刷新的接口

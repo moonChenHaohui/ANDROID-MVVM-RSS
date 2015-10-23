@@ -1,4 +1,4 @@
-package com.moon.myreadapp.common;
+package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.databinding.BaseObservable;
 

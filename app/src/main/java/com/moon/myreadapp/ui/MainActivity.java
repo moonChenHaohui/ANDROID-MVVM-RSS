@@ -3,7 +3,6 @@ package com.moon.myreadapp.ui;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -12,16 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.moon.appframework.action.EventAction;
+import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.pulltorefresh.ui.PullToRefreshBase;
+import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
-import com.moon.myreadapp.util.DialogFractory;
 
-import me.drakeet.materialdialog.MaterialDialog;
+import de.halfbit.tinybus.Subscribe;
+
 
 public class MainActivity extends BaseActivity implements IMainView {
 
@@ -42,6 +44,12 @@ public class MainActivity extends BaseActivity implements IMainView {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         initToolBar(toolbar);
         initBusiness();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -86,6 +94,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.mainList.setPullLoadEnabled(true);
         binding.mainList.setScrollLoadEnabled(true);
         binding.mainList.getRefreshableView().addHeaderView(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_channel_header, null));
+        binding.mainList.getRefreshableView().setOnItemClickListener(mainViewModel.getReadItemClickListener());
 
         binding.mainList.getRefreshableView().setAdapter(mainViewModel.getReadAdapter());
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
@@ -110,11 +119,11 @@ public class MainActivity extends BaseActivity implements IMainView {
 
 
     @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -127,7 +136,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    MaterialDialog mMaterialDialog;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -138,11 +146,16 @@ public class MainActivity extends BaseActivity implements IMainView {
         // Handle your other action bar items...
         int id = item.getItemId();
         if(id == R.id.action_reflash){
-            DialogFractory.create(this,DialogFractory.Type.AddSubscrible).show();
         } else if (id == R.id.action_add){
-
+            XDispatcher.from(this).dispatch(new EventAction(new AEvent("from main act")));
+            XLog.d("post");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Subscribe
+    public void onShakeEvent(AEvent event) {
+        binding.leftDrawer.appInfo.setText(event.getA());
     }
 
 

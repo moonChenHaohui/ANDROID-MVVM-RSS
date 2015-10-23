@@ -5,10 +5,15 @@
         <!-- Customize your theme here. -->
         <item name="android:fitsSystemWindows">true</item>
         <item name="windowActionBar">false</item>
+        <!--设置activity透明-->
+        　<item name="android:windowBackground">@color/transparent</item>
+    　　<item name="android:windowIsTranslucent">true</item>
+    　　<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <!--end-->
         <item name="windowNoTitle">false</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
         <item name="android:textColorSecondary">@color/text_second_color_primary</item>
-        <item name="android:windowBackground">@color/window_background</item>
+        <!--<item name="android:windowBackground">@color/window_background</item>-->
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextView</item>
         <item name="popupTheme">@style/popupTheme</item>
@@ -23,15 +28,22 @@
         <item name="android:fitsSystemWindows">true</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
+        <!--设置activity透明-->
+        　<item name="android:windowBackground">@color/transparent</item>
+        　　<item name="android:windowIsTranslucent">true</item>
+        　　<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <!--end-->
+
         <item name="android:textColorPrimary">@color/text_color_primary</item>
         <item name="android:textColorSecondary">@color/text_second_color_primary</item>
-        <item name="android:windowBackground">@color/window_background</item>
+        <!--<item name="android:windowBackground">@color/window_background</item>-->
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextView</item>
         <item name="popupTheme">@style/popupTheme</item>
         <item name="popupMenuStyle">@style/popupMenuStyle</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
         <item name="selectableItemBackground">@drawable/selectable_background</item>
+
     </style>
 
     <style name="BaseDialogTheme" parent="Theme.AppCompat.Light.Dialog">
@@ -41,8 +53,10 @@
         <item name="android:windowExitAnimation">@anim/abc_fade_out</item>
     </style>
 
+
+
     <style name="AppTheme" parent="AppBaseTheme.Dark">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- All customizations that are NOT specific to base_slide_remain particular API-level can go here. -->
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
@@ -69,6 +83,7 @@
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="colorControlActivated">@android:color/white</item>
         <item name="colorButtonNormal">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
 

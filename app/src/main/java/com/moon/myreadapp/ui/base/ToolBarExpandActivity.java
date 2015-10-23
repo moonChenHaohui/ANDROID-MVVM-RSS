@@ -1,22 +1,39 @@
 package com.moon.myreadapp.ui.base;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 
+import com.moon.myreadapp.R;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.helper.ToolBarHelper;
 
 /**
  * Created by moon on 15/10/19.
  * 封装了toolbar.会封装一个FrameLayout作为副容器,并将toolbar添加到第一位
+ *
  */
 public abstract class ToolBarExpandActivity extends BaseActivity {
 
     private ToolBarHelper mToolBarHelper ;
     protected Toolbar toolbar ;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void setContentViewAndBindVm(Bundle savedInstanceState) {
+        setContentView(getLayoutView());
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -25,8 +42,6 @@ public abstract class ToolBarExpandActivity extends BaseActivity {
         setContentView(mToolBarHelper.getContentView());
         initToolBar(toolbar);
     }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

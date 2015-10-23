@@ -21,11 +21,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@null">
 
             <include
                 layout="@layout/common_tool_bar" />
-            <com.moon.myreadapp.common.pulltorefresh.ui.PullToRefreshListView
+            <com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshListView
                 android:id="@+id/main_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

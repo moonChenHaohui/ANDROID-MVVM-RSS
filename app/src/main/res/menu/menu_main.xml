@@ -4,13 +4,13 @@
     <item
         android:id="@+id/action_reflash"
         android:icon="@android:drawable/stat_notify_sync_noanim"
-        android:title="search"
+        android:title="@string/title_reflash"
         app:showAsAction="ifRoom|collapseActionView">
     </item>
     <item
         android:id="@+id/action_add"
         android:icon="@android:drawable/ic_input_add"
-        android:title="search"
+        android:title="@string/title_sub"
         app:showAsAction="ifRoom|collapseActionView">
     </item>
 </menu>

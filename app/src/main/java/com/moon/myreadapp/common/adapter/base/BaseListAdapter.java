@@ -31,7 +31,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public E getItem(int position) {
         return mData.get(position);
     }
 

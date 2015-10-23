@@ -1,16 +1,16 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
+import android.app.Activity;
 import android.databinding.Bindable;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.BR;
-import com.moon.myreadapp.common.BaseViewModel;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.User;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
+import com.moon.myreadapp.util.DialogFractory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,9 @@ public class DrawerViewModel extends BaseViewModel {
         drawerItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                XLog.d("click:"+position);
+                if(position == 0) {
+                    DialogFractory.create((Activity)mView, DialogFractory.Type.AddSubscrible).show();
+                }
             }
         };
     }

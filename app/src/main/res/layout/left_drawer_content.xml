@@ -88,12 +88,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/left_bottom_height"
             android:background="@color/background_gray"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:paddingLeft="@dimen/normal_padding"
             android:orientation="horizontal">
-
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/setting"
+                android:padding="@dimen/normal_half_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="{fa-cog} 设置" />
@@ -105,6 +105,7 @@
                 android:background="@color/divde_line"/>
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/changeTheme"
+                android:padding="@dimen/normal_half_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="{fa-moon-o} 夜间" />

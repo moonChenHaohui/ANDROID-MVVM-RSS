@@ -20,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.ChannelActivity"
+            android:label="@string/title_activity_channel"
+            android:launchMode="singleTop"
+            android:theme="@style/RedTheme" >
+        </activity>
     </application>
 
 </manifest>

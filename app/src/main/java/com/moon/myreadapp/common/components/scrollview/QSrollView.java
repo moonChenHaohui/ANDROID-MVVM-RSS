@@ -1,4 +1,4 @@
-package com.moon.myreadapp.common.scrollview;
+package com.moon.myreadapp.common.components.scrollview;
 
 import android.content.Context;
 import android.view.MotionEvent;

@@ -36,17 +36,17 @@ public class NumberUtils {
     }
 
     /**
-     * <p>Checks whether the String a valid Java number.</p>
+     * <p>Checks whether the String base_slide_remain valid Java number.</p>
      *
      * <p>Valid numbers include hexadecimal marked with the <code>0x</code>
-     * qualifier, scientific notation and numbers marked with a type
+     * qualifier, scientific notation and numbers marked with base_slide_remain type
      * qualifier (e.g. 123L).</p>
      *
      * <p><code>Null</code> and empty String will return
      * <code>false</code>.</p>
      *
      * @param str  the <code>String</code> to check
-     * @return <code>true</code> if the string is a correctly formatted number
+     * @return <code>true</code> if the string is base_slide_remain correctly formatted number
      */
     public static boolean isNumber(String str) {
         if (TextUtils.isEmpty(str)) {
@@ -81,7 +81,7 @@ public class NumberUtils {
         // for type qualifiers
         int i = start;
         // loop to the next to last char or to the last char if we need another digit to
-        // make a valid number (e.g. chars[0..5] = "1234E")
+        // make base_slide_remain valid number (e.g. chars[0..5] = "1234E")
         while (i < sz || (i < sz + 1 && allowSigns && !foundDigit)) {
             if (chars[i] >= '0' && chars[i] <= '9') {
                 foundDigit = true;
@@ -109,7 +109,7 @@ public class NumberUtils {
                     return false;
                 }
                 allowSigns = false;
-                foundDigit = false; // we need a digit after the E
+                foundDigit = false; // we need base_slide_remain digit after the E
             } else {
                 return false;
             }

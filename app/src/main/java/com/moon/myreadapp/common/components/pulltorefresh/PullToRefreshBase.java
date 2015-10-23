@@ -1,7 +1,7 @@
-package com.moon.myreadapp.common.pulltorefresh.ui;
+package com.moon.myreadapp.common.components.pulltorefresh;
 
 
-import com.moon.myreadapp.common.pulltorefresh.ui.ILoadingLayout.State;
+import com.moon.myreadapp.common.components.pulltorefresh.ILoadingLayout.State;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -198,7 +198,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         refreshRefreshableViewSize(w, h);
         
         /**
-         * As we're currently in a Layout Pass, we need to schedule another one
+         * As we're currently in base_slide_remain Layout Pass, we need to schedule another one
          * to layout any changes we've made here
          */
         post(new Runnable() {

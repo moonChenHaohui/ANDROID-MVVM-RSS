@@ -32,6 +32,7 @@ public class DrawerAdapter extends BaseListAdapter<MenuItem> {
 
 
         binding.setItem(getmData().get(position));
+
         return convertView;
     }
 
