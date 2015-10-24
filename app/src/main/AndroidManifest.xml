@@ -32,6 +32,8 @@
             android:launchMode="singleTop"
             android:theme="@style/RedTheme" >
         </activity>
+        <activity android:name=".ui.FeedWebActivity" >
+        </activity>
     </application>
 
 </manifest>

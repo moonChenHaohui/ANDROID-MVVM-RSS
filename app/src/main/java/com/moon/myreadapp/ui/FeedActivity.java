@@ -39,6 +39,7 @@ public class FeedActivity extends BaseActivity {
                         .setAction("Action", null).show();
             }
         });
+
         PullToRefreshScrollView mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.feed_body);
         mPullRefreshScrollView.setPullLoadEnabled(true);
         mPullRefreshScrollView.setScrollLoadEnabled(true);
@@ -89,8 +90,7 @@ public class FeedActivity extends BaseActivity {
         if (id == R.id.content) {
             finish();
         } else if (id == R.id.action_read_all) {
-            hideToolbar(toolbar);
-            XDispatcher.from(this).dispatch(new EventAction(new AEvent("change from channel")));
+            start(this,FeedWebActivity.class);
         }
         return super.onOptionsItemSelected(item);
     }
