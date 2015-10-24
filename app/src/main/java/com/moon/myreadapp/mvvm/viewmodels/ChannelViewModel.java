@@ -9,6 +9,7 @@ import com.moon.myreadapp.common.adapter.base.FeedAdapterHelper;
 import com.moon.myreadapp.mvvm.models.Feed;
 import com.moon.myreadapp.mvvm.models.ListFeed;
 import com.moon.myreadapp.ui.ChannelActivity;
+import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.ui.base.IViews.IView;
 
@@ -71,6 +72,7 @@ public class ChannelViewModel extends BaseViewModel {
                     }
                 } else {
                     XLog.d("is not a title");
+                    FeedActivity.start((ChannelActivity)mView,FeedActivity.class);
                 }
             }
         };

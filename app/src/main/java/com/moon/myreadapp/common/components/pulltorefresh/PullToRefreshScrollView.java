@@ -3,6 +3,7 @@ package com.moon.myreadapp.common.components.pulltorefresh;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 /**
@@ -48,6 +49,7 @@ public class PullToRefreshScrollView extends PullToRefreshBase<ScrollView> {
     @Override
     protected ScrollView createRefreshableView(Context context, AttributeSet attrs) {
         ScrollView scrollView = new ScrollView(context);
+        scrollView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return scrollView;
     }
 

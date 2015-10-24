@@ -1,6 +1,7 @@
 package com.moon.myreadapp.common.components.pulltorefresh;
 
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.util.BuiltConfig;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -20,6 +21,8 @@ public class FooterLoadingLayout extends LoadingLayout {
     private ProgressBar mProgressBar;
     /** 显示的文本 */
     private TextView mHintView;
+
+
     
     /**
      * 构造方法
@@ -50,7 +53,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     private void init(Context context) {
         mProgressBar = (ProgressBar) findViewById(R.id.pull_to_load_footer_progressbar);
         mHintView = (TextView) findViewById(R.id.pull_to_load_footer_hint_textview);
-        
+
         setState(State.RESET);
     }
     
@@ -90,13 +93,21 @@ public class FooterLoadingLayout extends LoadingLayout {
     @Override
     protected void onPullToRefresh() {
         mHintView.setVisibility(View.VISIBLE);
-        mHintView.setText(R.string.pull_to_refresh_header_hint_normal2);
+        if (null == TXTpullLabel) {
+            mHintView.setText(R.string.pull_to_refresh_header_hint_ready);
+        } else {
+            mHintView.setText(TXTpullLabel);
+        }
     }
 
     @Override
     protected void onReleaseToRefresh() {
         mHintView.setVisibility(View.VISIBLE);
-        mHintView.setText(R.string.pull_to_refresh_header_hint_ready);
+        if (null == TXTreleaseToRefresh) {
+            mHintView.setText(R.string.pull_to_refresh_header_hint_normal2);
+        } else {
+            mHintView.setText(TXTreleaseToRefresh);
+        }
     }
 
     @Override
@@ -111,4 +122,5 @@ public class FooterLoadingLayout extends LoadingLayout {
         mHintView.setVisibility(View.VISIBLE);
         mHintView.setText(R.string.pushmsg_center_no_more_msg);
     }
+
 }

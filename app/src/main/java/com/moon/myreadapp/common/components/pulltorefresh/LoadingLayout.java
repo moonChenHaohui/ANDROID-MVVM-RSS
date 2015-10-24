@@ -2,10 +2,14 @@ package com.moon.myreadapp.common.components.pulltorefresh;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.moon.myreadapp.R;
+import com.moon.myreadapp.util.BuiltConfig;
 
 /**
  * 这个类定义了Header和Footer的共通行为
@@ -21,7 +25,9 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
     private State mCurState = State.NONE;
     /**前一个状态*/
     private State mPreState = State.NONE;
-    
+
+    protected Spanned TXTreleaseToRefresh = null;
+    protected Spanned TXTpullLabel = null;
     /**
      * 构造方法
      * 
@@ -252,4 +258,15 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
      * @return Loading的View
      */
     protected abstract View createLoadingView(Context context, AttributeSet attrs);
+
+    @Override
+    public boolean checkInputConnectionProxy(View view) {
+        return super.checkInputConnectionProxy(view);
+    }
+    public void setTXTreleaseToRefreshText(Spanned str){
+        TXTreleaseToRefresh = str;
+    }
+    public void setTXTpullLabelText(Spanned str){
+        TXTpullLabel = str;
+    }
 }

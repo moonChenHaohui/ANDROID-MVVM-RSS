@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:minHeight="30dp"
-    android:paddingLeft="@dimen/normal_padding"
-    android:background="@color/background_gray"
-    >
-    <com.joanzapata.iconify.widget.IconTextView
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="title"
+            type="String"/>
+    </data>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:textColor="@color/txt_active"
-        android:text="{fa-cog spin}星期一"/>
-</LinearLayout>
+        android:layout_height="30dp"
+        android:minHeight="30dp"
+        android:paddingLeft="@dimen/normal_padding"
+        android:orientation="vertical"
+        android:background="@color/background_gray"
+        >
+        <include layout="@layout/common_divider"/>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/txt_active"
+            android:text="@{title}"/>
+    </LinearLayout>
+</layout>

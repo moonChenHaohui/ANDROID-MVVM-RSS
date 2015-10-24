@@ -130,7 +130,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         mHeaderLayout = createHeaderLoadingLayout(context, attrs);
         mFooterLayout = createFooterLoadingLayout(context, attrs);
         mRefreshableView = createRefreshableView(context, attrs);
-        
+
         if (null == mRefreshableView) {
             throw new NullPointerException("Refreshable view can not be null.");
         }
@@ -391,7 +391,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
             setInterceptTouchEventEnabled(false);
         }
     }
-    
+
+    public LoadingLayout getmFooterLayout() {
+        return mFooterLayout;
+    }
+
     @Override
     public void onPullUpRefreshComplete() {
         if (isPullLoading()) {
@@ -487,7 +491,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
      * @return LoadingLayout对象
      */
     protected LoadingLayout createHeaderLoadingLayout(Context context, AttributeSet attrs) {
-        return new HeaderLoadingLayout(context);
+        return new RotateLoadingLayout(context);
     }
     
     /**

@@ -26,6 +26,12 @@
             android:launchMode="singleTop"
             android:theme="@style/RedTheme" >
         </activity>
+        <activity
+            android:name=".ui.FeedActivity"
+            android:label="@string/title_activity_feed"
+            android:launchMode="singleTop"
+            android:theme="@style/RedTheme" >
+        </activity>
     </application>
 
 </manifest>
