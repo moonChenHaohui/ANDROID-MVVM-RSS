@@ -169,4 +169,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.mainList.onPullUpRefreshComplete();
     }
 
+    @Override
+    protected Toolbar getTooBar() {
+        return toolbar;
+    }
 }

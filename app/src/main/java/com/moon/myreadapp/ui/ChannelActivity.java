@@ -12,6 +12,7 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshPSListView;
+import com.moon.myreadapp.mvvm.viewmodels.ChannelViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 
 
@@ -26,26 +27,28 @@ public class ChannelActivity extends BaseActivity {
     boolean isFastScroll = false;
     private PullToRefreshPSListView listView;
     private Toolbar toolbar;
+
+    private ChannelViewModel channelViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         initToolBar(toolbar);
-
+        channelViewModel = new ChannelViewModel(this);
         listView = (PullToRefreshPSListView)findViewById(R.id.channel_list);
         listView.getRefreshableView().setFastScrollEnabled(true);
         listView.getRefreshableView().setSmoothScrollbarEnabled(true);
-        listView.getRefreshableView().setVerticalScrollBarEnabled(true);
+        listView.getRefreshableView().setVerticalScrollBarEnabled(false);
+        listView.getRefreshableView().setOnItemClickListener(channelViewModel.getFeedItemClickListener());
         listView.setPullLoadEnabled(true);
         listView.setScrollLoadEnabled(true);
-        listView.getRefreshableView().setAdapter(new FeedAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1));
+        listView.getRefreshableView().setAdapter(channelViewModel.getFeedAdapter());
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //下拉刷新
                 listView.onPullDownRefreshComplete();
             }
-
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //上拉加载
@@ -54,6 +57,9 @@ public class ChannelActivity extends BaseActivity {
         });
     }
 
+    public PullToRefreshPSListView getListView() {
+        return listView;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,9 +74,15 @@ public class ChannelActivity extends BaseActivity {
         if (id == R.id.content) {
             finish();
         } else if (id == R.id.action_read_all) {
+            hideToolbar(toolbar);
             XDispatcher.from(this).dispatch(new EventAction(new AEvent("change from channel")));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected Toolbar getTooBar() {
+        return toolbar;
     }
 
     @Override

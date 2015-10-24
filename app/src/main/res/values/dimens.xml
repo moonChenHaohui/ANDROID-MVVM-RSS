@@ -45,4 +45,5 @@
     <dimen name="left_bottom_height">40dp</dimen>
 
     <dimen name="main_list_item_height">@dimen/normal_list_item_regular</dimen>
+    <dimen name="feed_list_item_height">80dp</dimen>
 </resources>

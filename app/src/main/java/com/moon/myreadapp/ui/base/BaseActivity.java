@@ -8,6 +8,8 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.moon.appframework.core.XActivity;
 import com.moon.appframework.core.XDispatcher;
@@ -15,6 +17,8 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.swipeback.SwipeBackLayout;
 import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.ThemeUtils;
+import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 
 /**
@@ -35,7 +39,10 @@ import com.moon.myreadapp.util.ThemeUtils;
  * SwipeBackLayout.ATREA_PERCETAGE;
  * 增加了对栈底activity的判断,使不会直接滑退app
  */
-public abstract class BaseActivity extends XActivity implements IView {
+public abstract class BaseActivity extends XActivity implements IView{
+
+
+
 
     public static void start(Activity context, Class clazz) {
         Intent intent = new Intent();
@@ -128,8 +135,37 @@ public abstract class BaseActivity extends XActivity implements IView {
         showActivityExitAnim();
     }
 
+    protected abstract Toolbar getTooBar();
 
     protected abstract
     @LayoutRes
     int getLayoutView();
+
+
+    protected void showToolbar(Toolbar toolbar) {
+        moveToolbar(toolbar,0);
+    }
+
+    protected void hideToolbar(Toolbar toolbar) {
+        moveToolbar(toolbar,-toolbar.getHeight());
+    }
+
+    private void moveToolbar(final Toolbar toolbar,float toTranslationY) {
+        if (ViewHelper.getTranslationY(toolbar) == toTranslationY) {
+            return;
+        }
+        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getTranslationY(toolbar), toTranslationY).setDuration(200);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float translationY = (float) animation.getAnimatedValue();
+                ViewHelper.setTranslationY(toolbar, translationY);
+                ViewHelper.setTranslationY((View) layout, translationY);
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) ((View) layout).getLayoutParams();
+                lp.height = (int) -translationY + findViewById(android.R.id.content).getHeight() - lp.topMargin;
+                ((View) layout).requestLayout();
+            }
+        });
+        animator.start();
+    }
 }
