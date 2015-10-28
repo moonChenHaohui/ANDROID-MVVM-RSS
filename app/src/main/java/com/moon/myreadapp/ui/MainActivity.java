@@ -110,6 +110,12 @@ public class MainActivity extends BaseActivity implements IMainView {
                 binding.mainList.onPullUpRefreshComplete();
             }
         });
+        binding.leftDrawer.setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(MainActivity.this,SettingActivity.class);
+            }
+        });
     }
 
     @Override

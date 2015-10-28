@@ -21,6 +21,8 @@ import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollVie
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.ToolBarExpandActivity;
 
+import javax.xml.parsers.SAXParserFactory;
+
 public class FeedActivity extends BaseActivity {
 
 

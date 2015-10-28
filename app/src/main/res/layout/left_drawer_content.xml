@@ -94,7 +94,7 @@
                 android:id="@+id/setting"
                 android:padding="@dimen/normal_half_padding"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="{fa-cog} 设置" />
             <View
                 android:layout_marginLeft="@dimen/normal_padding"
@@ -106,7 +106,7 @@
                 android:id="@+id/changeTheme"
                 android:padding="@dimen/normal_half_padding"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="{fa-moon-o} 夜间" />
         </LinearLayout>
     </LinearLayout>

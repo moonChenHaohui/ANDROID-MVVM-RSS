@@ -29,4 +29,5 @@ dependencies {
 
     compile 'me.drakeet.materialdialog:library:1.2.2'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+
 }

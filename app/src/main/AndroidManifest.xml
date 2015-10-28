@@ -34,6 +34,11 @@
         </activity>
         <activity android:name=".ui.FeedWebActivity" >
         </activity>
+        <activity
+            android:name=".ui.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:theme="@style/AppBaseTheme.Dark.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

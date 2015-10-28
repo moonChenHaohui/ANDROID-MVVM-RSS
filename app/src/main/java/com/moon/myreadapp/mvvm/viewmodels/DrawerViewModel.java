@@ -9,6 +9,8 @@ import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.User;
+import com.moon.myreadapp.ui.MainActivity;
+import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DialogFractory;
 
@@ -95,4 +97,9 @@ public class DrawerViewModel extends BaseViewModel {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void onClickFriend(View view) {
+        MainActivity.start((Activity)mView, SettingActivity.class);
+    }
+    public void onLongClick (View view){}
 }
