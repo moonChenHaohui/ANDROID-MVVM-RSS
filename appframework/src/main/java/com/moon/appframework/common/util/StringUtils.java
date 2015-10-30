@@ -17,6 +17,7 @@ public class StringUtils {
 	public static boolean isNull(String s){
 		return s==null || "null".equals(s);
 	}
+
 	
 	public static String nullToString(String s){
 		return isNull(s)?"":s;
