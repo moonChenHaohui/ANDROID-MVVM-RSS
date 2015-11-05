@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.moon.appframework.action.EventAction;
+import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
@@ -113,7 +114,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.leftDrawer.setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(MainActivity.this,SettingActivity.class);
+                XDispatcher.from(MainActivity.this).dispatch(new RouterAction(SettingActivity.class,true));
             }
         });
     }
@@ -176,7 +177,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    protected Toolbar getTooBar() {
+    protected Toolbar getToolBar() {
         return toolbar;
     }
 }

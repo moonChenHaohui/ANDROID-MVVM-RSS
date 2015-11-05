@@ -3,7 +3,9 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.common.adapter.FeedAdapter;
 import com.moon.myreadapp.common.adapter.base.FeedAdapterHelper;
 import com.moon.myreadapp.mvvm.models.Feed;
@@ -72,7 +74,7 @@ public class ChannelViewModel extends BaseViewModel {
                     }
                 } else {
                     XLog.d("is not a title");
-                    FeedActivity.start((ChannelActivity)mView,FeedActivity.class);
+                    XDispatcher.from((ChannelActivity)mView).dispatch(new RouterAction(FeedActivity.class,true));
                 }
             }
         };

@@ -29,7 +29,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     @Override
-    protected Toolbar getTooBar() {
+    protected Toolbar getToolBar() {
         return null;
     }
 

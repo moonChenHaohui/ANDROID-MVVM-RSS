@@ -4,14 +4,52 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.moon.myreadapp.common.components.scroll.ObservableScrollViewCallbacks;
+import com.moon.myreadapp.common.components.scroll.Scrollable;
+
 /**
  * Created by moon on 15/10/24.
  */
-public class ProgressWebView extends WebView {
+public class ProgressWebView extends WebView implements Scrollable{
+    @Override
+    public void setScrollViewCallbacks(ObservableScrollViewCallbacks listener) {
+
+    }
+
+    @Override
+    public void addScrollViewCallbacks(ObservableScrollViewCallbacks listener) {
+
+    }
+
+    @Override
+    public void removeScrollViewCallbacks(ObservableScrollViewCallbacks listener) {
+
+    }
+
+    @Override
+    public void clearScrollViewCallbacks() {
+
+    }
+
+    @Override
+    public void scrollVerticallyTo(int y) {
+
+    }
+
+    @Override
+    public int getCurrentScrollY() {
+        return 0;
+    }
+
+    @Override
+    public void setTouchInterceptionViewGroup(ViewGroup viewGroup) {
+
+    }
 
     private ProgressBar progressbar;
     private ILoad listener;

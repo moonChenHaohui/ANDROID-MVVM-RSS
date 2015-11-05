@@ -6,23 +6,29 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.common.components.scroll.ObservableScrollViewCallbacks;
+import com.moon.myreadapp.common.components.scroll.ScrollState;
+import com.moon.myreadapp.common.components.scroll.Scrollable;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.helper.ToolBarHelper;
+import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by moon on 15/10/19.
- * 封装了toolbar.会封装一个FrameLayout作为副容器,并将toolbar添加到第一位
  *
  */
-public abstract class ToolBarExpandActivity extends BaseActivity {
+public abstract class ToolBarExpandActivity<S extends Scrollable> extends BaseActivity implements ObservableScrollViewCallbacks {
 
-    private ToolBarHelper mToolBarHelper ;
-    protected Toolbar toolbar ;
-
+    protected Toolbar mToolbar ;
+    private S mScrollable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,24 +39,78 @@ public abstract class ToolBarExpandActivity extends BaseActivity {
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
         setContentView(getLayoutView());
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        mToolBarHelper = new ToolBarHelper(this,layoutResID) ;
-        toolbar = mToolBarHelper.getToolBar() ;
-        setContentView(mToolBarHelper.getContentView());
-        initToolBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        initToolBar(mToolbar);
+        mScrollable = createScrollable();
+        mScrollable.setScrollViewCallbacks(this);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //防止Context泄露
-        if (null != mToolBarHelper) mToolBarHelper.clear();
     }
 
     @Override
     public void setTitle(CharSequence title) {
-        toolbar.setTitle(title);
+        mToolbar.setTitle(title);
+    }
+
+
+    protected abstract S createScrollable();
+
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        Log.e("DEBUG", "onUpOrCancelMotionEvent: " + scrollState);
+        if (scrollState == ScrollState.UP) {
+            if (toolbarIsShown()) {
+                hideToolbar();
+            }
+        } else if (scrollState == ScrollState.DOWN) {
+            if (toolbarIsHidden()) {
+                showToolbar();
+            }
+        }
+    }
+
+    private boolean toolbarIsShown() {
+        return ViewHelper.getTranslationY(mToolbar) == 0;
+    }
+
+    private boolean toolbarIsHidden() {
+        return ViewHelper.getTranslationY(mToolbar) == -mToolbar.getHeight();
+    }
+
+    private void showToolbar() {
+        moveToolbar(0);
+    }
+
+    private void hideToolbar() {
+        moveToolbar(-mToolbar.getHeight());
+    }
+
+    private void moveToolbar(float toTranslationY) {
+        if (ViewHelper.getTranslationY(mToolbar) == toTranslationY) {
+            return;
+        }
+        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getTranslationY(mToolbar), toTranslationY).setDuration(200);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float translationY = (float) animation.getAnimatedValue();
+                ViewHelper.setTranslationY(mToolbar, translationY);
+                ViewHelper.setTranslationY((View) mScrollable, translationY);
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) ((View) mScrollable).getLayoutParams();
+                lp.height = (int) -translationY + getScreenHeight() - lp.topMargin;
+                ((View) mScrollable).requestLayout();
+            }
+        });
+        animator.start();
     }
 }

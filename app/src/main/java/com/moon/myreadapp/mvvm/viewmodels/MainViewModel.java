@@ -6,7 +6,9 @@ import android.databinding.Bindable;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.common.adapter.ReadAdapter;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.Channel;
@@ -53,9 +55,9 @@ public class MainViewModel extends BaseViewModel {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                       Channel channel = readAdapter.getItem(position);
                 Intent intent = new Intent();
-                intent.putExtra(Constants.CHANNEL_OBJ,channel);
-                MainActivity.start((Activity) mView, ChannelActivity.class);
-                XLog.d("pos:"+position);
+                intent.putExtra(Constants.CHANNEL_OBJ, channel);
+                XDispatcher.from((Activity)mView).dispatch(new RouterAction(ChannelActivity.class,true));
+                XLog.d("pos:" + position);
             }
         };
     }

@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.moon.appframework.action.EventAction;
+import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
@@ -65,7 +66,7 @@ public class FeedActivity extends BaseActivity {
     }
 
     @Override
-    protected Toolbar getTooBar() {
+    protected Toolbar getToolBar() {
         return toolbar;
     }
 
@@ -92,7 +93,7 @@ public class FeedActivity extends BaseActivity {
         if (id == R.id.content) {
             finish();
         } else if (id == R.id.action_read_all) {
-            start(this,FeedWebActivity.class);
+            XDispatcher.from(this).dispatch(new RouterAction(FeedWebActivity.class, true));
         }
         return super.onOptionsItemSelected(item);
     }

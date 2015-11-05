@@ -74,14 +74,13 @@ public class ChannelActivity extends BaseActivity {
         if (id == R.id.content) {
             finish();
         } else if (id == R.id.action_read_all) {
-            hideToolbar(toolbar);
             XDispatcher.from(this).dispatch(new EventAction(new AEvent("change from channel")));
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected Toolbar getTooBar() {
+    protected Toolbar getToolBar() {
         return toolbar;
     }
 

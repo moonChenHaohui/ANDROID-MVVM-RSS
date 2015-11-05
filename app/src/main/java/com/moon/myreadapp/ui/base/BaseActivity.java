@@ -42,18 +42,6 @@ import com.nineoldandroids.view.ViewHelper;
 public abstract class BaseActivity extends XActivity implements IView{
 
 
-
-
-    public static void start(Activity context, Class clazz) {
-        Intent intent = new Intent();
-        start(context, clazz, intent);
-    }
-
-    public static void start(Activity context, Class clazz, Intent intent) {
-        intent.setClass(context, clazz);
-        context.startActivity(intent);
-    }
-
     protected SwipeBackLayout layout;
 
     @Override
@@ -72,7 +60,7 @@ public abstract class BaseActivity extends XActivity implements IView{
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-        overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_remain);
+        //overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_remain);
     }
 
     @Override
@@ -132,40 +120,18 @@ public abstract class BaseActivity extends XActivity implements IView{
     @Override
     public void finish() {
         super.finish();
-        showActivityExitAnim();
+        //showActivityExitAnim();
     }
 
-    protected abstract Toolbar getTooBar();
+    protected abstract Toolbar getToolBar();
 
     protected abstract
     @LayoutRes
     int getLayoutView();
 
 
-    protected void showToolbar(Toolbar toolbar) {
-        moveToolbar(toolbar,0);
-    }
 
-    protected void hideToolbar(Toolbar toolbar) {
-        moveToolbar(toolbar,-toolbar.getHeight());
-    }
-
-    private void moveToolbar(final Toolbar toolbar,float toTranslationY) {
-        if (ViewHelper.getTranslationY(toolbar) == toTranslationY) {
-            return;
-        }
-        ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getTranslationY(toolbar), toTranslationY).setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float translationY = (float) animation.getAnimatedValue();
-                ViewHelper.setTranslationY(toolbar, translationY);
-                ViewHelper.setTranslationY((View) layout, translationY);
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) ((View) layout).getLayoutParams();
-                lp.height = (int) -translationY + findViewById(android.R.id.content).getHeight() - lp.topMargin;
-                ((View) layout).requestLayout();
-            }
-        });
-        animator.start();
+    protected int getScreenHeight() {
+        return findViewById(android.R.id.content).getHeight();
     }
 }

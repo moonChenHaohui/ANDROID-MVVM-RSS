@@ -5,6 +5,8 @@ import android.databinding.Bindable;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.mvvm.models.MenuItem;
@@ -99,7 +101,7 @@ public class DrawerViewModel extends BaseViewModel {
     }
 
     public void onClickFriend(View view) {
-        MainActivity.start((Activity)mView, SettingActivity.class);
+        XDispatcher.from((Activity)mView).dispatch(new RouterAction(SettingActivity.class,true));
     }
     public void onLongClick (View view){}
 }
