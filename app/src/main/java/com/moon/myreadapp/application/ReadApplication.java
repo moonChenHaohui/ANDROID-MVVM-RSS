@@ -11,12 +11,15 @@ import com.moon.appframework.core.XApplication;
  */
 public class ReadApplication extends XApplication{
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         new AppInitTask().execute("start");
     }
+
 
     class AppInitTask extends SafeAsyncTask<String,String,String>{
 

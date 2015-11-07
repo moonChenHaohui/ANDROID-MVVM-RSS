@@ -9,4 +9,9 @@
 
     <string name="set_theme">set_theme</string>
 
+
+
+    <string name="generic_server_down">服务器正在开小差.</string>
+    <string name="no_internet">当前没有网络接入.</string>
+    <string name="generic_error">请求异常</string>
 </resources>
