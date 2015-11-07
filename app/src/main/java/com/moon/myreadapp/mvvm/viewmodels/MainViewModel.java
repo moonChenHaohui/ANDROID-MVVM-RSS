@@ -3,6 +3,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.Bindable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -10,6 +11,7 @@ import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.common.adapter.ReadAdapter;
+import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.Channel;
 import com.moon.myreadapp.ui.ChannelActivity;
@@ -28,7 +30,7 @@ public class MainViewModel extends BaseViewModel {
 
     private ReadAdapter readAdapter;
 
-    private AdapterView.OnItemClickListener readItemClickListener;
+    private RecyclerItemClickListener readItemClickListener;
 
     public MainViewModel(IMainView view) {
         this.mView = view;
@@ -45,21 +47,23 @@ public class MainViewModel extends BaseViewModel {
     @Override
     public void initEvents() {
         final List<Channel> channels = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             channels.add(new Channel("s" + i,1));
         }
         readAdapter = new ReadAdapter(channels);
 
-        readItemClickListener = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                      Channel channel = readAdapter.getItem(position);
+        readItemClickListener = new RecyclerItemClickListener((Activity)mView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override public void onItemClick(View view, int position) {
+                Channel channel = readAdapter.getItem(position);
                 Intent intent = new Intent();
                 intent.putExtra(Constants.CHANNEL_OBJ, channel);
                 XDispatcher.from((Activity)mView).dispatch(new RouterAction(ChannelActivity.class,true));
                 XLog.d("pos:" + position);
             }
-        };
+        });
+
+
+
     }
 
     @Bindable
@@ -71,11 +75,11 @@ public class MainViewModel extends BaseViewModel {
         this.readAdapter = readAdapter;
     }
 
-    public AdapterView.OnItemClickListener getReadItemClickListener() {
+    public RecyclerItemClickListener getReadItemClickListener() {
         return readItemClickListener;
     }
 
-    public void setReadItemClickListener(AdapterView.OnItemClickListener readItemClickListener) {
+    public void setReadItemClickListener(RecyclerItemClickListener readItemClickListener) {
         this.readItemClickListener = readItemClickListener;
     }
 

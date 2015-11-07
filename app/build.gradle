@@ -33,6 +33,8 @@ dependencies {
     compile 'me.drakeet.materialdialog:library:1.2.2'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
+    //recyclerview
+    compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     //green dao
     compile 'de.greenrobot:greendao:2.0.0'
 

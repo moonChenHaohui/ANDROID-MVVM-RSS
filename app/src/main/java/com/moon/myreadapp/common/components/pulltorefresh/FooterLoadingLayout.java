@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     @Override
     protected View createLoadingView(Context context, AttributeSet attrs) {
         View container = LayoutInflater.from(context).inflate(R.layout.pull_to_load_footer, null);
+        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return container;
     }
 

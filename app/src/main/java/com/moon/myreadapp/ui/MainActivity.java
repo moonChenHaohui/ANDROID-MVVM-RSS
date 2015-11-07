@@ -4,13 +4,17 @@ import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.joanzapata.iconify.widget.IconTextView;
 import com.moon.appframework.action.EventAction;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -22,6 +26,8 @@ import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
+
+import java.util.ArrayList;
 
 import de.halfbit.tinybus.Subscribe;
 
@@ -92,25 +98,28 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     private void initMainView(){
-        binding.mainList.setPullLoadEnabled(true);
+        binding.mainList.setPullLoadEnabled(false);
         binding.mainList.setScrollLoadEnabled(true);
-        binding.mainList.getRefreshableView().addHeaderView(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_channel_header, null));
-        binding.mainList.getRefreshableView().setOnItemClickListener(mainViewModel.getReadItemClickListener());
-
-        binding.mainList.getRefreshableView().setAdapter(mainViewModel.getReadAdapter());
-        binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+       // binding.mainList.getRefreshableView().addHeaderView(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_channel_header, null));
+        //binding.mainList.getRefreshableView().setOnClickListener(mainViewModel.getReadItemClickListener());
+        binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
+        ArrayList<String> data = new ArrayList<String>(){{add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");}};
+        binding.mainList.setAdapter(new MyAdapter((data)));
+        binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+            public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //下拉刷新
                 binding.mainList.onPullDownRefreshComplete();
             }
 
             @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+            public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //上拉加载
-                binding.mainList.onPullUpRefreshComplete();
+               binding.mainList.onPullUpRefreshComplete();
             }
         });
+
+
         binding.leftDrawer.setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,5 +188,38 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected Toolbar getToolBar() {
         return toolbar;
+    }
+
+
+    class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+        public ArrayList<String> datas = null;
+        public MyAdapter(ArrayList<String> datas) {
+            this.datas = datas;
+        }
+        //创建新View，被LayoutManager所调用
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.lv_channel_item,viewGroup,false);
+            ViewHolder vh = new ViewHolder(view);
+            return vh;
+        }
+        //将数据与界面进行绑定的操作
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, int position) {
+            viewHolder.mTextView.setText(datas.get(position));
+        }
+        //获取数据的数量
+        @Override
+        public int getItemCount() {
+            return datas.size();
+        }
+        //自定义的ViewHolder，持有每个Item的的所有界面元素
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public IconTextView mTextView;
+            public ViewHolder(View view){
+                super(view);
+                mTextView = (IconTextView) view.findViewById(R.id.channel_name);
+            }
+        }
     }
 }

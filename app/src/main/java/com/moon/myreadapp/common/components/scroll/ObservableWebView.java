@@ -30,6 +30,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.moon.myreadapp.common.components.webview.ILoad;
+import com.moon.myreadapp.util.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class ObservableWebView extends WebView implements Scrollable {
     public ObservableWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-        progressbar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 10, 0, 0));
+        progressbar.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, ScreenUtils.dpToPx(10), 0, 0));
 
         addView(progressbar);
         setWebChromeClient(new WebChromeClient());

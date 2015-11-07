@@ -13,6 +13,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
 
 /**
  * 这个实现了下拉刷新和上拉加载更多的功能
@@ -83,7 +84,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     private SmoothScrollRunnable mSmoothScrollRunnable;
     /**可刷新View的包装布局*/
     private FrameLayout mRefreshableViewWrapper;
-    
+
+    /**
+     * 弹性滑动
+     */
+    private Scroller scroller;
     /**
      * 构造方法
      * 
@@ -117,14 +122,24 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         init(context, attrs);
     }
 
+    @Override
+    public void computeScroll() {
+        if (scroller.computeScrollOffset()){
+            scrollTo(scroller.getCurrX(),scroller.getCurrY());
+            postInvalidate();
+        }
+    }
+
     /**
      * 初始化
      * 
      * @param context context
      */
-    private void init(Context context, AttributeSet attrs) {
+    protected void init(Context context, AttributeSet attrs) {
+        scroller = new Scroller(context);
         setOrientation(LinearLayout.VERTICAL);
-        
+
+        //最小滑动距离
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         
         mHeaderLayout = createHeaderLoadingLayout(context, attrs);
