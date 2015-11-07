@@ -37,7 +37,7 @@ public class PullToRefreshPSListView extends PullToRefreshListView{
         ListView listView = new PinnedSectionListView(context,attrs);
         mListView = listView;
         mListView.setOnScrollListener(this);
-        //mListView.setFooterDividersEnabled(false);
+        //mRecyclerView.setFooterDividersEnabled(false);
         mListView.setDivider(null);
         return listView;
     }

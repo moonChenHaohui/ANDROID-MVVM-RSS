@@ -100,8 +100,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     private void initMainView(){
         binding.mainList.setPullLoadEnabled(false);
         binding.mainList.setScrollLoadEnabled(true);
-       // binding.mainList.getRefreshableView().addHeaderView(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_channel_header, null));
-        //binding.mainList.getRefreshableView().setOnClickListener(mainViewModel.getReadItemClickListener());
+        binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_channel_header, null));
+
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
         ArrayList<String> data = new ArrayList<String>(){{add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");}};
         binding.mainList.setAdapter(new MyAdapter((data)));
@@ -109,13 +109,14 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //下拉刷新
-                binding.mainList.onPullDownRefreshComplete();
+                //binding.mainList.onPullDownRefreshComplete();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //上拉加载
-               binding.mainList.onPullUpRefreshComplete();
+               //binding.mainList.onPullUpRefreshComplete();
+                binding.mainList.setShowEmptyLayout(true);
             }
         });
 

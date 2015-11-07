@@ -61,7 +61,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
         ListView listView = new ListView(context);
         mListView = listView;
         listView.setOnScrollListener(this);
-        //mListView.setFooterDividersEnabled(false);
+        //mRecyclerView.setFooterDividersEnabled(false);
         mListView.setDivider(null);
         return listView;
     }

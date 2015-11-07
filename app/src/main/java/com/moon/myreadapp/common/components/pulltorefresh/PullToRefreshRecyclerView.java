@@ -23,7 +23,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
     /**
      * ListView
      */
-    protected RecyclerView mListView;
+    protected RecyclerView mRecyclerView;
     /**
      * 用于滑到底部自动加载的Footer
      */
@@ -84,8 +84,8 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
         super.init(context, attrs);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        if (mListView != null) {
-            mListView.setLayoutManager(mLinearLayoutManager);
+        if (mRecyclerView != null) {
+            mRecyclerView.setLayoutManager(mLinearLayoutManager);
         }
         mScrollListener = new RecyclerView.OnScrollListener() {
             @Override
@@ -110,10 +110,12 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
                 setEnabled(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
             }
         };
-        if (mListView != null) {
-            mListView.setOnScrollListener(mScrollListener);
+        if (mRecyclerView != null) {
+            mRecyclerView.setOnScrollListener(mScrollListener);
         }
     }
+
+
 
     public ComAdapter getmAdapter() {
         return mAdapter;
@@ -122,11 +124,11 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
     @Override
     protected RecyclerView createRefreshableView(Context context, AttributeSet attrs) {
         RecyclerView listView = new RecyclerView(context);
-        mListView = listView;
+        mRecyclerView = listView;
         mAdapter = new ComAdapter(null);
-        mListView.setAdapter(mAdapter);
-        //mListView.setFooterDividersEnabled(false);
-        //mListView.setDivider(null);
+        mRecyclerView.setAdapter(mAdapter);
+        //mRecyclerView.setFooterDividersEnabled(false);
+        //mRecyclerView.setDivider(null);
         return listView;
     }
     public void setAdapter(RecyclerView.Adapter adapter){
@@ -263,11 +265,11 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
          */
         if (lastVisiblePosition >= lastItemPosition - 1) {
             final int childIndex = lastVisiblePosition - mLinearLayoutManager.findFirstVisibleItemPosition();
-            final int childCount = mListView.getChildCount();
+            final int childCount = mRecyclerView.getChildCount();
             final int index = Math.min(childIndex, childCount - 1);
-            final View lastVisibleChild = mListView.getChildAt(index);
+            final View lastVisibleChild = mRecyclerView.getChildAt(index);
             if (lastVisibleChild != null) {
-                return lastVisibleChild.getBottom() <= mListView.getBottom();
+                return lastVisibleChild.getBottom() <= mRecyclerView.getBottom();
             }
         }
 

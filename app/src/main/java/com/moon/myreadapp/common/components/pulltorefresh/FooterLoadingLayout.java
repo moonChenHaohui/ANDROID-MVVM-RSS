@@ -61,7 +61,6 @@ public class FooterLoadingLayout extends LoadingLayout {
     @Override
     protected View createLoadingView(Context context, AttributeSet attrs) {
         View container = LayoutInflater.from(context).inflate(R.layout.pull_to_load_footer, null);
-        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return container;
     }
 

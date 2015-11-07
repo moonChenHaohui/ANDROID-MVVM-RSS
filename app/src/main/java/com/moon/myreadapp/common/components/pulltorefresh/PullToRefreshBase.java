@@ -58,6 +58,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     private LoadingLayout mHeaderLayout;
     /**上拉加载更多的布局*/
     private LoadingLayout mFooterLayout;
+    /**
+     * 空布局,可能是在无网络\请求失败的情况下给用户提示
+     */
+    private EmptyLayout mEmptyLayout;
+    /**
+     * 是否显示空布局
+     */
+    private boolean showEmptyLayout = false;
+
     /**HeaderView的高度*/
     private int mHeaderHeight;
     /**FooterView的高度*/
@@ -145,7 +154,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         mHeaderLayout = createHeaderLoadingLayout(context, attrs);
         mFooterLayout = createFooterLoadingLayout(context, attrs);
         mRefreshableView = createRefreshableView(context, attrs);
-
+        mEmptyLayout = createEmptyLayout(context, attrs);
         if (null == mRefreshableView) {
             throw new NullPointerException("Refreshable view can not be null.");
         }
@@ -483,6 +492,21 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
      * @return View
      */
     protected abstract T createRefreshableView(Context context, AttributeSet attrs);
+
+    protected EmptyLayout createEmptyLayout (Context context, AttributeSet attrs){
+        EmptyLayout el = new EmptyLayout(context);
+        el.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setShowEmptyLayout(false);
+                //滚动到顶部
+                //smoothScrollTo(0,300,0);
+                //刷新
+                doPullRefreshing(true,500);
+            }
+        });
+        return el;
+    }
     
     /**
      * 判断刷新的View是否滑动到顶部
@@ -847,7 +871,29 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
             }
         }
     }
-    
+
+    public boolean isShowEmptyLayout() {
+        return showEmptyLayout;
+    }
+
+
+    /**
+     * 设置是否显示empty view
+     * @param showEmptyLayout
+     */
+    public void setShowEmptyLayout(boolean showEmptyLayout) {
+        if (showEmptyLayout == isShowEmptyLayout()){
+            return;
+        }
+        this.showEmptyLayout = showEmptyLayout;
+        mRefreshableViewWrapper.removeAllViews();
+        if (showEmptyLayout) {
+            mRefreshableViewWrapper.addView(mEmptyLayout, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        } else {
+            mRefreshableViewWrapper.addView(getRefreshableView(), ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        }
+    }
+
     /**
      * 设置是否截断touch事件
      * 
