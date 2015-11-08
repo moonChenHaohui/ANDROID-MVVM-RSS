@@ -11,6 +11,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.moon.appframework.R;
+import com.moon.appframework.common.log.XLog;
 
 import java.util.HashMap;
 
@@ -76,20 +77,20 @@ public static String getMessage(Object error, Context context) {
                     case 404:
                     case 422:
                     case 401:
-                        try {
-                            // server might return error like this { "error": "Some error occured" }
-                            // Use "Gson" to parse the result
-                            HashMap<String, String> result = JSON.parseObject(new String(response.data), HashMap.class);
-
-                            if (result != null && result.containsKey("error")) {
-                                return result.get("error");
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            // server might return error like this { "error": "Some error occured" }
+//                            // Use "Gson" to parse the result
+//                            HashMap<String, String> result = JSON.parseObject(new String(response.data), HashMap.class);
+//                            //XLog.e(response.data.toString());
+//                            if (result != null && result.containsKey("error")) {
+//                                return new String(response.data);
+//                            }
+//
+//                        } catch (Exception e) {
+//                            //e.printStackTrace();
+//                        }
                         // invalid request
-                        return error.getMessage();
+                        return new String(response.data);
 
                     default:
                         return context.getResources().getString(R.string.generic_server_down);

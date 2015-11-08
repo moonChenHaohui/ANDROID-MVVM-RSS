@@ -43,6 +43,9 @@ public final class XLog {
         if (logLevel == LogLevel.NONE) {
             return;
         }
+        if (message == null){
+            return;
+        }
         int length = message.length();
         if (length <= CHUNK_SIZE) {
             logChunk(logType, message);

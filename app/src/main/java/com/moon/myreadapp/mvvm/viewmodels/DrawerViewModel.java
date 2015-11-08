@@ -5,10 +5,14 @@ import android.databinding.Bindable;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.alibaba.fastjson.JSON;
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.business.RequestHelper;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
+import com.moon.myreadapp.constants.Nav;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.User;
 import com.moon.myreadapp.ui.MainActivity;
@@ -16,7 +20,10 @@ import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DialogFractory;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,11 +45,11 @@ public class DrawerViewModel extends BaseViewModel {
     public DrawerViewModel(IMainView view) {
         this.mView = view;
         initViews();
+        initEvents();
     }
 
     @Override
     public void initViews() {
-        user = new User("asdsad","asdasd");
         List<MenuItem> menus = new ArrayList<>();
         menus.add(new MenuItem.Builder().title("添加订阅").build());
         menus.add(new MenuItem.Builder().title("推荐频道").build());
@@ -64,7 +71,7 @@ public class DrawerViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-
+        //requestUser();
     }
 
 
@@ -98,10 +105,31 @@ public class DrawerViewModel extends BaseViewModel {
 
     public void setUser(User user) {
         this.user = user;
+        notifyChange();
     }
 
     public void onClickFriend(View view) {
-        XDispatcher.from((Activity)mView).dispatch(new RouterAction(SettingActivity.class,true));
+        XDispatcher.from((Activity)mView).dispatch(new RouterAction(SettingActivity.class, true));
     }
     public void onLongClick (View view){}
+
+
+
+
+    public void requestUser(){
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", "1");
+        RequestHelper.call(Nav.USER_LOGIN, Nav.USER_LOGIN, params, new RequestHelper.IResponseListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                setUser(JSON.parseObject(response.toString(),User.class));
+                XLog.d(response.toString());
+            }
+
+            @Override
+            public void onErrorResponse(String error) {
+                XLog.d(error);
+            }
+        }, true);
+    }
 }

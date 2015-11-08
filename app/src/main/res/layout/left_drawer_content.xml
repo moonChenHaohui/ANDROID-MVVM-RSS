@@ -49,7 +49,7 @@
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:hint="user name"
-                android:text="@{drawerViewModel.user.name}" />
+                android:text="@{drawerViewModel.user.nickname}" />
 
             <TextView
                 android:id="@+id/user_info"
@@ -62,7 +62,7 @@
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:hint="user name"
-                android:text="@{drawerViewModel.user.email}" />
+                android:text="@{drawerViewModel.user.account}" />
         </RelativeLayout>
         <include layout="@layout/common_divider"/>
         <ListView

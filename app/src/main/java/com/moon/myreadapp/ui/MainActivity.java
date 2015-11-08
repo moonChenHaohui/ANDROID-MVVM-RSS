@@ -124,7 +124,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.leftDrawer.setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XDispatcher.from(MainActivity.this).dispatch(new RouterAction(SettingActivity.class,true));
+                drawerViewModel.requestUser();
+                //XDispatcher.from(MainActivity.this).dispatch(new RouterAction(SettingActivity.class,true));
             }
         });
     }
