@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".application.ReadApplication"
         android:allowBackup="true"
@@ -37,6 +42,10 @@
         <activity
             android:name=".ui.SettingActivity"
             android:label="@string/title_activity_setting"
+            android:theme="@style/AppBaseTheme.Dark.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ui.LoginActivity"
             android:theme="@style/AppBaseTheme.Dark.NoActionBar" >
         </activity>
     </application>

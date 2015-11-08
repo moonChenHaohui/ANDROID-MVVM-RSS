@@ -408,6 +408,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
 
             public OtherViewHolder(View itemView) {
                 super(itemView);
+                itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 
         }

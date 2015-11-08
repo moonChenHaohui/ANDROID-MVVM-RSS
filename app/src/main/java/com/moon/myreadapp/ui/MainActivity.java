@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.mainList.setPullLoadEnabled(false);
         binding.mainList.setScrollLoadEnabled(true);
         binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_channel_header, null));
-
+       
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
         ArrayList<String> data = new ArrayList<String>(){{add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");}};
         binding.mainList.setAdapter(new MyAdapter((data)));
@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //上拉加载
-               //binding.mainList.onPullUpRefreshComplete();
+                //binding.mainList.onPullUpRefreshComplete();
                 binding.mainList.setShowEmptyLayout(true);
             }
         });
@@ -126,6 +126,12 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onClick(View v) {
                 drawerViewModel.requestUser();
                 //XDispatcher.from(MainActivity.this).dispatch(new RouterAction(SettingActivity.class,true));
+            }
+        });
+        binding.leftDrawer.changeTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XDispatcher.from(MainActivity.this).dispatch(new RouterAction(LoginActivity.class,true));
             }
         });
     }

@@ -9,7 +9,7 @@ public class Nav {
 
     public final static String SERVER = "http://" + URL + "/rssService";
 
-    public final static String USER_LOGIN = SERVER + "?a=login";
+    public final static String USER_LOGIN = SERVER + "?a=loginOrRegister";
 
 
 }
