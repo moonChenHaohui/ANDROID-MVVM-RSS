@@ -9,8 +9,8 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseListAdapter;
 import com.moon.myreadapp.common.adapter.base.FeedAdapterHelper;
 import com.moon.myreadapp.common.components.pinnedsectionlistView.PinnedSectionListView;
-import com.moon.myreadapp.databinding.LvFeedDividerHeaderBinding;
-import com.moon.myreadapp.databinding.LvFeedItemBinding;
+import com.moon.myreadapp.databinding.LvArticleDividerHeaderBinding;
+import com.moon.myreadapp.databinding.LvArticleItemBinding;
 import com.moon.myreadapp.mvvm.models.ListFeed;
 
 import java.util.List;
@@ -31,21 +31,21 @@ public class FeedAdapter extends BaseListAdapter<ListFeed> implements PinnedSect
         if (null == convertView) {
             FeedAdapterHelper.TimeType itemType = getItem(position).tpye;
             if (itemType == FeedAdapterHelper.TimeType.TODATY) {
-                LvFeedDividerHeaderBinding binding = DataBindingUtil.inflate(mInflater, R.layout.lv_feed_divider_header, parent, false);
+                LvArticleDividerHeaderBinding binding = DataBindingUtil.inflate(mInflater, R.layout.lv_article_divider_header, parent, false);
                 convertView = binding.getRoot();
                 convertView.setTag(binding);
             } else if (itemType == FeedAdapterHelper.TimeType.YESTORY) {
-                LvFeedItemBinding binding = DataBindingUtil.inflate(mInflater, R.layout.lv_feed_item, parent, false);
+                LvArticleItemBinding binding = DataBindingUtil.inflate(mInflater, R.layout.lv_article_item, parent, false);
                 convertView = binding.getRoot();
                 convertView.setTag(binding);
             }
         }
         Object tag = convertView.getTag();
-        if (tag instanceof LvFeedItemBinding) {
-            LvFeedItemBinding binding = (LvFeedItemBinding) tag;
-            binding.channelIcon.setImageURI(Uri.parse("http://www.logoquan.com/upload/list/20150925/logoquan14509819713.PNG"));
-        } else if (tag instanceof LvFeedDividerHeaderBinding) {
-            LvFeedDividerHeaderBinding binding = (LvFeedDividerHeaderBinding) tag;
+        if (tag instanceof LvArticleItemBinding) {
+            LvArticleItemBinding binding = (LvArticleItemBinding) tag;
+            binding.feedIcon.setImageURI(Uri.parse("http://www.logoquan.com/upload/list/20150925/logoquan14509819713.PNG"));
+        } else if (tag instanceof LvArticleDividerHeaderBinding) {
+            LvArticleDividerHeaderBinding binding = (LvArticleDividerHeaderBinding) tag;
             binding.setTitle("星期" + position);
         }
         return convertView;

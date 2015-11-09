@@ -9,7 +9,6 @@ import android.widget.ListView;
 import com.moon.appframework.action.EventAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.adapter.FeedAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshPSListView;
 import com.moon.myreadapp.mvvm.viewmodels.ChannelViewModel;
@@ -21,7 +20,7 @@ public class ChannelActivity extends BaseActivity {
 
     @Override
     protected int getLayoutView() {
-        return R.layout.activity_channel;
+        return R.layout.activity_feed;
     }
 
     boolean isFastScroll = false;

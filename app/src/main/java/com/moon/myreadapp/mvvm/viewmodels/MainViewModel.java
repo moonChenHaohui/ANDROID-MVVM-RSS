@@ -3,22 +3,20 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.Bindable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
-import com.moon.myreadapp.common.adapter.ReadAdapter;
+import com.moon.myreadapp.BR;
+import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
-import com.moon.myreadapp.constants.Constants;
-import com.moon.myreadapp.mvvm.models.Channel;
+import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.ChannelActivity;
-import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +26,7 @@ public class MainViewModel extends BaseViewModel {
 
     private IMainView mView;
 
-    private ReadAdapter readAdapter;
+    private FeedRecAdapter feedRecAdapter;
 
     private RecyclerItemClickListener readItemClickListener;
 
@@ -46,17 +44,17 @@ public class MainViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-        final List<Channel> channels = new ArrayList<>();
+        final List<Feed> channels = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            channels.add(new Channel("s" + i,1));
+            channels.add(new Feed(null,"在知乎上被吐槽是怎么样一种体验",2,"珠海","no type","http://www.baidu.com/",new Date(),"China","2015 copy rights","","moon creater",1));
         }
-        readAdapter = new ReadAdapter(channels);
+        feedRecAdapter = new FeedRecAdapter(channels);
 
         readItemClickListener = new RecyclerItemClickListener((Activity)mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
-                Channel channel = readAdapter.getItem(position);
+                Feed feed = feedRecAdapter.getItem(position);
                 Intent intent = new Intent();
-                intent.putExtra(Constants.CHANNEL_OBJ, channel);
+                //intent.putExtra(Constants.CHANNEL_OBJ, feed);
                 XDispatcher.from((Activity)mView).dispatch(new RouterAction(ChannelActivity.class,true));
                 XLog.d("pos:" + position);
             }
@@ -67,12 +65,13 @@ public class MainViewModel extends BaseViewModel {
     }
 
     @Bindable
-    public ReadAdapter getReadAdapter() {
-        return readAdapter;
+    public FeedRecAdapter getFeedRecAdapter() {
+        return feedRecAdapter;
     }
 
-    public void setReadAdapter(ReadAdapter readAdapter) {
-        this.readAdapter = readAdapter;
+    public void setFeedRecAdapter(FeedRecAdapter feedRecAdapter) {
+        this.feedRecAdapter = feedRecAdapter;
+        notifyPropertyChanged(BR.feedRecAdapter);
     }
 
     public RecyclerItemClickListener getReadItemClickListener() {

@@ -3,7 +3,6 @@ package com.moon.myreadapp.ui;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -11,18 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.moon.appframework.action.EventAction;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollView;
 import com.moon.myreadapp.ui.base.BaseActivity;
-import com.moon.myreadapp.ui.base.ToolBarExpandActivity;
-
-import javax.xml.parsers.SAXParserFactory;
 
 public class FeedActivity extends BaseActivity {
 
@@ -72,7 +66,7 @@ public class FeedActivity extends BaseActivity {
 
     @Override
     protected int getLayoutView() {
-        return R.layout.activity_feed;
+        return R.layout.activity_article;
     }
 
     @Override

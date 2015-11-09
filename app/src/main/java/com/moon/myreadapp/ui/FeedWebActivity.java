@@ -18,7 +18,7 @@ public class FeedWebActivity extends ToolBarExpandActivity<ObservableWebView> {
 
     @Override
     protected int getLayoutView() {
-        return R.layout.activity_feed_web;
+        return R.layout.activity_article_web;
     }
 
     //private ActivityFeedWebBinding binding;

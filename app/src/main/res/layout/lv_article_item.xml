@@ -4,48 +4,65 @@
     <data>
 
         <variable
-            name="feed"
-            type="com.moon.myreadapp.mvvm.models.dao.Feed" />
+            name="listfeed"
+            type="com.moon.myreadapp.mvvm.models.ListFeed" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_list_item_height"
-        android:minHeight="@dimen/main_list_item_height"
-        android:background="@null">
-
+        android:layout_height="@dimen/feed_list_item_height"
+        android:minHeight="@dimen/feed_list_item_height"
+        android:background="@color/background_gray">
+        <include layout="@layout/common_divider"
+            android:layout_height="1px"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"/>
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/feed_icon"
-            android:layout_marginTop="@dimen/normal_padding"
             android:layout_marginLeft="@dimen/normal_padding"
-            android:layout_width="@dimen/img_size_48"
-            android:layout_height="@dimen/img_size_48"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/img_size_32"
+            android:layout_height="@dimen/img_size_32"
             fresco:placeholderImage="@color/background_selected"
-            fresco:roundAsCircle="true"
+            fresco:roundedCornerRadius="8dp"
             fresco:roundingBorderWidth="1px"
             fresco:roundingBorderColor="@color/divde_line"
             />
         <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/feed_title"
+            android:id="@+id/author_name"
             android:layout_marginLeft="@dimen/normal_half_padding"
             android:layout_marginRight="80dp"
             android:layout_toRightOf="@id/feed_icon"
-            android:layout_marginTop="@dimen/normal_padding"
+            android:layout_marginTop="@dimen/normal_half_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{feed.title}"
+            android:text="moon"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/txt_active"
-            android:textSize="@dimen/text_h2" />
+            android:textSize="@dimen/text_h4" />
         <com.joanzapata.iconify.widget.IconTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="10未读"
+            android:text="12:30"
+            android:textSize="@dimen/text_h4"
             android:layout_marginRight="@dimen/normal_padding"
-            android:layout_marginTop="@dimen/normal_padding"/>
+            android:layout_marginTop="@dimen/normal_half_padding"/>
         <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/feed_description"
+            android:id="@+id/feed_title"
+            android:layout_marginLeft="@dimen/normal_half_padding"
+            android:layout_marginRight="@dimen/normal_padding"
+            android:layout_toRightOf="@id/feed_icon"
+            android:layout_below="@id/author_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="123"
+            android:textColor="@color/txt_gray_dark"
+            android:textSize="@dimen/text_h3" />
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/feed_info"
             android:layout_marginLeft="@dimen/normal_half_padding"
             android:layout_marginRight="@dimen/normal_padding"
             android:layout_toRightOf="@id/feed_icon"
@@ -54,14 +71,12 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="@{feed.description}"
-            android:textColor="@color/txt_gray_dark"
-            android:textSize="@dimen/text_h3" />
-        <include layout="@layout/common_divider"
-            android:layout_marginTop="@dimen/normal_half_padding"
-            android:layout_height="1px"
+            android:text="内容说的是什么呢?就在这里显示出来拉,但是可能太长了的话就会...."
+            android:textColor="@color/txt_active"
+            android:textSize="@dimen/text_h4" />
+        <include layout="@layout/common_divider_with_more_space"
+            android:layout_height="10dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@id/feed_info"
             android:layout_width="match_parent"/>
     </RelativeLayout>
 </layout>
