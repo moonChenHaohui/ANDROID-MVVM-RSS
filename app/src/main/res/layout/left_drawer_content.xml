@@ -1,76 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="drawerViewModel"
             type="com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel" />
     </data>
+
     <LinearLayout
         android:layout_width="@dimen/left_drawer_width"
         android:layout_height="match_parent"
         android:background="@null"
         android:orientation="vertical">
 
+
         <RelativeLayout
             android:layout_width="@dimen/left_drawer_width"
             android:layout_height="@dimen/left_header_height"
-            android:padding="@dimen/normal_padding"
-            android:background="?attr/colorPrimary">
+            android:background="?attr/colorPrimary"
+            android:padding="@dimen/normal_padding">
             <com.joanzapata.iconify.widget.IconTextView
-                android:layout_width="match_parent"
                 android:id="@+id/app_info"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textSize="@dimen/text_sp18"
+                android:gravity="left|center_vertical"
                 android:text="@string/app_info"
-                android:textStyle="bold"
                 android:textColor="@color/txt_white"
-                />
+                android:textSize="@dimen/text_sp18"
+                android:textStyle="bold" />
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/user_logo"
-                android:layout_below="@id/app_info"
                 android:layout_width="@dimen/img_size_48"
                 android:layout_height="@dimen/img_size_48"
                 android:layout_alignParentLeft="true"
+                android:layout_below="@id/app_info"
                 fresco:placeholderImage="@color/background_gray"
                 fresco:roundAsCircle="true" />
 
             <TextView
-                android:layout_marginLeft="@dimen/normal_padding"
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/user_logo"
+                android:layout_marginLeft="@dimen/normal_padding"
                 android:layout_toRightOf="@id/user_logo"
-                android:textSize="@dimen/text_sp14"
-                android:textStyle="bold"
-                android:singleLine="true"
                 android:ellipsize="end"
                 android:hint="user name"
-                android:text="@{drawerViewModel.user.nickname}" />
+                android:singleLine="true"
+                android:text="@{drawerViewModel.user.nickname}"
+                android:visibility="@{drawerViewModel.user.nickname != null ? View.VISIBLE : View.GONE}"
+                android:textSize="@dimen/text_sp14"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/user_info"
-                android:layout_marginLeft="@dimen/normal_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/user_logo"
                 android:layout_alignBottom="@id/user_logo"
-                android:textSize="@dimen/text_sp14"
-                android:singleLine="true"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_toRightOf="@id/user_logo"
                 android:ellipsize="end"
                 android:hint="user name"
-                android:text="@{drawerViewModel.user.account}" />
+                android:singleLine="true"
+                android:text="@{drawerViewModel.user.account}"
+                android:visibility="@{drawerViewModel.user.account != null ? View.VISIBLE : View.GONE}"
+                android:textSize="@dimen/text_sp14" />
+
+            <TextView
+                android:id="@+id/email_sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/go_sign_in"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/user_logo"
+                android:gravity="center_vertical"
+                android:layout_alignTop="@id/user_logo"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/text_sp14"
+                android:onClick="@{drawerViewModel.onClickLogin}"
+                android:visibility="@{drawerViewModel.user == null ? View.VISIBLE : View.GONE}"
+                />
         </RelativeLayout>
-        <include layout="@layout/common_divider"/>
+
+        <include layout="@layout/common_divider" />
+
         <ListView
             android:id="@+id/left_drawer_listview"
             android:layout_width="@dimen/left_drawer_width"
             android:layout_height="0dp"
             android:layout_weight="1.0"
             android:adapter="@{drawerViewModel.drawerAdapter}"
+            android:background="@color/background_gray"
             android:cacheColorHint="@android:color/transparent"
             android:choiceMode="singleChoice"
             android:divider="@null"
@@ -80,33 +104,37 @@
             android:onItemClickListener="@{drawerViewModel.drawerItemClickListener}"
             android:overScrollMode="never"
             android:scrollbars="none"
-            android:smoothScrollbar="true"
-            android:background="@color/background_gray"/>
-        <include layout="@layout/common_divider"/>
+            android:smoothScrollbar="true" />
+
+        <include layout="@layout/common_divider" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/left_bottom_height"
             android:background="@color/background_gray"
             android:gravity="center"
-            android:paddingLeft="@dimen/normal_padding"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/normal_padding">
+
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/setting"
-                android:padding="@dimen/normal_half_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:padding="@dimen/normal_half_padding"
                 android:text="{fa-cog} 设置" />
+
             <View
-                android:layout_marginLeft="@dimen/normal_padding"
-                android:layout_marginRight="@dimen/normal_padding"
                 android:layout_width="1px"
                 android:layout_height="14dp"
-                android:background="@color/divde_line"/>
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:background="@color/divde_line" />
+
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/changeTheme"
-                android:padding="@dimen/normal_half_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:padding="@dimen/normal_half_padding"
                 android:text="{fa-moon-o} 夜间" />
         </LinearLayout>
     </LinearLayout>

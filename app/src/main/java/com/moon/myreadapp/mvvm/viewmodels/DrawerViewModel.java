@@ -18,7 +18,6 @@ import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.mvvm.models.dao.UserDao;
 import com.moon.myreadapp.ui.LoginActivity;
-import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DBHelper;
@@ -79,7 +78,10 @@ public class DrawerViewModel extends BaseViewModel {
     public void initEvents() {
         this.userDao = DBHelper.getDAO().getUserDao();
         if (userDao.queryBuilder().list().size() > 0){
+            //有本地用户存在
             setUser(userDao.queryBuilder().list().get(0));
+        } else {
+
         }
         requestUser();
     }
@@ -127,9 +129,9 @@ public class DrawerViewModel extends BaseViewModel {
 
 
     public void requestUser(){
-        user = new User(null,"123","123","123");
+        //user = new User(null,"123","123","123");
         if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
-            XDispatcher.from((Activity)mView).dispatch(new RouterAction(LoginActivity.class, true));
+            //XDispatcher.from((Activity)mView).dispatch(new RouterAction(LoginActivity.class, true));
             return;
         }
         HashMap<String, String> params = new HashMap<>();
@@ -154,5 +156,19 @@ public class DrawerViewModel extends BaseViewModel {
                 XLog.d(error);
             }
         }, true);
+    }
+
+
+    /**
+     * 用户点击登陆
+     */
+    public void onClickLogin (View view ){
+        XLog.d("onclick work !");
+        if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
+            XDispatcher.from((Activity)mView).dispatch(new RouterAction(LoginActivity.class, true));
+            return;
+        } else {
+            requestUser();
+        }
     }
 }

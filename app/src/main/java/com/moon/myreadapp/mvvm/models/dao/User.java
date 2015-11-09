@@ -4,7 +4,7 @@ package com.moon.myreadapp.mvvm.models.dao;
 /**
  * Entity mapped to table USER.
  */
-public class User {
+public class User  {
 
     private Long id;
     /** Not-null value. */

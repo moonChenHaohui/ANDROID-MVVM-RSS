@@ -130,6 +130,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">密码</string>
     <string name="action_sign_in">注册 或 登录</string>
+    <string name="go_sign_in">前往登录或者注册吧!</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
