@@ -1,6 +1,7 @@
 package com.moon.myreadapp.ui;
 
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +23,9 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
+import com.moon.myreadapp.mvvm.models.dao.DaoMaster;
+import com.moon.myreadapp.mvvm.models.dao.DaoSession;
+import com.moon.myreadapp.mvvm.models.dao.UserDao;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;

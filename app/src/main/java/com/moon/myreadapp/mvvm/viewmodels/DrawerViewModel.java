@@ -15,9 +15,11 @@ import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.constants.Nav;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.User;
+import com.moon.myreadapp.mvvm.models.dao.UserDao;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
+import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 
 import org.json.JSONObject;
@@ -71,7 +73,10 @@ public class DrawerViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-        //requestUser();
+        UserDao userDao = DBHelper.getDAO().getUserDao();
+        List<com.moon.myreadapp.mvvm.models.dao.User> users = userDao.queryBuilder().list();
+        XLog.d("user size : " + users.size());
+
     }
 
 
@@ -118,12 +123,19 @@ public class DrawerViewModel extends BaseViewModel {
 
     public void requestUser(){
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", "1");
+        params.put("account", "test1");
+        params.put("password", "test1");
         RequestHelper.call(Nav.USER_LOGIN, Nav.USER_LOGIN, params, new RequestHelper.IResponseListener() {
             @Override
             public void onResponse(JSONObject response) {
-                setUser(JSON.parseObject(response.toString(),User.class));
+                setUser(JSON.parseObject(response.toString(), User.class));
                 XLog.d(response.toString());
+                com.moon.myreadapp.mvvm.models.dao.User user  = JSON.parseObject(response.toString(), com.moon.myreadapp.mvvm.models.dao.User.class);
+                XLog.d(user.toString());
+//                user.setAcount("asd");
+//                UserDao userDao = DBHelper.getDAO().getUserDao();
+//                userDao.insert(user);
+//                XLog.d("insert sucessed!");
             }
 
             @Override
