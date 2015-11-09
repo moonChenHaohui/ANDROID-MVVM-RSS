@@ -9,13 +9,15 @@ import com.alibaba.fastjson.JSON;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.business.RequestHelper;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.constants.Nav;
 import com.moon.myreadapp.mvvm.models.MenuItem;
-import com.moon.myreadapp.mvvm.models.User;
+import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.mvvm.models.dao.UserDao;
+import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
@@ -42,6 +44,8 @@ public class DrawerViewModel extends BaseViewModel {
 
     private IMainView mView;
 
+
+    private UserDao userDao;
 
 
     public DrawerViewModel(IMainView view) {
@@ -73,10 +77,11 @@ public class DrawerViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-        UserDao userDao = DBHelper.getDAO().getUserDao();
-        List<com.moon.myreadapp.mvvm.models.dao.User> users = userDao.queryBuilder().list();
-        XLog.d("user size : " + users.size());
-
+        this.userDao = DBHelper.getDAO().getUserDao();
+        if (userDao.queryBuilder().list().size() > 0){
+            setUser(userDao.queryBuilder().list().get(0));
+        }
+        requestUser();
     }
 
 
@@ -122,20 +127,26 @@ public class DrawerViewModel extends BaseViewModel {
 
 
     public void requestUser(){
+        user = new User(null,"123","123","123");
+        if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
+            XDispatcher.from((Activity)mView).dispatch(new RouterAction(LoginActivity.class, true));
+            return;
+        }
         HashMap<String, String> params = new HashMap<>();
-        params.put("account", "test1");
-        params.put("password", "test1");
+        params.put("account", user.getAccount());
+        params.put("password", user.getPassword());
         RequestHelper.call(Nav.USER_LOGIN, Nav.USER_LOGIN, params, new RequestHelper.IResponseListener() {
             @Override
             public void onResponse(JSONObject response) {
-                setUser(JSON.parseObject(response.toString(), User.class));
-                XLog.d(response.toString());
-                com.moon.myreadapp.mvvm.models.dao.User user  = JSON.parseObject(response.toString(), com.moon.myreadapp.mvvm.models.dao.User.class);
-                XLog.d(user.toString());
-//                user.setAcount("asd");
-//                UserDao userDao = DBHelper.getDAO().getUserDao();
-//                userDao.insert(user);
-//                XLog.d("insert sucessed!");
+                User user = JSON.parseObject(response.toString(), User.class);
+                if (!user.equals(getUser())) {
+                    setUser(user);
+                    XLog.d(user.toString());
+                    userDao.deleteAll();
+                    userDao.insert(user);
+                }
+
+                XLog.d("insert sucessed!");
             }
 
             @Override
