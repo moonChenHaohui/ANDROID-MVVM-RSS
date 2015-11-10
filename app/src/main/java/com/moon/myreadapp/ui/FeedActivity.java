@@ -1,82 +1,68 @@
 package com.moon.myreadapp.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ScrollView;
+import android.widget.ListView;
 
-import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.action.EventAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
-import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollView;
+import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshPSListView;
+import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
+
 
 public class FeedActivity extends BaseActivity {
 
 
+    @Override
+    protected int getLayoutView() {
+        return R.layout.activity_feed;
+    }
+
+    boolean isFastScroll = false;
+    private PullToRefreshPSListView listView;
     private Toolbar toolbar;
+
+    private FeedViewModel feedViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
         initToolBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
-        fab.setOnClickListener(new View.OnClickListener() {
+        feedViewModel = new FeedViewModel(this);
+        listView = (PullToRefreshPSListView)findViewById(R.id.channel_list);
+        listView.getRefreshableView().setFastScrollEnabled(true);
+        listView.getRefreshableView().setSmoothScrollbarEnabled(true);
+        listView.getRefreshableView().setVerticalScrollBarEnabled(false);
+        listView.getRefreshableView().setOnItemClickListener(feedViewModel.getFeedItemClickListener());
+        listView.setPullLoadEnabled(true);
+        listView.setScrollLoadEnabled(true);
+        listView.getRefreshableView().setAdapter(feedViewModel.getFeedAdapter());
+        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                //下拉刷新
+                listView.onPullDownRefreshComplete();
+            }
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                //上拉加载
+                listView.onPullUpRefreshComplete();
             }
         });
-
-        PullToRefreshScrollView mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.feed_body);
-        mPullRefreshScrollView.setPullLoadEnabled(true);
-        mPullRefreshScrollView.setScrollLoadEnabled(true);
-        mPullRefreshScrollView.getFooterLoadingLayout().setTXTpullLabelText(Html.fromHtml("放开后加载下篇:<font color=\"#FF5500\">xxxxxxxxxxxxxxxxxxx</font>"));
-        mPullRefreshScrollView.getFooterLoadingLayout().setTXTreleaseToRefreshText(Html.fromHtml("加载下篇:<font color=\"#FF5500\">xxxxxxxxxxxxxxxxxxx</font>"));
-        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
-            }
-        });
-
-        ScrollView mScrollView = mPullRefreshScrollView.getRefreshableView();
-
-        mScrollView.addView(LayoutInflater.from(this).inflate(R.layout.feed_body,null));
     }
 
-    @Override
-    protected Toolbar getToolBar() {
-        return toolbar;
-    }
-
-    @Override
-    protected int getLayoutView() {
-        return R.layout.activity_article;
-    }
-
-    @Override
-    public void setContentViewAndBindVm(Bundle savedInstanceState) {
-        setContentView(getLayoutView());
+    public PullToRefreshPSListView getListView() {
+        return listView;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_feed, menu);
+        getMenuInflater().inflate(R.menu.menu_channel, menu);
         return true;
     }
 
@@ -87,8 +73,21 @@ public class FeedActivity extends BaseActivity {
         if (id == R.id.content) {
             finish();
         } else if (id == R.id.action_read_all) {
-            XDispatcher.from(this).dispatch(new RouterAction(FeedWebActivity.class, true));
+            XDispatcher.from(this).dispatch(new EventAction(new AEvent("change from channel")));
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected Toolbar getToolBar() {
+        return toolbar;
+    }
+
+    @Override
+    public void setContentViewAndBindVm(Bundle savedInstanceState) {
+        setContentView(getLayoutView());
+    }
+
+
+
 }

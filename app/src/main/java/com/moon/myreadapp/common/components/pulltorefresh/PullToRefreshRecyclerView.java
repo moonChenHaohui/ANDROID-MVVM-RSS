@@ -1,6 +1,7 @@
 package com.moon.myreadapp.common.components.pulltorefresh;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -138,6 +139,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
             }
         };
         mRecyclerView = listView;
+
         //mAdapter = new ComAdapter(null);
         //mRecyclerView.setAdapter(mAdapter);
         //mRecyclerView.setFooterDividersEnabled(false);

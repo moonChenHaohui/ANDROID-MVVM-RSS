@@ -10,7 +10,7 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.scroll.ObservableWebView;
 import com.moon.myreadapp.ui.base.ToolBarExpandActivity;
 
-public class FeedWebActivity extends ToolBarExpandActivity<ObservableWebView> {
+public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView> {
     @Override
     protected Toolbar getToolBar() {
         return toolbar;

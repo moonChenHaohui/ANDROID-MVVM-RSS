@@ -96,7 +96,6 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         } else {
             int truePos = position - getHeaderSize();
             if (truePos >= 0 && truePos < mData.size()) {
-                //todo 这里应当对 data 的type进行判断
                 return getItemCoreViewType(truePos);
             }
         }
@@ -149,7 +148,7 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
     }
 
     public void remove(int position) {
-        this.mData.remove(getHeaderSize() + position);
+        this.mData.remove(position);
         notifyItemRemoved(getHeaderSize() + position);
     }
 

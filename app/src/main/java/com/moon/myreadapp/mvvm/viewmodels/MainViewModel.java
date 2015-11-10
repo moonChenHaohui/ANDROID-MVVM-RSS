@@ -12,7 +12,7 @@ import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
-import com.moon.myreadapp.ui.ChannelActivity;
+import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 
 import java.util.ArrayList;
@@ -44,24 +44,21 @@ public class MainViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-        final List<Feed> channels = new ArrayList<>();
+        final List<Feed> feeds = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
-            channels.add(new Feed(null,"在知乎上被吐槽是怎么样一种体验",2,"珠海","no type","http://www.baidu.com/",new Date(),"China","2015 copy rights","","moon creater",1));
+            feeds.add(new Feed(null, "在知乎上被吐槽是怎么样一种体验", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
         }
-        feedRecAdapter = new FeedRecAdapter(channels);
+        feedRecAdapter = new FeedRecAdapter(feeds);
 
         readItemClickListener = new RecyclerItemClickListener((Activity)mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
                 Feed feed = feedRecAdapter.getItem(position);
                 Intent intent = new Intent();
                 //intent.putExtra(Constants.CHANNEL_OBJ, feed);
-                XDispatcher.from((Activity)mView).dispatch(new RouterAction(ChannelActivity.class,true));
+                XDispatcher.from((Activity)mView).dispatch(new RouterAction(FeedActivity.class,true));
                 XLog.d("pos:" + position);
             }
         });
-
-
-
     }
 
     @Bindable

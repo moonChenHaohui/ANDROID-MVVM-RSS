@@ -26,18 +26,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ChannelActivity"
-            android:label="@string/title_activity_channel"
-            android:launchMode="singleTop"
-            android:theme="@style/RedTheme" >
-        </activity>
-        <activity
             android:name=".ui.FeedActivity"
             android:label="@string/title_activity_feed"
             android:launchMode="singleTop"
             android:theme="@style/RedTheme" >
         </activity>
-        <activity android:name=".ui.FeedWebActivity" >
+        <activity
+            android:name=".ui.ArticleActivity"
+            android:label="@string/title_activity_article"
+            android:launchMode="singleTop"
+            android:theme="@style/RedTheme" >
+        </activity>
+        <activity android:name=".ui.ArticleWebActivity" >
         </activity>
         <activity
             android:name=".ui.SettingActivity"

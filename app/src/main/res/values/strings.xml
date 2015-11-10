@@ -31,8 +31,8 @@
     <string name="dialog_sub_cacel">取消</string>
 
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_channel">ChannelActivity</string>
     <string name="title_activity_feed">FeedActivity</string>
+    <string name="title_activity_article">ArticleActivity</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

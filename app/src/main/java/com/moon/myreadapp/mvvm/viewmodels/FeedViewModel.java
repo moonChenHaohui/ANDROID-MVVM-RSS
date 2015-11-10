@@ -10,9 +10,8 @@ import com.moon.myreadapp.common.adapter.FeedAdapter;
 import com.moon.myreadapp.common.adapter.base.FeedAdapterHelper;
 import com.moon.myreadapp.mvvm.models.Feed;
 import com.moon.myreadapp.mvvm.models.ListFeed;
-import com.moon.myreadapp.ui.ChannelActivity;
 import com.moon.myreadapp.ui.FeedActivity;
-import com.moon.myreadapp.ui.base.IViews.IMainView;
+import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
 
 import java.util.ArrayList;
@@ -21,14 +20,14 @@ import java.util.List;
 /**
  * Created by moon on 15/10/23.
  */
-public class ChannelViewModel extends BaseViewModel {
+public class FeedViewModel extends BaseViewModel {
 
     private IView mView;
 
     private AdapterView.OnItemClickListener feedItemClickListener;
     private FeedAdapter feedAdapter;
     private List<ListFeed> feeds;
-    public ChannelViewModel(IView view) {
+    public FeedViewModel(IView view) {
         this.mView = view;
         initViews();
         initEvents();
@@ -68,13 +67,13 @@ public class ChannelViewModel extends BaseViewModel {
                     //TODO 这个滚动应该放在view中,去调用
 
                     if (android.os.Build.VERSION.SDK_INT >= 8) {
-                        ((ChannelActivity)mView).getListView().getRefreshableView().smoothScrollToPosition(position);
+                        ((FeedActivity)mView).getListView().getRefreshableView().smoothScrollToPosition(position);
                     } else {
-                        ((ChannelActivity)mView).getListView().getRefreshableView().setSelection(position);
+                        ((FeedActivity)mView).getListView().getRefreshableView().setSelection(position);
                     }
                 } else {
                     XLog.d("is not a title");
-                    XDispatcher.from((ChannelActivity)mView).dispatch(new RouterAction(FeedActivity.class,true));
+                    XDispatcher.from((FeedActivity)mView).dispatch(new RouterAction(ArticleActivity.class,true));
                 }
             }
         };
