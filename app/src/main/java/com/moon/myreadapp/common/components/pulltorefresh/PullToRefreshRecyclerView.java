@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
 
+import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.ILoadingLayout.State;
 
 import java.util.ArrayList;
@@ -34,10 +36,8 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
      */
     private RecyclerView.OnScrollListener mScrollListener;
 
-    /**
-     * 添加了head 和footer的 recycler adapter
-     */
-    private ComAdapter mAdapter;
+
+    private BaseRecyclerAdapter mAdapter;
 
     /**
      * 布局管理器
@@ -94,6 +94,9 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (isScrollLoadEnabled() && hasMoreData()) {
+                    if (null == mAdapter) {
+                        return;
+                    }
                     if (mAdapter.getItemCount() <= (mLinearLayoutManager
                             .findLastVisibleItemPosition() + 1 + toEndSize)
                             && newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -118,22 +121,37 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
 
 
 
-    public ComAdapter getmAdapter() {
+    public BaseRecyclerAdapter getmAdapter() {
         return mAdapter;
     }
 
     @Override
     protected RecyclerView createRefreshableView(Context context, AttributeSet attrs) {
-        RecyclerView listView = new RecyclerView(context);
+        RecyclerView listView = new RecyclerView(context){
+
+            /**
+             * 平滑滚动
+             */
+            Scroller scroller = new Scroller(getContext());
+            @Override
+            public void computeScroll() {
+                if (scroller.computeScrollOffset()){
+                    scrollTo(scroller.getCurrX(),scroller.getCurrY());
+                    postInvalidate();
+                }
+            }
+        };
         mRecyclerView = listView;
-        mAdapter = new ComAdapter(null);
-        mRecyclerView.setAdapter(mAdapter);
+        //mAdapter = new ComAdapter(null);
+        //mRecyclerView.setAdapter(mAdapter);
         //mRecyclerView.setFooterDividersEnabled(false);
         //mRecyclerView.setDivider(null);
         return listView;
     }
-    public void setAdapter(RecyclerView.Adapter adapter){
-        mAdapter.setAdapter(adapter);
+    public void setAdapter(BaseRecyclerAdapter adapter){
+        //mAdapter.setAdapter(adapter);
+        mAdapter = adapter;
+        mRecyclerView.setAdapter(adapter);
     }
 
     /**

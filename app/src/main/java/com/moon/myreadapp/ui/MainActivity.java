@@ -18,12 +18,14 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
+import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.halfbit.tinybus.Subscribe;
 
@@ -94,40 +96,41 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     private void initMainView(){
-        binding.mainList.setPullLoadEnabled(false);
-        binding.mainList.setScrollLoadEnabled(true);
-        binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
-       
-        binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
+
+       //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         ArrayList<String> data = new ArrayList<String>(){{add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");}};
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
+        binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
+        binding.mainList.setPullLoadEnabled(false);
+        binding.mainList.setScrollLoadEnabled(true);
+        binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
+
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //下拉刷新
                 //binding.mainList.onPullDownRefreshComplete();
+                binding.mainList.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mainViewModel.getFeedRecAdapter().add(new Feed(null,"this is added raw",2,"珠海","no type","http://www.baidu.com/",new Date(),"China","2015 copy rights","","moon creater",1),0);
+                        binding.mainList.onPullDownRefreshComplete();
+                    }
+                },3000);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //上拉加载
                 //binding.mainList.onPullUpRefreshComplete();
-                binding.mainList.setShowEmptyLayout(true);
-            }
-        });
-
-
-        binding.leftDrawer.setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerViewModel.requestUser();
-                //XDispatcher.from(MainActivity.this).dispatch(new RouterAction(SettingActivity.class,true));
-            }
-        });
-        binding.leftDrawer.changeTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                XDispatcher.from(MainActivity.this).dispatch(new RouterAction(LoginActivity.class,true));
+                //binding.mainList.setShowEmptyLayout(true);
+                binding.mainList.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mainViewModel.getFeedRecAdapter().add(new Feed(null,"this is added raw",2,"珠海","no type","http://www.baidu.com/",new Date(),"China","2015 copy rights","","moon creater",1));
+                        binding.mainList.onPullUpRefreshComplete();
+                    }
+                }, 3000);
             }
         });
     }

@@ -21,8 +21,12 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
     }
 
     @Override
-    public BaseRecyclerAdapter.BindingHolder<LvFeedItemBinding> onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected int getItemCoreViewType(int truePos) {
+        return 1;
+    }
 
+    @Override
+    protected BindingHolder<LvFeedItemBinding> onCreateCoreViewHolder(ViewGroup parent, int viewType) {
         View convertView = mInflater.inflate(R.layout.lv_feed_item, null);
         LvFeedItemBinding binding = LvFeedItemBinding.bind(convertView);
         convertView.setTag(binding);
@@ -33,10 +37,10 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
     }
 
     @Override
-    public void onBindViewHolder(BaseRecyclerAdapter.BindingHolder<LvFeedItemBinding> holder, int position) {
-        Feed feed = mData.get(position);
-
+    protected void onBindCoreViewHolder(BindingHolder<LvFeedItemBinding> holder, int truePos) {
+        Feed feed = mData.get(truePos);
         holder.getBinding().setFeed(feed);
         holder.getBinding().feedIcon.setImageURI(Uri.parse("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4168775445,1420260708&fm=116&gp=0.jpg"));
+
     }
 }

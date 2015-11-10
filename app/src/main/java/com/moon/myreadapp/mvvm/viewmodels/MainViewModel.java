@@ -45,7 +45,7 @@ public class MainViewModel extends BaseViewModel {
     @Override
     public void initEvents() {
         final List<Feed> channels = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             channels.add(new Feed(null,"在知乎上被吐槽是怎么样一种体验",2,"珠海","no type","http://www.baidu.com/",new Date(),"China","2015 copy rights","","moon creater",1));
         }
         feedRecAdapter = new FeedRecAdapter(channels);
