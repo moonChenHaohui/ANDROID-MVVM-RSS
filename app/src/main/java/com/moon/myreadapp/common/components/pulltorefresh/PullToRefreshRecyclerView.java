@@ -6,14 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Scroller;
 
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.ILoadingLayout.State;
-
-import java.util.ArrayList;
 
 
 /**
@@ -211,7 +207,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
 
         if (scrollLoadEnabled) {
             // 设置Footer
-            if (null == mLoadMoreFooterLayout) {
+            if (null == mLoadMoreFooterLayout && mAdapter != null) {
                 mLoadMoreFooterLayout = new FooterLoadingLayout(getContext());
                 mAdapter.addFooter(mLoadMoreFooterLayout);
             }
@@ -295,140 +291,4 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
         return false;
     }
 
-
-    /**
-     * 实现了头部和尾部的adapter
-     */
-    public static class ComAdapter extends RecyclerView.Adapter {
-
-        private ArrayList<View> mHeadViews;
-        private ArrayList<View> mFooterViews;
-        private RecyclerView.Adapter mAdapter;
-
-        final static int TYPE_HEAD = 1 << 10;
-        final static int TYPE_FOOT = 1 << 11;
-
-        private int headerPosition = 0;
-        private int footerPosition = 0;
-
-        public ComAdapter(RecyclerView.Adapter mAdapter) {
-            this.mAdapter = mAdapter;
-
-
-        }
-
-        public void addFooter(View view) {
-            if (null == mFooterViews) {
-                mFooterViews = new ArrayList<>();
-            }
-            mFooterViews.add(view);
-        }
-
-
-        public void addHeader(View view) {
-            if (null == mHeadViews) {
-                mHeadViews = new ArrayList<>();
-            }
-            mHeadViews.add(view);
-        }
-
-        public void setAdapter(RecyclerView.Adapter mAdapter) {
-            this.mAdapter = mAdapter;
-        }
-
-        private int getHeaderSize() {
-            return null == mHeadViews ? 0 : mHeadViews.size();
-        }
-
-        private int getFooterSize() {
-            return null == mFooterViews ? 0 : mFooterViews.size();
-        }
-
-        /**
-         * 判断是否是头部
-         *
-         * @param pos
-         * @return
-         */
-        private boolean isHeader(int pos) {
-            if (null == mHeadViews) return false;
-            return pos >= 0 && pos < getHeaderSize();
-        }
-
-        /**
-         * 判断是否是底部
-         *
-         * @param position
-         * @return
-         */
-        public boolean isFooter(int position) {
-            if (null == mFooterViews) return false;
-            return position < getItemCount() && position >= getItemCount() - getFooterSize();
-        }
-
-
-        /**
-         * 根据位置配置不同的view类型
-         *
-         * @param position
-         * @return
-         */
-        @Override
-        public int getItemViewType(int position) {
-            if (isHeader(position)) {
-                return TYPE_HEAD;
-            } else if (isFooter(position)) {
-                return TYPE_FOOT;
-            } else {
-                int truePos = position - getHeaderSize();
-                if (truePos >= 0 && truePos < mAdapter.getItemCount()) {
-                    return mAdapter.getItemViewType(truePos);
-                }
-            }
-            return RecyclerView.INVALID_TYPE;
-        }
-
-        @Override
-        public int getItemCount() {
-            return getHeaderSize() + getFooterSize() + (mAdapter == null ? 0 : mAdapter.getItemCount());
-        }
-
-        @Override
-        public long getItemId(int position) {
-            int truePos = position - getHeaderSize();
-            if (mAdapter != null && truePos >= 0 && truePos < mAdapter.getItemCount()) {
-                return mAdapter.getItemId(truePos);
-            }
-            return -1;
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            int truePos = position - getHeaderSize();
-            if (mAdapter != null && truePos >= 0 && truePos < mAdapter.getItemCount()) {
-                mAdapter.onBindViewHolder(holder, truePos);
-            }
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == TYPE_HEAD) {
-                return new OtherViewHolder(mHeadViews.get(headerPosition++));
-            } else if (viewType == TYPE_FOOT) {
-                return new OtherViewHolder(mFooterViews.get(footerPosition++));
-            } else {
-                return mAdapter.onCreateViewHolder(parent, viewType);
-            }
-        }
-
-
-        private class OtherViewHolder extends RecyclerView.ViewHolder {
-
-            public OtherViewHolder(View itemView) {
-                super(itemView);
-                itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            }
-
-        }
-    }
 }
