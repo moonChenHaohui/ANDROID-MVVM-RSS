@@ -16,7 +16,7 @@ import com.moon.myreadapp.mvvm.models.ListFeed;
 import java.util.List;
 
 /**
- * Created by moon on 15/10/23.
+ * Created by moon on 15/10/23.∑
  */
 public class FeedAdapter extends BaseListAdapter<ListFeed> implements PinnedSectionListView.PinnedSectionListAdapter {
 
