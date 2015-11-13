@@ -17,6 +17,7 @@ import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
+import com.moon.myreadapp.common.event.UpdateEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
@@ -83,13 +84,13 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu();
-                toolbar.setTitle("open");
+                //toolbar.setTitle("open");
             }
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
-                toolbar.setTitle("close");
+                //toolbar.setTitle("close");
             }
         };
         binding.drawerLayout.setDrawerListener(mDrawerToggle);
@@ -98,7 +99,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     private void initMainView(){
 
        //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
-        ArrayList<String> data = new ArrayList<String>(){{add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");add("sss");}};
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
         binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
         binding.mainList.setPullLoadEnabled(false);
@@ -113,10 +113,10 @@ public class MainActivity extends BaseActivity implements IMainView {
                 binding.mainList.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mainViewModel.getFeedRecAdapter().add(new Feed(null,"this is added raw",2,"珠海","no type","http://www.baidu.com/",new Date(),"China","2015 copy rights","","moon creater",1),0);
+                        //mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1), 0);
                         binding.mainList.onPullDownRefreshComplete();
                     }
-                },3000);
+                }, 3000);
             }
 
             @Override
@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 binding.mainList.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mainViewModel.getFeedRecAdapter().add(new Feed(null,"this is added raw",2,"珠海","no type","http://www.baidu.com/",new Date(),"China","2015 copy rights","","moon creater",1));
+                       // mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
                         binding.mainList.onPullUpRefreshComplete();
                     }
                 }, 3000);
@@ -170,16 +170,17 @@ public class MainActivity extends BaseActivity implements IMainView {
         int id = item.getItemId();
         if(id == R.id.action_reflash){
         } else if (id == R.id.action_add){
-            XDispatcher.from(this).dispatch(new EventAction(new AEvent("from main act")));
-            XLog.d("post");
+            mainViewModel.onAddButtonClick();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Subscribe
-    public void onShakeEvent(AEvent event) {
-        binding.leftDrawer.appInfo.setText(event.getA());
+    public void onUpdateEvent(UpdateEvent event) {
+        XLog.d("get mes:" + "UpdateEvent");
+        mainViewModel.updateFeeds();
     }
+
 
 
     @Override

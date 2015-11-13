@@ -32,6 +32,8 @@ public class RssHelper {
     }
 
 
+
+
     public static synchronized void getMostRecentNews( final String feedUrl,IRssListener listener){
         if (listener == null) return;
 
@@ -44,7 +46,7 @@ public class RssHelper {
      */
     public interface IRssListener {
 
-        void onSuccess (SyndFeed feed);
+        void onSuccess (SyndFeed syndFeed);
 
         void onError(String msg);
     }

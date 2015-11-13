@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="@{feed.description}"
+            android:text="@{feed.creator ?? feed.title}"
             android:textColor="@color/txt_gray_dark"
             android:textSize="@dimen/text_h3" />
         <include layout="@layout/common_divider"

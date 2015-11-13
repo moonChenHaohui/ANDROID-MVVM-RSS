@@ -14,6 +14,8 @@ import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListen
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
+import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.DialogFractory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,10 +46,7 @@ public class MainViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-        final List<Feed> feeds = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            feeds.add(new Feed(null, "在知乎上被吐槽是怎么样一种体验", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
-        }
+        final List<Feed> feeds = DBHelper.Query.getFeeds();
         feedRecAdapter = new FeedRecAdapter(feeds);
 
         readItemClickListener = new RecyclerItemClickListener((Activity)mView, new RecyclerItemClickListener.OnItemClickListener() {
@@ -61,6 +60,11 @@ public class MainViewModel extends BaseViewModel {
         });
     }
 
+    public void updateFeeds(){
+        if (feedRecAdapter != null){
+            feedRecAdapter.setmData(DBHelper.Query.getFeeds());
+        }
+    }
     @Bindable
     public FeedRecAdapter getFeedRecAdapter() {
         return feedRecAdapter;
@@ -79,6 +83,9 @@ public class MainViewModel extends BaseViewModel {
         this.readItemClickListener = readItemClickListener;
     }
 
+    public void onAddButtonClick(){
+        DialogFractory.create((Activity) mView, DialogFractory.Type.AddSubscrible).show();
+    }
     @Override
     public void clear() {
         mView = null;
