@@ -6,6 +6,7 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.application.ReadApplication;
 import com.moon.myreadapp.mvvm.models.dao.Article;
+import com.moon.myreadapp.mvvm.models.dao.ArticleDao;
 import com.moon.myreadapp.mvvm.models.dao.DaoSession;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.models.dao.FeedDao;
@@ -87,6 +88,18 @@ public class DBHelper {
         }
         public static List<Feed> getFeeds(){
             return getDAO().getFeedDao().queryBuilder().list();
+        }
+
+        public static List<Article> getArticles(){
+            return getDAO().getArticleDao().queryBuilder().list();
+        }
+
+        public static Article getArticle (long id){
+            List<Article> list = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Id.eq(new Long(id))).list();
+            if (null == list || list.size() == 0){
+                return null;
+            }
+            return list.get(0);
         }
 
         public static long getUserId(){

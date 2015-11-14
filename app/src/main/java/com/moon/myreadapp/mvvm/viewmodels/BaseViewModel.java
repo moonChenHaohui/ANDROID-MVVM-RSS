@@ -2,8 +2,9 @@ package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.databinding.BaseObservable;
 
-public abstract class BaseViewModel extends BaseObservable{
+import com.moon.myreadapp.ui.base.IViews.IMainView;
 
+public abstract class BaseViewModel extends BaseObservable{
 
 
     public abstract void initViews();

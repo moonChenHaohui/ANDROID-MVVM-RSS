@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context="com.moon.myreadapp.ui.ArticleActivity">
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="articleViewModel"
+            type="com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@null"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:context="com.moon.myreadapp.ui.ArticleActivity">
 
-        <include layout="@layout/common_tool_bar" />
-        <com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:id="@+id/feed_body"
-            android:layout_height="match_parent">
-        </com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollView>
-    </LinearLayout>
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab1"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
-</android.support.design.widget.CoordinatorLayout>
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:orientation="vertical">
+
+            <include layout="@layout/common_tool_bar" />
+            <include
+                android:id="@+id/feed_body"
+                layout="@layout/feed_body"
+                bind:article="@{articleViewModel.article}"/>
+            <!--<com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+                <!--android:id="@+id/feed_body"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent" />-->
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_dialog_email" />
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

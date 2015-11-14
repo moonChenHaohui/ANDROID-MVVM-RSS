@@ -190,19 +190,4 @@ public class Article {
         myDao.refresh(this);
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", use_count=" + use_count +
-                ", container='" + container + '\'' +
-                ", link='" + link + '\'' +
-                ", publishtime=" + publishtime +
-                ", rights='" + rights + '\'' +
-                ", uri='" + uri + '\'' +
-                ", creator='" + creator + '\'' +
-                ", feed_id=" + feed_id +
-                '}';
-    }
 }

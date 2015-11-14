@@ -1,10 +1,16 @@
 package com.moon.myreadapp.ui;
 
+import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,51 +18,28 @@ import android.view.View;
 import android.widget.ScrollView;
 
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollView;
+import com.moon.myreadapp.databinding.ActivityArticleBinding;
+import com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 
 public class ArticleActivity extends BaseActivity {
 
 
     private Toolbar toolbar;
+    private ActivityArticleBinding binding;
+
+    private ArticleViewModel articleViewModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         initToolBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        PullToRefreshScrollView mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.feed_body);
-        mPullRefreshScrollView.setPullLoadEnabled(true);
-        mPullRefreshScrollView.setScrollLoadEnabled(true);
-        mPullRefreshScrollView.getFooterLoadingLayout().setTXTpullLabelText(Html.fromHtml("放开后加载下篇:<font color=\"#FF5500\">xxxxxxxxxxxxxxxxxxx</font>"));
-        mPullRefreshScrollView.getFooterLoadingLayout().setTXTreleaseToRefreshText(Html.fromHtml("加载下篇:<font color=\"#FF5500\">xxxxxxxxxxxxxxxxxxx</font>"));
-        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
-            }
-        });
-
-        ScrollView mScrollView = mPullRefreshScrollView.getRefreshableView();
-
-        mScrollView.addView(LayoutInflater.from(this).inflate(R.layout.feed_body,null));
     }
 
     @Override
@@ -71,7 +54,12 @@ public class ArticleActivity extends BaseActivity {
 
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
-        setContentView(getLayoutView());
+        binding = DataBindingUtil.setContentView(this,getLayoutView());
+
+        articleViewModel = new ArticleViewModel(this,getIntent().getExtras().getLong("article_id", -1));
+        binding.setArticleViewModel(articleViewModel);
+
+        binding.feedBody.feedContent.setText(Html.fromHtml());
     }
 
     @Override

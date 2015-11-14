@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="listfeed"
-            type="com.moon.myreadapp.mvvm.models.ListFeed" />
+            name="article"
+            type="com.moon.myreadapp.mvvm.models.dao.Article" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/normal_half_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="moon"
+            android:text="@{article.creator}"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/txt_active"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="123"
+            android:text="@{article.title}"
             android:textColor="@color/txt_gray_dark"
             android:textSize="@dimen/text_h3" />
         <com.joanzapata.iconify.widget.IconTextView
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="内容说的是什么呢?就在这里显示出来拉,但是可能太长了的话就会...."
+            android:text="@{article.container}"
             android:textColor="@color/txt_active"
             android:textSize="@dimen/text_h4" />
         <include layout="@layout/common_divider_with_more_space"

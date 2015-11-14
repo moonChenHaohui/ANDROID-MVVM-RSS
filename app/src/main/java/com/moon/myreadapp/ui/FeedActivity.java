@@ -1,7 +1,10 @@
 package com.moon.myreadapp.ui;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -11,6 +14,7 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshPSListView;
+import com.moon.myreadapp.databinding.ActivityFeedBinding;
 import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 
@@ -24,8 +28,10 @@ public class FeedActivity extends BaseActivity {
     }
 
     boolean isFastScroll = false;
-    private PullToRefreshPSListView listView;
+
     private Toolbar toolbar;
+
+    private ActivityFeedBinding binding;
 
     private FeedViewModel feedViewModel;
     @Override
@@ -33,31 +39,42 @@ public class FeedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         initToolBar(toolbar);
-        feedViewModel = new FeedViewModel(this);
-        listView = (PullToRefreshPSListView)findViewById(R.id.channel_list);
-        listView.getRefreshableView().setFastScrollEnabled(true);
-        listView.getRefreshableView().setSmoothScrollbarEnabled(true);
-        listView.getRefreshableView().setVerticalScrollBarEnabled(false);
-        listView.getRefreshableView().setOnItemClickListener(feedViewModel.getFeedItemClickListener());
-        listView.setPullLoadEnabled(true);
-        listView.setScrollLoadEnabled(true);
-        listView.getRefreshableView().setAdapter(feedViewModel.getFeedAdapter());
-        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                //下拉刷新
-                listView.onPullDownRefreshComplete();
-            }
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                //上拉加载
-                listView.onPullUpRefreshComplete();
-            }
-        });
+        initBusiness();
     }
 
-    public PullToRefreshPSListView getListView() {
-        return listView;
+    private void initBusiness (){
+        binding.feedList.setAdapter(feedViewModel.getmAdapter());
+        binding.feedList.setPullLoadEnabled(false);
+        binding.feedList.setScrollLoadEnabled(true);
+        binding.feedList.getRefreshableView().addOnItemTouchListener(feedViewModel.getArticleClickListener());
+        binding.feedList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                //下拉刷新
+                //binding.mainList.onPullDownRefreshComplete();
+                binding.feedList.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1), 0);
+                        binding.feedList.onPullDownRefreshComplete();
+                    }
+                }, 3000);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                //上拉加载
+                //binding.mainList.onPullUpRefreshComplete();
+                //binding.mainList.setShowEmptyLayout(true);
+                binding.feedList.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
+                        binding.feedList.onPullUpRefreshComplete();
+                    }
+                }, 3000);
+            }
+        });
     }
 
     @Override
@@ -73,7 +90,7 @@ public class FeedActivity extends BaseActivity {
         if (id == R.id.content) {
             finish();
         } else if (id == R.id.action_read_all) {
-            XDispatcher.from(this).dispatch(new EventAction(new AEvent("change from channel")));
+            //XDispatcher.from(this).dispatch(new EventAction(new AEvent("change from channel")));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -85,7 +102,9 @@ public class FeedActivity extends BaseActivity {
 
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
-        setContentView(getLayoutView());
+        binding = DataBindingUtil.setContentView(this, getLayoutView());
+        feedViewModel = new FeedViewModel(this);
+        binding.setFeedViewModel(feedViewModel);
     }
 
 

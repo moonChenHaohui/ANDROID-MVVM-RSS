@@ -106,11 +106,14 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
 
     @Override
     public int getItemCount() {
-        return getHeaderSize() + getFooterSize() + mData.size();
+        return getHeaderSize() + getFooterSize() + (mData == null ?  0 : mData.size());
     }
 
 
     public E getItem(int position) {
+        if (mData.size() <= position){
+            return null;
+        }
         return mData.get(position);
     }
 

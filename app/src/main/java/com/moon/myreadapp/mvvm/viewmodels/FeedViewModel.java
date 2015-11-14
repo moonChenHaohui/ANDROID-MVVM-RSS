@@ -1,18 +1,28 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.common.router.XRouter;
+import com.moon.appframework.common.router.ZRuler;
 import com.moon.appframework.core.XDispatcher;
+import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.adapter.FeedAdapter;
 import com.moon.myreadapp.common.adapter.base.FeedAdapterHelper;
+import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.mvvm.models.Feed;
 import com.moon.myreadapp.mvvm.models.ListFeed;
+import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
+import com.moon.myreadapp.util.DBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +34,9 @@ public class FeedViewModel extends BaseViewModel {
 
     private IView mView;
 
-    private AdapterView.OnItemClickListener feedItemClickListener;
-    private FeedAdapter feedAdapter;
-    private List<ListFeed> feeds;
+    private RecyclerItemClickListener articleClickListener;
+    private ArticleRecAdapter mAdapter;
+    private List<Article> articles;
     public FeedViewModel(IView view) {
         this.mView = view;
         initViews();
@@ -35,60 +45,27 @@ public class FeedViewModel extends BaseViewModel {
 
     @Override
     public void initViews() {
-        feeds = new ArrayList<>();
-        final int sectionsNumber = 3;
-        int sectionPosition = 0, listPosition = 0;
-        for (char i = 0; i < sectionsNumber; i++) {
-            ListFeed section = new ListFeed(new Feed());
-            feeds.add(section);
-
-            final int itemsNumber = (int) Math.abs((Math.cos(2f * Math.PI / 3f * sectionsNumber / (i + 1f)) * 25f));
-            for (int j = 0; j < itemsNumber; j++) {
-                ListFeed item = new ListFeed(new Feed("2"));
-
-                item.sectionPosition = sectionPosition;
-                item.listPosition = listPosition++;
-                feeds.add(item);
-            }
-
-            sectionPosition++;
-        }
-        feedAdapter = new FeedAdapter(feeds);
+        mAdapter = new ArticleRecAdapter(DBHelper.Query.getArticles());
     }
 
     @Override
     public void initEvents() {
-        feedItemClickListener = new AdapterView.OnItemClickListener() {
+        articleClickListener = new RecyclerItemClickListener((Context)mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (feeds.get(position).tpye == FeedAdapterHelper.TimeType.TODATY){
-                    XLog.d("is a title");
-
-                    //TODO 这个滚动应该放在view中,去调用
-
-                    if (android.os.Build.VERSION.SDK_INT >= 8) {
-                        ((FeedActivity)mView).getListView().getRefreshableView().smoothScrollToPosition(position);
-                    } else {
-                        ((FeedActivity)mView).getListView().getRefreshableView().setSelection(position);
-                    }
-                } else {
-                    XLog.d("is not a title");
-                    XDispatcher.from((FeedActivity)mView).dispatch(new RouterAction(ArticleActivity.class,true));
-                }
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putLong("article_id", mAdapter.getItem(position).getId());
+                XDispatcher.from((Context)mView).dispatch(new RouterAction(ArticleActivity.class,bundle,true));
             }
-        };
+        });
     }
 
-    public AdapterView.OnItemClickListener getFeedItemClickListener() {
-        return feedItemClickListener;
+    public ArticleRecAdapter getmAdapter() {
+        return mAdapter;
     }
 
-    public void setFeedItemClickListener(AdapterView.OnItemClickListener feedItemClickListener) {
-        this.feedItemClickListener = feedItemClickListener;
-    }
-
-    public FeedAdapter getFeedAdapter() {
-        return feedAdapter;
+    public RecyclerItemClickListener getArticleClickListener() {
+        return articleClickListener;
     }
 
     @Override
