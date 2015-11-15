@@ -16,6 +16,7 @@ import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.adapter.FeedAdapter;
 import com.moon.myreadapp.common.adapter.base.FeedAdapterHelper;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.Feed;
 import com.moon.myreadapp.mvvm.models.ListFeed;
 import com.moon.myreadapp.mvvm.models.dao.Article;
@@ -54,7 +55,7 @@ public class FeedViewModel extends BaseViewModel {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putLong("article_id", mAdapter.getItem(position).getId());
+                bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
                 XDispatcher.from((Context)mView).dispatch(new RouterAction(ArticleActivity.class,bundle,true));
             }
         });

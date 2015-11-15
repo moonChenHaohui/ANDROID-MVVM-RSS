@@ -7,7 +7,10 @@
             name="article"
             type="com.moon.myreadapp.mvvm.models.dao.Article" />
     </data>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null">
     <com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,6 +56,7 @@
             android:gravity="left|top"
             android:layout_marginBottom="@dimen/normal_half_padding"
             android:layout_marginTop="@dimen/normal_half_padding"
+            android:text=""
             android:textColor="@color/txt_black"
             android:textSize="@dimen/text_h3" />
 
@@ -64,4 +68,5 @@
             android:gravity="left|center_vertical"
             android:text="下篇:XXXX" />
     </com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout>
+    </ScrollView>
 </layout>

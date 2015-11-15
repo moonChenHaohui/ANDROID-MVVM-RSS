@@ -66,7 +66,7 @@ public class BouncyLinearLayout extends LinearLayout {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP :
-                smoothScrollTo(0, 0);
+                //smoothScrollTo(0, 0);
                 break;
             default:
                 return mGestureDetector.onTouchEvent(event);

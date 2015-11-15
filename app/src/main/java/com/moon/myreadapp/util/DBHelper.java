@@ -95,7 +95,7 @@ public class DBHelper {
         }
 
         public static Article getArticle (long id){
-            List<Article> list = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Id.eq(new Long(id))).list();
+            List<Article> list = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Id.eq(id)).list();
             if (null == list || list.size() == 0){
                 return null;
             }

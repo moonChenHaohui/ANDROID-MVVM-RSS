@@ -1,5 +1,8 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
+import android.databinding.Bindable;
+
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.base.IViews.IView;
@@ -22,11 +25,12 @@ public class ArticleViewModel extends BaseViewModel {
         this.mView = view;
         articleId = id;
         article = DBHelper.Query.getArticle(articleId);
+
         initViews();
         initEvents();
     }
 
-    @Subscribe
+    @Bindable
     public Article getArticle() {
         return article;
     }

@@ -23,9 +23,8 @@
             android:orientation="vertical">
 
             <include layout="@layout/common_tool_bar" />
-            <include
+            <include layout="@layout/feed_body"
                 android:id="@+id/feed_body"
-                layout="@layout/feed_body"
                 bind:article="@{articleViewModel.article}"/>
             <!--<com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
                 <!--android:id="@+id/feed_body"-->
