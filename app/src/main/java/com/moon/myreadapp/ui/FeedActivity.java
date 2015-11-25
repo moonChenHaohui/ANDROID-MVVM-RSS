@@ -14,6 +14,7 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshPSListView;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityFeedBinding;
 import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
@@ -103,7 +104,7 @@ public class FeedActivity extends BaseActivity {
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, getLayoutView());
-        feedViewModel = new FeedViewModel(this);
+        feedViewModel = new FeedViewModel(this,getIntent().getExtras().getLong(Constants.FEED_ID,-1));
         binding.setFeedViewModel(feedViewModel);
     }
 

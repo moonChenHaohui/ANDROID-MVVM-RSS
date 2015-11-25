@@ -38,15 +38,18 @@ public class FeedViewModel extends BaseViewModel {
     private RecyclerItemClickListener articleClickListener;
     private ArticleRecAdapter mAdapter;
     private List<Article> articles;
-    public FeedViewModel(IView view) {
+
+    private long feedId;
+    public FeedViewModel(IView view,long feedId) {
         this.mView = view;
+        this.feedId=feedId;
         initViews();
         initEvents();
     }
 
     @Override
     public void initViews() {
-        mAdapter = new ArticleRecAdapter(DBHelper.Query.getArticles());
+        mAdapter = new ArticleRecAdapter(DBHelper.Query.getArticlesByID(feedId));
     }
 
     @Override

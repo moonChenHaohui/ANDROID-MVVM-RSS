@@ -1,8 +1,8 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.databinding.Bindable;
+import android.os.Bundle;
 import android.view.View;
 
 import com.moon.appframework.action.RouterAction;
@@ -11,14 +11,13 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +26,7 @@ import java.util.List;
 public class MainViewModel extends BaseViewModel {
 
     private IMainView mView;
+
 
     private FeedRecAdapter feedRecAdapter;
 
@@ -51,11 +51,15 @@ public class MainViewModel extends BaseViewModel {
 
         readItemClickListener = new RecyclerItemClickListener((Activity)mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
-                Feed feed = feedRecAdapter.getItem(position);
-                Intent intent = new Intent();
-                //intent.putExtra(Constants.CHANNEL_OBJ, feed);
-                XDispatcher.from((Activity)mView).dispatch(new RouterAction(FeedActivity.class,true));
-                XLog.d("pos:" + position);
+                int pos = position - 1;
+                Feed feed = feedRecAdapter.getItem(pos);
+                if (feed == null )return;
+
+                Bundle bundle = new Bundle();
+                XLog.d("bundle" + bundle);
+                bundle.putLong(Constants.FEED_ID, feed.getId());
+                XDispatcher.from((Activity)mView).dispatch(new RouterAction(FeedActivity.class,bundle,true));
+                XLog.d("pos:" + pos);
             }
         });
     }

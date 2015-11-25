@@ -94,6 +94,10 @@ public class DBHelper {
             return getDAO().getArticleDao().queryBuilder().list();
         }
 
+        public static List<Article> getArticlesByID(long id){
+            return getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(id)).list();
+        }
+
         public static Article getArticle (long id){
             List<Article> list = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Id.eq(id)).list();
             if (null == list || list.size() == 0){
