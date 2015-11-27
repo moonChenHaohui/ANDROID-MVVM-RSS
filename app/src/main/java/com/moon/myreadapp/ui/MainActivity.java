@@ -102,7 +102,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
         binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
         binding.mainList.setPullLoadEnabled(false);
-        binding.mainList.setScrollLoadEnabled(true);
+        binding.mainList.setScrollLoadEnabled(false);
+        binding.mainList.setPullRefreshEnabled(false);
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
 
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
