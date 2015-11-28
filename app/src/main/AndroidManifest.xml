@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moon.myreadapp" >
+    package="com.moon.myreadapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,13 +12,13 @@
     <application
         android:name=".application.ReadApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/iconfont_user"
         android:label="@string/app_name"
-        android:theme="@style/AppBaseTheme.Dark" >
+        android:theme="@style/AppBaseTheme.Dark">
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/RedTheme" >
+            android:theme="@style/RedTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,25 +29,24 @@
             android:name=".ui.FeedActivity"
             android:label="@string/title_activity_feed"
             android:launchMode="singleTop"
-            android:theme="@style/RedTheme" >
-        </activity>
+            android:theme="@style/RedTheme"></activity>
         <activity
             android:name=".ui.ArticleActivity"
             android:label="@string/title_activity_article"
             android:launchMode="singleTop"
-            android:theme="@style/RedTheme" >
-        </activity>
-        <activity android:name=".ui.ArticleWebActivity" >
-        </activity>
+            android:theme="@style/RedTheme"></activity>
+        <activity android:name=".ui.ArticleWebActivity"></activity>
         <activity
             android:name=".ui.SettingActivity"
             android:label="@string/title_activity_setting"
-            android:theme="@style/AppBaseTheme.Dark.NoActionBar" >
-        </activity>
+            android:theme="@style/AppBaseTheme.Dark.NoActionBar"></activity>
         <activity
             android:name=".ui.LoginActivity"
-            android:theme="@style/AppBaseTheme.Dark.NoActionBar" >
-        </activity>
+            android:theme="@style/AppBaseTheme.Dark.NoActionBar"></activity>
+        <activity
+            android:name=".ui.ImageBrowserActivity"
+            android:label="@string/title_activity_image_browser"
+            android:theme="@style/ImageTheme"></activity>
     </application>
 
 </manifest>

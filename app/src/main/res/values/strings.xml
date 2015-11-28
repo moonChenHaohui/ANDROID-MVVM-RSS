@@ -8,7 +8,7 @@
 
     <string name="app_info">Enjoy RSS Read</string>
 
-    
+
     <string name="time_today">今天</string>
     <string name="time_yesterday">昨天</string>
     <string name="time_before_yesterday">前天</string>
@@ -16,12 +16,10 @@
     <string name="time_more_before">更久</string>
 
 
-
     <string name="tip_no_login">登录后可以一键同步订阅源</string>
 
     <string name="title_reflash">刷新</string>
     <string name="title_sub">添加订阅</string>
-
 
 
     <string name="dialog_sub_title">输入RSS Url</string>
@@ -140,4 +138,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_image_browser">ImageBrowserActivity</string>
+
+
+    <string name="viewpager_indicator">%1$d/%2$d</string>
 </resources>

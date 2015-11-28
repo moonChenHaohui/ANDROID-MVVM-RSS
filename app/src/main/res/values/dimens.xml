@@ -21,11 +21,11 @@
     <dimen name="text_sp10">10sp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
-    
+
     <dimen name="normal_padding">16dp</dimen>
     <dimen name="normal_double_padding">32dp</dimen>
     <dimen name="normal_half_padding">8dp</dimen>
-    
+
     <dimen name="normal_list_item_small">48dp</dimen>
     <dimen name="normal_list_item_regular">72dp</dimen>
     <dimen name="normal_list_item_big">96dp</dimen>
@@ -35,7 +35,6 @@
     <dimen name="img_size_32">32dp</dimen>
     <dimen name="img_size_64">64dp</dimen>
     <dimen name="img_size_128">128dp</dimen>
-
 
 
     <dimen name="left_drawer_width">240dp</dimen>

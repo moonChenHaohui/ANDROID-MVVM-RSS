@@ -6,9 +6,12 @@
         <item name="android:fitsSystemWindows">true</item>
         <item name="windowActionBar">false</item>
         <!--设置activity透明-->
-        　<item name="android:windowBackground">@color/transparent</item>
-    　　<item name="android:windowIsTranslucent">true</item>
-    　　<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        　
+        <item name="android:windowBackground">@color/transparent</item>
+        　　
+        <item name="android:windowIsTranslucent">true</item>
+        　　
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <!--end-->
         <item name="windowNoTitle">false</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
@@ -29,9 +32,12 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
         <!--设置activity透明-->
-        　<item name="android:windowBackground">@color/transparent</item>
-        　　<item name="android:windowIsTranslucent">true</item>
-        　　<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        　
+        <item name="android:windowBackground">@color/transparent</item>
+        　　
+        <item name="android:windowIsTranslucent">true</item>
+        　　
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <!--end-->
 
         <item name="android:textColorPrimary">@color/text_color_primary</item>
@@ -53,7 +59,10 @@
         <item name="android:windowExitAnimation">@anim/abc_fade_out</item>
     </style>
 
-
+    <style name="ImageTheme" parent="AppBaseTheme.Dark.NoActionBar">
+        <item name="android:activityOpenEnterAnimation">@anim/image_slide_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/image_slide_out</item>
+    </style>
 
     <style name="AppTheme" parent="AppBaseTheme.Dark">
         <!-- All customizations that are NOT specific to base_slide_remain particular API-level can go here. -->
@@ -67,15 +76,13 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="popupMenuStyle" parent="Base.Widget.AppCompat.PopupMenu.Overflow">
-    </style>
+    <style name="popupMenuStyle" parent="Base.Widget.AppCompat.PopupMenu.Overflow"></style>
 
     <style name="AutoCompleteTextView" parent="Widget.AppCompat.AutoCompleteTextView">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@null</item>
         <item name="android:textColorHint">@android:color/white</item>
     </style>
-
 
 
     <style name="ToolbarTheme">
@@ -198,11 +205,14 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+
     <style name="AppBaseTheme.Dark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="AppBaseTheme.Dark.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppBaseTheme.Dark.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

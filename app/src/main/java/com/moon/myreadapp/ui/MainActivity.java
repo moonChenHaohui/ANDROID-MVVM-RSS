@@ -170,6 +170,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         // Handle your other action bar items...
         int id = item.getItemId();
         if(id == R.id.action_reflash){
+            XDispatcher.from(this).dispatch(new RouterAction(ImageBrowserActivity.class,true));
         } else if (id == R.id.action_add){
             mainViewModel.onAddButtonClick();
         }

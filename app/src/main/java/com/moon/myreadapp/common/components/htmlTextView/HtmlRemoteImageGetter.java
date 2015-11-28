@@ -47,11 +47,6 @@ public class HtmlRemoteImageGetter implements Html.ImageGetter {
                     public void onResponse(Bitmap response) {
                         Drawable drawable = new BitmapDrawable(response);
                         urlDrawable.setDrawable(drawable, container.getWidth());
-
-
-                       // XLog.d("height:" + height + ",container h :" + container.getHeight() + "..drawable + fix h:" + urlDrawable.getHeight() + ",int h:" + urlDrawable.drawable.getBounds().height());
-                        //container.setEllipsize(null);
-                        //container.setMovementMethod(LinkMovementMethod.getInstance());
                         container.invalidate();
                         container.setText(container.getText());
                     }
