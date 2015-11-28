@@ -2,54 +2,58 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="android.text.Html"/>
+
+        <import type="android.text.Html" />
+
         <variable
             name="article"
             type="com.moon.myreadapp.mvvm.models.dao.Article" />
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@null">
-    <com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@null"
-        android:orientation="vertical"
-        android:padding="@dimen/normal_padding">
 
-        <TextView
-            android:id="@+id/feed_title"
+        <com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/normal_half_padding"
-            android:hint="@{article.title}"
-            android:maxLines="3"
-            android:textColor="@color/txt_black"
-            android:textSize="@dimen/text_h1" />
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:orientation="vertical"
+            android:padding="@dimen/normal_padding">
 
-        <TextView
-            android:id="@+id/feed_author"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@{article.creator}"
-            android:singleLine="true"
-            android:textColor="@color/txt_active"
-            android:textSize="@dimen/text_h3" />
+            <TextView
+                android:id="@+id/feed_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/normal_half_padding"
+                android:hint="@{article.title}"
+                android:maxLines="3"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/text_h1" />
 
-        <TextView
-            android:id="@+id/feed_channel_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/normal_half_padding"
-            android:hint="@{article.feed.title}"
-            android:singleLine="true"
-            android:textColor="@color/txt_active"
-            android:textSize="@dimen/text_h3" />
+            <TextView
+                android:id="@+id/feed_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@{article.creator}"
+                android:singleLine="true"
+                android:textColor="@color/txt_active"
+                android:textSize="@dimen/text_h3" />
 
-        <include layout="@layout/common_divider" />
+            <TextView
+                android:id="@+id/feed_channel_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/normal_half_padding"
+                android:hint="@{article.feed.title}"
+                android:singleLine="true"
+                android:textColor="@color/txt_active"
+                android:textSize="@dimen/text_h3" />
 
-        <!--<TextView-->
+            <include layout="@layout/common_divider" />
+
+            <!--<TextView-->
             <!--android:id="@+id/feed_content"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
@@ -59,25 +63,24 @@
             <!--android:text=""-->
             <!--android:textColor="@color/txt_black"-->
             <!--android:textSize="@dimen/text_h3" />-->
-        <TextView
-            android:id="@+id/feed_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left|top"
-            android:layout_marginBottom="@dimen/normal_half_padding"
-            android:layout_marginTop="@dimen/normal_half_padding"
-            android:text=""
-            android:textColor="@color/txt_black"
-            android:textSize="@dimen/text_h3" />
+            <TextView
+                android:id="@+id/feed_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/normal_half_padding"
+                android:layout_marginTop="@dimen/normal_half_padding"
+                android:gravity="left|top"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/text_h2" />
 
+            <include layout="@layout/common_divider" />
 
-        <include layout="@layout/common_divider" />
-
-        <com.joanzapata.iconify.widget.IconTextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/normal_list_item_regular"
-            android:gravity="left|center_vertical"
-            android:text="下篇:XXXX" />
-    </com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout>
+            <com.joanzapata.iconify.widget.IconTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normal_list_item_regular"
+                android:gravity="left|center_vertical"
+                android:text="下篇:XXXX" />
+        </com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout>
     </ScrollView>
 </layout>

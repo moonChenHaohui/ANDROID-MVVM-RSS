@@ -12,6 +12,7 @@ import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.htmlTextView.HtmlRemoteImageGetter;
+import com.moon.myreadapp.common.components.htmlTextView.HtmlTagHandler;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityArticleBinding;
 import com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel;
@@ -48,7 +49,7 @@ public class ArticleActivity extends BaseActivity {
 
         articleViewModel = new ArticleViewModel(this, getIntent().getExtras().getLong(Constants.ARTICLE_ID, -1));
         binding.setArticleViewModel(articleViewModel);
-        Spanned spanned = Html.fromHtml(articleViewModel.getArticle().getContainer(), new HtmlRemoteImageGetter(binding.feedBody.feedContent,null), null);
+        Spanned spanned = Html.fromHtml(articleViewModel.getArticle().getContainer(), new HtmlRemoteImageGetter(binding.feedBody.feedContent,null), new HtmlTagHandler());
 //        XLog.d("spanned:" + spanned.toString());
         binding.feedBody.feedContent.setText(spanned);
     }
