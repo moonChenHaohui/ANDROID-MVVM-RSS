@@ -39,6 +39,4 @@ dependencies {
     //green dao
     compile 'de.greenrobot:greendao:2.0.0'
 
-    compile 'com.bm.photoview:library:1.3.6'
-
 }

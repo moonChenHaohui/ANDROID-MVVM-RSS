@@ -56,6 +56,7 @@ public class HtmlRemoteImageGetter implements Html.ImageGetter {
             }
         });
         Volley.newRequestQueue(container.getContext()).add(imageRequest);
+
         return urlDrawable;
     }
 

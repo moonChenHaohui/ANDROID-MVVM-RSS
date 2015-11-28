@@ -16,6 +16,9 @@ public class Constants {
 
     public static final String ARTICLE_ID   = "article_object_id";
 
+    public static final String IMAGES_LIST = "images_list";
+
+    public static final String IMAGES_NOW_POSITION = "images_now_position";
 
 
 }

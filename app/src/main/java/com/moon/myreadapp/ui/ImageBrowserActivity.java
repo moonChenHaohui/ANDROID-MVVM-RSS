@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.fragments.ImageDetailFragment;
 
 import java.util.ArrayList;
@@ -23,10 +24,15 @@ public class ImageBrowserActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_browser);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        ArrayList<String> urls = new ArrayList<>();
-        urls.add("http://e.hiphotos.baidu.com/image/h%3D300/sign=8ffef0cf8101a18befeb144fae2e0761/8644ebf81a4c510fddd394f96659252dd42aa539.jpg");
-        urls.add("http://f.hiphotos.baidu.com/image/h%3D360/sign=9eae7c3766d9f2d33f1122e999ed8a53/3bf33a87e950352a230666de5743fbf2b3118b85.jpg");
-        urls.add("http://g.hiphotos.baidu.com/image/h%3D360/sign=cba296ffd3c8a786a12a4c085708c9c7/5bafa40f4bfbfbed45d9007a7af0f736afc31f36.jpg");
+
+        ArrayList<String> urls = getIntent().getExtras().getStringArrayList(Constants.IMAGES_LIST);
+        int position = getIntent().getExtras().getInt(Constants.IMAGES_NOW_POSITION);
+        if (urls == null || urls.isEmpty()){
+            finish();
+        }
+        if (position < 0 || position >= urls.size()){
+            position = 0;
+        }
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), urls);
         viewPager.setAdapter(mAdapter);
 
@@ -57,7 +63,7 @@ public class ImageBrowserActivity extends FragmentActivity {
             //pagerPosition = savedInstanceState.getInt(STATE_POSITION);
         }
 
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(position);
     }
 
     private class ImagePagerAdapter extends FragmentStatePagerAdapter {

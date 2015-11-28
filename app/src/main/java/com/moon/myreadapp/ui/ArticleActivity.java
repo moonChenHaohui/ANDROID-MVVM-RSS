@@ -13,10 +13,13 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.htmlTextView.HtmlRemoteImageGetter;
 import com.moon.myreadapp.common.components.htmlTextView.HtmlTagHandler;
+import com.moon.myreadapp.common.components.htmlTextView.RichText;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityArticleBinding;
 import com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
+
+import java.util.ArrayList;
 
 public class ArticleActivity extends BaseActivity {
 
@@ -49,9 +52,19 @@ public class ArticleActivity extends BaseActivity {
 
         articleViewModel = new ArticleViewModel(this, getIntent().getExtras().getLong(Constants.ARTICLE_ID, -1));
         binding.setArticleViewModel(articleViewModel);
-        Spanned spanned = Html.fromHtml(articleViewModel.getArticle().getContainer(), new HtmlRemoteImageGetter(binding.feedBody.feedContent,null), new HtmlTagHandler());
-//        XLog.d("spanned:" + spanned.toString());
-        binding.feedBody.feedContent.setText(spanned);
+
+        binding.feedBody.feedContent.setOnImageClickListener(new RichText.OnImageClickListener() {
+            @Override
+            public void imageClicked(ArrayList<String> imageUrls, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList(Constants.IMAGES_LIST, imageUrls);
+                bundle.putInt(Constants.IMAGES_NOW_POSITION, position);
+                XDispatcher.from(ArticleActivity.this).dispatch(new RouterAction(ImageBrowserActivity.class, bundle, true));
+
+            }
+        });
+        //富文本显示
+        binding.feedBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
     }
 
     @Override
