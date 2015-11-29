@@ -40,6 +40,6 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
     protected void onBindCoreViewHolder(BindingHolder<LvFeedItemBinding> holder, int truePos) {
         Feed feed = mData.get(truePos);
         holder.getBinding().setFeed(feed);
-        holder.getBinding().feedIcon.setImageURI(Uri.parse("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4168775445,1420260708&fm=116&gp=0.jpg"));
+       // holder.getBinding().feedIcon.setImageURI(Uri.parse("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4168775445,1420260708&fm=116&gp=0.jpg"));
     }
 }

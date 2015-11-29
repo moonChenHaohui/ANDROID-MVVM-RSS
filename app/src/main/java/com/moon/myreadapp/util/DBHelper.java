@@ -65,6 +65,7 @@ public class DBHelper {
             return id;
         }
         public static long article(Article article){
+
             long id = getDAO().getArticleDao().insert(article);
             return id;
         }

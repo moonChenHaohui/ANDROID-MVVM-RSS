@@ -43,7 +43,7 @@ public class FeedAdapter extends BaseListAdapter<ListFeed> implements PinnedSect
         Object tag = convertView.getTag();
         if (tag instanceof LvArticleItemBinding) {
             LvArticleItemBinding binding = (LvArticleItemBinding) tag;
-            binding.feedIcon.setImageURI(Uri.parse("http://www.logoquan.com/upload/list/20150925/logoquan14509819713.PNG"));
+           // binding.feedIcon.setImageURI(Uri.parse("http://www.logoquan.com/upload/list/20150925/logoquan14509819713.PNG"));
         } else if (tag instanceof LvArticleDividerHeaderBinding) {
             LvArticleDividerHeaderBinding binding = (LvArticleDividerHeaderBinding) tag;
             binding.setTitle("星期" + position);

@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -98,14 +99,13 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     private void initMainView(){
 
-       //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
+        //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
         binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
         binding.mainList.setPullLoadEnabled(false);
         binding.mainList.setScrollLoadEnabled(false);
         binding.mainList.setPullRefreshEnabled(false);
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
-
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {

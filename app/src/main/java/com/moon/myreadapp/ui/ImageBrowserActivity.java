@@ -24,7 +24,6 @@ public class ImageBrowserActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_browser);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-
         ArrayList<String> urls = getIntent().getExtras().getStringArrayList(Constants.IMAGES_LIST);
         int position = getIntent().getExtras().getInt(Constants.IMAGES_NOW_POSITION);
         if (urls == null || urls.isEmpty()){
@@ -59,9 +58,7 @@ public class ImageBrowserActivity extends FragmentActivity {
             }
 
         });
-        if (savedInstanceState != null) {
-            //pagerPosition = savedInstanceState.getInt(STATE_POSITION);
-        }
+
 
         viewPager.setCurrentItem(position);
     }

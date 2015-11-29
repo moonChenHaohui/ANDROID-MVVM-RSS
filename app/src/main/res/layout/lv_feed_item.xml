@@ -61,7 +61,7 @@
             android:layout_marginTop="@dimen/normal_half_padding"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@id/feed_info"
+            android:layout_alignLeft="@id/feed_description"
             android:layout_width="match_parent"/>
     </RelativeLayout>
 </layout>
