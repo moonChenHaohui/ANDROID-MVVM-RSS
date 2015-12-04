@@ -2,10 +2,10 @@
 <resources>
 
     <color name="text_drak">#000000</color>
-    <color name="txt_black">#051b28</color>
+    <color name="txt_black">#5e5e5e</color>
     <color name="txt_gray_light">#999999</color>
     <color name="txt_gray_dark">#666666</color>
-    <color name="txt_active">#888887</color>
+    <color name="txt_active">#8f8f8f</color>
 
     <color name="pic_default">#dcdcdc</color>
     <drawable name="pic_default">#dcdcdc</drawable>
@@ -20,6 +20,6 @@
     <color name="tab_bar_item_acvite">#11aa11</color>
 
     <color name="background_gray">#FAF9FA</color>
-    <color name="background_selected">#E3E3E3</color>
+    <color name="background_selected">#dcdcdc</color>
 
 </resources>

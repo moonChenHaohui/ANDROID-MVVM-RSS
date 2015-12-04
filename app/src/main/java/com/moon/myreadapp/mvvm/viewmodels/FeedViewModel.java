@@ -2,30 +2,18 @@ package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.moon.appframework.action.RouterAction;
-import com.moon.appframework.common.log.XLog;
-import com.moon.appframework.common.router.XRouter;
-import com.moon.appframework.common.router.ZRuler;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
-import com.moon.myreadapp.common.adapter.FeedAdapter;
-import com.moon.myreadapp.common.adapter.base.FeedAdapterHelper;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.constants.Constants;
-import com.moon.myreadapp.mvvm.models.Feed;
-import com.moon.myreadapp.mvvm.models.ListFeed;
 import com.moon.myreadapp.mvvm.models.dao.Article;
-import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.DBHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
