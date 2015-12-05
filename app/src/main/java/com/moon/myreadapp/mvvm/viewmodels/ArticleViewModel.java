@@ -2,6 +2,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.app.Activity;
 import android.databinding.Bindable;
+import android.os.Bundle;
 import android.view.View;
 
 import com.moon.appframework.action.RouterAction;
@@ -9,6 +10,7 @@ import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleWebActivity;
 import com.moon.myreadapp.ui.LoginActivity;
@@ -51,7 +53,11 @@ public class ArticleViewModel extends BaseViewModel {
      * 阅读原文
      */
     public void onClickWebArticle (View view ){
-        XDispatcher.from((Activity) mView).dispatch(new RouterAction(ArticleWebActivity.class, true));
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.ARTICLE_TITLE,article.getTitle());
+        bundle.putString(Constants.ARTICLE_URL,article.getLink());
+        XLog.d("hahahah" + article.getLink() + "," + article.getUri()+ ",");
+        XDispatcher.from((Activity) mView).dispatch(new RouterAction(ArticleWebActivity.class, bundle,true));
     }
 
     @Override

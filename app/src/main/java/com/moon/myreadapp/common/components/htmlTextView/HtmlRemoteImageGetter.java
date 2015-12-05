@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.ScreenUtils;
@@ -46,8 +47,8 @@ public class HtmlRemoteImageGetter implements Html.ImageGetter {
                     @Override
                     public void onResponse(Bitmap response) {
                         Drawable drawable = new BitmapDrawable(response);
-                        urlDrawable.setDrawable(drawable, container.getWidth());
-                        container.invalidate();
+                        urlDrawable.setDrawable(drawable, container.getMeasuredWidth() - container.getPaddingLeft() - container.getPaddingRight());
+                        //container.invalidate();
                         container.setText(container.getText());
                     }
                 }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
@@ -73,22 +74,28 @@ public class HtmlRemoteImageGetter implements Html.ImageGetter {
             if (width <= 0) {
                 width = nDrawable.getIntrinsicWidth() * 3;
             }
-
+            XLog.d("htmlremote: width:" + width);
             drawable = nDrawable;
 
 
+            /*
             //等比例缩放
             Rect bounds = new Rect(0, 0, width, (int) (width * 3 / 4));
             int newwidth = bounds.width();
             int newheight = bounds.height();
+
+
             double factor = 1;
-            double fx = (double) ScreenUtils.dpToPx(drawable.getIntrinsicWidth()) / (double) newwidth;
-            double fy = (double) ScreenUtils.dpToPx(drawable.getIntrinsicHeight()) / (double) newheight;
+            double fx = (double) drawable.getIntrinsicWidth() / (double) newwidth;
+            double fy = (double) drawable.getIntrinsicHeight() / (double) newheight;
             factor = fx < fy ? fx : fy;
             if (factor < 1) factor = 1;
-            newwidth = (int) (ScreenUtils.dpToPx(drawable.getIntrinsicWidth()) / factor);
-            newheight = (int) (ScreenUtils.dpToPx(drawable.getIntrinsicHeight()) / factor);
+            newwidth = (int) (drawable.getIntrinsicWidth() / factor);
+            newheight = (int) (drawable.getIntrinsicHeight() / factor);
 
+            */
+            int newwidth = width;
+            int newheight = (int)(width * drawable.getIntrinsicHeight() / drawable.getIntrinsicWidth());
             drawable.setBounds(0, 0, newwidth, newheight);
             setBounds(0, 0, newwidth, newheight);
 

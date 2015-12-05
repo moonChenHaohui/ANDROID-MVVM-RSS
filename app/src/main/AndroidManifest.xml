@@ -35,7 +35,8 @@
             android:label="@string/title_activity_article"
             android:launchMode="singleTop"
             android:theme="@style/RedTheme"></activity>
-        <activity android:name=".ui.ArticleWebActivity"></activity>
+        <activity android:name=".ui.ArticleWebActivity"
+            android:launchMode="singleTop"></activity>
         <activity
             android:name=".ui.SettingActivity"
             android:label="@string/title_activity_setting"
@@ -47,6 +48,11 @@
             android:name=".ui.ImageBrowserActivity"
             android:label="@string/title_activity_image_browser"
             android:theme="@style/ImageTheme"></activity>
+        <intent-filter>
+            <category android:name="android.intent.category.DEFAULT" />
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="com.package.name" />
+        </intent-filter>
     </application>
 
 </manifest>

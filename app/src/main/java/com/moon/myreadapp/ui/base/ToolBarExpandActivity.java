@@ -87,11 +87,11 @@ public abstract class ToolBarExpandActivity<S extends Scrollable> extends BaseAc
         return ViewHelper.getTranslationY(mToolbar) == -mToolbar.getHeight();
     }
 
-    private void showToolbar() {
+    protected void showToolbar() {
         moveToolbar(0);
     }
 
-    private void hideToolbar() {
+    protected void hideToolbar() {
         moveToolbar(-mToolbar.getHeight());
     }
 

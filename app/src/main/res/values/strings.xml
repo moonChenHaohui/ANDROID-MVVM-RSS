@@ -57,5 +57,7 @@
 
     <string name="detail_info">%1$s _ %2$s</string>
 
+    <string name="title_activity_article_web">原文</string>
+    <string name="title_activity_article_web_link_title">(链接)%1$s</string>
 
 </resources>

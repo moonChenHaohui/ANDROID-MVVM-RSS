@@ -8,12 +8,13 @@ import android.webkit.DownloadListener;
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.scroll.ObservableWebView;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.base.ToolBarExpandActivity;
 
 public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView> {
     @Override
     protected Toolbar getToolBar() {
-        return toolbar;
+        return mToolbar;
     }
 
     @Override
@@ -21,14 +22,16 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
         return R.layout.activity_article_web;
     }
 
-    //private ActivityFeedWebBinding binding;
-    private Toolbar toolbar;
 
+
+    private ObservableWebView webView;
+
+    private String title;
+    private String url;
 
     @Override
     protected ObservableWebView createScrollable() {
-        ObservableWebView webView = (ObservableWebView) findViewById(R.id.scrollable);
-        //webView.loadUrl("file:///android_asset/lipsum.html");
+        webView = (ObservableWebView) findViewById(R.id.scrollable);
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
@@ -37,10 +40,27 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
             }
         });
 
-        webView.loadUrl("http://blog.sina.com.cn/s/blog_7a66361301011a46.html");
         return webView;
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        title = getIntent().getExtras().getString(Constants.ARTICLE_TITLE,getResources().getString(R.string.title_activity_article_web));
+        url = getIntent().getExtras().getString(Constants.ARTICLE_URL,null);
+        if (url != null) {
+            webView.loadUrl(url);
+        }
+        getSupportActionBar().setTitle(title);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        webView.stopLoading();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
