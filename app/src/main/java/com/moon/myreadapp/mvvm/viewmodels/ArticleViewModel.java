@@ -1,10 +1,17 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
+import android.app.Activity;
 import android.databinding.Bindable;
+import android.view.View;
 
+import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.common.util.StringUtils;
+import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.mvvm.models.dao.Article;
+import com.moon.myreadapp.ui.ArticleWebActivity;
+import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.DBHelper;
 
@@ -40,9 +47,16 @@ public class ArticleViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.article);
     }
 
+    /**
+     * 阅读原文
+     */
+    public void onClickWebArticle (View view ){
+        XDispatcher.from((Activity) mView).dispatch(new RouterAction(ArticleWebActivity.class, true));
+    }
+
     @Override
     public void initViews() {
-        
+
     }
 
     @Override

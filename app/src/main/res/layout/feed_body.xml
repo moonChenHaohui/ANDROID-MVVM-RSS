@@ -4,10 +4,9 @@
     <data>
 
         <import type="android.text.Html" />
-
         <variable
-            name="article"
-            type="com.moon.myreadapp.mvvm.models.dao.Article" />
+            name="articleViewModel"
+            type="com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel" />
     </data>
 
     <ScrollView
@@ -33,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/normal_half_padding"
-                    android:text="@{article.title}"
+                    android:text="@{articleViewModel.article.title}"
                     android:maxLines="3"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/text_h1" />
@@ -42,7 +41,7 @@
                     android:id="@+id/feed_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/detail_info(article.feed.title,article.creator)}"
+                    android:text="@{@string/detail_info(articleViewModel.article.feed.title,articleViewModel.article.creator)}"
                     android:singleLine="true"
                     android:textColor="?attr/colorPrimary"
                     android:layout_marginBottom="@dimen/default_padding_bottom"
@@ -75,10 +74,13 @@
             <com.joanzapata.iconify.widget.IconTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:clickable="true"
+                android:padding="@dimen/normal_half_padding"
+                android:layout_marginBottom="@dimen/normal_double_padding"
                 android:gravity="right|center_vertical"
                 android:text="查看原文"
-                android:background="@color/grey"/>
+                android:onClick="@{articleViewModel.onClickWebArticle}"
+                android:background="@drawable/activated_background"/>
 
         </com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout>
     </ScrollView>
