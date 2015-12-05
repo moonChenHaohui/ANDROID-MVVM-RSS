@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="feed"
             type="com.moon.myreadapp.mvvm.models.dao.Feed" />
@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_list_item_height"
         android:minHeight="@dimen/main_list_item_height"
-        android:background="@null">
+        android:clickable="true"
+        android:background="@drawable/selectable_background">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/feed_icon"
@@ -19,10 +20,8 @@
             android:layout_marginLeft="@dimen/normal_padding"
             android:layout_width="@dimen/img_size_48"
             android:layout_height="@dimen/img_size_48"
-            fresco:placeholderImage="@color/background_selected"
+            fresco:placeholderImage="@color/divde_line"
             fresco:roundAsCircle="true"
-            fresco:roundingBorderWidth="1px"
-            fresco:roundingBorderColor="@color/divde_line"
             />
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_title"
@@ -43,6 +42,7 @@
             android:layout_alignParentRight="true"
             android:text="10未读"
             android:layout_marginRight="@dimen/normal_padding"
+            android:textColor="@color/txt_active"
             android:layout_marginTop="@dimen/normal_padding"/>
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_description"
@@ -54,7 +54,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="@{feed.creator ?? feed.title}"
+            android:text="@{feed.description ?? feed.title}"
+            android:visibility="@{feed.description == null ? View.INVISIBLE : View.VISIBLE}"
             android:textColor="@color/txt_gray_dark"
             android:textSize="@dimen/text_h3" />
         <include layout="@layout/common_divider"

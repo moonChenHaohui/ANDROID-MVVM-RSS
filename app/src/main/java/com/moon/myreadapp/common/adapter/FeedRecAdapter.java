@@ -4,10 +4,12 @@ import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.databinding.LvFeedItemBinding;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
+import com.moon.myreadapp.util.DBHelper;
 
 import java.util.List;
 
@@ -39,7 +41,8 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
     @Override
     protected void onBindCoreViewHolder(BindingHolder<LvFeedItemBinding> holder, int truePos) {
         Feed feed = mData.get(truePos);
+        XLog.d("feed:" + feed.toString());
         holder.getBinding().setFeed(feed);
-       // holder.getBinding().feedIcon.setImageURI(Uri.parse("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4168775445,1420260708&fm=116&gp=0.jpg"));
+        holder.getBinding().feedIcon.setImageURI(Uri.parse("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4168775445,1420260708&fm=116&gp=0.jpg"));
     }
 }

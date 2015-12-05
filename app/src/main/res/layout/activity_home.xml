@@ -30,11 +30,7 @@
                 android:id="@+id/main_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.0"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@null"
-                android:fadingEdge="none"
-                android:listSelector="@android:color/transparent" />
+                android:layout_weight="1.0"/>
         </LinearLayout>
         <!-- The navigation drawer -->
         <include

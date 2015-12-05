@@ -11,5 +11,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="TODO:一个合适的顶部栏 {fa-cog spin}"/>
+            android:text="显示 未读/服务器信息{fa-cog spin}"/>
 </LinearLayout>

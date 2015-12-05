@@ -139,6 +139,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
             }
         };
         mRecyclerView = listView;
+
         //mAdapter = new ComAdapter(null);
         //mRecyclerView.setAdapter(mAdapter);
         //mRecyclerView.setFooterDividersEnabled(false);
