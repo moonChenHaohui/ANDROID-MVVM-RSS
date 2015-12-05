@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <import type="com.moon.myreadapp.util.Conver"/>
         <import type="android.text.Html" />
         <variable
             name="articleViewModel"
@@ -12,7 +12,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@null">
+
+        android:background="@color/background_gray">
 
         <com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout
             android:layout_width="match_parent"
@@ -22,11 +23,21 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:background="@color/background_gray"
+                android:clickable="true"
+                android:background="@drawable/activated_background"
                 android:padding="@dimen/normal_padding"
                 android:layout_width="match_parent"
                 android:elevation="2dip"
                 android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/feed_pub_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{Conver.ConverToString(articleViewModel.article.publishtime)}"
+                    android:singleLine="true"
+                    android:hint="2015/22/33"
+                    android:textColor="@color/txt_black"
+                    android:textSize="@dimen/text_h5" />
                 <TextView
                     android:id="@+id/feed_title"
                     android:layout_width="match_parent"
@@ -43,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{@string/detail_info(articleViewModel.article.feed.title,articleViewModel.article.creator)}"
                     android:singleLine="true"
-                    android:textColor="?attr/colorPrimary"
+                    android:textColor="@color/txt_black"
                     android:layout_marginBottom="@dimen/default_padding_bottom"
                     android:textSize="@dimen/text_h4" />
             </LinearLayout>
@@ -66,8 +77,10 @@
                 android:layout_marginBottom="@dimen/normal_half_padding"
                 android:layout_marginTop="@dimen/normal_half_padding"
                 android:gravity="left|top"
+                android:background="@null"
                 android:lineSpacingExtra="5dp"
                 android:textColor="@color/txt_black"
+                android:textColorLink="?attr/colorAccent"
                 android:padding="@dimen/normal_padding"
                 android:textSize="@dimen/text_h2" />
 

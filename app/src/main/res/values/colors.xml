@@ -19,7 +19,7 @@
     <color name="tab_bar_item_normal">#666</color>
     <color name="tab_bar_item_acvite">#11aa11</color>
 
-    <color name="background_gray">#FAF9FA</color>
+    <color name="background_gray">#f7f6f4</color>
     <color name="background_selected">#dcdcdc</color>
 
 </resources>
