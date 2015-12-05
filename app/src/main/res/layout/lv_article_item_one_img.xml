@@ -21,28 +21,26 @@
             android:id="@+id/contant"
             android:layout_width="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/img_size_96"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/article_title"
                 android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="@dimen/normal_half_padding"
                 android:layout_height="wrap_content"
                 android:hint=" this is title"
                 android:maxLines="3"
+                android:ellipsize="end"
                 android:lineSpacingMultiplier="1.2"
                 android:text="@{article.title}"
                 android:textColor="@color/txt_black"
                 android:textSize="@dimen/text_h2" />
             <com.facebook.drawee.view.SimpleDraweeView
-
                 android:id="@+id/atricle_image"
-                android:layout_width="100dp"
-                android:layout_weight="1"
-                fresco:placeholderImage="@drawable/bg_empty_image"
+                android:layout_width="@dimen/img_size_128"
                 fresco:roundedCornerRadius="1dp"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/img_size_96"
                 android:layout_toRightOf="@id/article_title"/>
         </LinearLayout>
         <com.joanzapata.iconify.widget.IconTextView

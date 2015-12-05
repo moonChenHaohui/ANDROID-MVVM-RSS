@@ -24,6 +24,8 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:hint=" this is title"
+
+            android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:text="@{article.title}"
             android:textColor="@color/txt_black"

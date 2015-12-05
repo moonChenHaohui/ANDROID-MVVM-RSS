@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
@@ -15,6 +17,7 @@ import com.moon.myreadapp.databinding.LvArticleItemNoImgBinding;
 import com.moon.myreadapp.databinding.LvArticleItemOneImgBinding;
 import com.moon.myreadapp.databinding.LvArticleItemThreeImgBinding;
 import com.moon.myreadapp.mvvm.models.dao.Article;
+import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.HtmlHelper;
 import com.moon.myreadapp.util.ScreenUtils;
 
@@ -100,19 +103,29 @@ public class ArticleRecAdapter extends BaseRecyclerAdapter<Article,ViewDataBindi
         if (type == TYPE.MORE_IMAGE.type) {
             LvArticleItemThreeImgBinding binding = ((LvArticleItemThreeImgBinding)holder.getBinding());
             binding.setArticle(article);
-            //设置图片
-            binding.articleImages.removeAllViews();
-            int width = (int) Math.floor(binding.articleImages.getMeasuredWidth() / 3.0);
-            for (String imageUrl : article.getImages()){
-                SimpleDraweeView  sd = new SimpleDraweeView(binding.articleImages.getContext());
-                sd.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(width,width);
-                sd.setLayoutParams(lp);
-                binding.articleImages.addView(sd);
-                sd.setImageURI(Uri.parse(imageUrl));
-                XLog.d("pos : " + truePos + ",image url : " + imageUrl);
-            }
-           // binding.articleImages.invalidate();
+
+            binding.articleImages.setImages(article.getImages());
+//            //设置图片
+//            binding.articleImages.removeAllViews();
+//            int width = (int) Math.floor(binding.articleImages.getMeasuredWidth() / 3.0);
+//            for (String imageUrl : article.getImages()){
+//                SimpleDraweeView  sd = new SimpleDraweeView(binding.articleImages.getContext());
+//                GenericDraweeHierarchyBuilder builder =
+//                        new GenericDraweeHierarchyBuilder(Globals.getApplication().getResources());
+//                GenericDraweeHierarchy hierarchy = builder
+//                        .setFadeDuration(300)
+//                        .setPlaceholderImage(Globals.getApplication().getResources().getDrawable(R.drawable.bg_empty_image))
+//                        .build();
+//                sd.setHierarchy(hierarchy);
+//                sd.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(width,(int)(width * .7));
+//
+//                sd.setLayoutParams(lp);
+//                binding.articleImages.addView(sd);
+//                sd.setImageURI(Uri.parse(imageUrl));
+//                XLog.d("pos : " + truePos + ",image url : " + imageUrl);
+//            }
+           //binding.getRoot().invalidate();
         }else if (type == TYPE.ONE_IMAGE.type){
             LvArticleItemOneImgBinding binding = ((LvArticleItemOneImgBinding)holder.getBinding());
             binding.setArticle(article);

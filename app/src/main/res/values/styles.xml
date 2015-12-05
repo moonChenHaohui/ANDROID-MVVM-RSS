@@ -215,4 +215,8 @@
 
     <style name="AppBaseTheme.Dark.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <declare-styleable name="ImageLinearLayout">
+        <attr name="imageMaxSize" format="integer"/>
+    </declare-styleable>
 </resources>
