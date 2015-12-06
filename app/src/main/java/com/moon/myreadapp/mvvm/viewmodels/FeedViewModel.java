@@ -1,12 +1,15 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
+import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.constants.Constants;
@@ -15,6 +18,7 @@ import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.VibratorHelper;
+import com.moon.myreadapp.util.ViewUtils;
 
 import java.util.List;
 
@@ -23,14 +27,13 @@ import java.util.List;
  */
 public class FeedViewModel extends BaseViewModel {
 
-    private IView mView;
+    private Activity mView;
 
     private RecyclerItemClickListener articleClickListener;
     private ArticleRecAdapter mAdapter;
-    private List<Article> articles;
 
     private long feedId;
-    public FeedViewModel(IView view,long feedId) {
+    public FeedViewModel(Activity view,long feedId) {
         this.mView = view;
         this.feedId=feedId;
         initViews();
@@ -58,6 +61,12 @@ public class FeedViewModel extends BaseViewModel {
                 //震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
                 //todo 弹出对话框:收藏|已读|删除
+                ViewUtils.showPopupMenu(mView, view.findViewById(R.id.article_title), R.menu.menu_single_article, new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(android.view.MenuItem item) {
+                        return false;
+                    }
+                });
             }
 
         });

@@ -56,7 +56,7 @@ public class ArticleViewModel extends BaseViewModel {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.ARTICLE_TITLE,article.getTitle());
         bundle.putString(Constants.ARTICLE_URL,article.getLink());
-        XLog.d("hahahah" + article.getLink() + "," + article.getUri()+ ",");
+        //XLog.d("hahahah" + article.getLink() + "," + article.getUri()+ ",");
         XDispatcher.from((Activity) mView).dispatch(new RouterAction(ArticleWebActivity.class, bundle,true));
     }
 

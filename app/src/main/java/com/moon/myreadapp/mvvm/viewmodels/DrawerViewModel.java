@@ -41,13 +41,13 @@ public class DrawerViewModel extends BaseViewModel {
 
     private AdapterView.OnItemClickListener drawerItemClickListener;
 
-    private IMainView mView;
+    private Activity mView;
 
 
     private UserDao userDao;
 
 
-    public DrawerViewModel(IMainView view) {
+    public DrawerViewModel(Activity view) {
         this.mView = view;
         initViews();
         initEvents();

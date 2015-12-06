@@ -50,6 +50,7 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
         <item name="selectableItemBackground">@drawable/selectable_background</item>
 
+
     </style>
 
     <style name="BaseDialogTheme" parent="Theme.AppCompat.Light.Dialog">

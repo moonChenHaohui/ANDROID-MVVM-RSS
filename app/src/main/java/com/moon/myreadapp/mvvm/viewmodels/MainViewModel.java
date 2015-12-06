@@ -4,20 +4,25 @@ import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
+import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.constants.Constants;
+import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.VibratorHelper;
+import com.moon.myreadapp.util.ViewUtils;
 
 import java.util.List;
 
@@ -26,14 +31,14 @@ import java.util.List;
  */
 public class MainViewModel extends BaseViewModel {
 
-    private IMainView mView;
+    private Activity mView;
 
 
     private FeedRecAdapter feedRecAdapter;
 
     private RecyclerItemClickListener readItemClickListener;
 
-    public MainViewModel(IMainView view) {
+    public MainViewModel(Activity view) {
         this.mView = view;
         //initViews();
         initEvents();
@@ -65,12 +70,22 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onItemLongClick(View view, int position) {
+                XLog.d("onItemLongClick execute!");
                 //短震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
                 //TODO 弹出对话框:标记全部已读|刷新|删除|置顶
+                ViewUtils.showPopupMenu(mView, view, R.menu.menu_single_feed, new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(android.view.MenuItem item) {
+                        return false;
+                    }
+                });
+
             }
         });
     }
+
+
 
     public void updateFeeds(){
         if (feedRecAdapter != null){
