@@ -7,6 +7,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.moon.appframework.common.log.XLog;
+
 /**
  * Created by moon on 15/11/7.
  *
@@ -23,8 +25,10 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
+        public void onItemLongClick(View view, int position);
     }
 
+    private RecyclerView mView;
     GestureDetector mGestureDetector;
 
     public RecyclerItemClickListener(Context context, OnItemClickListener listener) {
@@ -34,18 +38,35 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
             public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                XLog.d("GestureDetector  loLongPress");
+                if (mView != null){
+                    View childView = mView.findChildViewUnder(e.getX(), e.getY());
+                    if (childView != null && mListener != null ) {
+
+                        mListener.onItemLongClick(childView, mView.getChildPosition(childView));
+
+                    }
+                }
+            }
         });
+        mGestureDetector.setIsLongpressEnabled(true);
     }
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
+        mView = view;
         View childView = view.findChildViewUnder(e.getX(), e.getY());
         if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
+
             mListener.onItemClick(childView, view.getChildPosition(childView));
             return true;
         }
         return false;
     }
+
 
     @Override
     public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {

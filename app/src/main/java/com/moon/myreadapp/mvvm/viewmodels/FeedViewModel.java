@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
@@ -49,6 +50,12 @@ public class FeedViewModel extends BaseViewModel {
                 bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
                 XDispatcher.from((Context)mView).dispatch(new RouterAction(ArticleActivity.class,bundle,true));
             }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                XLog.d("onItemLongClick execute!");
+            }
+
         });
     }
 

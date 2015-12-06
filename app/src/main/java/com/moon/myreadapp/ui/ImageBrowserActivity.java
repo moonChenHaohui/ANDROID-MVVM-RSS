@@ -28,6 +28,7 @@ public class ImageBrowserActivity extends FragmentActivity {
         int position = getIntent().getExtras().getInt(Constants.IMAGES_NOW_POSITION);
         if (urls == null || urls.isEmpty()){
             finish();
+            return;
         }
         if (position < 0 || position >= urls.size()){
             position = 0;

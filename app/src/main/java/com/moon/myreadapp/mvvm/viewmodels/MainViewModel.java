@@ -61,6 +61,11 @@ public class MainViewModel extends BaseViewModel {
                 XDispatcher.from((Activity)mView).dispatch(new RouterAction(FeedActivity.class,bundle,true));
                 XLog.d("pos:" + pos);
             }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                XLog.d("onItemLongClick execute!");
+            }
         });
     }
 
