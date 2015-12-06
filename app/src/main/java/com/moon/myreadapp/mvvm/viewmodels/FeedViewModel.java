@@ -14,6 +14,7 @@ import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.VibratorHelper;
 
 import java.util.List;
 
@@ -54,6 +55,9 @@ public class FeedViewModel extends BaseViewModel {
             @Override
             public void onItemLongClick(View view, int position) {
                 XLog.d("onItemLongClick execute!");
+                //震动
+                VibratorHelper.shock(VibratorHelper.TIME.SHORT);
+                //todo 弹出对话框:收藏|已读|删除
             }
 
         });

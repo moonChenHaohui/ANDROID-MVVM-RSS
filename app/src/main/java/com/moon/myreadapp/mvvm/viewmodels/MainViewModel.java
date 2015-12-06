@@ -17,6 +17,7 @@ import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
+import com.moon.myreadapp.util.VibratorHelper;
 
 import java.util.List;
 
@@ -64,7 +65,9 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                XLog.d("onItemLongClick execute!");
+                //短震动
+                VibratorHelper.shock(VibratorHelper.TIME.SHORT);
+                //TODO 弹出对话框:标记全部已读|刷新|删除|置顶
             }
         });
     }
