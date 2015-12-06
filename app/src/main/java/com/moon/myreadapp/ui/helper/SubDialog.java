@@ -23,6 +23,7 @@ import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.models.dao.FeedDao;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.HtmlHelper;
 import com.moon.myreadapp.util.ViewUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -132,6 +133,8 @@ public class SubDialog extends MaterialDialog {
         //1.比对现有feed 中是否有相同的,a:有则更新,b:没有则插入.
         //2.比对articles,有则更新,没有则插入.
         //3.文章列表上传至服务器.
+        String icon = HtmlHelper.getIconUrlString(feed.getLink());
+        feed.setIcon(icon);
         long id = DBHelper.Insert.feed(feed);
         for(int i = 0 ;i < articles.size();i++){
             articles.get(i).setFeed_id(id);
@@ -139,7 +142,6 @@ public class SubDialog extends MaterialDialog {
         }
         XDispatcher.from(mContext).dispatch(new EventAction(new UpdateEvent()));
         dismiss();
-
         XLog.d("save successed ! the id :" + id);
         //XLog.d(feed1.toString());
         // 如果用户存在,则发送给服务端

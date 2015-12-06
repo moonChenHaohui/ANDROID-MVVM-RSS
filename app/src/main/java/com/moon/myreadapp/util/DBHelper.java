@@ -33,7 +33,10 @@ public class DBHelper {
                     syndFeed.getDescription(),
                     syndFeed.getFeedType(),
                     syndFeed.getLink(),
+                    HtmlHelper.getIconUrlString(syndFeed.getLink()),//icon获取
                     syndFeed.getPublishedDate(),
+                    null,
+                    null,//最近的图片
                     syndFeed.getLanguage(),
                     ((DCModule) syndFeed.getModules().get(0)).getRights(),
                     ((DCModule) syndFeed.getModules().get(0)).getUri(),
@@ -52,7 +55,20 @@ public class DBHelper {
         }
 
         public static Article articleConvert(SyndEntry entry){
-            Article article = new Article(null, entry.getTitle(), 0, entry.getDescription().getValue(), entry.getLink(), entry.getPublishedDate(), ((DCModule) entry.getModules().get(0)).getRights(), ((DCModule) entry.getModules().get(0)).getUri(), ((DCModule) entry.getModules().get(0)).getCreator(), -1);
+            Article article = new Article(
+                    null,
+                    entry.getTitle(),
+                    0,
+                    entry.getDescription().getValue(),
+                    entry.getLink(),
+                    StringHelper.convertListToSrring(HtmlHelper.getImgStr(entry.getDescription().getValue(),3)),//获取最开始的3张图片
+                    entry.getPublishedDate(),
+                    null,//最近阅读时间
+                    0,//状态
+                    ((DCModule) entry.getModules().get(0)).getUri(),
+                    ((DCModule) entry.getModules().get(0)).getRights(),
+                    ((DCModule) entry.getModules().get(0)).getCreator(),
+                    -1);
             return article;
         }
     }

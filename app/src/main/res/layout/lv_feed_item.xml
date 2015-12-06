@@ -20,8 +20,6 @@
             android:layout_marginLeft="@dimen/normal_padding"
             android:layout_width="@dimen/img_size_48"
             android:layout_height="@dimen/img_size_48"
-            fresco:placeholderImage="@color/divde_line"
-            fresco:roundAsCircle="true"
             />
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_title"

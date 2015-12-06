@@ -1,5 +1,8 @@
 package com.moon.myreadapp.util;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -32,4 +35,25 @@ public class HtmlHelper {
         }
         return result;
     }
+
+
+    /**
+     * 拿到网站icon
+     * @param urlString
+     * @return
+     */
+    public static String getIconUrlString( String urlString ) {
+        if (urlString == null || urlString.isEmpty()){
+            return null;
+        }
+        try{
+            URL url = new URL( urlString );
+            String iconUrl = url.getProtocol() + "://" + url.getHost() + "/favicon.ico";// 保证从域名根路径搜索
+            return iconUrl;
+        }catch (MalformedURLException e){
+            return null;
+        }
+    }
+
+
 }

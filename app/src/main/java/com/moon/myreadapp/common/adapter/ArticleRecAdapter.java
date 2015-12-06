@@ -20,6 +20,7 @@ import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.HtmlHelper;
 import com.moon.myreadapp.util.ScreenUtils;
+import com.moon.myreadapp.util.StringHelper;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -56,11 +57,15 @@ public class ArticleRecAdapter extends BaseRecyclerAdapter<Article,ViewDataBindi
 
     @Override
     protected int getItemCoreViewType(int truePos) {
-
-        ArrayList<String> images = getmData().get(truePos).getImages();
+        String imageUrls = getmData().get(truePos).getFirst_images();
+        ArrayList<String> images = StringHelper.convertStringToList(getmData().get(truePos).getFirst_images());
         if (images == null){
-            images = HtmlHelper.getImgStr(getmData().get(truePos).getContainer(),3);
-            getmData().get(truePos).setImages(images);
+            if (imageUrls == null){
+                //可能是没有被正确的初始化,初始化完成如果没有图片会 imageUrls == ""
+                images = HtmlHelper.getImgStr(getmData().get(truePos).getContainer(),3);
+                //设置初始化的图片
+                getmData().get(truePos).setFirst_images(StringHelper.convertListToSrring(images));
+            }
         }
         if (images == null || images.isEmpty()){
             return TYPE.NO_IMAGE.ordinal();
@@ -104,7 +109,7 @@ public class ArticleRecAdapter extends BaseRecyclerAdapter<Article,ViewDataBindi
             LvArticleItemThreeImgBinding binding = ((LvArticleItemThreeImgBinding)holder.getBinding());
             binding.setArticle(article);
 
-            binding.articleImages.setImages(article.getImages());
+            binding.articleImages.setImages(StringHelper.convertStringToList(article.getFirst_images()));
 //            //设置图片
 //            binding.articleImages.removeAllViews();
 //            int width = (int) Math.floor(binding.articleImages.getMeasuredWidth() / 3.0);
@@ -129,7 +134,7 @@ public class ArticleRecAdapter extends BaseRecyclerAdapter<Article,ViewDataBindi
         }else if (type == TYPE.ONE_IMAGE.type){
             LvArticleItemOneImgBinding binding = ((LvArticleItemOneImgBinding)holder.getBinding());
             binding.setArticle(article);
-            String imageUrl = article.getImages().get(0);
+            String imageUrl = StringHelper.convertStringToList(article.getFirst_images()).get(0);
             binding.atricleImage.setImageURI(Uri.parse(imageUrl));
             XLog.d("one pic .pos : " + truePos + ",image url : " + imageUrl);
         }else {

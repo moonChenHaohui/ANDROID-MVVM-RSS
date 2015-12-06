@@ -14,6 +14,9 @@ public class Conver {
     //把日期转为字符串
     public static String ConverToString(Date date)
     {
+        if (date == null){
+            return "";
+        }
         XLog.d("execute !" + date.getTime());
         DateFormat df = new SimpleDateFormat("MM月dd日HH:mm");
         XLog.d("execute !" + df.format(date));
