@@ -8,25 +8,29 @@
             type="com.moon.myreadapp.mvvm.models.dao.Feed" />
     </data>
     <RelativeLayout
+        android:elevation="2dip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_list_item_height"
         android:minHeight="@dimen/main_list_item_height"
+        android:paddingTop="@dimen/normal_padding"
         android:clickable="true"
-        android:background="@drawable/selectable_background">
+        android:background="@drawable/feed_list_item">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/feed_icon"
-            android:layout_marginTop="@dimen/normal_padding"
             android:layout_marginLeft="@dimen/normal_padding"
-            android:layout_width="@dimen/img_size_48"
-            android:layout_height="@dimen/img_size_48"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/img_size_32"
+            android:layout_height="@dimen/img_size_32"
             />
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_title"
             android:layout_marginLeft="@dimen/normal_half_padding"
             android:layout_marginRight="80dp"
+            android:hint="feed title"
             android:layout_toRightOf="@id/feed_icon"
-            android:layout_marginTop="@dimen/normal_padding"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{feed.title}"
@@ -38,29 +42,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="10未读"
+            android:text="10"
+            android:textStyle="bold"
             android:layout_marginRight="@dimen/normal_padding"
-            android:textColor="@color/txt_active"
-            android:layout_marginTop="@dimen/normal_padding"/>
+            android:textColor="@color/txt_active"/>
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_description"
-            android:layout_marginLeft="@dimen/normal_half_padding"
+            android:paddingTop="4dp"
             android:layout_marginRight="@dimen/normal_padding"
-            android:layout_toRightOf="@id/feed_icon"
+            android:layout_alignLeft="@id/feed_title"
             android:layout_below="@id/feed_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="@{feed.description ?? feed.title}"
-            android:visibility="@{feed.description == null ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{feed.description == null ? View.GONE : View.VISIBLE}"
             android:textColor="@color/txt_gray_dark"
             android:textSize="@dimen/text_h3" />
-        <include layout="@layout/common_divider"
-            android:layout_marginTop="@dimen/normal_half_padding"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@id/feed_description"
-            android:layout_width="match_parent"/>
+        <android.support.v7.internal.view.menu.ExpandedMenuView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        </android.support.v7.internal.view.menu.ExpandedMenuView>
     </RelativeLayout>
 </layout>

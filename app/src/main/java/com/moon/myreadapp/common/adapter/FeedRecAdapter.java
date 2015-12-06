@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,6 +18,7 @@ import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.databinding.LvFeedItemBinding;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.ScreenUtils;
 
 import java.util.List;
 
@@ -40,7 +42,10 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
         LvFeedItemBinding binding = LvFeedItemBinding.bind(convertView);
         convertView.setTag(binding);
 
-
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int padding = ScreenUtils.getResources().getDimensionPixelOffset(R.dimen.normal_padding);
+        lp.setMargins(padding, padding, padding, 0);
+        convertView.setLayoutParams(lp);
         BindingHolder mHolder = new BindingHolder(convertView);
         return mHolder;
     }
@@ -51,26 +56,24 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
         XLog.d("feed:" + feed.toString());
         holder.getBinding().setFeed(feed);
         String icon = feed.getIcon();
-        if (icon == null){
-            icon =  "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4168775445,1420260708&fm=116&gp=0.jpg";
+        if (icon != null){
+            /**
+             * 使用volley进行图片加载
+             */
+            ImageRequest imageRequest = new ImageRequest(
+                    icon,
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap response) {
+                            holder.getBinding().feedIcon.setImageBitmap(response);
+                        }
+                    }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    holder.getBinding().feedIcon.setImageResource(R.drawable.bg_empty_logo);
+                }
+            });
+            Volley.newRequestQueue(holder.getBinding().feedIcon.getContext()).add(imageRequest);
         }
-        /**
-         * 使用volley进行图片加载
-         */
-        ImageRequest imageRequest = new ImageRequest(
-                icon,
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {
-                        holder.getBinding().feedIcon.setImageBitmap(response);
-                    }
-                }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                holder.getBinding().feedIcon.setImageResource(R.drawable.bg_empty_image);
-            }
-        });
-        Volley.newRequestQueue(holder.getBinding().feedIcon.getContext()).add(imageRequest);
-        //holder.getBinding().feedIcon.setImageURI(Uri.parse(icon));
     }
 }
