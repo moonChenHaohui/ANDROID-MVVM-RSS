@@ -20,19 +20,17 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:orientation="vertical">
-            <include layout="@layout/feed_body"
-                android:id="@+id/feed_body"
+            <include layout="@layout/article_body"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/article_body"
                 bind:articleViewModel="@{articleViewModel}"/>
-
         </LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-
-            android:src="@android:drawable/ic_dialog_email" />
+        <include
+            android:id="@+id/article_bottom_bar"
+            layout="@layout/article_bottom_bar"
+            bind:articleViewModel="@{articleViewModel}"/>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

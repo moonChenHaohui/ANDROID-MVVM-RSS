@@ -7,7 +7,11 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.TranslateAnimation;
+import android.widget.ViewAnimator;
 
+import com.bumptech.glide.request.animation.ViewAnimation;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
@@ -18,6 +22,8 @@ import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityArticleBinding;
 import com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 
@@ -53,7 +59,9 @@ public class ArticleActivity extends BaseActivity {
         articleViewModel = new ArticleViewModel(this, getIntent().getExtras().getLong(Constants.ARTICLE_ID, -1));
         binding.setArticleViewModel(articleViewModel);
 
-        binding.feedBody.feedContent.setOnImageClickListener(new RichText.OnImageClickListener() {
+
+        //图片浏览
+        binding.articleBody.feedContent.setOnImageClickListener(new RichText.OnImageClickListener() {
             @Override
             public void imageClicked(ArrayList<String> imageUrls, int position) {
                 Bundle bundle = new Bundle();
@@ -64,7 +72,9 @@ public class ArticleActivity extends BaseActivity {
             }
         });
         //富文本显示
-        binding.feedBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
+        binding.articleBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
+        //ObjectAnimator.ofFloat(binding.buttonBar, "translationX",300).setDuration(3000).start();
+        // ViewHelper.setScaleX(binding.buttonBar,200);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.mvvm.models.MenuItem;
 
 import java.lang.reflect.Method;
 
@@ -42,6 +43,7 @@ public class ViewUtils {
         //4.0以上icon无法显示,需要反射调用该方法
         setIconEnable(popupMenu.getMenu(), true);
         popupMenu.getMenuInflater().inflate(layout, popupMenu.getMenu());
+
         // menu的item点击事件
         popupMenu.setOnMenuItemClickListener(listener);
         // PopupMenu关闭事件

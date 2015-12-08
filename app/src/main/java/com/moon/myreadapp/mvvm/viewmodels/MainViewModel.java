@@ -58,7 +58,7 @@ public class MainViewModel extends BaseViewModel {
         readItemClickListener = new RecyclerItemClickListener((Activity)mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
                 int pos = position - 1;
-                Feed feed = feedRecAdapter.getItem(pos);
+                 Feed feed = feedRecAdapter.getItem(pos);
                 if (feed == null )return;
 
                 Bundle bundle = new Bundle();
@@ -80,7 +80,6 @@ public class MainViewModel extends BaseViewModel {
                         return false;
                     }
                 });
-
             }
         });
     }

@@ -50,7 +50,7 @@ public class SwipeBackLayout extends FrameLayout {
     /**
      * 左滑生效百分比
      */
-    private static float ATREA_PERCETAGE = .3f;
+    private static float ATREA_PERCETAGE = .5f;
     /**
      * 是否是rootAct
      */

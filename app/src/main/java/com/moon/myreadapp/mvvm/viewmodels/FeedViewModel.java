@@ -3,6 +3,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.internal.view.menu.MenuPopupHelper;
 import android.view.View;
 import android.widget.PopupMenu;
 
@@ -67,6 +68,7 @@ public class FeedViewModel extends BaseViewModel {
                         return false;
                     }
                 });
+
             }
 
         });

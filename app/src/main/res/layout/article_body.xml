@@ -89,10 +89,10 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:padding="@dimen/normal_half_padding"
-                android:layout_marginBottom="@dimen/normal_double_padding"
+                android:layout_marginBottom="@dimen/normal_list_item_regular"
                 android:gravity="right|center_vertical"
-                android:text="查看原文"
                 android:onClick="@{articleViewModel.onClickWebArticle}"
+                android:text="查看原文"
                 android:background="@drawable/activated_background"/>
 
         </com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout>

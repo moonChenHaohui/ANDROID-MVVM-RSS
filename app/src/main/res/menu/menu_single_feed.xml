@@ -1,5 +1,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="20dp"
+    android:width="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_read_all"

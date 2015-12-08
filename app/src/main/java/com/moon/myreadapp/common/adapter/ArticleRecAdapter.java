@@ -4,12 +4,8 @@ import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
@@ -17,12 +13,10 @@ import com.moon.myreadapp.databinding.LvArticleItemNoImgBinding;
 import com.moon.myreadapp.databinding.LvArticleItemOneImgBinding;
 import com.moon.myreadapp.databinding.LvArticleItemThreeImgBinding;
 import com.moon.myreadapp.mvvm.models.dao.Article;
-import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.HtmlHelper;
 import com.moon.myreadapp.util.ScreenUtils;
 import com.moon.myreadapp.util.StringHelper;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
