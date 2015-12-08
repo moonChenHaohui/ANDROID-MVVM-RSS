@@ -220,4 +220,14 @@
     <declare-styleable name="ImageLinearLayout">
         <attr name="imageMaxSize" format="integer"/>
     </declare-styleable>
+
+    <style name="ButtomBarItem">
+        <item name="android:textSize">@dimen/text_h1</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/text_margin</item>
+        <item name="android:paddingRight">@dimen/text_margin</item>
+        <item name="android:background">@drawable/selectable_background</item>
+    </style>
 </resources>
