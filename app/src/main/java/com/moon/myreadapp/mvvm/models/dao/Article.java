@@ -13,6 +13,7 @@ public class Article extends BmobObject {
     public enum Status{
         NORMAL(0),
         FAVOR(1),
+        NORMAL_AND_FAVOR(2),
         DELETE(-1);
 
         public int status;

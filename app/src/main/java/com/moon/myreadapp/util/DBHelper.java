@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * Created by moon on 15/11/9.
@@ -116,7 +117,13 @@ public class DBHelper {
         public static List<Article> getArticlesByID(long id,Article.Status status){
             QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(id));
             if (status != null){
-                return res.where(ArticleDao.Properties.Status.eq(status.status)).list();
+                WhereCondition wc;
+                if (status == Article.Status.NORMAL_AND_FAVOR){
+                    wc = ArticleDao.Properties.Status.in(Article.Status.NORMAL.status,Article.Status.FAVOR.status);
+                } else {
+                    wc = ArticleDao.Properties.Status.eq(status.status);
+                }
+                return res.where(wc).list();
             }
             return res.list();
         }

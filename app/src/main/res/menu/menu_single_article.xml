@@ -4,14 +4,14 @@
     <item
         android:id="@+id/action_read"
         android:icon="@drawable/ic_launcher"
-        android:title="标记已读"/>
+        android:title="@string/action_read"/>
     <item
         android:id="@+id/action_read_favor"
         android:icon="@drawable/ic_launcher"
-        android:title="收藏"/>
+        android:title="@string/action_favor"/>
     <item
         android:id="@+id/action_read_delete"
         android:icon="@drawable/ic_launcher"
-        android:title="删除" />
+        android:title="@string/action_delete" />
 
 </menu>

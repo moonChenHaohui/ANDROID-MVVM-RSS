@@ -60,4 +60,12 @@
     <string name="title_activity_article_web">原文</string>
     <string name="title_activity_article_web_link_title">(链接)%1$s</string>
 
+    <string name="action_read">标记已读</string>
+    <string name="action_favor">收藏</string>
+    <string name="action_favor_back">取消收藏</string>
+    <string name="action_delete">删除</string>
+    
+    <string name="success">成功</string>
+    <string name="failure">失败</string>
+
 </resources>
