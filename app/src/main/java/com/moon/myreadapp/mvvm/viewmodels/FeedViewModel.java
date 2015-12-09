@@ -3,12 +3,15 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.internal.view.menu.MenuPopupHelper;
+import android.view.Menu;
 import android.view.View;
 import android.widget.PopupMenu;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.R;
@@ -45,7 +48,7 @@ public class FeedViewModel extends BaseViewModel {
 
     @Override
     public void initViews() {
-        mAdapter = new ArticleRecAdapter(DBHelper.Query.getArticlesByID(feedId));
+        mAdapter = new ArticleRecAdapter(DBHelper.Query.getArticlesByID(feedId, Article.Status.NORMAL));
     }
 
     @Override
@@ -61,17 +64,53 @@ public class FeedViewModel extends BaseViewModel {
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
-                XLog.d("onItemLongClick execute!");
+            public void onItemLongClick(final View view,final int position) {
+                //XLog.d("onItemLongClick execute!");
+                final Article article = mAdapter.getmData().get(position);
                 //震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
-                //todo 弹出对话框:收藏|已读|删除
-                ViewUtils.showPopupMenu(mView, view.findViewById(R.id.article_title), R.menu.menu_single_article, new PopupMenu.OnMenuItemClickListener() {
+                // 弹出对话框:收藏|已读|删除
+                Menu menu = ViewUtils.showPopupMenu(mView, view.findViewById(R.id.article_title), R.menu.menu_single_article, new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(android.view.MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.id.action_read:
+                                //标记已读
+                                article.setUse_count(article.getUse_count() + 1);
+                                DBHelper.UpDate.saveArticle(article);
+
+                                mAdapter.notifyItemChanged(position);
+                                break;
+                            case R.id.action_read_favor:
+                                //收藏
+                                if(article.getStatus() == Article.Status.NORMAL.status){
+                                    article.setStatus(Article.Status.FAVOR.status);
+                                    Snackbar.make(view, "收藏成功", Snackbar.LENGTH_SHORT).show();
+                                } else {
+                                    Snackbar.make(view, "已经取消收藏", Snackbar.LENGTH_SHORT).show();
+                                }
+                                break;
+                            case R.id.action_read_delete:
+                                //删除
+                                mAdapter.remove(position);
+                                article.setStatus(Article.Status.DELETE.status);
+                                DBHelper.UpDate.saveArticle(article);
+                                Snackbar.make(view, "删除成功", Snackbar.LENGTH_SHORT).show();
+                                break;
+                        }
                         return false;
                     }
                 });
+
+                //操作menu行为
+
+                //已读
+                menu.findItem(R.id.action_read).setVisible(article.getUse_count() <= 0);
+                //收藏
+                menu.findItem(R.id.action_read_favor).setTitle(article.getStatus() == Article.Status.FAVOR.status ? "取消收藏" : "收藏");
+
+
 
             }
 

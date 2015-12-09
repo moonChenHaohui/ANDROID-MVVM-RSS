@@ -10,6 +10,16 @@ import de.greenrobot.dao.DaoException;
  */
 public class Article extends BmobObject {
 
+    public enum Status{
+        NORMAL(0),
+        FAVOR(1),
+        DELETE(-1);
+
+        public int status;
+
+        Status(int s){ status = s;}
+    }
+
     private Long id;
     /** Not-null value. */
     private String title;

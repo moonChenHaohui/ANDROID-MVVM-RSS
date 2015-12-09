@@ -15,6 +15,8 @@ import com.moon.myreadapp.mvvm.models.dao.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.dao.query.QueryBuilder;
+
 /**
  * Created by moon on 15/11/9.
  */
@@ -111,8 +113,12 @@ public class DBHelper {
             return getDAO().getArticleDao().queryBuilder().list();
         }
 
-        public static List<Article> getArticlesByID(long id){
-            return getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(id)).list();
+        public static List<Article> getArticlesByID(long id,Article.Status status){
+            QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(id));
+            if (status != null){
+                return res.where(ArticleDao.Properties.Status.eq(status.status)).list();
+            }
+            return res.list();
         }
 
         public static Article getArticle (long id){
