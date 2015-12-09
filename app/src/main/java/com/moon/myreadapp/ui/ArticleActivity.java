@@ -1,29 +1,22 @@
 package com.moon.myreadapp.ui;
 
+import android.animation.Animator;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.TranslateAnimation;
-import android.widget.ViewAnimator;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.bumptech.glide.request.animation.ViewAnimation;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.components.htmlTextView.HtmlRemoteImageGetter;
-import com.moon.myreadapp.common.components.htmlTextView.HtmlTagHandler;
 import com.moon.myreadapp.common.components.htmlTextView.RichText;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityArticleBinding;
 import com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 
@@ -75,6 +68,17 @@ public class ArticleActivity extends BaseActivity {
         binding.articleBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
         //ObjectAnimator.ofFloat(binding.buttonBar, "translationX",300).setDuration(3000).start();
         // ViewHelper.setScaleX(binding.buttonBar,200);
+
+//        Animator animator = ViewAnimationUtils.createCircularReveal(
+//                binding.articleBottomBar.buttonBar,
+//                binding.articleBottomBar.buttonBar.getWidth()/2,
+//                binding.articleBottomBar.buttonBar.getHeight()/2,
+//                binding.articleBottomBar.buttonBar.getWidth(),0);
+//        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        animator.setDuration(2000);
+//        animator.start();
+
+
     }
 
     @Override

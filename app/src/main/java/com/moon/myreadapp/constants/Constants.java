@@ -6,6 +6,11 @@ package com.moon.myreadapp.constants;
 public class Constants {
 
 
+    /**
+     * Bmob APP id
+     */
+    public static final String APP_ID = "1c56866927e32c7063d2179cc121a741";
+
     public static final String DB_NAME         =   "eaasy-rss-db";
 
     public static final String FEED     =   "feed_object";

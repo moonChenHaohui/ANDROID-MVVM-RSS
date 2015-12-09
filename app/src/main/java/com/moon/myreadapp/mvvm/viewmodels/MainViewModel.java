@@ -5,7 +5,6 @@ import android.databinding.Bindable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -15,12 +14,9 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.constants.Constants;
-import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
-import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DBHelper;
-import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
 
@@ -110,7 +106,8 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void onAddButtonClick(){
-        DialogFractory.create((Activity) mView, DialogFractory.Type.AddSubscrible).show();
+
+        //DialogFractory.create((Activity) mView, DialogFractory.Type.AddSubscrible).show();
     }
     @Override
     public void clear() {

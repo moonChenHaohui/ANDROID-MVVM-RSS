@@ -10,7 +10,8 @@ import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.DaoMaster;
 import com.moon.myreadapp.mvvm.models.dao.DaoSession;
-import com.moon.myreadapp.mvvm.models.dao.UserDao;
+
+import cn.bmob.v3.Bmob;
 
 /**
  * Created by moon on 15/10/1.
@@ -37,6 +38,8 @@ public class ReadApplication extends XApplication{
             // Fresco init
             Fresco.initialize(ReadApplication.this);
 
+            //Bmob init
+            Bmob.initialize(ReadApplication.this, Constants.APP_ID);
 
             return null;
         }

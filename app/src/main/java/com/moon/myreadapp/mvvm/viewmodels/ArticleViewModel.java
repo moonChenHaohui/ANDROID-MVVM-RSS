@@ -143,6 +143,11 @@ public class ArticleViewModel extends BaseViewModel {
                 colorAnim.setEvaluator(new ArgbEvaluator());
                 colorAnim.start();
                 break;
+            case R.id.font_set:
+                break;
+            case R.id.share:
+                //分享
+                break;
         }
     }
 

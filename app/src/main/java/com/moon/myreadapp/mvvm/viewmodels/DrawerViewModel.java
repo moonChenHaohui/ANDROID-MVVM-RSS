@@ -5,25 +5,19 @@ import android.databinding.Bindable;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.alibaba.fastjson.JSON;
 import com.moon.appframework.action.RouterAction;
-import com.moon.appframework.common.business.RequestHelper;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
-import com.moon.myreadapp.constants.Nav;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.mvvm.models.dao.UserDao;
 import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.SettingActivity;
-import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,25 +131,25 @@ public class DrawerViewModel extends BaseViewModel {
         HashMap<String, String> params = new HashMap<>();
         params.put("account", user.getAccount());
         params.put("password", user.getPassword());
-        RequestHelper.call(Nav.USER_LOGIN, Nav.USER_LOGIN, params, new RequestHelper.IResponseListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-                User user = JSON.parseObject(response.toString(), User.class);
-                if (!user.equals(getUser())) {
-                    setUser(user);
-                    XLog.d(user.toString());
-                    userDao.deleteAll();
-                    userDao.insert(user);
-                }
-
-                XLog.d("insert sucessed!");
-            }
-
-            @Override
-            public void onErrorResponse(String error) {
-                XLog.d(error);
-            }
-        }, true);
+//        RequestHelper.call(Nav.USER_LOGIN, Nav.USER_LOGIN, params, new RequestHelper.IResponseListener() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                User user = JSON.parseObject(response.toString(), User.class);
+//                if (!user.equals(getUser())) {
+//                    setUser(user);
+//                    XLog.d(user.toString());
+//                    userDao.deleteAll();
+//                    userDao.insert(user);
+//                }
+//
+//                XLog.d("insert sucessed!");
+//            }
+//
+//            @Override
+//            public void onErrorResponse(String error) {
+//                XLog.d(error);
+//            }
+//        }, true);
     }
 
 

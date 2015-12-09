@@ -31,6 +31,7 @@ import android.widget.ProgressBar;
 
 import com.moon.myreadapp.common.components.webview.ILoad;
 import com.moon.myreadapp.util.ScreenUtils;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +117,7 @@ public class ObservableWebView extends WebView implements Scrollable {
             } else {
                 if (progressbar.getVisibility() == GONE)
                     progressbar.setVisibility(VISIBLE);
+
                 progressbar.setProgress(newProgress);
             }
             super.onProgressChanged(view, newProgress);

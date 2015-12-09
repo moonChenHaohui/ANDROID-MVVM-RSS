@@ -2,7 +2,6 @@ package com.moon.appframework.common.business;
 
 import android.content.Context;
 
-import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
@@ -11,9 +10,6 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.moon.appframework.R;
-import com.moon.appframework.common.log.XLog;
-
-import java.util.HashMap;
 
 /**
  * Created by moon on 15/11/7.

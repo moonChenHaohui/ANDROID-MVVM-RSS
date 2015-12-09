@@ -24,6 +24,8 @@ android {
 }
 
 dependencies {
+
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':appframework')
 
@@ -38,5 +40,7 @@ dependencies {
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     //green dao
     compile 'de.greenrobot:greendao:2.0.0'
+
+
 
 }
