@@ -1,10 +1,7 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
-import android.animation.AnimatorSet;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.databinding.Bindable;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -12,41 +9,39 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.moon.appframework.action.RouterAction;
-import com.moon.appframework.common.log.XLog;
-import com.moon.appframework.common.util.StringUtils;
+import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleWebActivity;
-import com.moon.myreadapp.ui.LoginActivity;
-import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.ScreenUtils;
 import com.nineoldandroids.animation.ArgbEvaluator;
 import com.nineoldandroids.animation.ObjectAnimator;
 
-import de.halfbit.tinybus.Subscribe;
-
 /**
  * Created by moon on 15/11/14.
  */
 public class ArticleViewModel extends BaseViewModel {
 
-    private IView mView;
+    private Activity mView;
 
     private Article article;
 
     private long articleId;
 
+    private int position;
 
-    public ArticleViewModel(IView view, long id) {
+
+    public ArticleViewModel(Activity view, long id,int pos) {
         this.mView = view;
         articleId = id;
+        position = pos;
         article = DBHelper.Query.getArticle(articleId);
-
         initViews();
         initEvents();
     }
@@ -79,7 +74,11 @@ public class ArticleViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-
+        //进来=>阅读次数加一
+        article.setUse_count(getArticle().getUse_count() + 1);
+        DBHelper.UpDate.saveArticle(article);
+        //通知
+        XApplication.getInstance().bus.post(new UpdateArticleEvent(article.getUse_count(),position));
     }
 
     @Override
@@ -140,6 +139,7 @@ public class ArticleViewModel extends BaseViewModel {
                         isFavor ? colorPrimary : colorDown,
                         isFavor ? colorDown : colorPrimary);
                 colorAnim.setDuration(500);
+
                 colorAnim.setEvaluator(new ArgbEvaluator());
                 colorAnim.start();
                 break;

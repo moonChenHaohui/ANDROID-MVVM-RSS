@@ -49,7 +49,7 @@ public class ArticleActivity extends BaseActivity {
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, getLayoutView());
 
-        articleViewModel = new ArticleViewModel(this, getIntent().getExtras().getLong(Constants.ARTICLE_ID, -1));
+        articleViewModel = new ArticleViewModel(this, getIntent().getExtras().getLong(Constants.ARTICLE_ID, -1),getIntent().getExtras().getInt(Constants.ARTICLE_POS, -1));
         binding.setArticleViewModel(articleViewModel);
 
 

@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+
 /**
  * Created by moon on 15/10/19.
  */
@@ -86,6 +88,8 @@ public class DrawerViewModel extends BaseViewModel {
         mView = null;
     }
 
+
+
     @Bindable
     public DrawerAdapter getDrawerAdapter() {
         return drawerAdapter;
@@ -125,31 +129,10 @@ public class DrawerViewModel extends BaseViewModel {
     public void requestUser(){
         //user = new User(null,"123","123","123");
         if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
-            //XDispatcher.from((Activity)mView).dispatch(new RouterAction(LoginActivity.class, true));
+            //没有用户缓存
             return;
         }
-        HashMap<String, String> params = new HashMap<>();
-        params.put("account", user.getAccount());
-        params.put("password", user.getPassword());
-//        RequestHelper.call(Nav.USER_LOGIN, Nav.USER_LOGIN, params, new RequestHelper.IResponseListener() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                User user = JSON.parseObject(response.toString(), User.class);
-//                if (!user.equals(getUser())) {
-//                    setUser(user);
-//                    XLog.d(user.toString());
-//                    userDao.deleteAll();
-//                    userDao.insert(user);
-//                }
-//
-//                XLog.d("insert sucessed!");
-//            }
-//
-//            @Override
-//            public void onErrorResponse(String error) {
-//                XLog.d(error);
-//            }
-//        }, true);
+        BmobQuery<User> bmobQuery = new BmobQuery<User>();
     }
 
 

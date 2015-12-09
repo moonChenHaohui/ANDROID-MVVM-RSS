@@ -9,6 +9,7 @@ import android.widget.PopupMenu;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
+import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
@@ -21,6 +22,8 @@ import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
 
 import java.util.List;
+
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by moon on 15/10/19.
@@ -51,7 +54,7 @@ public class MainViewModel extends BaseViewModel {
         final List<Feed> feeds = DBHelper.Query.getFeeds();
         feedRecAdapter = new FeedRecAdapter(feeds);
 
-        readItemClickListener = new RecyclerItemClickListener((Activity)mView, new RecyclerItemClickListener.OnItemClickListener() {
+        readItemClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
                 int pos = position - 1;
                  Feed feed = feedRecAdapter.getItem(pos);
@@ -60,7 +63,7 @@ public class MainViewModel extends BaseViewModel {
                 Bundle bundle = new Bundle();
                 XLog.d("bundle" + bundle);
                 bundle.putLong(Constants.FEED_ID, feed.getId());
-                XDispatcher.from((Activity)mView).dispatch(new RouterAction(FeedActivity.class,bundle,true));
+                XDispatcher.from(mView).dispatch(new RouterAction(FeedActivity.class,bundle,true));
                 XLog.d("pos:" + pos);
             }
 
@@ -106,7 +109,17 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void onAddButtonClick(){
+        feedRecAdapter.getmData().get(0).save(mView, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                XLog.d("添加数据成");
+            }
 
+            @Override
+            public void onFailure(int i, String s) {
+
+            }
+        });
         //DialogFractory.create((Activity) mView, DialogFractory.Type.AddSubscrible).show();
     }
     @Override

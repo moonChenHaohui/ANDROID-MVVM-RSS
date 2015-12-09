@@ -127,4 +127,18 @@ public class DBHelper {
             return getUser() != null ? getUser().getId() : -1;
         }
     }
+
+    public static class UpDate{
+
+        public static long saveArticle(Article article){
+            return getDAO().getArticleDao().insertOrReplace(article);
+        }
+        public static long saveFeed(Feed feed){
+            return getDAO().getFeedDao().insertOrReplace(feed);
+        }
+        public static long saveUser(User user){
+            return getDAO().getUserDao().insertOrReplace(user);
+        }
+    }
+
 }

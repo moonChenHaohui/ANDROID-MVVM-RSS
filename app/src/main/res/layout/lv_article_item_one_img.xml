@@ -34,7 +34,7 @@
                 android:ellipsize="end"
                 android:lineSpacingMultiplier="1.2"
                 android:text="@{article.title}"
-                android:textColor="@color/txt_black"
+                android:textColor="@{article.use_count == 0 ? @color/txt_black : @color/txt_active}"
                 android:textSize="@dimen/text_h2" />
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/atricle_image"

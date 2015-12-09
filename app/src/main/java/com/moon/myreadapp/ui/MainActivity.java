@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -12,22 +11,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.moon.appframework.action.EventAction;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
-import com.moon.myreadapp.common.event.UpdateEvent;
+import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
-import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 import de.halfbit.tinybus.Subscribe;
 
@@ -178,10 +172,11 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Subscribe
-    public void onUpdateEvent(UpdateEvent event) {
-        XLog.d("get mes:" + "UpdateEvent");
+    public void onUpdateEvent(UpdateArticleEvent event) {
+        XLog.d("get mes:" + "UpdateArticleEvent");
         mainViewModel.updateFeeds();
     }
+
 
 
 

@@ -11,13 +11,17 @@ import android.widget.ListView;
 
 import com.moon.appframework.action.EventAction;
 import com.moon.appframework.core.XDispatcher;
+import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshPSListView;
+import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityFeedBinding;
 import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
+
+import de.halfbit.tinybus.Subscribe;
 
 
 public class FeedActivity extends BaseActivity {
@@ -108,6 +112,11 @@ public class FeedActivity extends BaseActivity {
         binding.setFeedViewModel(feedViewModel);
     }
 
-
+    @Subscribe
+    public void onEvent(UpdateArticleEvent event) {
+        if (feedViewModel != null){
+            feedViewModel.updateArticleUseCount(event);
+        }
+    }
 
 }

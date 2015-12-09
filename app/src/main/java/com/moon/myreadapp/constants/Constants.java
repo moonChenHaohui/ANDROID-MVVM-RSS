@@ -21,6 +21,8 @@ public class Constants {
 
     public static final String ARTICLE_ID   = "article_object_id";
 
+    public static final String ARTICLE_POS   = "article_object_pos";
+
     public static final String ARTICLE_TITLE   = "article_object_title";
 
     public static final String ARTICLE_URL   = "article_object_url";

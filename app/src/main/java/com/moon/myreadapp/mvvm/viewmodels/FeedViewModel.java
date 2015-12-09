@@ -10,9 +10,11 @@ import android.widget.PopupMenu;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
+import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
+import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleActivity;
@@ -51,8 +53,10 @@ public class FeedViewModel extends BaseViewModel {
         articleClickListener = new RecyclerItemClickListener((Context)mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
                 Bundle bundle = new Bundle();
                 bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
+                bundle.putInt(Constants.ARTICLE_POS, position);
                 XDispatcher.from((Context)mView).dispatch(new RouterAction(ArticleActivity.class,bundle,true));
             }
 
@@ -85,5 +89,15 @@ public class FeedViewModel extends BaseViewModel {
     @Override
     public void clear() {
         mView = null;
+    }
+
+
+    public void updateArticleUseCount(UpdateArticleEvent event) {
+        //XLog.d("updateArticleUseCount" + event.getPosition() + ",count:" + event.getUseCount());
+        if (event.getPosition() < 0){
+            return;
+        }
+        mAdapter.getmData().get(event.getPosition()).setUse_count(event.getUseCount());
+        mAdapter.notifyItemChanged(event.getPosition());
     }
 }

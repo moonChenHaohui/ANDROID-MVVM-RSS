@@ -24,10 +24,11 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:hint=" this is title"
+
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:text="@{article.title}"
-            android:textColor="@color/txt_black"
+            android:textColor="@{article.use_count == 0 ? @color/txt_black : @color/txt_active}"
             android:textSize="@dimen/text_h2" />
         <com.moon.myreadapp.ui.helper.ImagesView
             android:id="@+id/article_images"
@@ -52,7 +53,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/publishtime"
-            android:hint="hello"
             android:text="@{Conver.ConverToString(article.publishtime)}"
             android:textSize="@dimen/text_h4"
             android:textColor="@color/txt_active"

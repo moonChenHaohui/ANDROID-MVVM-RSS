@@ -1,14 +1,9 @@
 package com.moon.myreadapp.ui.helper;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.module.DCModule;
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.moon.appframework.action.EventAction;
@@ -17,10 +12,9 @@ import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.rss.RssHelper;
-import com.moon.myreadapp.common.event.UpdateEvent;
+import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
-import com.moon.myreadapp.mvvm.models.dao.FeedDao;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.HtmlHelper;
@@ -28,7 +22,6 @@ import com.moon.myreadapp.util.ViewUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -140,7 +133,7 @@ public class SubDialog extends MaterialDialog {
             articles.get(i).setFeed_id(id);
             DBHelper.Insert.article(articles.get(i));
         }
-        XDispatcher.from(mContext).dispatch(new EventAction(new UpdateEvent()));
+        //XDispatcher.from(mContext).dispatch(new EventAction(new UpdateArticleEvent()));
         dismiss();
         XLog.d("save successed ! the id :" + id);
         //XLog.d(feed1.toString());
