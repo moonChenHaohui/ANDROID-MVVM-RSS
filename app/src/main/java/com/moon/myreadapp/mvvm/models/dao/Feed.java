@@ -12,6 +12,7 @@ public class Feed extends BmobObject {
     private Long id;
     /** Not-null value. */
     private String title;
+    private String url;
     private Integer use_count;
     private String description;
     private String feedtype;
@@ -43,9 +44,10 @@ public class Feed extends BmobObject {
         this.id = id;
     }
 
-    public Feed(Long id, String title, Integer use_count, String description, String feedtype, String link, String icon, java.util.Date publishtime, java.util.Date update_time, String current_image, String language, String rights, String uri, String creator, long user_id) {
+    public Feed(Long id, String title, String url, Integer use_count, String description, String feedtype, String link, String icon, java.util.Date publishtime, java.util.Date update_time, String current_image, String language, String rights, String uri, String creator, long user_id) {
         this.id = id;
         this.title = title;
+        this.url = url;
         this.use_count = use_count;
         this.description = description;
         this.feedtype = feedtype;
@@ -83,6 +85,14 @@ public class Feed extends BmobObject {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getUse_count() {
@@ -246,6 +256,7 @@ public class Feed extends BmobObject {
         return "Feed{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
                 ", use_count=" + use_count +
                 ", description='" + description + '\'' +
                 ", feedtype='" + feedtype + '\'' +

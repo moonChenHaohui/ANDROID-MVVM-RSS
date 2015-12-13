@@ -99,39 +99,17 @@ public class ArticleRecAdapter extends BaseRecyclerAdapter<Article,ViewDataBindi
     protected void onBindCoreViewHolder(BindingHolder<ViewDataBinding> holder, int truePos) {
         Article article = mData.get(truePos);
         final int type = getItemCoreViewType(truePos);
-        if (type == TYPE.MORE_IMAGE.type) {
+        if (type == TYPE.MORE_IMAGE.type) {//三张图片
             LvArticleItemThreeImgBinding binding = ((LvArticleItemThreeImgBinding)holder.getBinding());
             binding.setArticle(article);
-
             binding.articleImages.setImages(StringHelper.convertStringToList(article.getFirst_images()));
-//            //设置图片
-//            binding.articleImages.removeAllViews();
-//            int width = (int) Math.floor(binding.articleImages.getMeasuredWidth() / 3.0);
-//            for (String imageUrl : article.getImages()){
-//                SimpleDraweeView  sd = new SimpleDraweeView(binding.articleImages.getContext());
-//                GenericDraweeHierarchyBuilder builder =
-//                        new GenericDraweeHierarchyBuilder(Globals.getApplication().getResources());
-//                GenericDraweeHierarchy hierarchy = builder
-//                        .setFadeDuration(300)
-//                        .setPlaceholderImage(Globals.getApplication().getResources().getDrawable(R.drawable.bg_empty_image))
-//                        .build();
-//                sd.setHierarchy(hierarchy);
-//                sd.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(width,(int)(width * .7));
-//
-//                sd.setLayoutParams(lp);
-//                binding.articleImages.addView(sd);
-//                sd.setImageURI(Uri.parse(imageUrl));
-//                XLog.d("pos : " + truePos + ",image url : " + imageUrl);
-//            }
-           //binding.getRoot().invalidate();
-        }else if (type == TYPE.ONE_IMAGE.type){
+        }else if (type == TYPE.ONE_IMAGE.type){//一张图片
             LvArticleItemOneImgBinding binding = ((LvArticleItemOneImgBinding)holder.getBinding());
             binding.setArticle(article);
             String imageUrl = StringHelper.convertStringToList(article.getFirst_images()).get(0);
             binding.atricleImage.setImageURI(Uri.parse(imageUrl));
             XLog.d("one pic .pos : " + truePos + ",image url : " + imageUrl);
-        }else {
+        }else {//纯文字
             ((LvArticleItemNoImgBinding)holder.getBinding()).setArticle(article);
         }
     }

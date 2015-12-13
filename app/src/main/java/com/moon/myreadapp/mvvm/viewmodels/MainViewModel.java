@@ -3,6 +3,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.PopupMenu;
 
@@ -17,6 +18,7 @@ import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListen
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
+import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
@@ -30,14 +32,14 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class MainViewModel extends BaseViewModel {
 
-    private Activity mView;
+    private MainActivity mView;
 
 
     private FeedRecAdapter feedRecAdapter;
 
     private RecyclerItemClickListener readItemClickListener;
 
-    public MainViewModel(Activity view) {
+    public MainViewModel(MainActivity view) {
         this.mView = view;
         //initViews();
         initEvents();
@@ -69,13 +71,31 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onItemLongClick(View view, int position) {
+                Feed feed = feedRecAdapter.getmData().get(position);
                 XLog.d("onItemLongClick execute!");
                 //短震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
                 //TODO 弹出对话框:标记全部已读|刷新|删除|置顶
-                ViewUtils.showPopupMenu(mView, view, R.menu.menu_single_feed, new PopupMenu.OnMenuItemClickListener() {
+                Menu menu = ViewUtils.showPopupMenu(mView, view, R.menu.menu_single_feed, new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(android.view.MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.string.action_read_all:
+
+                                //标记全部已读
+                                break;
+                            case R.string.action_read_reflash:
+                                //刷新
+
+                                break;
+                            case R.string.action_read_top:
+                                //置顶
+                                break;
+                            case R.string.action_read_delete_feed:
+                                //删除订阅
+                                break;
+                        }
                         return false;
                     }
                 });
@@ -109,17 +129,17 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void onAddButtonClick(){
-        feedRecAdapter.getmData().get(0).save(mView, new SaveListener() {
-            @Override
-            public void onSuccess() {
-                XLog.d("添加数据成");
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-
-            }
-        });
+//        feedRecAdapter.getmData().get(0).save(mView, new SaveListener() {
+//            @Override
+//            public void onSuccess() {
+//                XLog.d("添加数据成");
+//            }
+//
+//            @Override
+//            public void onFailure(int i, String s) {
+//
+//            }
+//        });
         //DialogFractory.create((Activity) mView, DialogFractory.Type.AddSubscrible).show();
     }
     @Override

@@ -27,19 +27,20 @@ public class FeedDao extends AbstractDao<Feed, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
-        public final static Property Use_count = new Property(2, Integer.class, "use_count", false, "USE_COUNT");
-        public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
-        public final static Property Feedtype = new Property(4, String.class, "feedtype", false, "FEEDTYPE");
-        public final static Property Link = new Property(5, String.class, "link", false, "LINK");
-        public final static Property Icon = new Property(6, String.class, "icon", false, "ICON");
-        public final static Property Publishtime = new Property(7, java.util.Date.class, "publishtime", false, "PUBLISHTIME");
-        public final static Property Update_time = new Property(8, java.util.Date.class, "update_time", false, "UPDATE_TIME");
-        public final static Property Current_image = new Property(9, String.class, "current_image", false, "CURRENT_IMAGE");
-        public final static Property Language = new Property(10, String.class, "language", false, "LANGUAGE");
-        public final static Property Rights = new Property(11, String.class, "rights", false, "RIGHTS");
-        public final static Property Uri = new Property(12, String.class, "uri", false, "URI");
-        public final static Property Creator = new Property(13, String.class, "creator", false, "CREATOR");
-        public final static Property User_id = new Property(14, long.class, "user_id", false, "USER_ID");
+        public final static Property Url = new Property(2, String.class, "url", false, "URL");
+        public final static Property Use_count = new Property(3, Integer.class, "use_count", false, "USE_COUNT");
+        public final static Property Description = new Property(4, String.class, "description", false, "DESCRIPTION");
+        public final static Property Feedtype = new Property(5, String.class, "feedtype", false, "FEEDTYPE");
+        public final static Property Link = new Property(6, String.class, "link", false, "LINK");
+        public final static Property Icon = new Property(7, String.class, "icon", false, "ICON");
+        public final static Property Publishtime = new Property(8, java.util.Date.class, "publishtime", false, "PUBLISHTIME");
+        public final static Property Update_time = new Property(9, java.util.Date.class, "update_time", false, "UPDATE_TIME");
+        public final static Property Current_image = new Property(10, String.class, "current_image", false, "CURRENT_IMAGE");
+        public final static Property Language = new Property(11, String.class, "language", false, "LANGUAGE");
+        public final static Property Rights = new Property(12, String.class, "rights", false, "RIGHTS");
+        public final static Property Uri = new Property(13, String.class, "uri", false, "URI");
+        public final static Property Creator = new Property(14, String.class, "creator", false, "CREATOR");
+        public final static Property User_id = new Property(15, long.class, "user_id", false, "USER_ID");
     };
 
     private DaoSession daoSession;
@@ -60,19 +61,20 @@ public class FeedDao extends AbstractDao<Feed, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"FEED\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"TITLE\" TEXT NOT NULL ," + // 1: title
-                "\"USE_COUNT\" INTEGER," + // 2: use_count
-                "\"DESCRIPTION\" TEXT," + // 3: description
-                "\"FEEDTYPE\" TEXT," + // 4: feedtype
-                "\"LINK\" TEXT," + // 5: link
-                "\"ICON\" TEXT," + // 6: icon
-                "\"PUBLISHTIME\" INTEGER," + // 7: publishtime
-                "\"UPDATE_TIME\" INTEGER," + // 8: update_time
-                "\"CURRENT_IMAGE\" TEXT," + // 9: current_image
-                "\"LANGUAGE\" TEXT," + // 10: language
-                "\"RIGHTS\" TEXT," + // 11: rights
-                "\"URI\" TEXT," + // 12: uri
-                "\"CREATOR\" TEXT," + // 13: creator
-                "\"USER_ID\" INTEGER NOT NULL );"); // 14: user_id
+                "\"URL\" TEXT," + // 2: url
+                "\"USE_COUNT\" INTEGER," + // 3: use_count
+                "\"DESCRIPTION\" TEXT," + // 4: description
+                "\"FEEDTYPE\" TEXT," + // 5: feedtype
+                "\"LINK\" TEXT," + // 6: link
+                "\"ICON\" TEXT," + // 7: icon
+                "\"PUBLISHTIME\" INTEGER," + // 8: publishtime
+                "\"UPDATE_TIME\" INTEGER," + // 9: update_time
+                "\"CURRENT_IMAGE\" TEXT," + // 10: current_image
+                "\"LANGUAGE\" TEXT," + // 11: language
+                "\"RIGHTS\" TEXT," + // 12: rights
+                "\"URI\" TEXT," + // 13: uri
+                "\"CREATOR\" TEXT," + // 14: creator
+                "\"USER_ID\" INTEGER NOT NULL );"); // 15: user_id
     }
 
     /** Drops the underlying database table. */
@@ -92,66 +94,71 @@ public class FeedDao extends AbstractDao<Feed, Long> {
         }
         stmt.bindString(2, entity.getTitle());
  
+        String url = entity.getUrl();
+        if (url != null) {
+            stmt.bindString(3, url);
+        }
+ 
         Integer use_count = entity.getUse_count();
         if (use_count != null) {
-            stmt.bindLong(3, use_count);
+            stmt.bindLong(4, use_count);
         }
  
         String description = entity.getDescription();
         if (description != null) {
-            stmt.bindString(4, description);
+            stmt.bindString(5, description);
         }
  
         String feedtype = entity.getFeedtype();
         if (feedtype != null) {
-            stmt.bindString(5, feedtype);
+            stmt.bindString(6, feedtype);
         }
  
         String link = entity.getLink();
         if (link != null) {
-            stmt.bindString(6, link);
+            stmt.bindString(7, link);
         }
  
         String icon = entity.getIcon();
         if (icon != null) {
-            stmt.bindString(7, icon);
+            stmt.bindString(8, icon);
         }
  
         java.util.Date publishtime = entity.getPublishtime();
         if (publishtime != null) {
-            stmt.bindLong(8, publishtime.getTime());
+            stmt.bindLong(9, publishtime.getTime());
         }
  
         java.util.Date update_time = entity.getUpdate_time();
         if (update_time != null) {
-            stmt.bindLong(9, update_time.getTime());
+            stmt.bindLong(10, update_time.getTime());
         }
  
         String current_image = entity.getCurrent_image();
         if (current_image != null) {
-            stmt.bindString(10, current_image);
+            stmt.bindString(11, current_image);
         }
  
         String language = entity.getLanguage();
         if (language != null) {
-            stmt.bindString(11, language);
+            stmt.bindString(12, language);
         }
  
         String rights = entity.getRights();
         if (rights != null) {
-            stmt.bindString(12, rights);
+            stmt.bindString(13, rights);
         }
  
         String uri = entity.getUri();
         if (uri != null) {
-            stmt.bindString(13, uri);
+            stmt.bindString(14, uri);
         }
  
         String creator = entity.getCreator();
         if (creator != null) {
-            stmt.bindString(14, creator);
+            stmt.bindString(15, creator);
         }
-        stmt.bindLong(15, entity.getUser_id());
+        stmt.bindLong(16, entity.getUser_id());
     }
 
     @Override
@@ -172,19 +179,20 @@ public class FeedDao extends AbstractDao<Feed, Long> {
         Feed entity = new Feed( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // title
-            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // use_count
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // description
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // feedtype
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // link
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // icon
-            cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)), // publishtime
-            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)), // update_time
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // current_image
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // language
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // rights
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // uri
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // creator
-            cursor.getLong(offset + 14) // user_id
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // url
+            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // use_count
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // description
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // feedtype
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // link
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // icon
+            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)), // publishtime
+            cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)), // update_time
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // current_image
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // language
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // rights
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // uri
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // creator
+            cursor.getLong(offset + 15) // user_id
         );
         return entity;
     }
@@ -194,19 +202,20 @@ public class FeedDao extends AbstractDao<Feed, Long> {
     public void readEntity(Cursor cursor, Feed entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setTitle(cursor.getString(offset + 1));
-        entity.setUse_count(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
-        entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setFeedtype(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setLink(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setIcon(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setPublishtime(cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)));
-        entity.setUpdate_time(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
-        entity.setCurrent_image(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setLanguage(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setRights(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setUri(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
-        entity.setCreator(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setUser_id(cursor.getLong(offset + 14));
+        entity.setUrl(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setUse_count(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
+        entity.setDescription(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setFeedtype(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setLink(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setIcon(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setPublishtime(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
+        entity.setUpdate_time(cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)));
+        entity.setCurrent_image(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setLanguage(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setRights(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setUri(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setCreator(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setUser_id(cursor.getLong(offset + 15));
      }
     
     /** @inheritdoc */

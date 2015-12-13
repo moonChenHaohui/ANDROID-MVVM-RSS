@@ -82,6 +82,7 @@ public class SubDialog extends MaterialDialog {
                                 @Override
                                 public void run() {
                                     Feed feed = DBHelper.Util.feedConert(syndFeed, DBHelper.Query.getUserId());
+                                    feed.setUrl(editText.getText().toString());
                                     ArrayList<Article> articles = DBHelper.Util.getArticles(syndFeed);
                                     success(feed,articles);
                                 }

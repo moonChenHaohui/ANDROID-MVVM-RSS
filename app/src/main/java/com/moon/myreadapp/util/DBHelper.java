@@ -13,6 +13,7 @@ import com.moon.myreadapp.mvvm.models.dao.FeedDao;
 import com.moon.myreadapp.mvvm.models.dao.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
@@ -32,6 +33,7 @@ public class DBHelper {
         public static Feed feedConert(SyndFeed syndFeed,long userID){
             Feed feed = new Feed(null,
                     syndFeed.getTitle(),
+                    null,//url
                     0,
                     syndFeed.getDescription(),
                     syndFeed.getFeedType(),
@@ -84,9 +86,17 @@ public class DBHelper {
             return id;
         }
         public static long article(Article article){
-
-            long id = getDAO().getArticleDao().insert(article);
+            if (article.getPublishtime() == null){
+                article.setPublishtime(new Date());
+            }
+            long id = getDAO().getArticleDao().insertOrReplace(article);
             return id;
+        }
+        public static void articles(List<Article> articles){
+            if (articles == null) return;
+            for (int i = 0; i< articles.size();i++){
+                article(articles.get(i));
+            }
         }
     }
 
@@ -123,9 +133,9 @@ public class DBHelper {
                 } else {
                     wc = ArticleDao.Properties.Status.eq(status.status);
                 }
-                return res.where(wc).list();
+                return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).list();
             }
-            return res.list();
+            return res.orderDesc(ArticleDao.Properties.Publishtime).list();
         }
 
         public static Article getArticle (long id){
@@ -135,10 +145,32 @@ public class DBHelper {
             }
             return list.get(0);
         }
+        public static Article getRecentArticleOnFeedByFeedId (long id){
+            List<Article> list = getDAO().getArticleDao().queryBuilder().
+                    where(ArticleDao.Properties.Feed_id.eq(id)).orderDesc(ArticleDao.Properties.Publishtime).limit(1).list();
+            if (null == list || list.size() == 0){
+                return null;
+            }
+            return list.get(0);
+        }
+
+        public static Feed getFeed (long id){
+            List<Feed> list = getDAO().getFeedDao().queryBuilder().where(FeedDao.Properties.Id.eq(id)).list();
+            if (null == list || list.size() == 0){
+                return null;
+            }
+            return list.get(0);
+        }
 
         public static long getUserId(){
             return getUser() != null ? getUser().getId() : -1;
         }
+
+        public static long getFeedUnReadByFeedId (long id){
+            return getDAO().getArticleDao().queryBuilder().
+                    where(ArticleDao.Properties.Feed_id.eq(id),ArticleDao.Properties.Use_count.le(1),ArticleDao.Properties.Status.notEq(Article.Status.DELETE)).count();
+        }
+
     }
 
     public static class UpDate{

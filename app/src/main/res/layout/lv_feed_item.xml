@@ -39,10 +39,10 @@
             android:textColor="@color/txt_active"
             android:textSize="@dimen/text_h2" />
         <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/feed_unread_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="10"
             android:textStyle="bold"
             android:layout_marginRight="@dimen/normal_padding"
             android:textColor="@color/txt_active"/>
@@ -60,10 +60,11 @@
             android:visibility="@{feed.description == null ? View.GONE : View.VISIBLE}"
             android:textColor="@color/txt_gray_dark"
             android:textSize="@dimen/text_h3" />
-        <android.support.v7.internal.view.menu.ExpandedMenuView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-        </android.support.v7.internal.view.menu.ExpandedMenuView>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </layout>

@@ -40,6 +40,7 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
             mFooterViews = new ArrayList<>();
         }
         mFooterViews.add(view);
+        notifyItemChanged(getHeaderSize() + getmData().size() + mFooterViews.size() - 1);
     }
 
 
@@ -48,6 +49,11 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
             mHeadViews = new ArrayList<>();
         }
         mHeadViews.add(view);
+        notifyDataSetChanged();
+    }
+    public View getHeader(int position) {
+        if (position <0 || position >= getHeaderSize()) return null;
+        return mHeadViews.get(position);
     }
 
     private int getHeaderSize() {
@@ -154,7 +160,22 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         this.mData.remove(position);
         notifyItemRemoved(getHeaderSize() + position);
     }
+    public void removeHeader(int position) {
+        if (position == -1){
+            position = mHeadViews.size() - 1;
+        }
+        if (position >= getHeaderSize() || position < 0) return;
+        mHeadViews.remove(position);
+        notifyItemRemoved(position);
 
+    }
+    public void removeHeader(View view) {
+        if (view == null ) return;
+        if (mHeadViews.contains(view)){
+            mHeadViews.remove(view);
+            notifyDataSetChanged();
+        }
+    }
 
 
     @Override

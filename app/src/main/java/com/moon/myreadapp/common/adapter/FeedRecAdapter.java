@@ -55,6 +55,11 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
         Feed feed = mData.get(truePos);
         XLog.d("feed:" + feed.toString());
         holder.getBinding().setFeed(feed);
+
+        //查找频道未读数量
+        long unReadCount = DBHelper.Query.getFeedUnReadByFeedId(feed.getId());
+        holder.getBinding().feedUnreadSize.setText(unReadCount + "");
+        XLog.d("unReadCount:" +unReadCount);
         String icon = feed.getIcon();
         if (icon != null){
             /**

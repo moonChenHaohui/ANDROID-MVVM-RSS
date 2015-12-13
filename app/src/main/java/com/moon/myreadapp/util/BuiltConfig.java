@@ -37,5 +37,7 @@ public class BuiltConfig {
     public static String getString(int configResId) {
         return Globals.getApplication().getString(configResId);
     }
-
+    public static String getString(int configResId, Object... formatArgs) {
+        return Globals.getApplication().getString(configResId,formatArgs);
+    }
 }

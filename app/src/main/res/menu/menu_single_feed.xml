@@ -7,21 +7,21 @@
         android:id="@+id/action_read_all"
         android:icon="@drawable/ic_launcher"
         app:showAsAction="collapseActionView"
-        android:title="全部已读"/>
+        android:title="@string/action_read_all"/>
     <item
-        android:id="@+id/action_read_all1"
+        android:id="@+id/action_read_reflash"
         android:icon="@drawable/ic_launcher"
         app:showAsAction="collapseActionView"
-        android:title="刷新"/>
+        android:title="@string/action_read_reflash"/>
     <item
-        android:id="@+id/action_read_all2"
+        android:id="@+id/action_read_top"
         android:icon="@drawable/ic_launcher"
         app:showAsAction="collapseActionView"
-        android:title="置顶"/>
+        android:title="@string/action_read_top"/>
     <item
-        android:id="@+id/action_read_all3"
+        android:id="@+id/action_read_delete_feed"
         android:icon="@drawable/ic_launcher"
         app:showAsAction="collapseActionView"
-        android:title="删除订阅" />
+        android:title="@string/action_read_delete_feed" />
 
 </menu>

@@ -56,14 +56,7 @@ public class FeedActivity extends BaseActivity {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //下拉刷新
-                //binding.mainList.onPullDownRefreshComplete();
-                binding.feedList.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1), 0);
-                        binding.feedList.onPullDownRefreshComplete();
-                    }
-                }, 3000);
+                feedViewModel.refresh(binding.feedList);
             }
 
             @Override

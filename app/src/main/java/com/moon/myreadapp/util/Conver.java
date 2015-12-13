@@ -22,6 +22,16 @@ public class Conver {
         XLog.d("execute !" + df.format(date));
         return df.format(date);
     }
+    public static String ConverToString(Date date,String style)
+    {
+        if (date == null){
+            return "";
+        }
+        XLog.d("execute !" + date.getTime());
+        DateFormat df = new SimpleDateFormat(style);
+        XLog.d("execute !" + df.format(date));
+        return df.format(date);
+    }
     //把字符串转为日期
     public static Date ConverToDate(String strDate) throws Exception
     {
