@@ -118,6 +118,15 @@ public class MainViewModel extends BaseViewModel {
             }
         }
     }
+
+    /**
+     * 更新所有频道
+     */
+    public void updateFeeds(){
+        if (feedRecAdapter != null){
+            feedRecAdapter.setmData(DBHelper.Query.getFeeds());
+        }
+    }
     @Bindable
     public FeedRecAdapter getFeedRecAdapter() {
         return feedRecAdapter;

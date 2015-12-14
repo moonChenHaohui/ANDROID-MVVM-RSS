@@ -17,6 +17,7 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.event.UpdateArticleEvent;
+import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
@@ -122,7 +123,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 binding.mainList.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                       // mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
+                        // mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
                         binding.mainList.onPullUpRefreshComplete();
                     }
                 }, 3000);
@@ -173,10 +174,13 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Subscribe
     public void onUpdateEvent(UpdateArticleEvent event) {
-        XLog.d("get mes:" + "UpdateArticleEvent");
+        //XLog.d("get mes:" + "UpdateArticleEvent");
         mainViewModel.updateFeed(event.getFeed());
     }
-
+    @Subscribe
+    public void onUpdateEvent(UpdateFeedListEvent event) {
+        mainViewModel.updateFeeds();
+    }
 
 
 
