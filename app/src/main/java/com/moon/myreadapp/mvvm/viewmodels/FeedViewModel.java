@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
@@ -82,7 +83,8 @@ public class FeedViewModel extends BaseViewModel {
         articleClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                readArticle(mAdapter.getItem(position),position);
+                updateFeed(feed);
                 Bundle bundle = new Bundle();
                 bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
                 bundle.putInt(Constants.ARTICLE_POS, position);
@@ -102,11 +104,8 @@ public class FeedViewModel extends BaseViewModel {
                         int id = item.getItemId();
                         switch (id) {
                             case R.id.action_read:
-                                //标记已读
-                                article.setUse_count(article.getUse_count() + 1);
-                                DBHelper.UpDate.saveArticle(article);
-
-                                mAdapter.notifyItemChanged(position);
+                                readArticle(article,position);
+                                updateFeed(feed);
                                 break;
                             case R.id.action_read_favor:
                                 //收藏
@@ -159,14 +158,6 @@ public class FeedViewModel extends BaseViewModel {
     }
 
 
-    public void updateArticleUseCount(UpdateArticleEvent event) {
-        //XLog.d("updateArticleUseCount" + event.getPosition() + ",count:" + event.getUseCount());
-        if (event.getPosition() < 0) {
-            return;
-        }
-        mAdapter.getmData().get(event.getPosition()).setUse_count(event.getUseCount());
-        mAdapter.notifyItemChanged(event.getPosition());
-    }
 
     /**
      * 刷新
@@ -271,6 +262,18 @@ public class FeedViewModel extends BaseViewModel {
             }
         }, 2000);
         */
+    }
+
+
+
+    private void readArticle(Article article,int position){
+        article.setUse_count(article.getUse_count() + 1);
+        DBHelper.UpDate.saveArticle(article);
+        mAdapter.notifyItemChanged(position);
+    }
+
+    private void updateFeed(Feed feed){
+        XApplication.getInstance().bus.post(new UpdateArticleEvent(feed));
     }
 
 }

@@ -168,7 +168,11 @@ public class DBHelper {
 
         public static long getFeedUnReadByFeedId (long id){
             return getDAO().getArticleDao().queryBuilder().
-                    where(ArticleDao.Properties.Feed_id.eq(id),ArticleDao.Properties.Use_count.le(1),ArticleDao.Properties.Status.notEq(Article.Status.DELETE)).count();
+                    where(
+                            ArticleDao.Properties.Feed_id.eq(id),
+                            ArticleDao.Properties.Use_count.eq(0),
+                            ArticleDao.Properties.Status.notEq(Article.Status.DELETE
+                            )).count();
         }
 
     }

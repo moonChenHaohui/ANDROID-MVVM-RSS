@@ -56,11 +56,11 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         return mHeadViews.get(position);
     }
 
-    private int getHeaderSize() {
+    public int getHeaderSize() {
         return null == mHeadViews ? 0 : mHeadViews.size();
     }
 
-    private int getFooterSize() {
+    public int getFooterSize() {
         return null == mFooterViews ? 0 : mFooterViews.size();
     }
 

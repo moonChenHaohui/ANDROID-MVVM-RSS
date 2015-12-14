@@ -174,7 +174,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Subscribe
     public void onUpdateEvent(UpdateArticleEvent event) {
         XLog.d("get mes:" + "UpdateArticleEvent");
-        mainViewModel.updateFeeds();
+        mainViewModel.updateFeed(event.getFeed());
     }
 
 

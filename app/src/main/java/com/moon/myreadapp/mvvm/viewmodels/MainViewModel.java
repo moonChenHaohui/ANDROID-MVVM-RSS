@@ -104,10 +104,18 @@ public class MainViewModel extends BaseViewModel {
     }
 
 
-
-    public void updateFeeds(){
+    /**
+     * 更新频道信息
+     * @param feed
+     */
+    public void updateFeed(Feed feed){
         if (feedRecAdapter != null){
-            feedRecAdapter.setmData(DBHelper.Query.getFeeds());
+            int p = feedRecAdapter.getmData().indexOf(feed);
+            XLog.d("updateFeed:" + p);
+            if (p >= 0){
+                //更新这个要加上header
+                feedRecAdapter.notifyItemChanged(feedRecAdapter.getHeaderSize() + p);
+            }
         }
     }
     @Bindable

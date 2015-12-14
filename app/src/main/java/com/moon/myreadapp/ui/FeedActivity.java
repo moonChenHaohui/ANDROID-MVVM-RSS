@@ -12,6 +12,7 @@ import android.view.ViewPropertyAnimator;
 import android.widget.ListView;
 
 import com.moon.appframework.action.EventAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.R;
@@ -89,8 +90,6 @@ public class FeedActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.content) {
             finish();
-        } else if (id == R.id.action_read_all) {
-            //XDispatcher.from(this).dispatch(new EventAction(new AEvent("change from channel")));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -107,11 +106,5 @@ public class FeedActivity extends BaseActivity {
         binding.setFeedViewModel(feedViewModel);
     }
 
-    @Subscribe
-    public void onEvent(UpdateArticleEvent event) {
-        if (feedViewModel != null){
-            feedViewModel.updateArticleUseCount(event);
-        }
-    }
 
 }

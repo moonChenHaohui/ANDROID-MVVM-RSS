@@ -74,11 +74,6 @@ public class ArticleViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-        //进来=>阅读次数加一
-        article.setUse_count(getArticle().getUse_count() + 1);
-        DBHelper.UpDate.saveArticle(article);
-        //通知
-        XApplication.getInstance().bus.post(new UpdateArticleEvent(article.getUse_count(),position));
     }
 
     @Override
