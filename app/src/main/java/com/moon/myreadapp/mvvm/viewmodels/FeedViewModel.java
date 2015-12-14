@@ -6,11 +6,17 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
+
+import android.view.ViewGroup;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -22,6 +28,7 @@ import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.common.components.rss.RssHelper;
+import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
@@ -208,7 +215,7 @@ public class FeedViewModel extends BaseViewModel {
                         articles = null;
 
                         //设置提示
-                        showNotice(feedList, haveNewDate ? BuiltConfig.getString(R.string.notice_update, result.size()) : BuiltConfig.getString(R.string.notice_update_none));
+                        showNotice(feedList, haveNewDate ? BuiltConfig.getString(R.string.notice_update,feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none));
 
                         //重新设置数据
                         if (haveNewDate) {
@@ -236,21 +243,30 @@ public class FeedViewModel extends BaseViewModel {
      * @param txt
      */
     private void showNotice(final PullToRefreshRecyclerView feedList, String txt) {
+        TastyToast.makeText(mView, txt, TastyToast.STYLE_MESSAGE).enableSwipeDismiss().setLayoutBelow(mView.findViewById(R.id.toolbar)).show();
+        /*
         final View view = LayoutInflater.from(mView).inflate(R.layout.common_notice_bar, null);
-        final TextView tv = (TextView) view.findViewById(R.id.info);
-        if (time++ <= 2) {
-            tv.setText(txt + "time:" + time);
-        }
-        feedList.getmAdapter().addHeader(view);
-        //设置放大的动画
-        animate(tv).setDuration(1000).scaleXBy(.5f).scaleYBy(.5f).setInterpolator(new AnticipateOvershootInterpolator());
 
+        feedList.getmAdapter().addHeader(view);
+
+        View m =feedList.getmAdapter().getHeader(0);
+        final TextView tv = (TextView) m.findViewById(R.id.info);
+        tv.setText(txt + time);
+        //设置放大的动画
+        if (time % 2 == 0) {
+            animate(tv).setDuration(1000).scaleXBy(.5f).scaleYBy(.5f).setInterpolator(new AnticipateOvershootInterpolator());
+        } else {
+            animate(tv).setDuration(1000).scaleXBy(-.5f).scaleYBy(-.5f).setInterpolator(new AnticipateOvershootInterpolator());
+        }
+        time++;
         feedList.postDelayed(new Runnable() {
             @Override
             public void run() {
                 feedList.getmAdapter().removeHeader(view);
+
             }
         }, 2000);
+        */
     }
-    private static int time = 1;
+
 }

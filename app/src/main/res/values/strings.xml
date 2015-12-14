@@ -73,7 +73,7 @@
     <string name="success">成功</string>
     <string name="failure">失败</string>
 
-    <string name="notice_update">有%1$d条更新</string>
+    <string name="notice_update">%1$s有%2$d条更新</string>
     <string name="notice_update_none">暂时没有更新,请稍后再试试..</string>
 
 </resources>
