@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         initToolBar(toolbar);
         initBusiness();
 
@@ -73,7 +73,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         initDrawer();
         initMainView();
     }
-    private void initDrawer(){
+
+    private void initDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, 0, 0) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
@@ -90,14 +91,15 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.drawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void initMainView(){
+    private void initMainView() {
 
         //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
-        binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
-        binding.mainList.setPullLoadEnabled(false);
-        binding.mainList.setScrollLoadEnabled(false);
-        binding.mainList.setPullRefreshEnabled(false);
+        //binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
+//        binding.mainList.setPullLoadEnabled(false);
+//        binding.mainList.setScrollLoadEnabled(false);
+//        binding.mainList.setPullRefreshEnabled(false);
+        binding.mainList.setHasMoreData(false);
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
@@ -153,6 +155,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -162,9 +165,9 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
         // Handle your other action bar items...
         int id = item.getItemId();
-        if(id == R.id.action_refresh){
+        if (id == R.id.action_refresh) {
             mainViewModel.refreshAll();
-        } else if (id == R.id.action_add){
+        } else if (id == R.id.action_add) {
             mainViewModel.onAddButtonClick();
         }
         return super.onOptionsItemSelected(item);
@@ -175,11 +178,11 @@ public class MainActivity extends BaseActivity implements IMainView {
         //XLog.d("get mes:" + "UpdateFeedEvent");
         mainViewModel.updateFeed(event);
     }
+
     @Subscribe
     public void onUpdateEvent(UpdateFeedListEvent event) {
         mainViewModel.updateFeeds();
     }
-
 
 
     @Override

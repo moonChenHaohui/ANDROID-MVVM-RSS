@@ -15,21 +15,27 @@
         android:paddingTop="@dimen/normal_padding"
         android:clickable="true"
         android:background="@drawable/feed_list_item">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/feed_icon"
+        <FrameLayout
+            android:id="@+id/feed_icon_body"
             android:layout_marginLeft="@dimen/normal_padding"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_width="@dimen/img_size_32"
-            android:layout_height="@dimen/img_size_32"
-            />
+            android:layout_height="@dimen/img_size_32">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/feed_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </FrameLayout>
+
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_title"
             android:layout_marginLeft="@dimen/normal_half_padding"
             android:layout_marginRight="80dp"
             android:hint="feed title"
-            android:layout_toRightOf="@id/feed_icon"
+            android:layout_toRightOf="@id/feed_icon_body"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,11 +66,5 @@
             android:visibility="@{feed.description == null ? View.GONE : View.VISIBLE}"
             android:textColor="@color/txt_gray_dark"
             android:textSize="@dimen/text_h3" />
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </layout>

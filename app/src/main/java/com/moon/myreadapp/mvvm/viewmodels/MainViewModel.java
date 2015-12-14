@@ -71,7 +71,8 @@ public class MainViewModel extends BaseViewModel {
         readItemClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                int pos = position - 1;
+                //应当减去 head 的size 作为正确的pos
+                int pos = position -feedRecAdapter.getHeaderSize();
                 Feed feed = feedRecAdapter.getItem(pos);
                 if (feed == null) return;
 

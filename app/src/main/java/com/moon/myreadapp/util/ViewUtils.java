@@ -1,16 +1,11 @@
 package com.moon.myreadapp.util;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.PopupMenu;
-import android.widget.Toast;
-
-import com.moon.myreadapp.R;
-import com.moon.myreadapp.mvvm.models.MenuItem;
 
 import java.lang.reflect.Method;
 

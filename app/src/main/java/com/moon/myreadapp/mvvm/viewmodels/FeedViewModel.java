@@ -21,6 +21,7 @@ import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
+import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.ArticleActivity;
@@ -173,21 +174,12 @@ public class FeedViewModel extends BaseViewModel {
                             return;
                         }
 
-                        //从数据库中取最新的文章,用时间比对
-                        Article recentArticle = DBHelper.Query.getRecentArticleOnFeedByFeedId(feedId);
-                        Date date = recentArticle.getPublishtime();
-                        Date temp;
-                        ArrayList<Article> result = new ArrayList<Article>();
-                        for (int i = 0; i < articles.size(); i++) {
-                            articles.get(i).setFeed_id(feedId);
-                            temp = articles.get(i).getPublishtime();
-                            if (temp != null && temp.after(date)) {
-                                result.add(articles.get(i));
-                            }
-                        }
                         //result 为获取新更新的文章
+                        ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feedId,articles);
+
 
                         boolean haveNewDate = result != null && result.size() > 0;
+
                         //插入数据库
                         if (haveNewDate) {
                             DBHelper.Insert.articles(result);
