@@ -14,6 +14,8 @@ import android.view.View;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -215,7 +217,7 @@ public class FeedViewModel extends BaseViewModel {
                         articles = null;
 
                         //设置提示
-                        showNotice(feedList, haveNewDate ? BuiltConfig.getString(R.string.notice_update,feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none));
+                        showNotice(feedList, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none));
 
                         //重新设置数据
                         if (haveNewDate) {
@@ -243,7 +245,9 @@ public class FeedViewModel extends BaseViewModel {
      * @param txt
      */
     private void showNotice(final PullToRefreshRecyclerView feedList, String txt) {
-        TastyToast.makeText(mView, txt, TastyToast.STYLE_MESSAGE).enableSwipeDismiss().setLayoutBelow(mView.findViewById(R.id.toolbar)).show();
+        TastyToast toast = TastyToast.makeText(mView, txt, TastyToast.STYLE_MESSAGE).enableSwipeDismiss().setLayoutBelow(mView.findViewById(R.id.toolbar));
+        toast.setOutAnimation(AnimationUtils.loadAnimation(mView, R.anim.toast_out));
+        toast.show();
         /*
         final View view = LayoutInflater.from(mView).inflate(R.layout.common_notice_bar, null);
 
