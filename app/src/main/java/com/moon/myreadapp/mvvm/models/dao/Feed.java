@@ -7,12 +7,13 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table "FEED".
  */
-public class Feed extends BmobObject {
+public class Feed extends BmobObject{
 
     private Long id;
     /** Not-null value. */
     private String title;
     private String url;
+    private Integer status;
     private Integer use_count;
     private String description;
     private String feedtype;
@@ -44,10 +45,11 @@ public class Feed extends BmobObject {
         this.id = id;
     }
 
-    public Feed(Long id, String title, String url, Integer use_count, String description, String feedtype, String link, String icon, java.util.Date publishtime, java.util.Date update_time, String current_image, String language, String rights, String uri, String creator, long user_id) {
+    public Feed(Long id, String title, String url, Integer status, Integer use_count, String description, String feedtype, String link, String icon, java.util.Date publishtime, java.util.Date update_time, String current_image, String language, String rights, String uri, String creator, long user_id) {
         this.id = id;
         this.title = title;
         this.url = url;
+        this.status = status;
         this.use_count = use_count;
         this.description = description;
         this.feedtype = feedtype;
@@ -93,6 +95,14 @@ public class Feed extends BmobObject {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getUse_count() {
@@ -251,25 +261,4 @@ public class Feed extends BmobObject {
         myDao.refresh(this);
     }
 
-    @Override
-    public String toString() {
-        return "Feed{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", url='" + url + '\'' +
-                ", use_count=" + use_count +
-                ", description='" + description + '\'' +
-                ", feedtype='" + feedtype + '\'' +
-                ", link='" + link + '\'' +
-                ", icon='" + icon + '\'' +
-                ", publishtime=" + publishtime +
-                ", update_time=" + update_time +
-                ", current_image='" + current_image + '\'' +
-                ", language='" + language + '\'' +
-                ", rights='" + rights + '\'' +
-                ", uri='" + uri + '\'' +
-                ", creator='" + creator + '\'' +
-                ", user_id=" + user_id +
-                '}';
-    }
 }

@@ -10,13 +10,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 
-import com.moon.appframework.action.RouterAction;
-import com.moon.appframework.common.log.XLog;
-import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
-import com.moon.myreadapp.common.event.UpdateArticleEvent;
+import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
@@ -164,8 +162,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
         // Handle your other action bar items...
         int id = item.getItemId();
-        if(id == R.id.action_reflash){
-            XDispatcher.from(this).dispatch(new RouterAction(ImageBrowserActivity.class,true));
+        if(id == R.id.action_refresh){
+            mainViewModel.refreshAll();
         } else if (id == R.id.action_add){
             mainViewModel.onAddButtonClick();
         }
@@ -173,9 +171,9 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Subscribe
-    public void onUpdateEvent(UpdateArticleEvent event) {
-        //XLog.d("get mes:" + "UpdateArticleEvent");
-        mainViewModel.updateFeed(event.getFeed());
+    public void onUpdateEvent(UpdateFeedEvent event) {
+        //XLog.d("get mes:" + "UpdateFeedEvent");
+        mainViewModel.updateFeed(event);
     }
     @Subscribe
     public void onUpdateEvent(UpdateFeedListEvent event) {

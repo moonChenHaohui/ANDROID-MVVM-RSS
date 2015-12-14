@@ -4,27 +4,15 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewPropertyAnimator;
-import android.widget.ListView;
 
-import com.moon.appframework.action.EventAction;
-import com.moon.appframework.common.log.XLog;
-import com.moon.appframework.core.XDispatcher;
-import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
-import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshPSListView;
-import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityFeedBinding;
 import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
-
-import de.halfbit.tinybus.Subscribe;
 
 
 public class FeedActivity extends BaseActivity {

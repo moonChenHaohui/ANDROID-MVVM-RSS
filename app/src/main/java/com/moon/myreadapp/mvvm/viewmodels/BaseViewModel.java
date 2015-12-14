@@ -13,4 +13,6 @@ public abstract class BaseViewModel extends BaseObservable{
 
     public abstract void initEvents();
     public abstract void clear();
+
+
 }

@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> {
 
+
     public FeedRecAdapter(List<Feed> data) {
         super(data);
     }
@@ -81,4 +82,6 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
             Volley.newRequestQueue(holder.getBinding().feedIcon.getContext()).add(imageRequest);
         }
     }
+
+
 }

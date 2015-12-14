@@ -6,14 +6,11 @@ import android.view.View;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.joanzapata.iconify.widget.IconTextView;
-import com.moon.appframework.action.EventAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XApplication;
-import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.rss.RssHelper;
-import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;

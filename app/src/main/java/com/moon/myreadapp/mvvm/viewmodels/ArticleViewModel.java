@@ -9,11 +9,9 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.moon.appframework.action.RouterAction;
-import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleWebActivity;

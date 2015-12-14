@@ -35,6 +35,7 @@ public class DBHelper {
                     syndFeed.getTitle(),
                     null,//url
                     0,
+                    0,
                     syndFeed.getDescription(),
                     syndFeed.getFeedType(),
                     syndFeed.getLink(),
@@ -64,9 +65,9 @@ public class DBHelper {
                     null,
                     entry.getTitle(),
                     0,
-                    entry.getDescription().getValue(),
+                    entry.getDescription() == null ? "" :entry.getDescription().getValue(),
                     entry.getLink(),
-                    StringHelper.convertListToSrring(HtmlHelper.getImgStr(entry.getDescription().getValue(),3)),//获取最开始的3张图片
+                    entry.getDescription() == null ? null : StringHelper.convertListToSrring(HtmlHelper.getImgStr(entry.getDescription().getValue(),3)),//获取最开始的3张图片
                     entry.getPublishedDate(),
                     null,//最近阅读时间
                     0,//状态

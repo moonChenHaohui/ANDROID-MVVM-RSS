@@ -7,25 +7,35 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.PopupMenu;
 
+import com.google.code.rome.android.repackaged.com.sun.syndication.fetcher.FetcherException;
+import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.common.util.SafeAsyncTask;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
+import com.moon.myreadapp.common.components.rss.RssHelper;
+import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
+import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.StringHelper;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.listener.SaveListener;
+import cn.volley.toolbox.Volley;
 
 /**
  * Created by moon on 15/10/19.
@@ -38,6 +48,8 @@ public class MainViewModel extends BaseViewModel {
     private FeedRecAdapter feedRecAdapter;
 
     private RecyclerItemClickListener readItemClickListener;
+
+    private boolean refresh = false;
 
     public MainViewModel(MainActivity view) {
         this.mView = view;
@@ -57,15 +69,16 @@ public class MainViewModel extends BaseViewModel {
         feedRecAdapter = new FeedRecAdapter(feeds);
 
         readItemClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override public void onItemClick(View view, int position) {
+            @Override
+            public void onItemClick(View view, int position) {
                 int pos = position - 1;
-                 Feed feed = feedRecAdapter.getItem(pos);
-                if (feed == null )return;
+                Feed feed = feedRecAdapter.getItem(pos);
+                if (feed == null) return;
 
                 Bundle bundle = new Bundle();
                 XLog.d("bundle" + bundle);
                 bundle.putLong(Constants.FEED_ID, feed.getId());
-                XDispatcher.from(mView).dispatch(new RouterAction(FeedActivity.class,bundle,true));
+                XDispatcher.from(mView).dispatch(new RouterAction(FeedActivity.class, bundle, true));
                 XLog.d("pos:" + pos);
             }
 
@@ -106,13 +119,12 @@ public class MainViewModel extends BaseViewModel {
 
     /**
      * 更新频道信息
-     * @param feed
      */
-    public void updateFeed(Feed feed){
-        if (feedRecAdapter != null){
-            int p = feedRecAdapter.getmData().indexOf(feed);
-            XLog.d("updateFeed:" + p);
-            if (p >= 0){
+    public void updateFeed(UpdateFeedEvent event) {
+        if (feedRecAdapter != null) {
+            int p = feedRecAdapter.getmData().indexOf(event.getFeed());
+            if (p >= 0) {
+                feedRecAdapter.getmData().get(p).setStatus(event.getStatus());
                 //更新这个要加上header
                 feedRecAdapter.notifyItemChanged(feedRecAdapter.getHeaderSize() + p);
             }
@@ -122,11 +134,12 @@ public class MainViewModel extends BaseViewModel {
     /**
      * 更新所有频道
      */
-    public void updateFeeds(){
-        if (feedRecAdapter != null){
+    public void updateFeeds() {
+        if (feedRecAdapter != null) {
             feedRecAdapter.setmData(DBHelper.Query.getFeeds());
         }
     }
+
     @Bindable
     public FeedRecAdapter getFeedRecAdapter() {
         return feedRecAdapter;
@@ -145,7 +158,7 @@ public class MainViewModel extends BaseViewModel {
         this.readItemClickListener = readItemClickListener;
     }
 
-    public void onAddButtonClick(){
+    public void onAddButtonClick() {
 //        feedRecAdapter.getmData().get(0).save(mView, new SaveListener() {
 //            @Override
 //            public void onSuccess() {
@@ -159,9 +172,43 @@ public class MainViewModel extends BaseViewModel {
 //        });
         //DialogFractory.create((Activity) mView, DialogFractory.Type.AddSubscrible).show();
     }
+
     @Override
     public void clear() {
         mView = null;
     }
 
+    public boolean isRefresh() {
+        return refresh;
+    }
+
+    public void setRefresh(boolean refresh) {
+        this.refresh = refresh;
+    }
+
+
+    /**
+     * 更新所有
+     */
+    public void refreshAll() {
+        XLog.d("RefreshAsyncTask refreshAll execute!");
+        if (isRefresh()) {
+            XLog.d("RefreshAsyncTask 正在刷新!");
+            return;
+        }
+        setRefresh(true);
+        RefreshAsyncTask refreshAsyncTask = new RefreshAsyncTask(new RefreshAsyncTask.StatusListener() {
+            @Override
+            public void onSuccess() {
+                setRefresh(false);
+            }
+
+            @Override
+            public void onCancel() {
+                setRefresh(false);
+            }
+        });
+        refreshAsyncTask.execute((ArrayList<Feed>)getFeedRecAdapter().getmData());
+
+    }
 }

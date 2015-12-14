@@ -10,6 +10,7 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.common.log.XLog;
+import com.moon.myreadapp.mvvm.models.dao.Feed;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,7 +25,7 @@ public class RssHelper {
 
     private static RssAtomFeedRetriever retriever;
 
-    private static RssAtomFeedRetriever getRetriever (){
+    public static RssAtomFeedRetriever getRetriever (){
         if (null == retriever){
             retriever = new RssAtomFeedRetriever();
         }
@@ -41,6 +42,7 @@ public class RssHelper {
         new RssTask(listener).execute(feedUrl);
     }
 
+
     /**
      * 不能直接进行ui更新
      */
@@ -51,7 +53,7 @@ public class RssHelper {
         void onError(String msg);
     }
 
-    private static class RssTask extends AsyncTask<String, Integer, SyndFeed>
+    public static class RssTask extends AsyncTask<String, Integer, SyndFeed>
     {
         private SyndFeed feed;
         private IRssListener listener;

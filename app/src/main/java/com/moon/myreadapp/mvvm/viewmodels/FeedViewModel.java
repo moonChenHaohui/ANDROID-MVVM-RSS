@@ -1,26 +1,13 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 
-import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
-
-import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.action.RouterAction;
@@ -32,7 +19,7 @@ import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerV
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.TastyToast;
-import com.moon.myreadapp.common.event.UpdateArticleEvent;
+import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
@@ -84,7 +71,7 @@ public class FeedViewModel extends BaseViewModel {
             @Override
             public void onItemClick(View view, int position) {
                 readArticle(mAdapter.getItem(position),position);
-                updateFeed(feed);
+                updateFeed();
                 Bundle bundle = new Bundle();
                 bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
                 bundle.putInt(Constants.ARTICLE_POS, position);
@@ -105,7 +92,7 @@ public class FeedViewModel extends BaseViewModel {
                         switch (id) {
                             case R.id.action_read:
                                 readArticle(article,position);
-                                updateFeed(feed);
+                                updateFeed();
                                 break;
                             case R.id.action_read_favor:
                                 //收藏
@@ -208,12 +195,13 @@ public class FeedViewModel extends BaseViewModel {
                         articles = null;
 
                         //设置提示
-                        showNotice(feedList, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none));
+                        showNotice(haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none));
 
                         //重新设置数据
                         if (haveNewDate) {
                             mAdapter.setmData(getBaseData());
                         }
+                        updateFeed();
 
                     }
                 });
@@ -222,7 +210,7 @@ public class FeedViewModel extends BaseViewModel {
 
             @Override
             public void onError(final String msg) {
-                showNotice(feedList, BuiltConfig.getString(R.string.notice_update_none));
+                showNotice(BuiltConfig.getString(R.string.notice_update_none));
                 feedList.onPullDownRefreshComplete();
 //
             }
@@ -232,10 +220,9 @@ public class FeedViewModel extends BaseViewModel {
     /**
      * 弹出顶部提示
      *
-     * @param feedList
      * @param txt
      */
-    private void showNotice(final PullToRefreshRecyclerView feedList, String txt) {
+    private void showNotice(String txt) {
         TastyToast toast = TastyToast.makeText(mView, txt, TastyToast.STYLE_MESSAGE).enableSwipeDismiss().setLayoutBelow(mView.findViewById(R.id.toolbar));
         toast.setOutAnimation(AnimationUtils.loadAnimation(mView, R.anim.toast_out));
         toast.show();
@@ -272,8 +259,8 @@ public class FeedViewModel extends BaseViewModel {
         mAdapter.notifyItemChanged(position);
     }
 
-    private void updateFeed(Feed feed){
-        XApplication.getInstance().bus.post(new UpdateArticleEvent(feed));
+    private void updateFeed(){
+        XApplication.getInstance().bus.post(new UpdateFeedEvent(feed));
     }
 
 }

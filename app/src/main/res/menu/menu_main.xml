@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item
-        android:id="@+id/action_reflash"
+        android:id="@+id/action_refresh"
         android:icon="@android:drawable/stat_notify_sync_noanim"
         android:title="@string/title_reflash"
         app:showAsAction="ifRoom|collapseActionView">
