@@ -73,7 +73,7 @@ public class RichText extends TextView {
         }
 
         ImageSpan[] imageSpans = spannableStringBuilder.getSpans(0, spannableStringBuilder.length(), ImageSpan.class);
-        final ArrayList<String> imageUrls = new ArrayList<>();
+        final ArrayList<String> imageUrls = new ArrayList<String>();
 
         for (int i = 0, size = imageSpans.length; i < size; i++) {
             ImageSpan imageSpan = imageSpans[i];

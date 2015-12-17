@@ -6,6 +6,7 @@ import com.moon.appframework.common.util.SafeAsyncTask;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
+import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.util.DBHelper;
@@ -38,11 +39,17 @@ public class RefreshAsyncTask extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 //通知正在更新这个feed
                 publishProgress(new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.ON_UPDATE));
 
+                //获取频道信息
                 SyndFeed syndFeed = RssHelper.getRetriever().retrieveFeed(RssHelper.adapterURL(feeds.get(i).getUrl()));
+                //转换成feed
                 Feed feed = DBHelper.Util.feedConert(syndFeed, DBHelper.Query.getUserId());
+                //转换出文章list
                 ArrayList<Article> articles = DBHelper.Util.getArticles(syndFeed);
-                //新更新的feed feed;
-                XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + " 更新完毕,共获得article:" + articles.size());
+                //过滤,获取新数据;
+                ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feeds.get(i).getId(),articles);
+                XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + " 更新完毕,共获得更新的文章:" + result.size());
+                //插入数据
+                DBHelper.Insert.articles(result);
                 //通知更新结束
                 publishProgress(new UpdateFeedEvent(feed, UpdateFeedEvent.NORMAL));
             } catch (Exception e) {

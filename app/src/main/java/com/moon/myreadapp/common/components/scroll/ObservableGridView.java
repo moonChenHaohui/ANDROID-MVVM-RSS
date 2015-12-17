@@ -277,7 +277,7 @@ public class ObservableGridView extends GridView implements Scrollable {
     @Override
     public void addScrollViewCallbacks(ObservableScrollViewCallbacks listener) {
         if (mCallbackCollection == null) {
-            mCallbackCollection = new ArrayList<>();
+            mCallbackCollection = new ArrayList<ObservableScrollViewCallbacks>();
         }
         mCallbackCollection.add(listener);
     }

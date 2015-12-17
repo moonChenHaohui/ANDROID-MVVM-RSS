@@ -22,6 +22,7 @@ import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
+import com.moon.myreadapp.ui.AddFeedActivity;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
@@ -160,18 +161,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void onAddButtonClick() {
-//        feedRecAdapter.getmData().get(0).save(mView, new SaveListener() {
-//            @Override
-//            public void onSuccess() {
-//                XLog.d("添加数据成");
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s) {
-//
-//            }
-//        });
-        //DialogFractory.create((Activity) mView, DialogFractory.Type.AddSubscrible).show();
+        XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
     }
 
     @Override

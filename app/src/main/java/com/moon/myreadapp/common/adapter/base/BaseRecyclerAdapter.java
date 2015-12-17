@@ -37,7 +37,7 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
 
     public void addFooter(View view) {
         if (null == mFooterViews) {
-            mFooterViews = new ArrayList<>();
+            mFooterViews = new ArrayList<View>();
         }
         mFooterViews.add(view);
         notifyItemChanged(getHeaderSize() + getmData().size() + mFooterViews.size() - 1);
@@ -46,7 +46,7 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
 
     public void addHeader(View view) {
         if (null == mHeadViews) {
-            mHeadViews = new ArrayList<>();
+            mHeadViews = new ArrayList<View>();
         }
         mHeadViews.add(view);
         notifyDataSetChanged();

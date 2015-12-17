@@ -1,7 +1,6 @@
 package com.moon.myreadapp.common.components.cutebuttombar;
 
 import android.content.Context;
-import android.graphics.drawable.Icon;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;

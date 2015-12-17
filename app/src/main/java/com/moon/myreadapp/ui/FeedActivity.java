@@ -7,12 +7,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
+import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityFeedBinding;
 import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
+import com.moon.myreadapp.util.PreferenceUtils;
+import com.moon.myreadapp.util.ThemeUtils;
 
 
 public class FeedActivity extends BaseActivity {
@@ -22,8 +27,6 @@ public class FeedActivity extends BaseActivity {
     protected int getLayoutView() {
         return R.layout.activity_feed;
     }
-
-    boolean isFastScroll = false;
 
     private Toolbar toolbar;
 
@@ -78,6 +81,11 @@ public class FeedActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.content) {
             finish();
+        } else if (id == R.id.action_refresh){
+            XLog.d("onOptionsItemSelected:");
+            PreferenceUtils.getInstance(this)
+                    .saveParam(this.getString(R.string.set_theme), ThemeUtils.Theme.YELLOW.getIntValue());
+            XApplication.getInstance().bus.post(new UpdateUIEvent(UpdateUIEvent.THEME_CHANGE));
         }
         return super.onOptionsItemSelected(item);
     }

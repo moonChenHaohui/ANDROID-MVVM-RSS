@@ -218,7 +218,7 @@
 
 
     <declare-styleable name="ImageLinearLayout">
-        <attr name="imageMaxSize" format="integer"/>
+        <attr name="imageMaxSize" format="integer" />
     </declare-styleable>
 
     <style name="ButtomBarItem">

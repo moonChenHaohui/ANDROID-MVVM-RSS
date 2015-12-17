@@ -12,11 +12,11 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- bmob add -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".application.ReadApplication"
@@ -38,30 +38,40 @@
             android:name=".ui.FeedActivity"
             android:label="@string/title_activity_feed"
             android:launchMode="singleTop"
-            android:theme="@style/RedTheme"></activity>
+            android:theme="@style/RedTheme" />
         <activity
             android:name=".ui.ArticleActivity"
             android:label="@string/title_activity_article"
             android:launchMode="singleTop"
-            android:theme="@style/RedTheme"></activity>
-        <activity android:name=".ui.ArticleWebActivity"
-            android:launchMode="singleTop"></activity>
+            android:theme="@style/RedTheme" />
+        <activity
+            android:name=".ui.ArticleWebActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.SettingActivity"
             android:label="@string/title_activity_setting"
-            android:theme="@style/AppBaseTheme.Dark.NoActionBar"></activity>
+            android:theme="@style/AppBaseTheme.Dark.NoActionBar" />
         <activity
             android:name=".ui.LoginActivity"
-            android:theme="@style/AppBaseTheme.Dark.NoActionBar"></activity>
+            android:theme="@style/AppBaseTheme.Dark.NoActionBar" />
         <activity
             android:name=".ui.ImageBrowserActivity"
             android:label="@string/title_activity_image_browser"
-            android:theme="@style/ImageTheme"></activity>
+            android:theme="@style/ImageTheme" />
+
         <intent-filter>
             <category android:name="android.intent.category.DEFAULT" />
+
             <action android:name="android.intent.action.VIEW" />
+
             <data android:scheme="com.package.name" />
         </intent-filter>
+
+        <activity
+            android:name=".ui.AddFeedActivity"
+            android:label="@string/title_activity_add_feed"
+            android:theme="@style/RedTheme"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

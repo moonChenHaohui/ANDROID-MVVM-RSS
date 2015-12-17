@@ -15,10 +15,14 @@ import com.moon.appframework.core.XActivity;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.swipeback.SwipeBackLayout;
+import com.moon.myreadapp.common.event.UpdateFeedListEvent;
+import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.ThemeUtils;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
+
+import de.halfbit.tinybus.Subscribe;
 
 
 /**
@@ -129,7 +133,13 @@ public abstract class BaseActivity extends XActivity implements IView{
     @LayoutRes
     int getLayoutView();
 
+    @Subscribe
+    public void onUpdateEvent(UpdateUIEvent event) {
 
+        if (event.getStatus() == UpdateUIEvent.THEME_CHANGE) {
+            recreate();
+        }
+    }
 
     protected int getScreenHeight() {
         return findViewById(android.R.id.content).getHeight();

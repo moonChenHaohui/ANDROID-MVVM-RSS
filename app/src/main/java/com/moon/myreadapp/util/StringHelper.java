@@ -15,7 +15,7 @@ public class StringHelper {
         if (StringUtils.isEmpty(images)){
             return null;
         }
-        ArrayList<String> re = new ArrayList<>();
+        ArrayList<String> re = new ArrayList<String>();
         String[] result = images.split(SPLIT);
         for (String s : result){
             re.add(s);

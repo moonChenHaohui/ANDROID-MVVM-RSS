@@ -24,7 +24,7 @@ public class ToastQueueMgr extends Handler{
     private Queue<TastyToast> msgQueue;
 
     private ToastQueueMgr(){
-        msgQueue = new LinkedList<TastyToast>();
+        msgQueue = new LinkedList<>();
     }
 
     static synchronized ToastQueueMgr getInstance(){
