@@ -31,7 +31,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@color/txt_white" />
+                android:background="@color/txt_white"
+                app:tabTextColor="@color/txt_active"
+                app:tabSelectedTextColor="?attr/colorPrimary"
+                app:tabIndicatorColor="?attr/colorPrimary" />
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager

@@ -36,7 +36,9 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed,LvRecommendBindin
     protected BindingHolder<LvRecommendBinding> onCreateCoreViewHolder(ViewGroup parent, int viewType) {
         View convertView = mInflater.inflate(R.layout.lv_recommend, null);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0,convertView.getResources().getDimensionPixelSize(R.dimen.normal_padding),0,0);
         convertView.setLayoutParams(lp);
+
         LvRecommendBinding binding = LvRecommendBinding.bind(convertView);
         convertView.setTag(binding);
         BindingHolder mHolder = new BindingHolder(convertView);

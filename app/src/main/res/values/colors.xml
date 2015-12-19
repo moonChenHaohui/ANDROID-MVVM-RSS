@@ -15,6 +15,7 @@
     <color name="transparent">#00000000</color>
 
     <color name="divde_line">#CECECE</color>
+    <color name="divde_line_deep">#666</color>
 
     <color name="tab_bar_item_normal">#666</color>
     <color name="tab_bar_item_acvite">#11aa11</color>
