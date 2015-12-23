@@ -25,17 +25,15 @@ public class RssHelper {
 
     private static RssAtomFeedRetriever retriever;
 
-    public static RssAtomFeedRetriever getRetriever (){
-        if (null == retriever){
+    public static RssAtomFeedRetriever getRetriever() {
+        if (null == retriever) {
             retriever = new RssAtomFeedRetriever();
         }
         return retriever;
     }
 
 
-
-
-    public static synchronized void getMostRecentNews( final String feedUrl,IRssListener listener){
+    public static synchronized void getMostRecentNews(final String feedUrl, IRssListener listener) {
         if (listener == null) return;
 
         //TODO 这里使用threadtool or RxAndroid?
@@ -48,18 +46,16 @@ public class RssHelper {
      */
     public interface IRssListener {
 
-        void onSuccess (SyndFeed syndFeed);
+        void onSuccess(SyndFeed syndFeed);
 
         void onError(String msg);
     }
 
-    public static class RssTask extends AsyncTask<String, Integer, SyndFeed>
-    {
+    public static class RssTask extends AsyncTask<String, Integer, SyndFeed> {
         private SyndFeed feed;
         private IRssListener listener;
 
         String url;
-
 
 
         public RssTask(IRssListener listener) {
@@ -68,30 +64,30 @@ public class RssHelper {
 
 
         @Override
-        protected SyndFeed doInBackground(String... params)
-        {
+        protected SyndFeed doInBackground(String... params) {
             url = params[0];
-            if (!isURL(params[0])){
+            if (!isURL(params[0])) {
                 listener.onError("url 错误");
                 return null;
             }
             url = adapterURL(url);
             XLog.d(url);
-            try
-            {
-                feed =  getRetriever().retrieveFeed(url);
-            }
-            catch ( Exception e )
-            {
+            try {
+                feed = getRetriever().retrieveFeed(url);
+            } catch (Exception e) {
                 String ex = e.toString();
-                if(ex != null && ex != ""){
-                    Log.d("getMostRecentNews",ex);
+                if (ex != null && ex != "") {
+                    Log.d("getMostRecentNews", ex);
                     String[] array = ex.split("[\\D]+");
-                    String code = array[array.length-1];
+                    if (array == null || array.length == 0) {
+                        listener.onError("网络连接出错.");
+                        return null;
+                    }
+                    String code = array[array.length - 1];
                     int codeNumber = 404;
-                    try{
-                        codeNumber =  Integer.valueOf(code);
-                    } catch (Exception e1){
+                    try {
+                        codeNumber = Integer.valueOf(code);
+                    } catch (Exception e1) {
 
                     }
 
@@ -105,7 +101,7 @@ public class RssHelper {
         }
     }
 
-    public static boolean isURL(String str){
+    public static boolean isURL(String str) {
         if (str == null) return false;
         //转换为小写
         str = str.replace("  ", "");
@@ -124,9 +120,10 @@ public class RssHelper {
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();
     }
-    public static String adapterURL (String url){
-        String urls = url.replace(" ","").replace("\n|\r","").toLowerCase();
-        if (!urls.startsWith("http://") && !urls.startsWith("https://")){
+
+    public static String adapterURL(String url) {
+        String urls = url.replace(" ", "").replace("\n|\r", "").toLowerCase();
+        if (!urls.startsWith("http://") && !urls.startsWith("https://")) {
             urls = "http://" + urls;
         }
         return urls;

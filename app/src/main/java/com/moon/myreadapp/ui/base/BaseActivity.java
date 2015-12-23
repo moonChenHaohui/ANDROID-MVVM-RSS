@@ -11,13 +11,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XActivity;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.swipeback.SwipeBackLayout;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.common.event.UpdateUIEvent;
+import com.moon.myreadapp.constants.Constants;
+import com.moon.myreadapp.ui.WelcomeActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
+import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ThemeUtils;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
@@ -59,6 +64,7 @@ public abstract class BaseActivity extends XActivity implements IView{
         //event bus init
         XDispatcher.register(this);
         setContentViewAndBindVm(savedInstanceState);
+        checkEvent();
     }
 
     @Override
@@ -114,11 +120,11 @@ public abstract class BaseActivity extends XActivity implements IView{
     }
 
     private void showActivityInAnim() {
-        overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_remain);
+       // overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_remain);
     }
 
     private void showActivityExitAnim() {
-        overridePendingTransition(0, R.anim.base_slide_right_out);
+       // overridePendingTransition(0, R.anim.base_slide_right_out);
     }
 
     @Override
@@ -143,5 +149,18 @@ public abstract class BaseActivity extends XActivity implements IView{
 
     protected int getScreenHeight() {
         return findViewById(android.R.id.content).getHeight();
+    }
+
+    protected void checkEvent(){
+        boolean isFirstUse = PreferenceUtils.getInstance(this).getBooleanParam(Constants.APP_IS_FIRST_USE,true);
+        //第一次进入
+        //isFirstUse = true;
+        if (isFirstUse){
+            XLog.d("checkEvent: first");
+            XDispatcher.from(this).dispatch(new RouterAction(WelcomeActivity.class,true));
+            PreferenceUtils.getInstance(this).saveParam(Constants.APP_IS_FIRST_USE,false);
+        }else {
+            XLog.d("checkEvent: not first");
+        }
     }
 }

@@ -32,4 +32,14 @@ public class Constants {
     public static final String IMAGES_NOW_POSITION = "images_now_position";
 
 
+    /**
+     * 配置类
+     */
+
+    /**
+     * app是否第一次进入
+     */
+    public static final String APP_IS_FIRST_USE = "app_is_first_use";
+
+
 }

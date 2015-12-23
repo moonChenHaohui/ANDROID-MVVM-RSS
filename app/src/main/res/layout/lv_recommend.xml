@@ -10,7 +10,7 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/square_background"
@@ -19,19 +19,41 @@
         android:minHeight="@dimen/normal_list_item_small"
         android:orientation="horizontal">
         <com.joanzapata.iconify.widget.IconTextView
-            android:layout_width="0dp"
+            android:id="@+id/feed_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/text_drak"
             android:text="@{title}"
-            android:paddingRight="@dimen/normal_half_padding"/>
+            android:paddingRight="@dimen/normal_half_padding"
+            android:layout_alignParentLeft="true"
+            android:layout_alignLeft="@+id/sub_btn"
+            android:layout_toLeftOf="@+id/sub_btn"
+            android:layout_toStartOf="@+id/sub_btn" />
+        <com.joanzapata.iconify.widget.IconTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/txt_active"
+            android:text="@{title}"
+            android:paddingRight="@dimen/normal_half_padding"
+            android:layout_alignParentLeft="true"
+            android:layout_alignLeft="@+id/sub_btn"
+            android:layout_below="@+id/feed_title"
+            android:layout_toLeftOf="@+id/sub_btn"
+            android:layout_toStartOf="@+id/sub_btn" />
         <com.joanzapata.iconify.widget.IconButton
+            android:id="@+id/sub_btn"
             android:layout_width="64dp"
-            android:layout_height="32dp"
+            android:layout_height="match_parent"
             android:background="@drawable/button_corners"
             android:textColor="@color/txt_white"
-            android:text="订阅"/>
-    </LinearLayout>
+            android:text="订阅"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 </layout>

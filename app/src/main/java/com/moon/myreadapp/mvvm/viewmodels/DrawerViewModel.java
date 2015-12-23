@@ -14,6 +14,7 @@ import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.mvvm.models.dao.UserDao;
+import com.moon.myreadapp.ui.AddFeedActivity;
 import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.util.DBHelper;
@@ -55,15 +56,19 @@ public class DrawerViewModel extends BaseViewModel {
         menus.add(new MenuItem.Builder().title("推荐频道").build());
         menus.add(new MenuItem.Builder().title("我的收藏").build());
         menus.add(new MenuItem.Builder().title("最近阅读").build());
-        menus.add(new MenuItem.Builder().title("离线阅读").build());
 
         drawerAdapter = new DrawerAdapter(menus);
 
         drawerItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0) {
-                    DialogFractory.create((Activity)mView, DialogFractory.Type.AddSubscrible).show();
+                switch (position){
+                    case 0:
+                        DialogFractory.create((Activity)mView, DialogFractory.Type.AddSubscrible).show();
+                        break;
+                    case 1:
+                        XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class,true));
+                        break;
                 }
             }
         };

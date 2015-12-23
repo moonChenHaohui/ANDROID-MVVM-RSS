@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="model"
+            type="com.moon.myreadapp.mvvm.viewmodels.AddFeedViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -43,14 +46,17 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_menu_add"
-            app:layout_anchor="@id/viewpager"
-            app:layout_anchorGravity="bottom|end" />
 
+        <com.joanzapata.iconify.widget.IconTextView
+            style="@style/ButtomBarItem"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/add_feed_btn"
+            app:layout_anchor="@id/viewpager"
+            android:textSize="@dimen/text_h3"
+            android:background="@drawable/sub_btn_background"
+            android:elevation="4dp"
+            android:onClick="@{model.onClickAddSub}"
+            app:layout_anchorGravity="bottom|end"/>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

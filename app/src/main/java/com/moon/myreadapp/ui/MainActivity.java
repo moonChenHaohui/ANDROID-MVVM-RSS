@@ -200,5 +200,4 @@ public class MainActivity extends BaseActivity implements IMainView {
         return toolbar;
     }
 
-
 }

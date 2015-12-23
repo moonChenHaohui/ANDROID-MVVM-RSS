@@ -72,7 +72,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         initToolBar(toolbar);
         setTitle(getString(R.string.action_sign_in));
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.account);
+
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -114,6 +115,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             return;
         }
 
+        //TODO 这里是什么意思
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -276,6 +278,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
+        //从cursor中取出配置...原来是这样用,而不是开线程来做.但是原理是一样的
 
         addEmailsToAutoComplete(emails);
     }

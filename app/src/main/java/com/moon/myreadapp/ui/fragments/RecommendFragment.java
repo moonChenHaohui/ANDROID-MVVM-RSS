@@ -3,7 +3,6 @@ package com.moon.myreadapp.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.mvvm.viewmodels.AddFeedViewModel;
-import com.moon.myreadapp.ui.fragments.dummy.DummyContent;
 
 /**
  * Created by moon on 15/12/17.
@@ -38,6 +36,7 @@ public class RecommendFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     public RecommendFragment createWithViewModel(AddFeedViewModel addFeedViewModel) {
         this.addFeedViewModel = addFeedViewModel;
         return this;
@@ -64,7 +63,6 @@ public class RecommendFragment extends Fragment {
         }
         return view;
     }
-
 
 
 }

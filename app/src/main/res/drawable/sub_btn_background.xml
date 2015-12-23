@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<item >
+    <selector>
+        <item android:state_pressed="true" android:drawable="@drawable/abc_list_pressed_holo_dark" />
+        <item  android:drawable="@android:color/transparent" />
+    </selector>
+</item>
+    <item android:top="1px">
+        <shape>
+            <stroke
+                android:width="1px"
+                android:color="@color/background_selected"/>
+        </shape>
+    </item>
+</layer-list>

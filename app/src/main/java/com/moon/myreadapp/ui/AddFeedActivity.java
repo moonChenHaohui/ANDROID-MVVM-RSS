@@ -56,6 +56,8 @@ public class AddFeedActivity extends BaseActivity {
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, getLayoutView());
         addFeedViewModel = new AddFeedViewModel(this);
+        binding.setModel(addFeedViewModel);
+
         binding.viewpager.setAdapter(addFeedViewModel.getAdapter());//给ViewPager设置适配器
         binding.tablayout.setupWithViewPager(binding.viewpager);//将TabLayout和ViewPager关联起来。
         binding.tablayout.setTabsFromPagerAdapter(addFeedViewModel.getAdapter());//给Tabs设置适配器

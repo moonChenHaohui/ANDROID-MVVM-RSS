@@ -27,4 +27,6 @@
     <color name="alert">#e74c3c</color>
     <color name="message">#3498db</color>
 
+    <color name="black_overlay">#66000000</color>
+
 </resources>

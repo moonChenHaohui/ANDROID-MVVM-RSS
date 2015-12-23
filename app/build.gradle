@@ -36,5 +36,5 @@ dependencies {
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     compile 'de.greenrobot:greendao:2.0.0'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.0+'
+    compile 'com.android.support:cardview-v7:23.1.1'
 }

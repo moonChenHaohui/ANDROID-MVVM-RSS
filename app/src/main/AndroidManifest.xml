@@ -70,8 +70,13 @@
         <activity
             android:name=".ui.AddFeedActivity"
             android:label="@string/title_activity_add_feed"
-            android:theme="@style/RedTheme"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:theme="@style/RedTheme" />
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_welcome"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

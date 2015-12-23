@@ -1,48 +1,90 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context="com.moon.myreadapp.ui.LoginActivity">
-    <include layout="@layout/common_tool_bar" />
-    <!-- Login progress -->
-    <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" android:visibility="gone" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
 
-    <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin">
+    </data>
 
-        <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:context="com.moon.myreadapp.ui.LoginActivity">
+        <include layout="@layout/common_tool_bar" />
+        <!-- Login progress -->
+        <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" android:visibility="gone" />
 
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/activity_horizontal_margin">
 
-                <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress" android:maxLines="1"
-                    android:singleLine="true" />
+            <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical">
 
-            </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <AutoCompleteTextView android:id="@+id/account" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:hint="@string/prompt_account"
+                        android:inputType="textAutoComplete" android:maxLines="1"
+                        android:singleLine="true" />
 
-                <EditText android:id="@+id/password" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified" android:inputType="textPassword"
-                    android:maxLines="1" android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
 
-            </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                    <EditText android:id="@+id/password" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:hint="@string/prompt_password"
+                        android:imeActionId="@+id/login"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionUnspecified" android:inputType="textPassword"
+                        android:maxLines="1" android:singleLine="true" />
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                </android.support.design.widget.TextInputLayout>
+
+                <Button android:id="@+id/email_sign_in_button"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" android:text="@string/action_sign_in"
+                    android:background="?attr/colorPrimary"
+                    android:textColor="@color/txt_white" />
+
+                <include
+                    android:layout_marginTop="@dimen/normal_padding"
+                    android:layout_marginBottom="@dimen/normal_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    layout="@layout/common_divider"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="第三方登录:"
+                    android:textSize="@dimen/text_h3"
+                    android:textColor="?attr/colorAccent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="微信"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="微博"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="另外"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</layout>
