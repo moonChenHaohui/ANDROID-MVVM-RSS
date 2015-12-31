@@ -8,11 +8,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -39,6 +41,8 @@ import com.nineoldandroids.view.ViewHelper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
+import java.util.LinkedList;
+import java.util.List;
 
 import de.halfbit.tinybus.Subscribe;
 
@@ -79,11 +83,82 @@ public abstract class BaseActivity extends XActivity implements IView{
 
 
     private void initLayout(){
+
+        //这个文件需要创建出来,截图使用
+        mFileTemp = new File(getCacheDir(), WINDOWBITMAP);
+
         //如果不是栈底则注入
         if(!isTaskRoot()){
             //通过反射来改变SlidingPanelayout的值
             try {
-                slidingPaneLayout = new SlidingPaneLayout(this);
+                slidingPaneLayout = new SlidingPaneLayout(this){
+
+                    /**
+                     * 需要处理一下页面内的viewpager
+                     */
+                    private List<ViewPager> mViewPagers = new LinkedList<ViewPager>();
+
+                    @Override
+                    public boolean onInterceptTouchEvent(MotionEvent ev) {
+                        //处理ViewPager冲突问题
+                        ViewPager mViewPager = getTouchViewPager(mViewPagers, ev);
+                        // Log.i(TAG, "mViewPager = " + mViewPager);
+
+                        if(mViewPager != null && mViewPager.getCurrentItem() != 0){
+                            //如果有viewpager,而且不是第一页,就给viewpager代理.
+                            //TODO 更好的逻辑应该是判断一下滑动速度.快滑 返回;慢滑 切换viewpager
+                            return false;
+                        }
+                        return super.onInterceptTouchEvent(ev);
+                    }
+                    /**
+                     * 返回我们touch的ViewPager
+                     * @param mViewPagers
+                     * @param ev
+                     * @return
+                     */
+                    private ViewPager getTouchViewPager(List<ViewPager> mViewPagers, MotionEvent ev){
+                        if(mViewPagers == null || mViewPagers.size() == 0){
+                            return null;
+                        }
+                        Rect mRect = new Rect();
+                        for(ViewPager v : mViewPagers){
+                            v.getHitRect(mRect);
+
+                            if(mRect.contains((int)ev.getX(), (int)ev.getY())){
+                                return v;
+                            }
+                        }
+                        return null;
+                    }
+                    @Override
+                    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+                        super.onLayout(changed, l, t, r, b);
+                        if (changed) {
+                            getAlLViewPager(mViewPagers, this);
+                            //Log.i(TAG, "ViewPager size = " + mViewPagers.size());
+                        }
+                    }
+                    /**
+                     * 获取SwipeBackLayout里面的ViewPager的集合
+                     * @param mViewPagers
+                     * @param parent
+                     */
+                    private void getAlLViewPager(List<ViewPager> mViewPagers, ViewGroup parent){
+                        int childCount = parent.getChildCount();
+                        for(int i=0; i<childCount; i++){
+                            View child = parent.getChildAt(i);
+                            if(child instanceof ViewPager){
+                                mViewPagers.add((ViewPager)child);
+                            }else if(child instanceof ViewGroup){
+                                getAlLViewPager(mViewPagers, (ViewGroup)child);
+                            }
+                        }
+                    }
+
+                };
+
+
                 //改变 mOverhangSize
                 Field f_overHang = SlidingPaneLayout.class.getDeclaredField("mOverhangSize");
                 f_overHang.setAccessible(true);
@@ -113,7 +188,6 @@ public abstract class BaseActivity extends XActivity implements IView{
                 e.printStackTrace();
             }
 
-            mFileTemp = new File(getCacheDir(), WINDOWBITMAP);
             defaultTranslationX = ScreenUtils.dpToPx(defaultTranslationX);
             shadowWidth = ScreenUtils.dpToPx(shadowWidth);
             //behindframeLayout
@@ -161,7 +235,6 @@ public abstract class BaseActivity extends XActivity implements IView{
             behindImageView.setScaleType(ImageView.ScaleType.FIT_XY);
             behindImageView.setImageBitmap(getBitmap());
         }
-
     }
 
 
@@ -295,8 +368,15 @@ public abstract class BaseActivity extends XActivity implements IView{
             decorView.destroyDrawingCache();
             FileOutputStream out = new FileOutputStream(mFileTemp);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            Bitmap big = getBitmap();
+            if (big == null){
+                Log.e(TAG, "statusBarHeight:big null" );
+            } else {
+                Log.e(TAG, "statusBarHeight:big " + big.toString());
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "statusBarHeight:" + e.toString());
+
         }
     }
 }
