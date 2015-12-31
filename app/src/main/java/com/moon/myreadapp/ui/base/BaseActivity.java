@@ -3,13 +3,21 @@ package com.moon.myreadapp.ui.base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -23,60 +31,155 @@ import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.WelcomeActivity;
 import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.PreferenceUtils;
+import com.moon.myreadapp.util.ScreenUtils;
 import com.moon.myreadapp.util.ThemeUtils;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.lang.reflect.Field;
 
 import de.halfbit.tinybus.Subscribe;
 
 
 /**
- * Created by moon on 15/10/18.
+ * Created by moon on 15/12/30.
  *
  *
+ * 附带左滑返回的baseActivity.采用了SlidingPaneLayout来实现
  *
- * 附带实现了左滑finish activity
- * --来自瑞克大神blog:http://blog.csdn.net/xiaanming/article/details/20934541:
- * --注意点:activity需要设置主题透明:
- * <p>
- * <item name="android:windowBackground">@color/transparent</item>
- * 　　<item name="android:windowIsTranslucent">true</item>
- * 　　<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
- * </p>
- * 改动了一下生效区域,在
- * SwipeBackLayout.SCROLL_SIZE ;
- * SwipeBackLayout.ATREA_PERCETAGE;
- * 增加了对栈底activity的判断,使不会直接滑退app
+ *
  */
 public abstract class BaseActivity extends XActivity implements IView{
 
 
-    protected SwipeBackLayout layout;
+
+
+    private final static String TAG = BaseActivity.class.getSimpleName();
+    private final static String WINDOWBITMAP = "screenshots.jpg";
+    private File mFileTemp;
+    private SlidingPaneLayout slidingPaneLayout;
+    private FrameLayout frameLayout;
+    private ImageView behindImageView;
+    private ImageView shadowImageView;
+    private int defaultTranslationX = 100;
+    private int shadowWidth = 20;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         //配置主题
         initTheme();
+
         super.onCreate(savedInstanceState);
-        layout = (SwipeBackLayout) LayoutInflater.from(this).inflate(
-                R.layout.activity_base, null);
-        layout.attachToActivity(this);
-        //event bus init
-        XDispatcher.register(this);
+
         setContentViewAndBindVm(savedInstanceState);
-        checkEvent();
     }
 
+
+    private void initLayout(){
+        //如果不是栈底则注入
+        if(!isTaskRoot()){
+            //通过反射来改变SlidingPanelayout的值
+            try {
+                slidingPaneLayout = new SlidingPaneLayout(this);
+                //改变 mOverhangSize
+                Field f_overHang = SlidingPaneLayout.class.getDeclaredField("mOverhangSize");
+                f_overHang.setAccessible(true);
+                f_overHang.set(slidingPaneLayout, 0);
+                slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
+                    @Override
+                    public void onPanelClosed(View view) {
+
+                    }
+
+                    @Override
+                    public void onPanelOpened(View view) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                    }
+
+                    @Override
+                    public void onPanelSlide(View view, float v) {
+                        Log.e(TAG, "onPanelSlide ：" + v);
+                        //duang duang duang 你可以在这里加入很多特效
+                        behindImageView.setTranslationX(v * defaultTranslationX - defaultTranslationX);
+
+                    }
+                });
+               slidingPaneLayout.setSliderFadeColor(getResources().getColor(android.R.color.transparent));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            mFileTemp = new File(getCacheDir(), WINDOWBITMAP);
+            defaultTranslationX = ScreenUtils.dpToPx(defaultTranslationX);
+            shadowWidth = ScreenUtils.dpToPx(shadowWidth);
+            //behindframeLayout
+            FrameLayout behindframeLayout = new FrameLayout(this);
+            behindImageView = new ImageView(this);
+            behindImageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            behindframeLayout.addView(behindImageView, 0);
+
+            //containerLayout
+//            LinearLayout containerLayout = new LinearLayout(this);
+//            containerLayout.setOrientation(LinearLayout.HORIZONTAL);
+//            containerLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//            containerLayout.setLayoutParams(new ViewGroup.LayoutParams(getWindowManager().getDefaultDisplay().getWidth() + shadowWidth, ViewGroup.LayoutParams.MATCH_PARENT));
+//            //you view container
+//            frameLayout = new FrameLayout(this);
+//            frameLayout.setBackgroundColor(getResources().getColor(android.R.color.white));
+            //frameLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+            //add shadow
+//            shadowImageView = new ImageView(this);
+//            shadowImageView.setBackgroundResource(R.drawable.shadow_left);
+//            shadowImageView.setLayoutParams(new LinearLayout.LayoutParams(shadowWidth, LinearLayout.LayoutParams.MATCH_PARENT));
+//            containerLayout.addView(shadowImageView);
+            //containerLayout.addView(frameLayout);
+            //containerLayout.setTranslationX(-shadowWidth);
+            //添加两个view
+            slidingPaneLayout.addView(behindframeLayout, 0);
+            //slidingPaneLayout.addView(containerLayout, 1);
+
+
+            //替换decorview
+            ViewGroup decor = (ViewGroup) getWindow().getDecorView();
+            ViewGroup decorChild = (ViewGroup) decor.getChildAt(0);
+            decorChild.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            decor.removeView(decorChild);
+//            frameLayout.removeAllViews();
+//            frameLayout.addView(decorChild);
+
+            slidingPaneLayout.addView(decorChild, 1);
+            decor.addView(slidingPaneLayout);
+
+
+
+            //设置图片
+            behindImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            behindImageView.setImageBitmap(getBitmap());
+        }
+
+    }
+
+
     @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
-        //overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_remain);
+    public void startActivity(Intent intent, Bundle options) {
+        screenshots(false);
+        super.startActivity(intent, options);
+        XLog.d("startActivity");
     }
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         injectView(this);
+        initLayout();
+        //event bus init
+        XDispatcher.register(this);
+        checkEvent();
     }
 
     private void initTheme() {
@@ -119,19 +222,6 @@ public abstract class BaseActivity extends XActivity implements IView{
         XDispatcher.unregister(this);
     }
 
-    private void showActivityInAnim() {
-       // overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_remain);
-    }
-
-    private void showActivityExitAnim() {
-       // overridePendingTransition(0, R.anim.base_slide_right_out);
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        //showActivityExitAnim();
-    }
 
     protected abstract Toolbar getToolBar();
 
@@ -157,10 +247,56 @@ public abstract class BaseActivity extends XActivity implements IView{
         //isFirstUse = true;
         if (isFirstUse){
             XLog.d("checkEvent: first");
-            XDispatcher.from(this).dispatch(new RouterAction(WelcomeActivity.class,true));
-            PreferenceUtils.getInstance(this).saveParam(Constants.APP_IS_FIRST_USE,false);
+            XDispatcher.from(this).dispatch(new RouterAction(WelcomeActivity.class, true));
+            PreferenceUtils.getInstance(this).saveParam(Constants.APP_IS_FIRST_USE, false);
         }else {
             XLog.d("checkEvent: not first");
+        }
+    }
+
+
+    /**
+     * 取得视觉差背景图
+     *
+     * @return
+     */
+    public Bitmap getBitmap() {
+        return BitmapFactory.decodeFile(mFileTemp.getAbsolutePath());
+    }
+
+
+
+    /**
+     * 对当前界面进行截图保存,这个动作应该在start另外一个act之前做好
+     * @param isFullScreen
+     */
+    public void screenshots(boolean isFullScreen) {
+        try {
+            //View是你需要截图的View
+            View decorView = getWindow().getDecorView();
+            decorView.setDrawingCacheEnabled(true);
+            decorView.buildDrawingCache();
+            Bitmap b1 = decorView.getDrawingCache();
+            // 获取状态栏高度 /
+            Rect frame = new Rect();
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+            int statusBarHeight = frame.top;
+            Log.e(TAG, "statusBarHeight:" + statusBarHeight);
+            // 获取屏幕长和高 Get screen width and height
+            int width = getWindowManager().getDefaultDisplay().getWidth();
+            int height = getWindowManager().getDefaultDisplay().getHeight();
+            // 去掉标题栏 Remove the statusBar Height
+            Bitmap bitmap;
+            if (isFullScreen) {
+                bitmap = Bitmap.createBitmap(b1, 0, 0, width, height);
+            } else {
+                bitmap = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight);
+            }
+            decorView.destroyDrawingCache();
+            FileOutputStream out = new FileOutputStream(mFileTemp);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

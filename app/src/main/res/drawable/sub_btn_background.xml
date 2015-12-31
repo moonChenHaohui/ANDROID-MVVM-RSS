@@ -6,7 +6,7 @@
 <item >
     <selector>
         <item android:state_pressed="true" android:drawable="@drawable/abc_list_pressed_holo_dark" />
-        <item  android:drawable="@android:color/transparent" />
+        <item  android:drawable="@color/txt_white" />
     </selector>
 </item>
     <item android:top="1px">

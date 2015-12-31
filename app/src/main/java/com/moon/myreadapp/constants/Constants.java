@@ -6,6 +6,8 @@ package com.moon.myreadapp.constants;
 public class Constants {
 
 
+    public static boolean DEBUG = true;
+
     /**
      * Bmob APP id
      */

@@ -60,7 +60,10 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this, getLayoutView());
+
+        binding = DataBindingUtil.inflate(LayoutInflater.from(this),getLayoutView(),null,false);
+
+        setContentView(binding.getRoot());
 
         this.drawerViewModel = new DrawerViewModel(this);
         binding.setDrawerViewModel(drawerViewModel);

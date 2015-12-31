@@ -42,6 +42,7 @@ public class XRouter {
         Intent intent = new Intent(context, clazz);
         intent.putExtras(args);
         context.startActivity(intent);
+
     }
 
     private static Object getQueryParameters(String key){

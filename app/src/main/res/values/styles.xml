@@ -7,11 +7,11 @@
         <item name="windowActionBar">false</item>
         <!--设置activity透明-->
         　
-        <item name="android:windowBackground">@color/transparent</item>
-        　　
-        <item name="android:windowIsTranslucent">true</item>
-        　　
-        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <!--<item name="android:windowBackground">@color/transparent</item>-->
+        <!--　　-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--　　-->
+        <!--<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>-->
         <!--end-->
         <item name="windowNoTitle">false</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
@@ -33,11 +33,11 @@
         <item name="windowNoTitle">true</item>
         <!--设置activity透明-->
         　
-        <item name="android:windowBackground">@color/transparent</item>
-        　　
-        <item name="android:windowIsTranslucent">true</item>
-        　　
-        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <!--<item name="android:windowBackground">@color/transparent</item>-->
+        <!--　　-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--　　-->
+        <!--<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>-->
         <!--end-->
 
         <item name="android:textColorPrimary">@color/text_color_primary</item>
@@ -203,7 +203,7 @@
     <style name="ShareDialog" parent="BaseDialogTheme">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <item name="android:windowIsFloating">true</item>
     </style>
 
@@ -241,5 +241,11 @@
 
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
+    </style>
+
+
+    <style name="ButtomPopupAnimStyle" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
 </resources>

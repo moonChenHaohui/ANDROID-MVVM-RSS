@@ -12,6 +12,7 @@ import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.common.components.dialog.ShareDialog;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleWebActivity;
@@ -140,6 +141,7 @@ public class ArticleViewModel extends BaseViewModel {
                 break;
             case R.id.share:
                 //分享
+                new ShareDialog(mView).showWithView(view);
                 break;
         }
     }

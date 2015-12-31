@@ -55,7 +55,7 @@
             app:layout_anchor="@id/viewpager"
             android:textSize="@dimen/text_h3"
             android:background="@drawable/sub_btn_background"
-            android:elevation="4dp"
+            android:elevation="2dp"
             android:onClick="@{model.onClickAddSub}"
             app:layout_anchorGravity="bottom|end"/>
     </android.support.design.widget.CoordinatorLayout>
