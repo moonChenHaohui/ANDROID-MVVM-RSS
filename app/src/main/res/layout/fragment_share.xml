@@ -4,10 +4,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
-        <variable
-            name="drawerViewModel"
-            type="com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel" />
+
     </data>
 
     <LinearLayout
@@ -15,20 +12,32 @@
         android:elevation="4dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/background_gray"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/normal_list_item_small"
-            android:text="分享到"
+            android:text="@string/share_title"
             android:gravity="center"
-            android:textColor="@color/txt_white"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_h2"
             android:textStyle="bold"/>
-        <Button
+        <include layout="@layout/common_divider"/>
+        <GridView
+            android:padding="@dimen/normal_padding"
+            android:id="@+id/gridview"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="hello"/>
-
+            android:layout_height="wrap_content"
+            android:listSelector="@drawable/selectable_background"
+            android:numColumns="auto_fit"
+            android:columnWidth="@dimen/normal_list_item_regular"  />
+        <include layout="@layout/common_divider"/>
+        <Button
+            android:background="@drawable/selectable_background"
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_list_item_small"
+            android:text="@string/share_cancel"
+            android:layout_gravity="center"/>
     </LinearLayout>
 </layout>

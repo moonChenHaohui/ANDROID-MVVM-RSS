@@ -1,7 +1,6 @@
 package com.moon.myreadapp.ui.base;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,31 +11,24 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XActivity;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.components.swipeback.SwipeBackLayout;
-import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.WelcomeActivity;
-import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ScreenUtils;
 import com.moon.myreadapp.util.ThemeUtils;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,7 +47,7 @@ import de.halfbit.tinybus.Subscribe;
  *
  *
  */
-public abstract class BaseActivity extends XActivity implements IView{
+public abstract class BaseActivity extends XActivity{
 
 
 
@@ -194,6 +186,7 @@ public abstract class BaseActivity extends XActivity implements IView{
             FrameLayout behindframeLayout = new FrameLayout(this);
             behindImageView = new ImageView(this);
             behindImageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            behindframeLayout.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
             behindframeLayout.addView(behindImageView, 0);
 
             //containerLayout
@@ -231,12 +224,13 @@ public abstract class BaseActivity extends XActivity implements IView{
 
 
 
-            //设置图片
-            behindImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            //设置图片 这里设置原图大小比较好.像如果出现输入法,可能会改变容器的大小
+            behindImageView.setScaleType(ImageView.ScaleType.MATRIX);
             behindImageView.setImageBitmap(getBitmap());
         }
     }
 
+    protected abstract void setContentViewAndBindVm(Bundle savedInstanceState);
 
     @Override
     public void startActivity(Intent intent, Bundle options) {
@@ -354,7 +348,7 @@ public abstract class BaseActivity extends XActivity implements IView{
             Rect frame = new Rect();
             getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
             int statusBarHeight = frame.top;
-            Log.e(TAG, "statusBarHeight:" + statusBarHeight);
+            //Log.e(TAG, "statusBarHeight:" + statusBarHeight);
             // 获取屏幕长和高 Get screen width and height
             int width = getWindowManager().getDefaultDisplay().getWidth();
             int height = getWindowManager().getDefaultDisplay().getHeight();
@@ -368,12 +362,12 @@ public abstract class BaseActivity extends XActivity implements IView{
             decorView.destroyDrawingCache();
             FileOutputStream out = new FileOutputStream(mFileTemp);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            Bitmap big = getBitmap();
-            if (big == null){
-                Log.e(TAG, "statusBarHeight:big null" );
-            } else {
-                Log.e(TAG, "statusBarHeight:big " + big.toString());
-            }
+//            Bitmap big = getBitmap();
+//            if (big == null){
+//                Log.e(TAG, "statusBarHeight:big null" );
+//            } else {
+//                Log.e(TAG, "statusBarHeight:big " + big.toString());
+//            }
         } catch (Exception e) {
             Log.e(TAG, "statusBarHeight:" + e.toString());
 

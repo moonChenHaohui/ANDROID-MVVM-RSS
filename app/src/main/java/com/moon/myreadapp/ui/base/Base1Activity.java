@@ -17,7 +17,6 @@ import com.moon.myreadapp.common.components.swipeback.SwipeBackLayout;
 import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.WelcomeActivity;
-import com.moon.myreadapp.ui.base.IViews.IView;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ThemeUtils;
 
@@ -42,7 +41,7 @@ import de.halfbit.tinybus.Subscribe;
  * SwipeBackLayout.ATREA_PERCETAGE;
  * 增加了对栈底activity的判断,使不会直接滑退app
  */
-public abstract class Base1Activity extends XActivity implements IView{
+public abstract class Base1Activity extends XActivity{
 
 
     protected SwipeBackLayout layout;
@@ -60,11 +59,10 @@ public abstract class Base1Activity extends XActivity implements IView{
         setContentViewAndBindVm(savedInstanceState);
         checkEvent();
     }
-
+    abstract void setContentViewAndBindVm(Bundle savedInstanceState);
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-        //overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_remain);
     }
 
     @Override

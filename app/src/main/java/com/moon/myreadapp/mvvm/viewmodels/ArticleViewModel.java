@@ -80,9 +80,6 @@ public class ArticleViewModel extends BaseViewModel {
 
     }
 
-    /**
-     * 用户点击登陆
-     */
     public void onClickButtomBar(View view) {
         if (!(view instanceof IconTextView)) {
             return;
@@ -102,13 +99,13 @@ public class ArticleViewModel extends BaseViewModel {
                 view.getLocationOnScreen(position);
                 //屏幕宽度- (该控件位置+控件宽度) = 移动的距离    --控件右边贴边需要移动的距离
                 int hideSize = ScreenUtils.getDisplayMetrics().widthPixels - (position[0] + view.getWidth());
-                float alpha = 0.75f;
+                //float alpha = 0.75f;
                 com.nineoldandroids.animation.AnimatorSet set = new com.nineoldandroids.animation.AnimatorSet();
                 set.playTogether(
                         //位置平移
                         ObjectAnimator.ofFloat(view.getParent(), "translationX", isOpen ? hideSize : 0).setDuration(500),
                         //透明度
-                        ObjectAnimator.ofFloat(view.getParent(), "alpha", (isOpen ? 1 : alpha), (isOpen ? alpha : 1)),
+                        //ObjectAnimator.ofFloat(view.getParent(), "alpha", (isOpen ? 1 : alpha), (isOpen ? alpha : 1)),
                         //图标旋转
                         ObjectAnimator.ofFloat(view, "rotation", 0 + (isOpen ? 0 : 180), 180 + (isOpen ? 0 : 180))
                 );

@@ -102,7 +102,7 @@ public class SubDialog extends MaterialDialog {
                 }
             }
         });
-        setNegativeButton(R.string.dialog_sub_cacel, new View.OnClickListener() {
+        setNegativeButton(R.string.dialog_sub_cancel, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
