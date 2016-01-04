@@ -11,6 +11,8 @@ import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
+import com.moon.myreadapp.common.event.UpdateArticleEvent;
+import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityFeedBinding;
@@ -18,6 +20,8 @@ import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ThemeUtils;
+
+import de.halfbit.tinybus.Subscribe;
 
 
 public class FeedActivity extends BaseActivity {

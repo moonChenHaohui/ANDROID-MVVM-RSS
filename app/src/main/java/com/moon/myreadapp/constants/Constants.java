@@ -43,5 +43,7 @@ public class Constants {
      */
     public static final String APP_IS_FIRST_USE = "app_is_first_use";
 
+    public static final String ARTICLE_FONT_SIZE = "article_font_size";
+
 
 }

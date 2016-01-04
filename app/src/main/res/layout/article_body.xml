@@ -55,7 +55,7 @@
                     android:text="@{@string/detail_info(articleViewModel.article.feed.title,articleViewModel.article.creator)}"
                     android:singleLine="true"
                     android:textColor="@color/txt_black"
-                    android:layout_marginBottom="@dimen/default_padding_bottom"
+                    android:layout_marginBottom="@dimen/normal_padding"
                     android:textSize="@dimen/text_h4" />
             </LinearLayout>
 
@@ -78,7 +78,7 @@
                 android:layout_marginTop="@dimen/normal_half_padding"
                 android:gravity="left|top"
                 android:background="@null"
-                android:lineSpacingExtra="5dp"
+                android:lineSpacingMultiplier="1.6"
                 android:textColor="@color/txt_black"
                 android:textColorLink="?attr/colorAccent"
                 android:padding="@dimen/normal_padding"

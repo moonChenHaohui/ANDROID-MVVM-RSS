@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 连框颜色值 --><item>
+    <shape>
+        <solid android:color="@color/divde_line" />
+    </shape>
+</item>
+    <!-- 主体背景颜色值 -->
+    <item android:bottom="1dp">
+        <shape>
+            <solid android:color="@color/background_gray" />
+        </shape>
+    </item>
+</layer-list> 

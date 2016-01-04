@@ -15,8 +15,8 @@
         <shape>
             <padding android:left="@dimen/normal_padding"
                 android:right="@dimen/normal_padding"
-                android:top="@dimen/default_padding_top"
-                android:bottom="@dimen/default_padding_bottom"/>
+                android:top="@dimen/normal_padding"
+                android:bottom="@dimen/normal_padding"/>
         </shape>
         <selector>
             <item android:state_pressed="true" android:drawable="@drawable/abc_list_pressed_holo_dark" />

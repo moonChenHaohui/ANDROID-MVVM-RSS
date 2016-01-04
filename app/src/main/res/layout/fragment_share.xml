@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:listSelector="@drawable/selectable_background"
             android:numColumns="auto_fit"
-            android:columnWidth="@dimen/normal_list_item_regular"  />
+            android:columnWidth="86dp"  />
         <include layout="@layout/common_divider"/>
         <Button
             android:background="@drawable/selectable_background"
@@ -38,6 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/normal_list_item_small"
             android:text="@string/share_cancel"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/text_h3"
             android:layout_gravity="center"/>
     </LinearLayout>
 </layout>

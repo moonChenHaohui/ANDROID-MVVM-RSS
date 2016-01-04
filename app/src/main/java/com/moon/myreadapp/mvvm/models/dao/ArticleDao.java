@@ -21,7 +21,7 @@ public class ArticleDao extends AbstractDao<Article, Long> {
     public static final String TABLENAME = "ARTICLE";
 
     /**
-     * Properties of entity Article.<br/>
+     * Properties of entity UpdateArticleEvent.<br/>
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {

@@ -22,7 +22,6 @@
             android:layout_height="match_parent"
             style="@style/ButtomBarItem"
             android:onClick="@{articleViewModel.onClickButtomBar}"
-            android:textColor="@color/txt_active"
             android:text="{fa-arrow-right}"/>
 
         <com.joanzapata.iconify.widget.IconTextView
@@ -42,13 +41,6 @@
             android:text="{fa-font}"/>
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/share"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            style="@style/ButtomBarItem"
-            android:onClick="@{articleViewModel.onClickButtomBar}"
-            android:text="{fa-share}"/>
-        <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/more"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/ButtomBarItem"

@@ -56,11 +56,8 @@ public abstract class BaseActivity extends XActivity{
     private final static String WINDOWBITMAP = "screenshots.jpg";
     private File mFileTemp;
     private SlidingPaneLayout slidingPaneLayout;
-    private FrameLayout frameLayout;
     private ImageView behindImageView;
-    private ImageView shadowImageView;
     private int defaultTranslationX = 100;
-    private int shadowWidth = 20;
 
 
     @Override
@@ -181,7 +178,7 @@ public abstract class BaseActivity extends XActivity{
             }
 
             defaultTranslationX = ScreenUtils.dpToPx(defaultTranslationX);
-            shadowWidth = ScreenUtils.dpToPx(shadowWidth);
+
             //behindframeLayout
             FrameLayout behindframeLayout = new FrameLayout(this);
             behindImageView = new ImageView(this);

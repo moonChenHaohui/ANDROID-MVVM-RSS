@@ -235,7 +235,7 @@ public class Article extends BmobObject {
 
     @Override
     public String toString() {
-        return "Article{" +
+        return "UpdateArticleEvent{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", use_count=" + use_count +

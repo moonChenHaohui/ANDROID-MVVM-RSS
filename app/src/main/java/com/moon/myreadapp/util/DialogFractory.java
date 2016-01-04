@@ -20,6 +20,7 @@ public class DialogFractory {
          * 输入订阅源dialog
          */
         AddSubscrible,
+        FontSet
     }
 
     public static MaterialDialog create(Context context, Type type) {
@@ -30,10 +31,15 @@ public class DialogFractory {
             case AddSubscrible:
                 dialog = new SubDialog(context);
                 break;
+            case FontSet:
+                dialog = new SubDialog(context);
+                break;
                 default:
                     EditText contentView = new EditText(context);
                     dialog = new MaterialDialog(context).setView(contentView);
         }
         return dialog;
     }
+
+
 }

@@ -28,13 +28,18 @@ dependencies {
     compile project(':appframework')
     //recyclerview
     //green dao
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
+    //compile 'com.android.support:appcompat-v7:23.1.1'
+    //compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:design:23.1.1'
+
+    //compile 'com.github.navasmdc:MaterialDesign:1.5@aar' navasmdc 这个库和v4包里面的一个rippleColor重名
+    compile 'com.github.rey5137:material:1.2.2'
+
     compile 'me.drakeet.materialdialog:library:1.2.2'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
+    //compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     compile 'de.greenrobot:greendao:2.0.0'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
+
 }

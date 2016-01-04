@@ -2,7 +2,10 @@ package com.moon.myreadapp.common.components.dialog;
 
 import android.app.Activity;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,32 +23,37 @@ import com.facebook.drawee.view.DraweeView;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
+import com.moon.myreadapp.databinding.FragmentShareBinding;
 import com.moon.myreadapp.mvvm.models.ShareItem;
 
 /**
  * Created by moon on 15/12/24.
  */
-public class ShareDialog extends PopupWindow {
+public class ShareDialog extends BaseButtomDialog implements View.OnClickListener {
 
-    private Activity context;
-    private Window mWindow;
+    private FragmentShareBinding binding;
 
     public ShareDialog(Activity context) {
-        this.context = context;
-        this.mWindow = context.getWindow();
+        super(context);
+    }
 
-        final View view = LinearLayout.inflate(context, R.layout.fragment_share, null);
-        setContentView(view);
-        //设置SelectPicPopupWindow弹出窗体的宽
-        this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        //设置SelectPicPopupWindow弹出窗体的高
-        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        //设置SelectPicPopupWindow弹出窗体可点击
-        this.setFocusable(true);
-        //设置SelectPicPopupWindow弹出窗体动画效果
-        this.setAnimationStyle(R.style.ButtomPopupAnimStyle);
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.cancel) {
+            dismiss();
+            return;
+        }
+    }
 
-        GridView gv = (GridView)view.findViewById(R.id.gridview);
+    @Override
+    void setContentView() {
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_share, null, true);
+        setContentView(binding.getRoot());
+    }
+
+    @Override
+    void init() {
         final ShareAdapter adapter = new ShareAdapter(context);
         String[] array = context.getResources().getStringArray(R.array.share_dialog_text);
         adapter.add(new ShareItem.Builder(context)
@@ -64,8 +72,12 @@ public class ShareDialog extends PopupWindow {
                 .content(array[3])
                 .icon(R.drawable.ic_sina_logo)
                 .build());
-        gv.setAdapter(adapter);
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter.add(new ShareItem.Builder(context)
+                .content(array[4])
+                .icon(R.drawable.ic_share_more)
+                .build());
+        binding.gridview.setAdapter(adapter);
+        binding.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SimpleToastHelper.showToast("click position:" + position);
@@ -88,9 +100,9 @@ public class ShareDialog extends PopupWindow {
             }
         });
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
-        view.setOnTouchListener(new View.OnTouchListener() {
+        binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                int height = view.findViewById(R.id.share_content).getTop();
+                int height = binding.shareContent.getTop();
                 int y = (int) event.getY();
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (y < height) {
@@ -100,32 +112,17 @@ public class ShareDialog extends PopupWindow {
                 return true;
             }
         });
-        setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                WindowManager.LayoutParams lp = mWindow.getAttributes();
-                lp.alpha = 1f;
-                mWindow.setAttributes(lp);
-            }
-        });
+        binding.cancel.setOnClickListener(this);
 
     }
 
-    public void showWithView(View v) {
-        WindowManager.LayoutParams lp = mWindow.getAttributes();
-        //TODO some thing
-        lp.alpha = 0.4f;
-        mWindow.setAttributes(lp);
-        showAtLocation(v, Gravity.BOTTOM, 0, 0);
-    }
-
-
-    class ShareAdapter extends ArrayAdapter<ShareItem>{
+    class ShareAdapter extends ArrayAdapter<ShareItem> {
 
 
         public ShareAdapter(Context context) {
             super(context, R.layout.gv_share_item, R.id.name);
         }
+
         @Override
         public View getView(final int index, View convertView, ViewGroup parent) {
             final View view = super.getView(index, convertView, parent);
@@ -141,7 +138,8 @@ public class ShareDialog extends PopupWindow {
         }
     }
 
+    @Override
+    void onDimiss() {
 
-
-
+    }
 }

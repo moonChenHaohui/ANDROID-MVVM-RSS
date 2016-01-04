@@ -18,7 +18,7 @@ public class SimpleToastHelper {
     public static void showToast(String str) {
         Toast toast = Toast.makeText(ReadApplication.getInstance(), str, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM,0,0);
-        toast.setMargin(0,0.01f);
+        toast.setMargin(0,0.1f);
         toast.show();
     }
 

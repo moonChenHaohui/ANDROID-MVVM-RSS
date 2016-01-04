@@ -12,6 +12,7 @@ import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.common.components.dialog.ReadSetDialog;
 import com.moon.myreadapp.common.components.dialog.ShareDialog;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
@@ -43,6 +44,7 @@ public class ArticleViewModel extends BaseViewModel {
         article = DBHelper.Query.getArticle(articleId);
         initViews();
         initEvents();
+
     }
 
     @Bindable
@@ -135,6 +137,7 @@ public class ArticleViewModel extends BaseViewModel {
                 colorAnim.start();
                 break;
             case R.id.font_set:
+                new ReadSetDialog(mView).showWithView(view);
                 break;
             case R.id.share:
                 //分享
