@@ -110,4 +110,7 @@
     <string name="set_font">字体大小</string>
     <string name="set_light">亮度调节</string>
     <string name="set_commit">完成</string>
+
+    <string name="set_theme_picker_title">选择主题</string>
+    <string name="set_theme_picker_close">关闭</string>
 </resources>

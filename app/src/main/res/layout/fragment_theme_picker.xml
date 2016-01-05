@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:numColumns="4"
+    android:paddingLeft="@dimen/normal_padding"
+    android:paddingRight="@dimen/normal_padding"
+    android:paddingBottom="@dimen/normal_double_padding"
+    android:background="@android:color/transparent"
+    android:listSelector="@android:color/transparent"
+    android:horizontalSpacing="@dimen/normal_padding"
+    android:verticalSpacing="@dimen/normal_padding"
+    android:layout_height="match_parent">
+</GridView>

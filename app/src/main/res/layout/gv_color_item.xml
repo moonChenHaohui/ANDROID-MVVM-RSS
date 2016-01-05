@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_1"
+        fresco:roundAsCircle="true"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/img_size_48"
+        android:layout_height="@dimen/img_size_48"  />
+    <ImageView
+        android:id="@+id/img_2"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/img_size_32"
+        android:layout_height="@dimen/img_size_32" />
+</FrameLayout>

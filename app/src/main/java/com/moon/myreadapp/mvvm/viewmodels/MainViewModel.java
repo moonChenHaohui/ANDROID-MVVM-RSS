@@ -21,6 +21,7 @@ import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
 import com.rey.material.app.Dialog;
@@ -159,7 +160,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void onAddButtonClick() {
-
+        DialogFractory.createDialog(mView, DialogFractory.Type.ThemeChoose).show();
         //XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
     }
 
