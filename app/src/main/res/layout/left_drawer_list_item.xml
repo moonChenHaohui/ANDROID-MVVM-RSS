@@ -17,12 +17,7 @@
         android:orientation="horizontal"
         android:background="@drawable/left_drawer_list"
         >
-        <com.joanzapata.iconify.widget.IconTextView
-            android:layout_width="@dimen/img_size_16"
-            android:layout_height="@dimen/img_size_16"
-            android:textColor="@color/text_drak"
-            android:textSize="@dimen/text_h3"
-            android:text="{fa-plus-square}"/>
+
         <TextView
             android:paddingLeft="40dp"
             android:textColor="@color/text_drak"

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <com.rey.material.widget.Button
+        android:id="@+id/action_read"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_list_item_small"
+        android:gravity="left|center_vertical"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/action_read"
+        android:onClick="btnOnClick"/>
+    <include layout="@layout/common_divider"/>
+    <com.rey.material.widget.Button
+        android:id="@+id/action_read_favor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_list_item_small"
+        android:gravity="left|center_vertical"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/action_favor"
+        android:onClick="btnOnClick"/>
+    <include layout="@layout/common_divider"/>
+    <com.rey.material.widget.Button
+        android:id="@+id/action_read_delete"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_list_item_small"
+        android:gravity="left|center_vertical"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/action_delete"
+        android:onClick="btnOnClick"/>
+</LinearLayout>

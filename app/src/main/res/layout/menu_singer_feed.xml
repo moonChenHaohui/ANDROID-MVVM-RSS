@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <com.rey.material.widget.Button
+        android:id="@+id/action_read_all"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_list_item_small"
+        android:gravity="left|center_vertical"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/action_read_all"
+        android:onClick="btnOnClick"/>
+    <include layout="@layout/common_divider"/>
+    <com.rey.material.widget.Button
+        android:id="@+id/action_read_reflash"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_list_item_small"
+        android:gravity="left|center_vertical"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/action_read_reflash"
+        android:onClick="btnOnClick"/>
+    <include layout="@layout/common_divider"/>
+    <com.rey.material.widget.Button
+        android:id="@+id/action_read_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_list_item_small"
+        android:gravity="left|center_vertical"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/action_read_top"
+        android:onClick="btnOnClick"/>
+    <include layout="@layout/common_divider"/>
+    <com.rey.material.widget.Button
+        android:id="@+id/action_read_delete_feed"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_list_item_small"
+        android:gravity="left|center_vertical"
+        android:padding="@dimen/normal_padding"
+        android:text="@string/action_read_delete_feed"
+        android:onClick="btnOnClick"/>
+</LinearLayout>

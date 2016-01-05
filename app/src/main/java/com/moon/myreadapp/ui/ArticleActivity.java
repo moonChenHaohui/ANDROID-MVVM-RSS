@@ -11,6 +11,7 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.dialog.TextFont;
@@ -73,6 +74,7 @@ public class ArticleActivity extends BaseActivity {
         });
         //富文本显示
         binding.articleBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
+        XLog.d(articleViewModel.getArticle().getContainer());
         //设置文本大小
         binding.articleBody.feedContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, PreferenceUtils.getInstance(this).getIntParam(Constants.ARTICLE_FONT_SIZE, (int)Globals.getApplication().getResources().getDimension(TextFont.H3.size)));
         //设置一个隐藏效果

@@ -72,8 +72,12 @@ public class ScreenUtils {
     public static void saveBrightness(Activity activity, int brightness) {
         ContentResolver resolver = activity.getContentResolver();
         Uri uri = android.provider.Settings.System.getUriFor("screen_brightness");
-
-        android.provider.Settings.System.putInt(resolver, "screen_brightness", brightness);
+        try{
+            android.provider.Settings.System.putInt(resolver, "screen_brightness", brightness);
+        }catch (Exception e){
+            //可能写入失败
+            return;
+        }
         // resolver.registerContentObserver(uri, true, myContentObserver);
         resolver.notifyChange(uri, null);
     }

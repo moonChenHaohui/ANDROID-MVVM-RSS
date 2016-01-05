@@ -14,6 +14,7 @@ import android.view.ViewPropertyAnimator;
 
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
+import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
@@ -187,7 +188,10 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainViewModel.updateFeeds();
     }
 
+    public void btnOnClick(View v) {
+        mainViewModel.btnOnClick(v);
 
+    }
     @Override
     public void onPullDownRefreshComplete() {
         binding.mainList.onPullDownRefreshComplete();

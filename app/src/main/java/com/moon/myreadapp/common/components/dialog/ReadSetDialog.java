@@ -103,10 +103,11 @@ public class ReadSetDialog extends BaseButtomDialog implements View.OnClickListe
         //转换成TextFont
         textFont = TextFont.findBySize(fontSize);
         binding.fontSlider.setValue(textFont.level,true);
+        binding.fontText.setTextSize(TypedValue.COMPLEX_UNIT_PX,(int)Globals.getApplication().getResources().getDimension(textFont.size));
         binding.fontSlider.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
             @Override
             public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
-                XLog.d("Slider view, boolean fromUser," + fromUser + " float oldPos" + oldPos + ", float newPos" + newPos + ", int oldValue" + oldValue + ", int newValue" + newValue + "");
+                //XLog.d("Slider view, boolean fromUser," + fromUser + " float oldPos" + oldPos + ", float newPos" + newPos + ", int oldValue" + oldValue + ", int newValue" + newValue + "");
                 TextFont newFont = TextFont.findByLevel(newValue);
                 int size = context.getResources().getDimensionPixelSize(newFont.size);
                 //setTextSize 的坑,是默认设置sp.需要强制设置一下px模式
@@ -121,8 +122,7 @@ public class ReadSetDialog extends BaseButtomDialog implements View.OnClickListe
     @Override
     void onDimiss() {
         //保存修改的亮度
-        // 目前不修改设置
-        // ScreenUtils.saveBrightness(context,binding.lightSlider.getValue());
+        //ScreenUtils.saveBrightness(context,binding.lightSlider.getValue());
         //保存字体修改u
         PreferenceUtils.getInstance(context).saveParam(Constants.ARTICLE_FONT_SIZE,(int)Globals.getApplication().getResources().getDimension(textFont.size));
     }

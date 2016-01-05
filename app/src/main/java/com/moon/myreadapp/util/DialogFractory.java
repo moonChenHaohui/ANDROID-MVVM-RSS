@@ -1,9 +1,15 @@
 package com.moon.myreadapp.util;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.joanzapata.iconify.widget.IconTextView;
+import com.moon.myreadapp.R;
 import com.moon.myreadapp.ui.helper.SubDialog;
+import com.rengwuxian.materialedittext.MaterialEditText;
+import com.rey.material.app.Dialog;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -29,9 +35,6 @@ public class DialogFractory {
             case YesNo:
             case InputValue:
             case AddSubscrible:
-                dialog = new SubDialog(context);
-                break;
-            case FontSet:
                 dialog = new SubDialog(context);
                 break;
                 default:

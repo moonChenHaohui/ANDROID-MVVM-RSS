@@ -78,7 +78,7 @@
                 android:layout_marginTop="@dimen/normal_half_padding"
                 android:gravity="left|top"
                 android:background="@null"
-                android:lineSpacingMultiplier="1.6"
+                android:lineSpacingExtra="8dp"
                 android:textColor="@color/txt_black"
                 android:textColorLink="?attr/colorAccent"
                 android:padding="@dimen/normal_padding"

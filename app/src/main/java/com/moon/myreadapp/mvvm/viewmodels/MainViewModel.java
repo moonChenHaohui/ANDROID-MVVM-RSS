@@ -1,42 +1,32 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
-import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import com.google.code.rome.android.repackaged.com.sun.syndication.fetcher.FetcherException;
-import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
-import com.moon.appframework.common.util.SafeAsyncTask;
 import com.moon.appframework.core.XDispatcher;
-import com.moon.appframework.event.XEvent;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
-import com.moon.myreadapp.common.components.rss.RssHelper;
+import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
-import com.moon.myreadapp.ui.AddFeedActivity;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
 import com.moon.myreadapp.util.DBHelper;
-import com.moon.myreadapp.util.StringHelper;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
+import com.rey.material.app.Dialog;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.listener.SaveListener;
-import cn.volley.toolbox.Volley;
 
 /**
  * Created by moon on 15/10/19.
@@ -51,6 +41,8 @@ public class MainViewModel extends BaseViewModel {
     private RecyclerItemClickListener readItemClickListener;
 
     private boolean refresh = false;
+    private int currentPosition = -1;
+    private Dialog mDialog;
 
     public MainViewModel(MainActivity view) {
         this.mView = view;
@@ -90,30 +82,36 @@ public class MainViewModel extends BaseViewModel {
                 XLog.d("onItemLongClick execute!");
                 //短震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
+                currentPosition = position;
                 //TODO 弹出对话框:标记全部已读|刷新|删除|置顶
-                Menu menu = ViewUtils.showPopupMenu(mView, view, R.menu.menu_single_feed, new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(android.view.MenuItem item) {
-                        int id = item.getItemId();
-                        switch (id) {
-                            case R.string.action_read_all:
-
-                                //标记全部已读
-                                break;
-                            case R.string.action_read_reflash:
-                                //刷新
-
-                                break;
-                            case R.string.action_read_top:
-                                //置顶
-                                break;
-                            case R.string.action_read_delete_feed:
-                                //删除订阅
-                                break;
-                        }
-                        return false;
-                    }
-                });
+                mDialog = new Dialog(mView).
+                        contentView(mView.getLayoutInflater().inflate(R.layout.menu_singer_feed,null)).
+                        cancelable(true).
+                        layoutParams(-1, -2);
+                mDialog.show();
+//                Menu menu = ViewUtils.showPopupMenu(mView, view, R.menu.menu_single_feed, new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(android.view.MenuItem item) {
+//                        int id = item.getItemId();
+//                        switch (id) {
+//                            case R.string.action_read_all:
+//
+//                                //标记全部已读
+//                                break;
+//                            case R.string.action_read_reflash:
+//                                //刷新
+//
+//                                break;
+//                            case R.string.action_read_top:
+//                                //置顶
+//                                break;
+//                            case R.string.action_read_delete_feed:
+//                                //删除订阅
+//                                break;
+//                        }
+//                        return false;
+//                    }
+//                });
             }
         });
     }
@@ -161,7 +159,8 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void onAddButtonClick() {
-        XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
+
+        //XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
     }
 
     @Override
@@ -200,6 +199,37 @@ public class MainViewModel extends BaseViewModel {
             }
         });
         refreshAsyncTask.execute((ArrayList<Feed>)getFeedRecAdapter().getmData());
+
+    }
+
+    /**
+     * 弹出菜单操作
+     * @param v
+     */
+    public void btnOnClick(View v) {
+        if(mDialog != null && mDialog.isShowing()){
+            mDialog.dismissImmediately();
+        }
+        if (currentPosition >= 0 || currentPosition < feedRecAdapter.getmData().size()){
+            Feed feed = feedRecAdapter.getmData().get(currentPosition);
+            int id = v.getId();
+            switch (id) {
+                case R.id.action_read_all:
+                    SimpleToastHelper.showToast("read all");
+                    //标记全部已读
+                    break;
+                case R.string.action_read_reflash:
+                    //刷新
+
+                    break;
+                case R.string.action_read_top:
+                    //置顶
+                    break;
+                case R.string.action_read_delete_feed:
+                    //删除订阅
+                    break;
+            }
+        }
 
     }
 }

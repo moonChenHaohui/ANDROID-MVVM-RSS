@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
@@ -106,5 +107,10 @@ public class FeedActivity extends BaseActivity {
         binding.setFeedViewModel(feedViewModel);
     }
 
+
+    public void btnOnClick(View v) {
+        feedViewModel.btnOnClick(v);
+
+    }
 
 }

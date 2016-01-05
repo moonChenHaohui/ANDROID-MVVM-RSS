@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.PopupMenu;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
@@ -30,6 +31,7 @@ import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
+import com.rey.material.app.Dialog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +49,8 @@ public class FeedViewModel extends BaseViewModel {
 
     private long feedId;
     private Feed feed;
+    private int currentPosition = -1;
+    private Dialog mDialog;
 
     public FeedViewModel(Activity view, long feedId) {
         this.mView = view;
@@ -71,7 +75,7 @@ public class FeedViewModel extends BaseViewModel {
         articleClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                readArticle(mAdapter.getItem(position),position);
+                readArticle(mAdapter.getItem(position), position);
                 updateFeed();
                 Bundle bundle = new Bundle();
                 bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
@@ -83,49 +87,60 @@ public class FeedViewModel extends BaseViewModel {
             public void onItemLongClick(final View view, final int position) {
                 //XLog.d("onItemLongClick execute!");
                 final Article article = mAdapter.getmData().get(position);
+                currentPosition = position;
                 //震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
-                // 弹出对话框:收藏|已读|删除
-                Menu menu = ViewUtils.showPopupMenu(mView, view.findViewById(R.id.article_title), R.menu.menu_single_article, new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(android.view.MenuItem item) {
-                        int id = item.getItemId();
-                        switch (id) {
-                            case R.id.action_read:
-                                readArticle(article,position);
-                                updateFeed();
-                                break;
-                            case R.id.action_read_favor:
-                                //收藏
-                                if (article.getStatus() == Article.Status.NORMAL.status) {
-                                    article.setStatus(Article.Status.FAVOR.status);
-                                    DBHelper.UpDate.saveArticle(article);
-                                    Snackbar.make(view, BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
-                                } else {
-                                    article.setStatus(Article.Status.NORMAL.status);
-                                    DBHelper.UpDate.saveArticle(article);
-                                    Snackbar.make(view, BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
-                                }
-                                break;
-                            case R.id.action_read_delete:
-                                //删除
-                                mAdapter.remove(position);
-                                article.setStatus(Article.Status.DELETE.status);
-                                DBHelper.UpDate.saveArticle(article);
+                View v = mView.getLayoutInflater().inflate(R.layout.menu_singer_article, null);
 
-                                Snackbar.make(view, BuiltConfig.getString(R.string.action_delete) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
+                mDialog = new Dialog(mView).
+                        contentView(v).
+                        cancelable(true).
+                        layoutParams(-1, -2);
+                mDialog.show();
+
+                // 弹出对话框:收藏|已读|删除
+//                Menu menu = ViewUtils.showPopupMenu(mView, view.findViewById(R.id.article_title), R.menu.menu_single_article, new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(android.view.MenuItem item) {
+//                        int id = item.getItemId();
+//                        switch (id) {
+//                            case R.id.action_read:
+//                                readArticle(article,position);
+//                                updateFeed();
+//                                break;
+//                            case R.id.action_read_favor:
+//                                //收藏
+//                                if (article.getStatus() == Article.Status.NORMAL.status) {
+//                                    article.setStatus(Article.Status.FAVOR.status);
+//                                    DBHelper.UpDate.saveArticle(article);
+//                                    Snackbar.make(view, BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
+//                                } else {
+//                                    article.setStatus(Article.Status.NORMAL.status);
+//                                    DBHelper.UpDate.saveArticle(article);
+//                                    Snackbar.make(view, BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
+//                                }
+//                                break;
+//                            case R.id.action_read_delete:
+//                                //删除
+//                                mAdapter.remove(position);
+//                                article.setStatus(Article.Status.DELETE.status);
+//                                DBHelper.UpDate.saveArticle(article);
+//
+//                                Snackbar.make(view, BuiltConfig.getString(R.string.action_delete) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
+//                                break;
+//                        }
+//                        return false;
+//                    }
+//                });
 
                 //操作menu行为
 
                 //已读
-                menu.findItem(R.id.action_read).setVisible(article.getUse_count() <= 0);
+                v.findViewById(R.id.action_read).setVisibility(article.getUse_count() <= 0 ? View.VISIBLE : View.GONE);
+                //menu.findItem(R.id.action_read).setVisible(article.getUse_count() <= 0);
                 //收藏
-                menu.findItem(R.id.action_read_favor).setTitle(BuiltConfig.getString(article.getStatus() == Article.Status.FAVOR.status ? R.string.action_favor_back : R.string.action_favor));
+                ((Button) (v.findViewById(R.id.action_read_favor))).setText(BuiltConfig.getString(article.getStatus() == Article.Status.FAVOR.status ? R.string.action_favor_back : R.string.action_favor));
+                // menu.findItem(R.id.action_read_favor).setTitle(BuiltConfig.getString(article.getStatus() == Article.Status.FAVOR.status ? R.string.action_favor_back : R.string.action_favor));
 
             }
 
@@ -144,7 +159,6 @@ public class FeedViewModel extends BaseViewModel {
     public void clear() {
         mView = null;
     }
-
 
 
     /**
@@ -175,7 +189,7 @@ public class FeedViewModel extends BaseViewModel {
                         }
 
                         //result 为获取新更新的文章
-                        ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feedId,articles);
+                        ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feedId, articles);
 
 
                         boolean haveNewDate = result != null && result.size() > 0;
@@ -244,15 +258,49 @@ public class FeedViewModel extends BaseViewModel {
     }
 
 
-
-    private void readArticle(Article article,int position){
+    private void readArticle(Article article, int position) {
         article.setUse_count(article.getUse_count() + 1);
         DBHelper.UpDate.saveArticle(article);
         mAdapter.notifyItemChanged(position);
     }
 
-    private void updateFeed(){
+    private void updateFeed() {
         XApplication.getInstance().bus.post(new UpdateFeedEvent(feed));
     }
 
+    public void btnOnClick(View v) {
+
+        if (currentPosition >= 0 || currentPosition < mAdapter.getmData().size()) {
+            int id = v.getId();
+            final Article article = mAdapter.getmData().get(currentPosition);
+            switch (id) {
+                case R.id.action_read:
+                    readArticle(article, currentPosition);
+                    updateFeed();
+                    break;
+                case R.id.action_read_favor:
+                    //收藏
+                    if (article.getStatus() == Article.Status.NORMAL.status) {
+                        article.setStatus(Article.Status.FAVOR.status);
+                        DBHelper.UpDate.saveArticle(article);
+                        Snackbar.make(v, BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        article.setStatus(Article.Status.NORMAL.status);
+                        DBHelper.UpDate.saveArticle(article);
+                        Snackbar.make(v, BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
+                    }
+                    break;
+                case R.id.action_read_delete:
+                    //删除
+                    mAdapter.remove(currentPosition);
+                    article.setStatus(Article.Status.DELETE.status);
+                    DBHelper.UpDate.saveArticle(article);
+                    Snackbar.make(v, BuiltConfig.getString(R.string.action_delete) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
+                    break;
+            }
+            if(mDialog != null && mDialog.isShowing()){
+                mDialog.dismissImmediately();
+            }
+        }
+    }
 }
