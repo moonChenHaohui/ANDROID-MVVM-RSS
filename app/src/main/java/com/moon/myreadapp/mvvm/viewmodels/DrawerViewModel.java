@@ -56,7 +56,7 @@ public class DrawerViewModel extends BaseViewModel {
         menus.add(new MenuItem.Builder().title("推荐频道").build());
         menus.add(new MenuItem.Builder().title("我的收藏").build());
         menus.add(new MenuItem.Builder().title("最近阅读").build());
-
+        menus.add(new MenuItem.Builder().title("清除缓存").build());
         drawerAdapter = new DrawerAdapter(menus);
 
         drawerItemClickListener = new AdapterView.OnItemClickListener() {
@@ -144,12 +144,13 @@ public class DrawerViewModel extends BaseViewModel {
      * 用户点击登陆
      */
     public void onClickLogin (View view ){
-        XLog.d("onclick work !");
         if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
-            XDispatcher.from((Activity)mView).dispatch(new RouterAction(LoginActivity.class, true));
+            XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, true));
             return;
-        } else {
-            requestUser();
         }
+    }
+
+    public void updateUser(User user) {
+        setUser(user);
     }
 }

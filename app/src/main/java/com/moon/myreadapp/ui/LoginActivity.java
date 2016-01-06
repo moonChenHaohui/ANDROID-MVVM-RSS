@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.databinding.ActivityLoginBinding;
 import com.moon.myreadapp.mvvm.models.dao.User;
@@ -75,6 +76,11 @@ public class LoginActivity extends BaseActivity{
                 attemptLogin();
             }
         });
+        //填充本地的用户
+        if (viewModel.getUser()!= null) {
+            XLog.d("VM:" + viewModel.getUser().getAccount());
+            binding.account.setText(viewModel.getUser().getAccount());
+        }
     }
 
     private void attemptLogin (){
@@ -113,12 +119,12 @@ public class LoginActivity extends BaseActivity{
 
     }
 
-    private boolean isAccountValid(String account) {
+    public static boolean isAccountValid(String account) {
         return account.contains("@");
     }
 
 
-    private boolean isPasswordValid(String password) {
+    public static boolean isPasswordValid(String password) {
         return password.length() > 4;
     }
 

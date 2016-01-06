@@ -14,6 +14,7 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseListAdapter;
+import com.moon.myreadapp.common.components.dialog.RegisterDialog;
 import com.moon.myreadapp.ui.helper.SubDialog;
 import com.rey.material.app.Dialog;
 
@@ -104,7 +105,9 @@ public class DialogFractory {
                 View view = LayoutInflater.from(context).inflate(R.layout.fragment_loading, null);
                 dialog.setContentView(view);
                 break;
-
+            case Register:
+                dialog = new RegisterDialog(context);
+                break;
             default:
                 dialog = new Dialog(context);
         }

@@ -12,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
+import com.moon.myreadapp.common.event.UpdateUserEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
@@ -186,6 +188,12 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Subscribe
     public void onUpdateEvent(UpdateFeedListEvent event) {
         mainViewModel.updateFeeds();
+    }
+
+    @Subscribe
+    public void onUpdateEvent(UpdateUserEvent event) {
+        XLog.d("get mes:" + "UpdateUserEvent");
+        drawerViewModel.updateUser(event.getUser());
     }
 
     public void btnOnClick(View v) {

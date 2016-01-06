@@ -17,6 +17,7 @@ import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
+import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
@@ -233,4 +234,5 @@ public class MainViewModel extends BaseViewModel {
         }
 
     }
+
 }

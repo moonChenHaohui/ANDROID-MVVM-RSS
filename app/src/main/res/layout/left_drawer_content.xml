@@ -21,39 +21,32 @@
             android:layout_width="@dimen/left_drawer_width"
             android:layout_height="@dimen/left_header_height"
             android:background="@drawable/normal_bg"
+            android:onClick="@{drawerViewModel.onClickLogin}"
             android:padding="@dimen/normal_padding">
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/app_info"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="left|center_vertical"
-                android:text="@string/app_info"
-                android:textColor="@color/txt_white"
-                android:textSize="@dimen/text_sp18"
-                android:textStyle="bold" />
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/user_logo"
                 android:layout_width="@dimen/img_size_48"
                 android:layout_height="@dimen/img_size_48"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/app_info"
+                android:layout_marginRight="@dimen/normal_half_padding"
+                android:layout_alignParentBottom="true"
                 fresco:placeholderImage="@color/background_gray"
                 fresco:roundAsCircle="true" />
 
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/user_logo"
-                android:layout_marginLeft="@dimen/normal_padding"
-                android:layout_toRightOf="@id/user_logo"
-                android:ellipsize="end"
-                android:hint="user name"
-                android:singleLine="true"
-                android:text="@{drawerViewModel.user.nickname}"
-                android:visibility="@{drawerViewModel.user.nickname != null ? View.VISIBLE : View.GONE}"
-                android:textSize="@dimen/text_sp14"
-                android:textStyle="bold" />
+            <!--<TextView-->
+                <!--android:id="@+id/user_name"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignTop="@id/user_logo"-->
+                <!--android:layout_marginLeft="@dimen/normal_padding"-->
+                <!--android:layout_toRightOf="@id/user_logo"-->
+                <!--android:ellipsize="end"-->
+                <!--android:hint="user name"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="@{drawerViewModel.user.nickname}"-->
+                <!--android:visibility="@{drawerViewModel.user.nickname != null ? View.VISIBLE : View.GONE}"-->
+                <!--android:textSize="@dimen/text_sp14"-->
+                <!--android:textStyle="bold" />-->
 
             <TextView
                 android:id="@+id/user_info"
@@ -62,13 +55,14 @@
                 android:layout_alignBottom="@id/user_logo"
                 android:layout_marginLeft="@dimen/normal_padding"
                 android:layout_toRightOf="@id/user_logo"
+                android:gravity="center_vertical"
+                android:layout_alignTop="@id/user_logo"
                 android:ellipsize="end"
-                android:hint="user name"
                 android:singleLine="true"
                 android:text="@{drawerViewModel.user.account}"
                 android:visibility="@{drawerViewModel.user.account != null ? View.VISIBLE : View.GONE}"
-                android:textSize="@dimen/text_sp14" />
-
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/text_h1"/>
             <TextView
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
@@ -81,12 +75,11 @@
                 android:layout_alignTop="@id/user_logo"
                 android:textColor="@color/txt_white"
                 android:textSize="@dimen/text_sp14"
-                android:onClick="@{drawerViewModel.onClickLogin}"
                 android:visibility="@{drawerViewModel.user == null ? View.VISIBLE : View.GONE}"
                 />
         </RelativeLayout>
 
-        <include layout="@layout/common_divider" />
+        <!--<include layout="@layout/common_divider" />-->
 
         <ListView
             android:id="@+id/left_drawer_listview"

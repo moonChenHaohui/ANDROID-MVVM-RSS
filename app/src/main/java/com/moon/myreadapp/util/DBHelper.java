@@ -187,6 +187,8 @@ public class DBHelper {
             return getDAO().getFeedDao().insertOrReplace(feed);
         }
         public static long saveUser(User user){
+            //只保存一个用户信息
+            getDAO().getUserDao().deleteAll();
             return getDAO().getUserDao().insertOrReplace(user);
         }
     }
