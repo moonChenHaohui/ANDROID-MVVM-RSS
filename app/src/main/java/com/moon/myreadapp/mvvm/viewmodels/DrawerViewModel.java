@@ -64,7 +64,8 @@ public class DrawerViewModel extends BaseViewModel {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        DialogFractory.create((Activity)mView, DialogFractory.Type.AddSubscrible).show();
+                        DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
+                        //DialogFractory.create((Activity)mView, DialogFractory.Type.AddSubscrible).show();
                         break;
                     case 1:
                         XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class,true));

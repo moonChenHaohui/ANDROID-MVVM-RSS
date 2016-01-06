@@ -72,6 +72,7 @@ public class AddFeedViewModel extends BaseViewModel {
      * 点击自定义输入 url 的dialog
      */
     public void onClickAddSub(View view) {
-        DialogFractory.create(mView, DialogFractory.Type.AddSubscrible).show();
+        DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
+       // DialogFractory.create(mView, DialogFractory.Type.AddSubscrible).show();
     }
 }

@@ -14,6 +14,7 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseListAdapter;
+import com.moon.myreadapp.common.components.dialog.AddSubDialog;
 import com.moon.myreadapp.common.components.dialog.RegisterDialog;
 import com.moon.myreadapp.ui.helper.SubDialog;
 import com.rey.material.app.Dialog;
@@ -51,20 +52,20 @@ public class DialogFractory {
         Register
     }
 
-    public static MaterialDialog create(Context context, Type type) {
-        MaterialDialog dialog = null;
-        switch (type) {
-            case YesNo:
-            case InputValue:
-            case AddSubscrible:
-                dialog = new SubDialog(context);
-                break;
-            default:
-                EditText contentView = new EditText(context);
-                dialog = new MaterialDialog(context).setView(contentView);
-        }
-        return dialog;
-    }
+//    public static MaterialDialog create(Context context, Type type) {
+//        MaterialDialog dialog = null;
+//        switch (type) {
+//            case YesNo:
+//            case InputValue:
+//            case AddSubscrible:
+//                dialog = new SubDialog(context);
+//                break;
+//            default:
+//                EditText contentView = new EditText(context);
+//                dialog = new MaterialDialog(context).setView(contentView);
+//        }
+//        return dialog;
+//    }
 
     public static Dialog createDialog(final Context context, Type type) {
         final Dialog dialog;
@@ -107,6 +108,9 @@ public class DialogFractory {
                 break;
             case Register:
                 dialog = new RegisterDialog(context);
+                break;
+            case AddSubscrible:
+                dialog = new AddSubDialog(context);
                 break;
             default:
                 dialog = new Dialog(context);

@@ -23,10 +23,14 @@
 
 
     <string name="dialog_sub_title">输入RSS Url</string>
+    <string name="dialog_sub_hint">输入url</string>
     <string name="dialog_sub_search">搜索</string>
+    <string name="dialog_sub_search_load">{fa-spinner spin}</string>
+    <string name="dialog_sub_other_method">不知道添加什么?来看看推荐</string>
     <string name="dialog_sub_search_error">无法获取当前url的订阅源.</string>
     <string name="dialog_sub_search_exist">您已经订阅过这个url源啦.</string>
     <string name="dialog_sub_search_empty">请输入url.</string>
+    <string name="dialog_sub_success">订阅成功!</string>
     <string name="dialog_sub_cancel">取消</string>
 
     <string name="title_activity_main2">Main2Activity</string>
