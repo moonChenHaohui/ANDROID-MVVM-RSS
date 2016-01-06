@@ -36,7 +36,18 @@ public class DialogFractory {
          */
         AddSubscrible,
         FontSet,
-        ThemeChoose
+        /**
+         * 主题选择
+         */
+        ThemeChoose,
+        /**
+         * 加载
+         */
+        Loading,
+        /**
+         * 注册
+         */
+        Register
     }
 
     public static MaterialDialog create(Context context, Type type) {
@@ -88,6 +99,12 @@ public class DialogFractory {
                 });
                 dialog.setContentView(gridView);
                 break;
+            case Loading:
+                dialog = new Dialog(context).cancelable(false).canceledOnTouchOutside(false);
+                View view = LayoutInflater.from(context).inflate(R.layout.fragment_loading, null);
+                dialog.setContentView(view);
+                break;
+
             default:
                 dialog = new Dialog(context);
         }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
+    android:padding="@dimen/normal_padding">
+    <com.rey.material.widget.ProgressView
+        android:layout_width="@dimen/img_size_48"
+        android:layout_height="@dimen/img_size_48"
+        android:layout_gravity="center_vertical"
+        app:pv_autostart="true"
+        app:pv_circular="true"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+        app:pv_progressMode="indeterminate"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingLeft="@dimen/normal_padding"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/txt_black"
+        android:textSize="@dimen/text_h3"
+        android:text="加载中...."/>
+</LinearLayout>
