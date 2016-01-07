@@ -1,13 +1,15 @@
 package com.moon.myreadapp.ui;
 
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.DownloadListener;
+import android.webkit.WebView;
 
-import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.scroll.ObservableWebView;
+import com.moon.myreadapp.common.components.webview.ILoad;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.base.ToolBarExpandActivity;
 
@@ -22,8 +24,6 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
         return R.layout.activity_article_web;
     }
 
-
-
     private ObservableWebView webView;
 
     private String title;
@@ -35,27 +35,53 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                if (url != null && url.startsWith("http://"))
-                    XLog.d("download success!");
+                if (url != null && (url.startsWith("http://") || url.startsWith("https://"))){
+                    mToolbar.setTitle(getResources().getString(R.string.xsearch_loading));
+                }
             }
-        });
 
+        });
         return webView;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        webView.setListener(new ILoad() {
+            @Override
+            public void success(WebView view, String u) {
+                mToolbar.setTitle(view.getTitle());
+                url = u;
+            }
+
+            @Override
+            public void error(WebView view, int errorCode, String description, String failingUrl) {
+                mToolbar.setTitle(view.getTitle());
+                url = view.getUrl();
+            }
+        });
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         title = getIntent().getExtras().getString(Constants.ARTICLE_TITLE,getResources().getString(R.string.title_activity_article_web));
         url = getIntent().getExtras().getString(Constants.ARTICLE_URL,null);
-        if (url != null) {
-            webView.loadUrl(url);
-        }
-        getSupportActionBar().setTitle(title);
+        load(url);
+        mToolbar.setTitle(title);
 
     }
 
+    private void load (String url){
+        if (url != null) {
+            webView.loadUrl(url);
+        }
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -64,7 +90,7 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_feed, menu);
+        getMenuInflater().inflate(R.menu.menu_web, menu);
         return true;
     }
 
@@ -74,8 +100,12 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
         int id = item.getItemId();
         if (id == R.id.content) {
             finish();
-        } else if (id == R.id.action_read_all) {
+        } else if (id == R.id.action_refresh) {
+            webView.loadUrl(url);
+        } else if (id == R.id.action_read_favor){
+            //TODO 将这个url加入收藏列表
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

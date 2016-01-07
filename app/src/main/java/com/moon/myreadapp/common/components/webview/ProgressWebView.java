@@ -73,7 +73,7 @@ public class ProgressWebView extends WebView implements Scrollable{
             @Override
             public void onPageFinished(WebView view, String url) {
                 if (listener != null) {
-                    listener.success();
+                    listener.success(view,url);
                 }
             }
             @Override
@@ -81,7 +81,7 @@ public class ProgressWebView extends WebView implements Scrollable{
                                         String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 if (listener != null) {
-                    listener.error();
+                    listener.error(view, errorCode, description, failingUrl);
                 }
             }
         });

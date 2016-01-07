@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:hint=" this is title"
 
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
@@ -33,6 +32,8 @@
         <com.moon.myreadapp.ui.helper.ImagesView
             android:id="@+id/article_images"
             android:layout_below="@id/article_title"
+            android:paddingTop="@dimen/normal_half_padding"
+            android:paddingBottom="@dimen/normal_half_padding"
             android:layout_width="match_parent"
             android:layout_height="@dimen/img_size_96"
             app:imageMaxSize="3">

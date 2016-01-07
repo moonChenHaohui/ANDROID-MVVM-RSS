@@ -10,5 +10,6 @@
         <shape>
             <solid android:color="@color/background_gray" />
         </shape>
+
     </item>
 </layer-list> 

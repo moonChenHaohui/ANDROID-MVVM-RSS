@@ -1,6 +1,7 @@
 package com.moon.myreadapp.common.adapter;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.moon.appframework.common.log.XLog;
@@ -25,7 +28,7 @@ import java.util.List;
 /**
  * Created by moon on 15/11/9.
  */
-public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> {
+public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding> {
 
 
     public FeedRecAdapter(List<Feed> data) {
@@ -44,8 +47,8 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
         convertView.setTag(binding);
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int padding = ScreenUtils.getResources().getDimensionPixelOffset(R.dimen.normal_padding);
-        lp.setMargins(padding, padding, padding, 0);
+//        int padding = ScreenUtils.getResources().getDimensionPixelOffset(R.dimen.normal_padding);
+//        lp.setMargins(padding, padding, padding, 0);
         convertView.setLayoutParams(lp);
         BindingHolder mHolder = new BindingHolder(convertView);
         return mHolder;
@@ -54,32 +57,37 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed,LvFeedItemBinding> 
     @Override
     protected void onBindCoreViewHolder(final BindingHolder<LvFeedItemBinding> holder, int truePos) {
         Feed feed = mData.get(truePos);
-        XLog.d("feed:" + feed.toString());
+        //XLog.d("feed:" + feed.toString());
         holder.getBinding().setFeed(feed);
 
         //查找频道未读数量
         long unReadCount = DBHelper.Query.getFeedUnReadByFeedId(feed.getId());
         holder.getBinding().feedUnreadSize.setText(unReadCount + "");
-        XLog.d("unReadCount:" +unReadCount);
+
         String icon = feed.getIcon();
-        if (icon != null){
+        XLog.d("unReadCount:" + icon);
+        if (icon != null) {
+            // holder.getBinding().feedIcon.set(Uri.parse(icon));
             /**
-             * 使用volley进行图片加载
+             * 使用volley进行图片加载.首先使用cache,无cache再用网络
              */
+            RequestQueue queue = Volley.newRequestQueue(holder.getBinding().feedIcon.getContext());
+
             ImageRequest imageRequest = new ImageRequest(
                     icon,
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {
+
                             holder.getBinding().feedIcon.setImageBitmap(response);
                         }
                     }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    holder.getBinding().feedIcon.setImageResource(R.drawable.bg_empty_logo);
+                    holder.getBinding().feedIcon.setImageResource(R.drawable.button_corners_unable);
                 }
             });
-            Volley.newRequestQueue(holder.getBinding().feedIcon.getContext()).add(imageRequest);
+            queue.add(imageRequest);
         }
     }
 

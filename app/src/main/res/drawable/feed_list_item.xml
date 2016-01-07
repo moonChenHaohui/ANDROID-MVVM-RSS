@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:drawable="@color/background_selected" />
-    <!--获得焦点时的颜色-->
-    <item android:state_focused="true" android:drawable="@color/background_gray"/>
-    <!--点击时的颜色-->
-    <item android:state_pressed="true" android:drawable="@color/background_selected" />
-    <!-- 默认颜色 -->
-    <item android:drawable="@color/background_gray"/>
+<item android:state_selected="true" android:drawable="@color/background_selected"/>
+<!--获得焦点时的颜色-->
+<item android:state_focused="true" android:drawable="@color/background_selected"/>
+<!--点击时的颜色-->
+<item android:state_pressed="true" android:drawable="@color/background_selected" />
+<!-- 默认颜色 -->
+<item android:drawable="@color/txt_white">
+    <shape>
+        <padding android:left="@dimen/normal_padding"
+            android:right="@dimen/normal_padding"
+            android:top="@dimen/normal_padding"
+            android:bottom="@dimen/normal_padding"/>
+    </shape>
+</item>
 </selector>

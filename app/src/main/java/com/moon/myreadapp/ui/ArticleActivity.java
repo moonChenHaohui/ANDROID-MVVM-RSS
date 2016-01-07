@@ -1,14 +1,11 @@
 package com.moon.myreadapp.ui;
 
-import android.animation.Animator;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -91,7 +88,7 @@ public class ArticleActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_feed, menu);
+        getMenuInflater().inflate(R.menu.menu_web, menu);
         return true;
     }
 

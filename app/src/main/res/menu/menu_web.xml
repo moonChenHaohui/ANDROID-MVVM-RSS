@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".ChannelActivity">
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/stat_notify_sync_noanim"
+        android:title="刷新"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/action_read_favor"
+        android:icon="@android:drawable/stat_notify_sync_noanim"
+        android:title="刷新"
+        app:showAsAction="ifRoom">
+    </item>
+    <!--<item android:id="@+id/action_more"-->
+        <!--android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"-->
+        <!--android:title="更多"-->
+        <!--app:showAsAction="ifRoom">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/action_home"-->
+                <!--android:title="返回主页" />-->
+            <!--<item-->
+                <!--android:id="@+id/action_share"-->
+                <!--android:title="分享" />-->
+        <!--</menu>-->
+    <!--</item>-->
+</menu>
