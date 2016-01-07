@@ -37,7 +37,9 @@ public class RefreshAsyncTask extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 //原来的feed feeds.get(i);
                 XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + " 开始更新");
                 //通知正在更新这个feed
-                publishProgress(new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.ON_UPDATE));
+                UpdateFeedEvent event =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
+                event.setStatus(UpdateFeedEvent.ON_UPDATE);
+                publishProgress(event);
 
                 //获取频道信息
                 SyndFeed syndFeed = RssHelper.getRetriever().retrieveFeed(RssHelper.adapterURL(feeds.get(i).getUrl()));
@@ -51,7 +53,9 @@ public class RefreshAsyncTask extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 //插入数据
                 DBHelper.Insert.articles(result);
                 //通知更新结束
-                publishProgress(new UpdateFeedEvent(feed, UpdateFeedEvent.NORMAL));
+                UpdateFeedEvent event1 =  new UpdateFeedEvent(feed, UpdateFeedEvent.TYPE.STATUS);
+                event1.setStatus(UpdateFeedEvent.NORMAL);
+                publishProgress(event1);
             } catch (Exception e) {
                 XLog.d(TAG + "feed :" + e);
             }

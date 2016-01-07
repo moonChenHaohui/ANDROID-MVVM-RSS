@@ -129,10 +129,14 @@ public class DBHelper {
             QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(id));
             if (status != null){
                 WhereCondition wc;
-                if (status == Article.Status.NORMAL_AND_FAVOR){
-                    wc = ArticleDao.Properties.Status.in(Article.Status.NORMAL.status,Article.Status.FAVOR.status);
+                if (status == Article.Status.NORMAL_AND_FAVOR || status == Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD) {
+                    wc = ArticleDao.Properties.Status.in(Article.Status.NORMAL.status, Article.Status.FAVOR.status);
+
                 } else {
                     wc = ArticleDao.Properties.Status.eq(status.status);
+                }
+                if (status == Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD){
+                    res = res.where(ArticleDao.Properties.Use_count.le(0));
                 }
                 return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).list();
             }

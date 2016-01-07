@@ -14,7 +14,8 @@ public class Article extends BmobObject {
         NORMAL(0),
         FAVOR(1),
         NORMAL_AND_FAVOR(2),
-        DELETE(-1);
+        NORMAL_AND_FAVOR_BUT_UNREAD(3),
+        DELETE(-2);
 
         public int status;
 

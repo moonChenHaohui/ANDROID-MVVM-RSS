@@ -11,6 +11,7 @@ import android.view.View;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.common.components.dialog.FeedSetDialog;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
@@ -86,11 +87,9 @@ public class FeedActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.content) {
             finish();
-        } else if (id == R.id.action_refresh){
-            XLog.d("onOptionsItemSelected:");
-            PreferenceUtils.getInstance(this)
-                    .saveParam(this.getString(R.string.set_theme), ThemeUtils.Theme.YELLOW.getIntValue());
-            XApplication.getInstance().bus.post(new UpdateUIEvent(UpdateUIEvent.THEME_CHANGE));
+        } else if (id == R.id.action_settings){
+            //频道设置
+            new FeedSetDialog(this).showWithView(binding.feedList);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -110,6 +109,13 @@ public class FeedActivity extends BaseActivity {
 
     public void btnOnClick(View v) {
         feedViewModel.btnOnClick(v);
+    }
+
+    @Subscribe
+    public void onUpdateEvent(UpdateFeedEvent event) {
+        if (event.getType() == UpdateFeedEvent.TYPE.SET){
+            feedViewModel.updateSet(event.isShowAllArticles());
+        }
 
     }
 

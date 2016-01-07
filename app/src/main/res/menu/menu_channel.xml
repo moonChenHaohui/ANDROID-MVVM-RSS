@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".ChannelActivity">
     <item
-        android:id="@+id/action_refresh"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="more"
-        app:showAsAction="ifRoom|withText">
+        android:id="@+id/action_settings"
+        android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+        android:title="set"
+        app:showAsAction="ifRoom">
     </item>
 </menu>

@@ -9,20 +9,45 @@ import com.moon.myreadapp.mvvm.models.dao.Feed;
  */
 public class UpdateFeedEvent implements XEvent {
 
+    public enum TYPE {
+        STATUS,
+        SET
+    }
+
     private Feed feed;
     private int status = NORMAL;
+    private boolean showAllArticles;
 
     /** 更新状态*/
     public static int ON_UPDATE = 1<<10;
     /** 正常状态*/
     public static int NORMAL    = 1<<11;
 
-    public UpdateFeedEvent(Feed feed) {
+    private TYPE type;
+
+    public UpdateFeedEvent(Feed feed,TYPE type) {
         this.feed = feed;
+        this.type = type;
     }
-    public UpdateFeedEvent(Feed feed, int status) {
-        this.feed = feed;
-        this.status =status;
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public boolean isShowAllArticles() {
+        return showAllArticles;
+    }
+
+    public void setShowAllArticles(boolean showAllArticles) {
+        this.showAllArticles = showAllArticles;
+    }
+
+    public TYPE getType() {
+        return type;
+    }
+
+    public void setType(TYPE type) {
+        this.type = type;
     }
 
     public Feed getFeed() {

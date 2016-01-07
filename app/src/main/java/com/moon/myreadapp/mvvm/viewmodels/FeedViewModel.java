@@ -26,9 +26,11 @@ import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.ArticleActivity;
+import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
 import com.rey.material.app.Dialog;
@@ -42,7 +44,7 @@ import java.util.List;
  */
 public class FeedViewModel extends BaseViewModel {
 
-    private Activity mView;
+    private FeedActivity mView;
 
     private RecyclerItemClickListener articleClickListener;
     private ArticleRecAdapter mAdapter;
@@ -51,8 +53,9 @@ public class FeedViewModel extends BaseViewModel {
     private Feed feed;
     private int currentPosition = -1;
     private Dialog mDialog;
+    private boolean showAllArticles;
 
-    public FeedViewModel(Activity view, long feedId) {
+    public FeedViewModel(FeedActivity view, long feedId) {
         this.mView = view;
         this.feedId = feedId;
         this.feed = DBHelper.Query.getFeed(feedId);
@@ -62,11 +65,13 @@ public class FeedViewModel extends BaseViewModel {
 
     @Override
     public void initViews() {
+        this.mView.setTitle(feed.getTitle());
+        showAllArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,true);
         mAdapter = new ArticleRecAdapter(getBaseData());
     }
 
     private List<Article> getBaseData() {
-        return DBHelper.Query.getArticlesByID(feedId, Article.Status.NORMAL_AND_FAVOR);
+        return DBHelper.Query.getArticlesByID(feedId, showAllArticles?Article.Status.NORMAL_AND_FAVOR:Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD);
     }
 
 
@@ -266,7 +271,9 @@ public class FeedViewModel extends BaseViewModel {
     }
 
     private void updateFeed() {
-        XApplication.getInstance().bus.post(new UpdateFeedEvent(feed));
+        UpdateFeedEvent event = new UpdateFeedEvent(feed,UpdateFeedEvent.TYPE.STATUS);
+        event.setStatus(UpdateFeedEvent.NORMAL);
+        XApplication.getInstance().bus.post(event);
     }
 
     public void btnOnClick(View v) {
@@ -304,5 +311,12 @@ public class FeedViewModel extends BaseViewModel {
         if(mDialog != null && mDialog.isShowing()){
             mDialog.dismiss();
         }
+    }
+
+    public void updateSet(boolean showAllArticles) {
+        this.showAllArticles = showAllArticles;
+
+        mAdapter.setmData(getBaseData());
+        updateFeed();
     }
 }

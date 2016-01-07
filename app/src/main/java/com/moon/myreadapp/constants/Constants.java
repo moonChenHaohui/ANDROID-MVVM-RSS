@@ -43,7 +43,15 @@ public class Constants {
      */
     public static final String APP_IS_FIRST_USE = "app_is_first_use";
 
+    /**
+     * 文章字体大小
+     */
     public static final String ARTICLE_FONT_SIZE = "article_font_size";
+
+    /**
+     * 频道内文章显示
+     */
+    public static final String FEED_SHOW_ALL = "feed_show_all";
 
 
 }

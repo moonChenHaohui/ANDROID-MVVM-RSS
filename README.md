@@ -24,6 +24,9 @@ Email:moon4chen@163.com
 1.7
 
 - 修改了自定义输入订阅的dialog；
+- 修改了feed ui；
+- 修改了webview的title、刷新部分
+- 添加了feed对于显示的设置dialog；
 
 1.6
 
