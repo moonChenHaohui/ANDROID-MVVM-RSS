@@ -16,23 +16,10 @@
             android:padding="@dimen/normal_padding"
             android:background="@drawable/edit_corners"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
-            <!--<com.rengwuxian.materialedittext.MaterialEditText-->
-                <!--android:id="@+id/input"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:focusable="true"-->
-                <!--android:focusableInTouchMode="true"-->
-                <!--android:gravity="top"-->
-                <!--android:hint="@string/dialog_sub_hint"-->
-                <!--android:maxLines="2"-->
-                <!--android:minLines="2"-->
-                <!--android:textSize="@dimen/text_h2" />-->
+            android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent">
 
@@ -41,6 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/dialog_sub_hint"
+                    android:editable="false"
+                    android:text="@{title}"
                     android:imeActionId="@+id/login"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textCapCharacters"
@@ -50,12 +39,12 @@
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:layout_gravity="right"
-                android:id="@+id/login"
+                android:id="@+id/sub"
                 android:padding="@dimen/normal_half_padding"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                android:text="@string/dialog_sub_search"
+                android:text="@string/dialog_sub_action"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_h2"
                 app:rd_enable="true" />

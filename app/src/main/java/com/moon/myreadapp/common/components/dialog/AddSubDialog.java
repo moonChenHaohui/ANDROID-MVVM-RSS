@@ -3,8 +3,11 @@ package com.moon.myreadapp.common.components.dialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.common.log.XLog;
@@ -15,6 +18,7 @@ import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.databinding.FragmentAddSubBinding;
+import com.moon.myreadapp.databinding.FragmentAddSubSecBinding;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.util.BuiltConfig;
@@ -29,10 +33,13 @@ import java.util.ArrayList;
 /**
  * Created by moon on 16/1/6.
  */
-public class AddSubDialog extends Dialog{
+public class AddSubDialog extends Dialog {
 
     private FragmentAddSubBinding binding;
     private boolean isLoad;
+    private boolean isSearch = true;
+    private Feed feed;
+    private ArrayList<Article> articles;
 
     public AddSubDialog(Context context) {
         super(context);
@@ -41,22 +48,26 @@ public class AddSubDialog extends Dialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.dialog_sub_title);
+        //setTitle(R.string.dialog_sub_title);
         layoutParams(-1, -2);
         canceledOnTouchOutside(true);
-        binding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_add_sub,null,false);
+        binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_sub, null, false);
         setContentView(binding.getRoot());
         binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isLoad) {
-                    search();
+                    if (isSearch) {
+                        search();
+                    } else {
+                        sub();
+                    }
                 }
             }
         });
     }
 
-    private void search (){
+    private void search() {
 
         String enter = binding.input.getText().toString();
         if (StringUtils.isEmpty(enter)) {
@@ -105,29 +116,51 @@ public class AddSubDialog extends Dialog{
         ViewUtils.editViewFocus(binding.input, true);
     }
 
-    private void success(Feed feed,ArrayList<Article> articles) {
+    private void success(Feed feed, ArrayList<Article> articles) {
+        this.feed = feed;
+        this.articles = articles;
+        isSearch = false;
+        binding.login.setText(Globals.getApplication().getString(R.string.dialog_sub_action));
+        binding.input.setEnabled(false);
+        binding.input.setText(feed.getTitle());
+        binding.input.setHint(Globals.getApplication().getString(R.string.dialog_subing_title));
+
+    }
+
+    private void sub() {
         //拿到转化好的feed 和文章列表
         //1.比对现有feed 中是否有相同的,a:有则更新,b:没有则插入.
         //2.比对articles,有则更新,没有则插入.
         //3.文章列表上传至服务器.
-        String icon = HtmlHelper.getIconUrlString(feed.getLink());
-        feed.setIcon(icon);
-        long id = DBHelper.Insert.feed(feed);
-        for(int i = 0 ;i < articles.size();i++){
-            articles.get(i).setFeed_id(id);
-            DBHelper.Insert.article(articles.get(i));
+        if (feed == null) {
+            showProgress(false);
+            return;
         }
-        XApplication.getInstance().bus.post(new UpdateFeedListEvent());
-        SimpleToastHelper.showToast(R.string.dialog_sub_success);
-        dismiss();
-        XLog.d("save successed ! the id :" + id);
-        //XLog.d(feed1.toString());
-        // 如果用户存在,则发送给服务端
+        binding.login.post(new Runnable() {
+            @Override
+            public void run() {
+                binding.login.setText(Globals.getApplication().getString(R.string.dialog_sub_search_load));
+                String icon = HtmlHelper.getIconUrlString(feed.getLink());
+                feed.setIcon(icon);
+                long id = DBHelper.Insert.feed(feed);
+                if (articles != null) {
+                    for (int i = 0; i < articles.size(); i++) {
+                        articles.get(i).setFeed_id(id);
+                        DBHelper.Insert.article(articles.get(i));
+                    }
+                }
+                XApplication.getInstance().bus.post(new UpdateFeedListEvent());
+                SimpleToastHelper.showToast(R.string.dialog_sub_success);
+                dismiss();
+            }
+        });
 
     }
-    private void showProgress(boolean show){
+
+    private void showProgress(boolean show) {
         isLoad = show;
-        binding.login.setText(Globals.getApplication().getString(show ? R.string.dialog_sub_search_load:R.string.dialog_sub_search));
+        isSearch = true;
+        binding.login.setText(Globals.getApplication().getString(show ? R.string.dialog_sub_search_load : R.string.dialog_sub_search));
         binding.input.setEnabled(!show);
     }
 }

@@ -19,20 +19,11 @@ Email:moon4chen@163.com
 
 
 
-##进度
-TODO:
-
-1. listview -> recyclerView;
-2. settingActivity
-3. >rss获取原理研究
-4. >本地sqlite保存＋shareprefrence保存
-5. >rss网络请求队列部分是否可以参考okhttp queue部分
-6. >greenDao研究(10.08提出)
-7. 动画框架 ：NineOldAndroids
-8. 后台：Bmob
-9. volley ->离线缓存机制的实现
-
 ###Log
+
+1.7
+
+- 修改了自定义输入订阅的dialog；
 
 1.6
 
