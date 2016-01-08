@@ -19,6 +19,7 @@
         android:layout_height="match_parent">
         <!--The main content view-->
         <LinearLayout
+            android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -40,5 +41,6 @@
             android:layout_width="@dimen/left_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start" />
+
     </android.support.v4.widget.DrawerLayout>
 </layout>

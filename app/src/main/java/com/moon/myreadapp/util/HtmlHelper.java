@@ -54,7 +54,7 @@ public class HtmlHelper {
         }
         try{
             URL url = new URL( urlString );
-            String iconUrl = url.getProtocol() + "://" + url.getHost() + "/favicon.ico";// 保证从域名根路径搜索
+            String iconUrl = "http://statics.dnspod.cn/proxy_favicon/_/favicon?domain=" + url.getHost();// 使用dnspod进行favicon的获取
             return iconUrl;
         }catch (MalformedURLException e){
             return null;

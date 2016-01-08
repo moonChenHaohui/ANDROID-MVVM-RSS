@@ -57,24 +57,24 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
 
                     //XLog.d("pos;" + pos + ";status:"+ status);
                     if (pos >= 0 && pos<getmData().size()){
+                        view.setText(v.getResources().getString(R.string.dialog_sub_search_load));
+                        view.setEnabled(false);
                         if (status ==SUB_STATUS_UNSUB){
-                            //未订阅状态可以加入订阅
-                            view.setText(v.getResources().getString(R.string.dialog_sub_search_load));
-                            view.setEnabled(false);
 
-                            view.post(new Runnable() {
+                            view.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     DBHelper.Insert.feed(getmData().get(pos));
                                     updateFeed();
-                                    ToastHelper.showNotice((Activity) context,view.getResources().getString(R.string.sub_notice_already_join,getmData().get(pos).getTitle()), TastyToast.STYLE_MESSAGE);
+                                    ToastHelper.showNotice((Activity) context, view.getResources().getString(R.string.sub_notice_already_join, getmData().get(pos).getTitle()), TastyToast.STYLE_MESSAGE).setDuration(1000);
                                     view.setText(view.getResources().getString(R.string.sub_btn_cancel_sub));
                                     view.setEnabled(true);
                                 }
-                            });
+                            }, 500);
                             view.setTag(R.id.tag_sub_status, SUB_STATUS_SUBED);
                         } else {
-                            view.post(new Runnable() {
+
+                            view.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     view.setEnabled(false);
@@ -84,7 +84,7 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
                                     view.setEnabled(true);
                                     view.setTag(R.id.tag_sub_status, SUB_STATUS_UNSUB);
                                 }
-                            });
+                            },500);
                         }
                     }
                 }

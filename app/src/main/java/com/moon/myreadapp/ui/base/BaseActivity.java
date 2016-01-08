@@ -304,6 +304,9 @@ public abstract class BaseActivity extends XActivity{
     protected int getScreenHeight() {
         return findViewById(android.R.id.content).getHeight();
     }
+    protected int getScreenWidth() {
+        return findViewById(android.R.id.content).getWidth();
+    }
 
     protected void checkEvent(){
         boolean isFirstUse = PreferenceUtils.getInstance(this).getBooleanParam(Constants.APP_IS_FIRST_USE,true);

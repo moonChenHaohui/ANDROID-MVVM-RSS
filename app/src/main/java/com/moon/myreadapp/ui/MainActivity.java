@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     private void initDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, 0, 0) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, 0,0) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu();
@@ -90,6 +90,14 @@ public class MainActivity extends BaseActivity implements IMainView {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
                 //toolbar.setTitle("close");
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                //切换的效果
+                int dis = (int)(slideOffset * getScreenWidth() / 3.0);
+                binding.mainContent.scrollTo(-dis,0);
             }
         };
         binding.drawerLayout.setDrawerListener(mDrawerToggle);
