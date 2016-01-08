@@ -1,5 +1,6 @@
 package com.moon.myreadapp.common.adapter;
 
+import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.text.Html;
@@ -46,8 +47,8 @@ public class ArticleRecAdapter extends BaseRecyclerAdapter<Article,ViewDataBindi
         }
     }
 
-    public ArticleRecAdapter(List<Article> data) {
-        super(data);
+    public ArticleRecAdapter(Context context,List<Article> data) {
+        super(context,data);
     }
 
     @Override
@@ -111,6 +112,7 @@ public class ArticleRecAdapter extends BaseRecyclerAdapter<Article,ViewDataBindi
             binding.atricleImage.setImageURI(Uri.parse(imageUrl));
             XLog.d("one pic .pos : " + truePos + ",image url : " + imageUrl);
         }else {//纯文字
+            article.setTitle("<strong><span style=\"color:#006600;\">&nbsp; &nbsp; <span style=\"color:#FFFFFF;background-color:#337FE5;\">藏</span> " + article.getTitle());
             ((LvArticleItemNoImgBinding)holder.getBinding()).setArticle(article);
         }
     }

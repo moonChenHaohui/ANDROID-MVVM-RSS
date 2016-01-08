@@ -1,5 +1,8 @@
 package com.moon.myreadapp.common.adapter.base;
 
+import android.content.Context;
+import android.databinding.Bindable;
+import android.databinding.Observable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +13,14 @@ import com.moon.myreadapp.util.Globals;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.halfbit.tinybus.Subscribe;
+
 /**
  * Created by moon on 15/11/9.
  * base recycler adapter with data binding
  * add head \foot list;
  */
-public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<BaseRecyclerAdapter.BindingHolder<T>> {
+public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<BaseRecyclerAdapter.BindingHolder<T>>{
 
 
     private ArrayList<View> mHeadViews;
@@ -29,8 +34,8 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
 
     protected LayoutInflater mInflater;
 
-    public BaseRecyclerAdapter(List<E> data) {
-        mInflater = LayoutInflater.from(Globals.getApplication());
+    public BaseRecyclerAdapter(Context context,List<E> data) {
+        mInflater = LayoutInflater.from(context);
         mData = data;
     }
 

@@ -1,5 +1,6 @@
 package com.moon.myreadapp.common.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -31,8 +32,8 @@ import java.util.List;
 public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding> {
 
 
-    public FeedRecAdapter(List<Feed> data) {
-        super(data);
+    public FeedRecAdapter(Context context,List<Feed> data) {
+        super(context,data);
     }
 
     @Override

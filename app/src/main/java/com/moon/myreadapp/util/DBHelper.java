@@ -82,7 +82,7 @@ public class DBHelper {
     public static class Insert{
 
         public static long feed(Feed feed){
-            long id = getDAO().getFeedDao().insert(feed);
+            long id = getDAO().getFeedDao().insertOrReplace(feed);
             XLog.d("insert feed id :" + id);
             return id;
         }
@@ -167,6 +167,17 @@ public class DBHelper {
             return list.get(0);
         }
 
+        public static Feed findFeedByURL(String url){
+            if (url == null){
+                return null;
+            }
+            List<Feed> list = getDAO().getFeedDao().queryBuilder().where(FeedDao.Properties.Url.eq(url)).list();
+            if (null == list || list.size() == 0){
+                return null;
+            }
+            return list.get(0);
+        }
+
         public static long getUserId(){
             return getUser() != null ? getUser().getId() : -1;
         }
@@ -194,6 +205,16 @@ public class DBHelper {
             //只保存一个用户信息
             getDAO().getUserDao().deleteAll();
             return getDAO().getUserDao().insertOrReplace(user);
+        }
+    }
+
+    public static class Delete {
+        public static boolean deleteFeed(Feed feed){
+            Feed f =Query.findFeedByURL(feed.getUrl());
+            if (f != null) {
+                getDAO().getFeedDao().delete(f);
+            }
+            return true;
         }
     }
 

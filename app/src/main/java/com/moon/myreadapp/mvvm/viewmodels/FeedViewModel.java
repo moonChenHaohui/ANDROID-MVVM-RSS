@@ -68,7 +68,7 @@ public class FeedViewModel extends BaseViewModel {
     public void initViews() {
         this.mView.setTitle(feed.getTitle());
         showAllArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,true);
-        mAdapter = new ArticleRecAdapter(getBaseData());
+        mAdapter = new ArticleRecAdapter(mView,getBaseData());
     }
 
     private List<Article> getBaseData() {

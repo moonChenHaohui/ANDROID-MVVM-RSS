@@ -21,6 +21,10 @@ Email:moon4chen@163.com
 
 ###Log
 
+1.8
+
+- 增加了系统订阅ui、功能
+
 1.7
 
 - 修改了自定义输入订阅的dialog；

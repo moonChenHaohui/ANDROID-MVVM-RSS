@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-    <!--<item android:top="1px" android:bottom="1px">-->
-        <!--<shape-->
-            <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--android:shape="rectangle">-->
-            <!--<solid-->
-                <!--android:color="@color/txt_white"/>-->
-            <!--<stroke-->
-                <!--android:width="1px"-->
-                <!--android:color="@color/divde_line_deep"/>-->
-        <!--</shape>-->
-    <!--</item>-->
-    <item >
-        <shape>
-            <padding android:left="@dimen/normal_padding"
-                android:right="@dimen/normal_padding"
-                android:top="@dimen/normal_padding"
-                android:bottom="@dimen/normal_padding"/>
-        </shape>
-        <selector>
-            <item android:state_pressed="true" android:drawable="@drawable/abc_list_pressed_holo_dark" />
-            <item  android:drawable="@android:color/transparent" />
-        </selector>
-    </item>
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:state_pressed="true" android:drawable="@drawable/abc_list_pressed_holo_dark" />
+<item android:drawable="@android:color/transparent">
+
+</item>
+</selector>

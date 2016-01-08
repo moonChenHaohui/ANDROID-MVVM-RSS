@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="adapter"
+            type="com.moon.myreadapp.common.adapter.SystemRecAdapter"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.moon.myreadapp.ui.fragments.RecommendFragment"
+    </data>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_gray"
-        tools:context="com.moon.myreadapp.ui.fragments.RecommendFragment"
-        tools:listitem="@layout/lv_recommend" />
-</FrameLayout>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.moon.myreadapp.ui.fragments.RecommendFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adapter="@{adapter}"
+            android:background="@color/background_gray"
+            tools:context="com.moon.myreadapp.ui.fragments.RecommendFragment"
+            tools:listitem="@layout/lv_recommend" />
+        <TextView
+            android:id="@+id/empty"
+            style="@style/ButtomBarItem"
+            android:clickable="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="@{adapter.getmData().size() > 0 ? View.GONE : View.VISIBLE}" />
+    </FrameLayout>
+</layout>
+

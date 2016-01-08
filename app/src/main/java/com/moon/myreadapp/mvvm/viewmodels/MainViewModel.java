@@ -57,7 +57,7 @@ public class MainViewModel extends BaseViewModel {
     @Override
     public void initEvents() {
         final List<Feed> feeds = DBHelper.Query.getFeeds();
-        feedRecAdapter = new FeedRecAdapter(feeds);
+        feedRecAdapter = new FeedRecAdapter(mView,feeds);
 
         readItemClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override

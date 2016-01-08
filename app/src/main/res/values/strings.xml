@@ -35,6 +35,14 @@
     <string name="dialog_sub_success">订阅成功!</string>
     <string name="dialog_sub_cancel">取消</string>
 
+    <!--系统订阅部分-->
+    <string name="sub_notice_empty_data">当前没有请求到数据,请点击屏幕重试.</string>
+    <string name="sub_notice_loading">数据加载中...</string>
+    <string name="sub_notice_system_error">服务器繁忙,请点击屏幕重试..</string>
+    <string name="sub_btn_sub">订阅</string>
+    <string name="sub_btn_cancel_sub">取消订阅</string>
+    <string name="sub_notice_already_join">订阅 " %1$s " 成功</string>
+
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_feed">FeedActivity</string>
     <string name="title_activity_article">ArticleActivity</string>

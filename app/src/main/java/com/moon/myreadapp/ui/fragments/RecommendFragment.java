@@ -1,15 +1,15 @@
 package com.moon.myreadapp.ui.fragments;
 
-import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.databinding.FragmentRecommendListBinding;
 import com.moon.myreadapp.mvvm.viewmodels.AddFeedViewModel;
 
 /**
@@ -19,11 +19,9 @@ public class RecommendFragment extends Fragment {
 
     private static String VM = "VIEW_MODEL";
     private AddFeedViewModel addFeedViewModel;
+    private FragmentRecommendListBinding binding;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+
     public RecommendFragment() {
     }
 
@@ -44,24 +42,29 @@ public class RecommendFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onResume() {
+        super.onResume();
+        if (addFeedViewModel != null) {
+            addFeedViewModel.loadSystemData(binding.empty);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recommend_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView && addFeedViewModel != null) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            //recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            recyclerView.setAdapter(addFeedViewModel.getSystemRecAdapter());
+       binding = DataBindingUtil.inflate(inflater,R.layout.fragment_recommend_list,container,false);
+        if (addFeedViewModel != null) {
+            binding.list.setLayoutManager(new LinearLayoutManager(binding.list.getContext()));
+            //binding.list.setAdapter(addFeedViewModel.getSystemRecAdapter());
+            binding.setAdapter(addFeedViewModel.getSystemRecAdapter());
+            binding.empty.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addFeedViewModel.loadSystemData(binding.empty);
+                }
+            });
         }
-        return view;
+        return binding.getRoot();
     }
 
 
