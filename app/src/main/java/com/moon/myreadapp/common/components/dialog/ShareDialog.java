@@ -3,26 +3,17 @@ package com.moon.myreadapp.common.components.dialog;
 import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.DraweeView;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.databinding.FragmentShareBinding;
 import com.moon.myreadapp.mvvm.models.ShareItem;
 
@@ -80,7 +71,7 @@ public class ShareDialog extends BaseButtomDialog implements View.OnClickListene
         binding.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SimpleToastHelper.showToast("click position:" + position);
+                ToastHelper.showToast("click position:" + position);
 //                switch (position) {
 //                    case 0:
 //                        shareToWeChatSession();

@@ -1,5 +1,11 @@
 package com.moon.myreadapp.util;
 
+import android.graphics.drawable.Drawable;
+import android.text.Html;
+import android.text.Spanned;
+
+import com.moon.myreadapp.R;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,5 +61,25 @@ public class HtmlHelper {
         }
     }
 
+
+    /**
+     * 从本地处理html文本
+     * @param url
+     * @return
+     */
+    public static Spanned getHtmlByRes(String url){
+        final Html.ImageGetter imageGetter = new Html.ImageGetter() {
+
+            public Drawable getDrawable(String source) {
+                Drawable drawable=null;
+                int rId=Integer.parseInt(source);
+                drawable=Globals.getApplication().getResources().getDrawable(rId);
+                int size =Globals.getApplication().getResources().getDimensionPixelOffset(R.dimen.text_h2);
+                drawable.setBounds(0, 0,size, size);
+                return drawable;
+            }
+        };
+        return Html.fromHtml(url, imageGetter, null);
+    }
 
 }

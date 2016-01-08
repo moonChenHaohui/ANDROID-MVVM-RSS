@@ -5,10 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.databinding.FragmentRegisterBinding;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.ui.LoginActivity;

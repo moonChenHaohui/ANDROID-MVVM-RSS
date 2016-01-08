@@ -2,6 +2,7 @@ package com.moon.myreadapp.common.adapter;
 
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;

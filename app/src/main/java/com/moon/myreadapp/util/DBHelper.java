@@ -175,8 +175,8 @@ public class DBHelper {
             return getDAO().getArticleDao().queryBuilder().
                     where(
                             ArticleDao.Properties.Feed_id.eq(id),
-                            ArticleDao.Properties.Use_count.eq(0),
-                            ArticleDao.Properties.Status.notEq(Article.Status.DELETE
+                            ArticleDao.Properties.Use_count.le(0),
+                            ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status
                             )).count();
         }
 

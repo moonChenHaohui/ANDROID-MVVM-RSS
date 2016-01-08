@@ -2,9 +2,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.databinding.Bindable;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
-import android.widget.PopupMenu;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -13,18 +11,16 @@ import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
-import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
-import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.VibratorHelper;
-import com.moon.myreadapp.util.ViewUtils;
 import com.rey.material.app.Dialog;
 
 import java.util.ArrayList;
@@ -217,7 +213,7 @@ public class MainViewModel extends BaseViewModel {
             int id = v.getId();
             switch (id) {
                 case R.id.action_read_all:
-                    SimpleToastHelper.showToast("read all");
+                    ToastHelper.showToast("read all");
                     //标记全部已读
                     break;
                 case R.string.action_read_reflash:

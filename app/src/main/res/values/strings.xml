@@ -135,5 +135,5 @@
     <string name="set_theme_picker_close">关闭</string>
 
     <string name="set_feed_title">频道设置</string>
-    <string name="set_feed_show_all_article">过滤已读文章</string>
+    <string name="set_feed_show_all_article">只显示未读文章</string>
 </resources>

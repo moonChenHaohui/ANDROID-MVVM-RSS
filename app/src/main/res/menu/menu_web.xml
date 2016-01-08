@@ -10,7 +10,7 @@
     <item
         android:id="@+id/action_read_favor"
         android:icon="@android:drawable/stat_notify_sync_noanim"
-        android:title="刷新"
+        android:title="收藏"
         app:showAsAction="ifRoom">
     </item>
     <!--<item android:id="@+id/action_more"-->

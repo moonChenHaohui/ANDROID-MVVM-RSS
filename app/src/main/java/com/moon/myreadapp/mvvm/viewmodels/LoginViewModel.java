@@ -7,21 +7,16 @@ import android.view.View;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
-import com.moon.myreadapp.common.components.toast.TastyToast;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateUserEvent;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
-import com.moon.myreadapp.util.Globals;
 import com.rey.material.app.Dialog;
-
-import org.json.JSONArray;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -103,7 +98,7 @@ public class LoginViewModel extends BaseViewModel {
                 }
                 if (list.size() > 0) {
                     User user = list.get(0);
-                    SimpleToastHelper.showToast(R.string.login_success);
+                    ToastHelper.showToast(R.string.login_success);
                     //更新本地用户数据
                     muUser = user;
                     DBHelper.UpDate.saveUser(user);
@@ -112,7 +107,7 @@ public class LoginViewModel extends BaseViewModel {
                     mView.finish();
                 } else {
                     dialog.dismiss();
-                    SimpleToastHelper.showToast(R.string.error_incorrect_password);
+                    ToastHelper.showToast(R.string.error_incorrect_password);
                 }
                 isOnlogin = false;
             }
@@ -120,7 +115,7 @@ public class LoginViewModel extends BaseViewModel {
             @Override
             public void onError(int i, String s) {
                 dialog.dismiss();
-                SimpleToastHelper.showToast(R.string.system_error);
+                ToastHelper.showToast(R.string.system_error);
                 isOnlogin = false;
             }
         });

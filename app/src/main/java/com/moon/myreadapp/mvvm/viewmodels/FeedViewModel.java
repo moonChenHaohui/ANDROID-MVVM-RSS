@@ -20,6 +20,7 @@ import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerV
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.TastyToast;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.ModelHelper;
@@ -206,7 +207,7 @@ public class FeedViewModel extends BaseViewModel {
                         articles = null;
 
                         //设置提示
-                        showNotice(haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
+                        ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
 
                         //重新设置数据
                         if (haveNewDate) {
@@ -221,47 +222,13 @@ public class FeedViewModel extends BaseViewModel {
 
             @Override
             public void onError(final String msg) {
-                showNotice(BuiltConfig.getString(R.string.notice_update_none),TastyToast.STYLE_MESSAGE);
+                ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
                 feedList.onPullDownRefreshComplete();
 //
             }
         });
     }
 
-    /**
-     * 弹出顶部提示
-     *
-     * @param txt
-     */
-    private TastyToast showNotice(String txt,TastyToast.Style style) {
-        TastyToast toast = TastyToast.makeText(mView, txt, style).enableSwipeDismiss().setLayoutBelow(mView.findViewById(R.id.toolbar));
-        toast.setOutAnimation(AnimationUtils.loadAnimation(mView, R.anim.toast_out));
-        toast.show();
-        return toast;
-        /*
-        final View view = LayoutInflater.from(mView).inflate(R.layout.common_notice_bar, null);
-
-        feedList.getmAdapter().addHeader(view);
-
-        View m =feedList.getmAdapter().getHeader(0);
-        final TextView tv = (TextView) m.findViewById(R.id.info);
-        tv.setText(txt + time);
-        //设置放大的动画
-        if (time % 2 == 0) {
-            animate(tv).setDuration(1000).scaleXBy(.5f).scaleYBy(.5f).setInterpolator(new AnticipateOvershootInterpolator());
-        } else {
-            animate(tv).setDuration(1000).scaleXBy(-.5f).scaleYBy(-.5f).setInterpolator(new AnticipateOvershootInterpolator());
-        }
-        time++;
-        feedList.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                feedList.getmAdapter().removeHeader(view);
-
-            }
-        }, 2000);
-        */
-    }
 
 
     private void readArticle(Article article, int position) {
@@ -291,11 +258,11 @@ public class FeedViewModel extends BaseViewModel {
                     if (article.getStatus() == Article.Status.NORMAL.status) {
                         article.setStatus(Article.Status.FAVOR.status);
                         DBHelper.UpDate.saveArticle(article);
-                        showNotice(BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success),TastyToast.STYLE_ALERT).setDuration(1000);
+                        ToastHelper.showNotice(mView,BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success),TastyToast.STYLE_ALERT).setDuration(1000);
                     } else {
                         article.setStatus(Article.Status.NORMAL.status);
                         DBHelper.UpDate.saveArticle(article);
-                        showNotice(BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success),TastyToast.STYLE_ALERT).setDuration(1000);
+                        ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success), TastyToast.STYLE_ALERT).setDuration(1000);
                     }
                     break;
                 case R.id.action_read_delete:
@@ -303,7 +270,8 @@ public class FeedViewModel extends BaseViewModel {
                     mAdapter.remove(currentPosition);
                     article.setStatus(Article.Status.DELETE.status);
                     DBHelper.UpDate.saveArticle(article);
-                    showNotice(BuiltConfig.getString(R.string.action_delete) + BuiltConfig.getString(R.string.success),TastyToast.STYLE_ALERT).setDuration(1000);
+                    updateFeed();
+                    ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.action_delete) + BuiltConfig.getString(R.string.success), TastyToast.STYLE_ALERT).setDuration(1000);
                     break;
             }
 

@@ -1,37 +1,22 @@
 package com.moon.myreadapp.common.components.dialog;
 
 import android.app.Activity;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.DimenRes;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
-import com.facebook.drawee.view.DraweeView;
-import com.joanzapata.iconify.widget.IconTextView;
-import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.common.event.UpdateArticleEvent;
-import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.FragmentReadSetBinding;
-import com.moon.myreadapp.databinding.FragmentShareBinding;
-import com.moon.myreadapp.mvvm.models.ShareItem;
 import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ScreenUtils;
 import com.rey.material.widget.Slider;
 import com.rey.material.widget.Switch;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by moon on 16/01/02.
@@ -92,7 +77,7 @@ public class ReadSetDialog extends BaseButtomDialog implements View.OnClickListe
         binding.modeSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(Switch view, boolean checked) {
-                //SimpleToastHelper.showToast("夜间模式:" + checked);
+                //ToastHelper.showToast("夜间模式:" + checked);
             }
         });
 

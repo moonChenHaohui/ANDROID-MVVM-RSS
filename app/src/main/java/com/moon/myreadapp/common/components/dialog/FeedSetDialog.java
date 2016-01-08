@@ -67,11 +67,11 @@ public class FeedSetDialog extends BaseButtomDialog implements View.OnClickListe
         binding.commit.setOnClickListener(this);
 
         showAllArticles = PreferenceUtils.getInstance(context).getBooleanParam(Constants.FEED_SHOW_ALL, showAllArticles);
-        binding.readSwitch.setChecked(!showAllArticles);
+        binding.readSwitch.setChecked(showAllArticles);
         binding.readSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(Switch view, boolean checked) {
-                showAllArticles = !checked;
+                showAllArticles = checked;
                 UpdateFeedEvent event = new UpdateFeedEvent(null, UpdateFeedEvent.TYPE.SET);
                 event.setShowAllArticles(showAllArticles);
                 XApplication.getInstance().bus.post(event);

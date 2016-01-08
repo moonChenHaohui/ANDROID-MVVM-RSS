@@ -3,22 +3,16 @@ package com.moon.myreadapp.common.components.dialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.view.TextureView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
-import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.rss.RssHelper;
-import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.databinding.FragmentAddSubBinding;
-import com.moon.myreadapp.databinding.FragmentAddSubSecBinding;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.util.BuiltConfig;
@@ -150,7 +144,7 @@ public class AddSubDialog extends Dialog {
                     }
                 }
                 XApplication.getInstance().bus.post(new UpdateFeedListEvent());
-                SimpleToastHelper.showToast(R.string.dialog_sub_success);
+                ToastHelper.showToast(R.string.dialog_sub_success);
                 dismiss();
             }
         });

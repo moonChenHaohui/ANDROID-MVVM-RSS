@@ -10,12 +10,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
-import com.moon.myreadapp.common.components.toast.SimpleToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.common.event.UpdateUserEvent;
