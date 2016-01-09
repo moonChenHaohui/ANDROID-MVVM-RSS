@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.rey.material.widget.Button
+            android:id="@+id/add_feed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+(一个频道都没有,快去添加频道)"/>
+        <include layout="@layout/common_divider"/>
+        <com.rey.material.widget.Button
+            android:id="@+id/user_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+(没登录妈妈喊你去登录拉!)"/>
+
+        <com.rey.material.widget.Button
+            android:id="@+id/user_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+(再刷新一次)"/>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/notice"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+报告老大:刚才是网络问题"/>
+    </LinearLayout>
+</layout>

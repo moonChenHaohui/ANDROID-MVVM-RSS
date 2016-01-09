@@ -41,5 +41,6 @@
         android:padding="@dimen/normal_padding"
         android:text="@string/action_read_delete_feed"
         android:textSize="@dimen/text_h3"
+        android:background="@color/txt_white"
         android:onClick="btnOnClick"/>
 </LinearLayout>

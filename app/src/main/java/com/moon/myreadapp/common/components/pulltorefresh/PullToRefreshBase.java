@@ -61,7 +61,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     /**
      * 空布局,可能是在无网络\请求失败的情况下给用户提示
      */
-    private EmptyLayout mEmptyLayout;
+    protected View mEmptyLayout;
     /**
      * 是否显示空布局
      */
@@ -493,14 +493,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
      */
     protected abstract T createRefreshableView(Context context, AttributeSet attrs);
 
-    protected EmptyLayout createEmptyLayout (Context context, AttributeSet attrs){
+    protected View createEmptyLayout (Context context, AttributeSet attrs){
         EmptyLayout el = new EmptyLayout(context);
         el.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 setShowEmptyLayout(false);
                 //滚动到顶部
-                //smoothScrollTo(0,300,0);
+                smoothScrollTo(0,300,0);
                 //刷新
                 doPullRefreshing(true,500);
             }

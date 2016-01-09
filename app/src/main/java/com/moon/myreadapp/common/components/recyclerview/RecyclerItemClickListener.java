@@ -42,10 +42,12 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
             @Override
             public void onLongPress(MotionEvent e) {
-                XLog.d("GestureDetector  loLongPress");
+                //XLog.d("GestureDetector  loLongPress");
                 if (mView != null){
                     View childView = mView.findChildViewUnder(e.getX(), e.getY());
                     if (childView != null && mListener != null ) {
+
+                        //当touch事件没有被cancel时才触发,否则可能出现bug
                         if (!canelAction) {
                             mListener.onItemLongClick(childView, mView.getChildPosition(childView));
                         }

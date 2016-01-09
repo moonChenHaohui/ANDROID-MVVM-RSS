@@ -14,7 +14,9 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 /**
  * 这个类封装了下拉刷新的布局
@@ -31,6 +33,8 @@ public class RotateLoadingLayout extends LoadingLayout {
     private RelativeLayout mHeaderContainer;
     /**箭头图片*/
     private ImageView mArrowImageView;
+    /**刷新图片*/
+    private ImageView mRefreshImageView;
     /**状态提示TextView*/
     private TextView mHintTextView;
     /**最后更新时间的TextView*/
@@ -69,11 +73,12 @@ public class RotateLoadingLayout extends LoadingLayout {
     private void init(Context context) {
         mHeaderContainer = (RelativeLayout) findViewById(R.id.pull_to_refresh_header_content);
         mArrowImageView = (ImageView) findViewById(R.id.pull_to_refresh_header_arrow);
+        mRefreshImageView = (ImageView)findViewById(R.id.pull_to_refresh_header_refreshing);
         mHintTextView = (TextView) findViewById(R.id.pull_to_refresh_header_hint_textview);
         mHeaderTimeView = (TextView) findViewById(R.id.pull_to_refresh_header_time);
         mHeaderTimeViewTitle = (TextView) findViewById(R.id.pull_to_refresh_last_update_time_text);
         
-        mArrowImageView.setScaleType(ScaleType.CENTER);
+        mArrowImageView.setScaleType(ScaleType.CENTER_INSIDE);
         //mArrowImageView.setImageResource(R.drawable.default_ptr_rotate);
         
         float pivotValue = 0.5f;    // SUPPRESS CHECKSTYLE
@@ -117,6 +122,9 @@ public class RotateLoadingLayout extends LoadingLayout {
     @Override
     protected void onReset() {
         resetRotation();
+        //在reset时显示arrow
+        ObjectAnimator.ofFloat(mRefreshImageView, "alpha",0).start();
+        ObjectAnimator.ofFloat(mArrowImageView, "alpha",1).start();
         mHintTextView.setText(R.string.pull_to_refresh_header_hint_normal);
     }
 
@@ -133,21 +141,34 @@ public class RotateLoadingLayout extends LoadingLayout {
     @Override
     protected void onRefreshing() {
         resetRotation();
-        mArrowImageView.startAnimation(mRotateAnimation);
+        //在刷新时显示refreshview
+        ObjectAnimator.ofFloat(mRefreshImageView, "alpha",1).start();
+        ObjectAnimator.ofFloat(mArrowImageView, "alpha",0).start();
+        mRefreshImageView.startAnimation(mRotateAnimation);
         mHintTextView.setText(R.string.pull_to_refresh_header_hint_loading);
     }
-    
+
+    private static int beginAngle = 140;
     @Override
     public void onPull(float scale) {
+        //当拉动一定程度才会转动图标
         float angle = scale * 180f; // SUPPRESS CHECKSTYLE
-        mArrowImageView.setRotation(angle);
+        //mArrowImageView.setRotation(angle);
+        if (angle > beginAngle && angle <= 180) {
+            mArrowImageView.setRotation((angle - beginAngle) / (180f - beginAngle) * 180f);
+        } else if (angle > 180){
+            mArrowImageView.setRotation(180);
+        } else {
+            mArrowImageView.setRotation(0);
+        }
     }
     
     /**
      * 重置动画
      */
     private void resetRotation() {
-        mArrowImageView.clearAnimation();
-        mArrowImageView.setRotation(0);
+        mRefreshImageView.clearAnimation();
+        mRefreshImageView.setRotation(0);
+        ObjectAnimator.ofFloat(mArrowImageView, "rotation",0).start();
     }
 }

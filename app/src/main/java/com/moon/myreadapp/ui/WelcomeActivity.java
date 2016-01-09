@@ -31,7 +31,7 @@ public class WelcomeActivity extends BaseActivity {
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
     /**
-     * Some older devices needs a small delay between UI widget updates
+     * Some older devices needs a small delay between UI widget_empty_home updates
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;

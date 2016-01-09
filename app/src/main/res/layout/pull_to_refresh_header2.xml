@@ -57,10 +57,17 @@
                 android:id="@+id/pull_to_refresh_header_arrow"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitCenter"
+                android:scaleType="centerInside"
                 android:layout_gravity="center"
-                android:src="@drawable/loaddb" />
-
+                android:src="@drawable/pull_to_refresh_header_arrow_1" />
+            <ImageView
+                android:id="@+id/pull_to_refresh_header_refreshing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                android:alpha="0"
+                android:src="@drawable/pull_to_refresh_header_refresh" />
             <ProgressBar
                 android:id="@+id/pull_to_refresh_header_progressbar"
                 android:layout_width="match_parent"

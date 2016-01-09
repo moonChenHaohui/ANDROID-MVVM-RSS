@@ -22,7 +22,7 @@ package com.moon.myreadapp.common.components.scroll;
 public enum ScrollState {
     /**
      * Widget is stopped.
-     * This state does not always mean that this widget have never been scrolled.
+     * This state does not always mean that this widget_empty_home have never been scrolled.
      */
     STOP,
 

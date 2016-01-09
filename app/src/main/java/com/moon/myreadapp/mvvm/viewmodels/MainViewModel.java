@@ -10,6 +10,7 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
+import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
@@ -57,7 +58,18 @@ public class MainViewModel extends BaseViewModel {
     @Override
     public void initEvents() {
         final List<Feed> feeds = DBHelper.Query.getFeeds();
-        feedRecAdapter = new FeedRecAdapter(mView,feeds);
+        feedRecAdapter = new FeedRecAdapter(mView,feeds, new BaseRecyclerAdapter.Notify<Feed>() {
+            @Override
+            public void onDataReSet(List<Feed> data) {
+                if (data != null && data.size() > 0){
+                    //有数据的情况
+                    //不显示empty
+                } else {
+                    //没数据的情况
+                    //显示empty,点击可以加载数据
+                }
+            }
+        });
 
         readItemClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override

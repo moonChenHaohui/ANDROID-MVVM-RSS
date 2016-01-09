@@ -91,6 +91,7 @@ public class AddFeedViewModel extends BaseViewModel {
             return;
         }
         emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_loading));
+        emptyView.setEnabled(false);
         emptyView.setVisibility(View.VISIBLE);
         BmobQuery<Feed> query = new BmobQuery<Feed>();
         query.findObjects(mView, new FindListener<Feed>() {
@@ -100,12 +101,14 @@ public class AddFeedViewModel extends BaseViewModel {
                 if (object.size() <= 0) {
                     emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_empty_data));
                 }
+                emptyView.setEnabled(true);
                 emptyView.setVisibility(object.size() <= 0 ? View.VISIBLE : View.INVISIBLE);
             }
 
             @Override
             public void onError(int code, String msg) {
-                emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_loading));
+                emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_system_error));
+                emptyView.setEnabled(true);
             }
         });
     }

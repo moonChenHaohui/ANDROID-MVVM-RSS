@@ -27,7 +27,7 @@
 
             <include
                 layout="@layout/common_tool_bar" />
-            <com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView
+            <com.moon.myreadapp.common.components.pulltorefresh.impl.HomePTPRecyclerView
                 android:id="@+id/main_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

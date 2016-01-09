@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 //        binding.mainList.setPullLoadEnabled(false);
 //        binding.mainList.setScrollLoadEnabled(false);
 //        binding.mainList.setPullRefreshEnabled(false);
-        binding.mainList.setHasMoreData(false);
+        //binding.mainList.setHasMoreData(false);
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
@@ -122,6 +122,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                     @Override
                     public void run() {
                         //mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1), 0);
+                        mainViewModel.getFeedRecAdapter().setmData(null);
                         binding.mainList.onPullDownRefreshComplete();
                     }
                 }, 3000);

@@ -12,11 +12,14 @@ import android.widget.Scroller;
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.ILoadingLayout.State;
 
+import java.util.List;
+
 
 /**
  * Created by moon on 15/11/07.
  * 实现了RecyclerView的下拉刷新 上拉加载
  * 添加了可以添加头部的的adapter
+ * 添加了emptyview 对于数据的响应
  */
 public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
 
@@ -45,6 +48,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
      * 设置还剩x个item时进行load more
      */
     private int toEndSize = 3;
+
     /**
      * 构造方法
      *
@@ -85,6 +89,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
         if (mRecyclerView != null) {
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
         }
+
         mScrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -150,6 +155,12 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
         //mAdapter.setAdapter(adapter);
         mAdapter = adapter;
         mRecyclerView.setAdapter(adapter);
+        //将adapter的数据更新与emptyview绑定
+        mAdapter.setNotify(bindEmptyView());
+        //第一次需要判断是否需要显示
+        if (!isPullRefreshing() && (mAdapter.getmData() == null || mAdapter.getmData().size() == 0)){
+            setShowEmptyLayout(true);
+        }
     }
 
     /**
@@ -213,7 +224,6 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
                 mLoadMoreFooterLayout = new FooterLoadingLayout(getContext());
                 mAdapter.addFooter(mLoadMoreFooterLayout);
             }
-
             mLoadMoreFooterLayout.show(true);
         } else {
             if (null != mLoadMoreFooterLayout) {
@@ -246,7 +256,6 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
         if ((null != mLoadMoreFooterLayout) && (mLoadMoreFooterLayout.getState() == State.NO_MORE_DATA)) {
             return false;
         }
-
         return true;
     }
 
@@ -293,4 +302,27 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
         return false;
     }
 
+
+    /**
+     * 用于绑定 emptyview and data
+     */
+    public BaseRecyclerAdapter.Notify bindEmptyView(){
+        if (mNotify == null) {
+            mNotify = new BaseRecyclerAdapter.Notify() {
+                @Override
+                public void onDataReSet(List data) {
+                    if (data == null || data.size() == 0) {
+                        setShowEmptyLayout(true);
+                    } else {
+                        setShowEmptyLayout(false);
+                    }
+                }
+            };
+        }
+        return mNotify;
+
+    }
+
+
+    private BaseRecyclerAdapter.Notify mNotify;
 }

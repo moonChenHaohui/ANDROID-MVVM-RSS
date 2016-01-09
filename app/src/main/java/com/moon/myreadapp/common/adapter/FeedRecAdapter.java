@@ -32,7 +32,7 @@ import java.util.List;
 public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding> {
 
 
-    public FeedRecAdapter(Context context,List<Feed> data) {
+    public FeedRecAdapter(Context context, List<Feed> data, Notify<Feed> notify) {
         super(context,data);
     }
 

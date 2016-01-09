@@ -32,7 +32,7 @@ public interface Scrollable {
     /**
      * Scrolls vertically to the absolute Y.
      * Implemented classes are expected to scroll to the exact Y pixels from the top,
-     * but it depends on the type of the widget.
+     * but it depends on the type of the widget_empty_home.
      *
      * @param y vertical position to scroll to
      */

@@ -162,7 +162,7 @@ public interface IPhotoView {
     void setMidScale(float midScale);
 
     /*
-     * Sets the medium scale level. What this value represents depends on the current {@link android.widget.ImageView.ScaleType}.
+     * Sets the medium scale level. What this value represents depends on the current {@link android.widget_empty_home.ImageView.ScaleType}.
      *
      * @param mediumScale medium scale preset
      */

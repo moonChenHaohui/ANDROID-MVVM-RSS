@@ -80,7 +80,7 @@
                 android:paddingRight="@dimen/normal_padding"
                 android:gravity="center_vertical"
                 android:layout_height="@dimen/normal_list_item_small">
-                <!--<com.joanzapata.iconify.widget.IconTextView-->
+                <!--<com.joanzapata.iconify.widget_empty_home.IconTextView-->
                     <!--android:id="@+id/find_password"-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->

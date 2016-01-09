@@ -23,10 +23,20 @@ import de.halfbit.tinybus.Subscribe;
 public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<BaseRecyclerAdapter.BindingHolder<T>>{
 
 
+    public interface Notify<E> {
+        /**
+         * 通知数据变化
+         * @param data
+         */
+        void onDataReSet(List<E> data);
+
+    }
+
     private ArrayList<View> mHeadViews;
     private ArrayList<View> mFooterViews;
     final static int TYPE_HEAD = 1 << 10;
     final static int TYPE_FOOT = 1 << 11;
+    private Notify<E> notify;
 
     private int headerPosition = 0;
     private int footerPosition = 0;
@@ -39,6 +49,12 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         mData = data;
     }
 
+    public BaseRecyclerAdapter(Context context,List<E> data,Notify<E> notify) {
+        mInflater = LayoutInflater.from(context);
+        mData = data;
+        this.notify =notify;
+    }
+
 
     public void addFooter(View view) {
         if (null == mFooterViews) {
@@ -48,6 +64,13 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         notifyItemChanged(getHeaderSize() + getmData().size() + mFooterViews.size() - 1);
     }
 
+    public Notify<E> getNotify() {
+        return notify;
+    }
+
+    public void setNotify(Notify<E> notify) {
+        this.notify = notify;
+    }
 
     public void addHeader(View view) {
         if (null == mHeadViews) {
@@ -144,6 +167,7 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
 
     public void setmData(List<E> mData) {
         this.mData = mData;
+        notifyDataChanged();
         notifyDataSetChanged();
     }
 
@@ -153,16 +177,19 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
     }
     public void add(E e,int pos) {
         this.mData.add(pos, e);
+        notifyDataChanged();
         notifyItemInserted(getHeaderSize() + pos);
     }
 
     public void addAll(List<E> list) {
         this.mData.addAll(list);
+        notifyDataChanged();
         notifyDataSetChanged();
     }
 
     public void remove(int position) {
         this.mData.remove(position);
+        notifyDataChanged();
         notifyItemRemoved(getHeaderSize() + position);
     }
     public void removeHeader(int position) {
@@ -171,6 +198,7 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         }
         if (position >= getHeaderSize() || position < 0) return;
         mHeadViews.remove(position);
+        notifyDataChanged();
         notifyItemRemoved(position);
 
     }
@@ -178,7 +206,14 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         if (view == null ) return;
         if (mHeadViews.contains(view)){
             mHeadViews.remove(view);
+            notifyDataChanged();
             notifyDataSetChanged();
+        }
+    }
+
+    private void notifyDataChanged (){
+        if (notify != null){
+            notify.onDataReSet(getmData());
         }
     }
 
