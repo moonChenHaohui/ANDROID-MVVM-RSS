@@ -11,6 +11,7 @@
         android:padding="@dimen/normal_padding"
         android:text="@string/action_read"
         android:textSize="@dimen/text_h3"
+        android:background="@color/txt_white"
         android:onClick="btnOnClick"/>
     <include layout="@layout/common_divider"/>
     <com.rey.material.widget.Button
@@ -21,6 +22,7 @@
         android:padding="@dimen/normal_padding"
         android:text="@string/action_favor"
         android:textSize="@dimen/text_h3"
+        android:background="@color/txt_white"
         android:onClick="btnOnClick"/>
     <include layout="@layout/common_divider"/>
     <com.rey.material.widget.Button
@@ -31,5 +33,6 @@
         android:padding="@dimen/normal_padding"
         android:text="@string/action_delete"
         android:textSize="@dimen/text_h3"
+        android:background="@color/txt_white"
         android:onClick="btnOnClick"/>
 </LinearLayout>

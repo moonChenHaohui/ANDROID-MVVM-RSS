@@ -34,15 +34,15 @@ public class FeedPTPRecyclerView extends PullToRefreshRecyclerView{
     @Override
     protected View createEmptyLayout(Context context, AttributeSet attrs) {
         emptyHomeBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.widget_empty_home,null,false);
-        emptyHomeBinding.addFeed.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setShowEmptyLayout(false);
-                //刷新
-                doPullRefreshing(true,500);
-
-            }
-        });
+//        emptyHomeBinding.addFeed.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setShowEmptyLayout(false);
+//                //刷新
+//                doPullRefreshing(true,500);
+//
+//            }
+//        });
         return emptyHomeBinding.getRoot();
     }
 }

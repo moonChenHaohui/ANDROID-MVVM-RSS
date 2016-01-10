@@ -1,35 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
 
     </data>
-    <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.rey.material.widget.Button
-            android:id="@+id/add_feed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+(一个频道都没有,快去添加频道)"/>
-        <include layout="@layout/common_divider"/>
-        <com.rey.material.widget.Button
-            android:id="@+id/user_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+(没登录妈妈喊你去登录拉!)"/>
 
-        <com.rey.material.widget.Button
-            android:id="@+id/user_refresh"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/txt_white"
+        android:orientation="vertical"
+        android:padding="@dimen/normal_padding">
+
+        <ImageView
+            android:id="@+id/empty_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+(再刷新一次)"/>
+            android:padding="@dimen/normal_padding"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_empty" />
+
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/notice"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+报告老大:刚才是网络问题"/>
+            android:gravity="center"
+            android:padding="@dimen/normal_half_padding"
+            android:text="@string/emptyview_default_notice"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/text_h2"
+            android:textStyle="bold" />
+
+        <com.joanzapata.iconify.widget.IconButton
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/normal_half_padding"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_normal"
+            android:text="@string/emptyview_reload"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/text_h2" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normal_half_padding">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/divde_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/txt_white"
+                android:padding="@dimen/normal_half_padding"
+                android:text="@string/emptyview_fuc_title"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/text_h3" />
+        </FrameLayout>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/fuc_sub_feed"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_list_item_small"
+            android:layout_margin="@dimen/normal_half_padding"
+            android:background="@drawable/btn_gray_normal"
+            android:text="@string/emptyview_fuc_add_feed"
+            android:clickable="true"
+            android:gravity="center"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/text_h2" />
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/fuc_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_list_item_small"
+            android:layout_margin="@dimen/normal_half_padding"
+            android:background="@drawable/btn_gray_normal"
+            android:text="@string/emptyview_fuc_login"
+            android:clickable="true"
+            android:gravity="center"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/text_h2" />
     </LinearLayout>
 </layout>

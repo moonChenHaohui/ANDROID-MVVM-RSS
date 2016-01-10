@@ -23,6 +23,7 @@ Email:moon4chen@163.com
 
 1.9
 - 在下拉刷新控件中增加了emptyview，支持自定义，对recyclerview adapter的数据变更做了自动通知，当没有数据时显示emptyview ；
+- 增加主页emptyview ui;
 
 1.8
 - 增加了系统订阅ui、功能

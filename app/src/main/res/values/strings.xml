@@ -144,4 +144,11 @@
 
     <string name="set_feed_title">频道设置</string>
     <string name="set_feed_show_all_article">只显示未读文章</string>
+
+
+    <string name="emptyview_reload">{fa-refresh} 重新加载</string>
+    <string name="emptyview_default_notice">当前没有数据,请重新加载</string>
+    <string name="emptyview_fuc_title">想要做点什么?</string>
+    <string name="emptyview_fuc_add_feed">{fa-plus-square-o} 添加频道</string>
+    <string name="emptyview_fuc_login">{fa-user} 去登录</string>
 </resources>
