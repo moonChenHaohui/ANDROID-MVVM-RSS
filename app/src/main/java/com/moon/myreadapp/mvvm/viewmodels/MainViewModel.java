@@ -3,6 +3,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.databinding.Bindable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -88,8 +89,12 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onItemLongClick(View view, int position) {
+                //非空判断
+                if (feedRecAdapter.getmData() == null) return;
+                if (position < 0 || position >= feedRecAdapter.getmData().size()) return;
+
                 Feed feed = feedRecAdapter.getmData().get(position);
-                XLog.d("onItemLongClick execute!");
+                //XLog.d("onItemLongClick execute!");
                 //短震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
                 currentPosition = position;
@@ -131,10 +136,11 @@ public class MainViewModel extends BaseViewModel {
      * 更新频道信息
      */
     public void updateFeed(UpdateFeedEvent event) {
-        if (feedRecAdapter != null) {
+        if (feedRecAdapter != null && feedRecAdapter.getmData() != null) {
             int p = feedRecAdapter.getmData().indexOf(event.getFeed());
             if (p >= 0) {
                 feedRecAdapter.getmData().get(p).setStatus(event.getStatus());
+                XLog.d("RefreshAsyncTaskfeed:status:" + event.getStatus());
                 //更新这个要加上header
                 feedRecAdapter.notifyItemChanged(feedRecAdapter.getHeaderSize() + p);
             }
@@ -191,7 +197,19 @@ public class MainViewModel extends BaseViewModel {
      * 更新所有
      */
     public void refreshAll() {
-        XLog.d("RefreshAsyncTask refreshAll execute!");
+        refresh((ArrayList<Feed>)getFeedRecAdapter().getmData());
+    }
+
+    /**
+     * 更新单个
+     * @param feed
+     */
+    public void refreshSingle(Feed feed){
+        ArrayList<Feed> feeds = new ArrayList<Feed>();
+        feeds.add(feed);
+        refresh(feeds);
+    }
+    public void refresh(ArrayList<Feed> feeds){
         if (isRefresh()) {
             XLog.d("RefreshAsyncTask 正在刷新!");
             return;
@@ -208,8 +226,7 @@ public class MainViewModel extends BaseViewModel {
                 setRefresh(false);
             }
         });
-        refreshAsyncTask.execute((ArrayList<Feed>)getFeedRecAdapter().getmData());
-
+        refreshAsyncTask.execute(feeds);
     }
 
     /**
@@ -221,22 +238,45 @@ public class MainViewModel extends BaseViewModel {
             mDialog.dismissImmediately();
         }
         if (currentPosition >= 0 || currentPosition < feedRecAdapter.getmData().size()){
-            Feed feed = feedRecAdapter.getmData().get(currentPosition);
+            final Feed feed = feedRecAdapter.getmData().get(currentPosition);
             int id = v.getId();
             switch (id) {
                 case R.id.action_read_all:
-                    ToastHelper.showToast("read all");
+                    DBHelper.UpDate.readAllArticleFromFeed(feed);
+                    feedRecAdapter.notifyItemChanged(currentPosition);
+                    ToastHelper.showToast(R.string.notice_read_all);
                     //标记全部已读
                     break;
-                case R.string.action_read_reflash:
+                case R.id.action_read_reflash:
                     //刷新
-
+                    refreshSingle(feed);
                     break;
-                case R.string.action_read_top:
+                case R.id.action_read_top:
                     //置顶
+                    ToastHelper.showToast("top top top");
                     break;
-                case R.string.action_read_delete_feed:
-                    //删除订阅
+                case R.id.action_read_delete_feed:
+                    //删除
+                    final Dialog dialog = new Dialog(mView){
+                    }.title(mView.getString(R.string.feed_item_delete_title,feed.getTitle()))
+                            .positiveAction(R.string.feed_item_delete_commit)
+                            .negativeAction(R.string.feed_item_delete_cancel).cancelable(true);
+                    dialog.negativeActionClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    }).positiveActionClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            feedRecAdapter.remove(currentPosition);
+                            //删除订阅
+                            DBHelper.Delete.deleteFeed(feed);
+                            ToastHelper.showToast(R.string.feed_item_delete_success);
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
                     break;
             }
         }

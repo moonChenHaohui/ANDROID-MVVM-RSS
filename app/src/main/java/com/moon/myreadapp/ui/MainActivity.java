@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
+import com.moon.myreadapp.util.DBHelper;
 
 import de.halfbit.tinybus.Subscribe;
 
@@ -104,42 +106,33 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     private void initMainView() {
-
         //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
         //binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
 //        binding.mainList.setPullLoadEnabled(false);
-//        binding.mainList.setScrollLoadEnabled(false);
+        binding.mainList.setScrollLoadEnabled(true);
 //        binding.mainList.setPullRefreshEnabled(false);
-        //binding.mainList.setHasMoreData(false);
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //下拉刷新
                 //binding.mainList.onPullDownRefreshComplete();
-                binding.mainList.postDelayed(new Runnable() {
+                binding.mainList.post(new Runnable() {
                     @Override
                     public void run() {
-                        //mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1), 0);
-                        mainViewModel.getFeedRecAdapter().setmData(null);
+                        //加载本地数据
+                        mainViewModel.updateFeeds();
                         binding.mainList.onPullDownRefreshComplete();
                     }
-                }, 3000);
+                });
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                binding.mainList.setHasMoreData(false);
                 //上拉加载
-                //binding.mainList.onPullUpRefreshComplete();
-                //binding.mainList.setShowEmptyLayout(true);
-                binding.mainList.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
-                        binding.mainList.onPullUpRefreshComplete();
-                    }
-                }, 3000);
+                binding.mainList.onPullUpRefreshComplete();
             }
         });
     }
@@ -179,6 +172,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         // Handle your other action bar items...
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
+
             mainViewModel.refreshAll();
         } else if (id == R.id.action_add) {
             mainViewModel.onAddButtonClick();

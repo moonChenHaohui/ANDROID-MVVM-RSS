@@ -30,15 +30,17 @@ public class RefreshAsyncTask extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
     @Override
     protected String doInBackground(ArrayList<Feed>... params) {
         ArrayList<Feed> feeds = params[0];
-
+        if(feeds == null || feeds.size() == 0){
+            return "";
+        }
         for (int i = 0; i < feeds.size(); i++) {
-
             try {
                 //原来的feed feeds.get(i);
                 XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + " 开始更新");
                 //通知正在更新这个feed
                 UpdateFeedEvent event =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
                 event.setStatus(UpdateFeedEvent.ON_UPDATE);
+                event.setNotice("开始更新....");
                 publishProgress(event);
 
                 //获取频道信息
@@ -49,15 +51,22 @@ public class RefreshAsyncTask extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 ArrayList<Article> articles = DBHelper.Util.getArticles(syndFeed);
                 //过滤,获取新数据;
                 ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feeds.get(i).getId(),articles);
-                XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + " 更新完毕,共获得更新的文章:" + result.size());
+                XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + "id : " + feeds.get(i).getId()+ " 更新完毕,共获得更新的文章:" + result.size());
                 //插入数据
                 DBHelper.Insert.articles(result);
+                //DBHelper.Insert.feed(feed);
                 //通知更新结束
-                UpdateFeedEvent event1 =  new UpdateFeedEvent(feed, UpdateFeedEvent.TYPE.STATUS);
+                UpdateFeedEvent event1 =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
                 event1.setStatus(UpdateFeedEvent.NORMAL);
+                event1.setNotice("更新完毕....");
                 publishProgress(event1);
             } catch (Exception e) {
                 XLog.d(TAG + "feed :" + e);
+                //更新失败...
+                UpdateFeedEvent event1 =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
+                event1.setStatus(UpdateFeedEvent.NORMAL);
+                event1.setNotice("更新失败....");
+                publishProgress(event1);
             }
 
         }

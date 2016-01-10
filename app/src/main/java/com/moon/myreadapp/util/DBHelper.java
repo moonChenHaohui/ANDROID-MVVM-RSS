@@ -150,6 +150,15 @@ public class DBHelper {
             }
             return list.get(0);
         }
+        public static List<Article> getArticlesByFeedId (long id){
+            List<Article> list = getDAO().getArticleDao().queryBuilder().
+                    where(ArticleDao.Properties.Feed_id.eq(id)).list();
+            if (null == list || list.size() == 0){
+                return null;
+            }
+            return list;
+        }
+
         public static Article getRecentArticleOnFeedByFeedId (long id){
             List<Article> list = getDAO().getArticleDao().queryBuilder().
                     where(ArticleDao.Properties.Feed_id.eq(id)).orderDesc(ArticleDao.Properties.Publishtime).limit(1).list();
@@ -201,6 +210,13 @@ public class DBHelper {
         public static long saveFeed(Feed feed){
             return getDAO().getFeedDao().insertOrReplace(feed);
         }
+        public static void readAllArticleFromFeed(Feed feed){
+            List<Article> articles = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(feed.getId())).list();
+            for (Article a:articles){
+                a.setUse_count(1);
+                saveArticle(a);
+            }
+        }
         public static long saveUser(User user){
             //只保存一个用户信息
             getDAO().getUserDao().deleteAll();
@@ -212,8 +228,16 @@ public class DBHelper {
         public static boolean deleteFeed(Feed feed){
             Feed f =Query.findFeedByURL(feed.getUrl());
             if (f != null) {
+                //先删除feed内文章
+                deleteArticlesByFeed(f);
+                //再删除feed
                 getDAO().getFeedDao().delete(f);
             }
+            return true;
+        }
+        private static boolean deleteArticlesByFeed(Feed feed){
+            List<Article> articles = Query.getArticlesByFeedId(feed.getId());
+            getDAO().getArticleDao().deleteInTx(articles);
             return true;
         }
     }

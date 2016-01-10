@@ -23,16 +23,26 @@ public class ModelHelper {
             return null;
         }
         Article recentArticle = DBHelper.Query.getRecentArticleOnFeedByFeedId(feedId);
-        Date date = recentArticle.getPublishtime();
-        Date temp;
         ArrayList<Article> result = new ArrayList<Article>();
-        for (int i = 0; i < articles.size(); i++) {
-            articles.get(i).setFeed_id(feedId);
-            temp = articles.get(i).getPublishtime();
-            if (temp != null && temp.after(date)) {
+        //如果没有找出,则把所有添加进去.
+        if (recentArticle == null){
+            for (int i = 0; i < articles.size(); i++) {
+                articles.get(i).setFeed_id(feedId);
                 result.add(articles.get(i));
             }
+        } else {
+            Date date = recentArticle.getPublishtime();
+            Date temp;
+            for (int i = 0; i < articles.size(); i++) {
+                articles.get(i).setFeed_id(feedId);
+                temp = articles.get(i).getPublishtime();
+                //如果数据中没有日期,则直接加入;如果有,则加入日期之后的
+                if (date == null || (temp != null && temp.after(date))) {
+                    result.add(articles.get(i));
+                }
+            }
         }
+
         return result;
     }
 }

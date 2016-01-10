@@ -103,6 +103,9 @@
 
     <string name="notice_update">%1$s有%2$d条更新</string>
     <string name="notice_update_none">暂时没有更新,请稍后再试试..</string>
+    <string name="notice_read_all">全部已读.</string>
+
+
     <string name="title_activity_add_feed">添加订阅</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -151,4 +154,12 @@
     <string name="emptyview_fuc_title">想要做点什么?</string>
     <string name="emptyview_fuc_add_feed">{fa-plus-square-o} 添加频道</string>
     <string name="emptyview_fuc_login">{fa-user} 去登录</string>
+
+
+
+    <string name="feed_item_load">{fa-spinner spin}</string>
+    <string name="feed_item_delete_title">确定删除 "%1$s" 吗?</string>
+    <string name="feed_item_delete_cancel">取消</string>
+    <string name="feed_item_delete_commit">确定</string>
+    <string name="feed_item_delete_success">删除成功!</string>
 </resources>

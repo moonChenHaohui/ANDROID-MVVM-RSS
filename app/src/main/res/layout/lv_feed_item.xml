@@ -3,6 +3,8 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
+        <import type="com.moon.myreadapp.common.event.UpdateFeedEvent"/>
+        <import type="com.moon.myreadapp.util.DBHelper"/>
         <variable
             name="feed"
             type="com.moon.myreadapp.mvvm.models.dao.Feed" />
@@ -11,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_list_item_height"
         android:minHeight="@dimen/main_list_item_height"
-        android:paddingTop="@dimen/normal_padding"
         android:clickable="true"
         android:background="@drawable/feed_list_item">
         <FrameLayout
@@ -35,6 +36,7 @@
             android:layout_marginRight="80dp"
             android:hint="feed title"
             android:layout_toRightOf="@id/feed_icon_body"
+            android:paddingTop="@dimen/normal_padding"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,13 +46,15 @@
             android:textColor="@color/txt_black"
             android:textSize="@dimen/text_h2" />
         <com.joanzapata.iconify.widget.IconTextView
+            android:layout_marginTop="@dimen/normal_padding"
             android:id="@+id/feed_unread_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textStyle="bold"
+            android:text='@{DBHelper.Query.getFeedUnReadByFeedId(feed.id) + ""}'
             android:layout_marginRight="@dimen/normal_padding"
-            android:textColor="@color/txt_active"/>
+            android:textColor="?attr/colorPrimary"/>
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_description"
             android:paddingTop="4dp"
@@ -71,5 +75,16 @@
             android:layout_toRightOf="@id/feed_icon_body"
             android:layout_alignParentBottom="true"
             android:background="@color/divde_line"/>
+        <com.joanzapata.iconify.widget.IconTextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_list_item_height"
+            android:text="@string/feed_item_load"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/txt_white"
+            android:textSize="@dimen/text_h1"
+            android:background="?attr/colorPrimaryDark"
+            android:alpha=".2"
+            android:visibility="@{(feed.status != null &#38;&#38; feed.status == UpdateFeedEvent.ON_UPDATE) ? View.VISIBLE : View.INVISIBLE}" />
     </RelativeLayout>
 </layout>

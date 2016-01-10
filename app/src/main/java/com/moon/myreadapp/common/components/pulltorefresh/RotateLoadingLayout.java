@@ -77,7 +77,7 @@ public class RotateLoadingLayout extends LoadingLayout {
         mHintTextView = (TextView) findViewById(R.id.pull_to_refresh_header_hint_textview);
         mHeaderTimeView = (TextView) findViewById(R.id.pull_to_refresh_header_time);
         mHeaderTimeViewTitle = (TextView) findViewById(R.id.pull_to_refresh_last_update_time_text);
-        
+        mHeaderTimeViewTitle.setVisibility(INVISIBLE);
         mArrowImageView.setScaleType(ScaleType.CENTER_INSIDE);
         //mArrowImageView.setImageResource(R.drawable.default_ptr_rotate);
         

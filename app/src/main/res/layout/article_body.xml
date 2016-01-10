@@ -43,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/normal_half_padding"
-                    android:text="@{articleViewModel.article.title}"
+                    android:text="@{Html.fromHtml(articleViewModel.article.title)}"
                     android:maxLines="3"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/text_h1" />
