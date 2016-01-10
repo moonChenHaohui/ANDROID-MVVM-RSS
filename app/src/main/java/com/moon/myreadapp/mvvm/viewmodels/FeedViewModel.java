@@ -68,11 +68,11 @@ public class FeedViewModel extends BaseViewModel {
     public void initViews() {
         this.mView.setTitle(feed.getTitle());
         showAllArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,true);
-        mAdapter = new ArticleRecAdapter(mView,getBaseData());
+        mAdapter = new ArticleRecAdapter(mView,getBaseData(0,10));
     }
 
-    private List<Article> getBaseData() {
-        return DBHelper.Query.getArticlesByID(feedId, showAllArticles?Article.Status.NORMAL_AND_FAVOR:Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD);
+    private List<Article> getBaseData(int start,int size) {
+        return DBHelper.Query.getArticlesByID(feedId, showAllArticles?Article.Status.NORMAL_AND_FAVOR:Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD,start,size);
     }
 
 
@@ -103,44 +103,6 @@ public class FeedViewModel extends BaseViewModel {
                         cancelable(true).
                         layoutParams(-1, -2);
                 mDialog.show();
-
-                // 弹出对话框:收藏|已读|删除
-//                Menu menu = ViewUtils.showPopupMenu(mView, view.findViewById(R.id.article_title), R.menu.menu_single_article, new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(android.view.MenuItem item) {
-//                        int id = item.getItemId();
-//                        switch (id) {
-//                            case R.id.action_read:
-//                                readArticle(article,position);
-//                                updateFeed();
-//                                break;
-//                            case R.id.action_read_favor:
-//                                //收藏
-//                                if (article.getStatus() == Article.Status.NORMAL.status) {
-//                                    article.setStatus(Article.Status.FAVOR.status);
-//                                    DBHelper.UpDate.saveArticle(article);
-//                                    Snackbar.make(view, BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
-//                                } else {
-//                                    article.setStatus(Article.Status.NORMAL.status);
-//                                    DBHelper.UpDate.saveArticle(article);
-//                                    Snackbar.make(view, BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
-//                                }
-//                                break;
-//                            case R.id.action_read_delete:
-//                                //删除
-//                                mAdapter.remove(position);
-//                                article.setStatus(Article.Status.DELETE.status);
-//                                DBHelper.UpDate.saveArticle(article);
-//
-//                                Snackbar.make(view, BuiltConfig.getString(R.string.action_delete) + BuiltConfig.getString(R.string.success), Snackbar.LENGTH_SHORT).show();
-//                                break;
-//                        }
-//                        return false;
-//                    }
-//                });
-
-                //操作menu行为
-
                 //已读
                 v.findViewById(R.id.action_read).setVisibility(article.getUse_count() <= 0 ? View.VISIBLE : View.GONE);
                 //menu.findItem(R.id.action_read).setVisible(article.getUse_count() <= 0);
@@ -211,7 +173,7 @@ public class FeedViewModel extends BaseViewModel {
 
                         //重新设置数据
                         if (haveNewDate) {
-                            mAdapter.setmData(getBaseData());
+                            mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
                         }
                         updateFeed();
 
@@ -229,6 +191,26 @@ public class FeedViewModel extends BaseViewModel {
         });
     }
 
+    /**
+     * 加载更多
+     */
+    public boolean loadMore(){
+        List<Article> loadData;
+        if (mAdapter.getmData() == null || mAdapter.getmData().size() == 0){
+            loadData = getBaseData(0,Constants.SINGLE_LOAD_SIZE);
+        } else {
+            loadData = getBaseData(mAdapter.getmData().size(),Constants.SINGLE_LOAD_SIZE);
+        }
+        if (loadData != null) {
+            mAdapter.addAll(loadData);
+        }
+        if (loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE){
+            //没有获得足够的数据,下次加载没有数据了.
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 
     private void readArticle(Article article, int position) {
@@ -251,7 +233,7 @@ public class FeedViewModel extends BaseViewModel {
             switch (id) {
                 case R.id.action_read:
                     readArticle(article, currentPosition);
-                    updateFeed();
+                    getmAdapter().notifyItemChanged(getmAdapter().getWholePosition(currentPosition));
                     break;
                 case R.id.action_read_favor:
                     //收藏
@@ -264,13 +246,14 @@ public class FeedViewModel extends BaseViewModel {
                         DBHelper.UpDate.saveArticle(article);
                         ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success), TastyToast.STYLE_ALERT).setDuration(1000);
                     }
+                    //通知更新
+                    getmAdapter().notifyItemChanged(getmAdapter().getWholePosition(currentPosition));
                     break;
                 case R.id.action_read_delete:
                     //删除
                     mAdapter.remove(currentPosition);
                     article.setStatus(Article.Status.DELETE.status);
                     DBHelper.UpDate.saveArticle(article);
-                    updateFeed();
                     ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.action_delete) + BuiltConfig.getString(R.string.success), TastyToast.STYLE_ALERT).setDuration(1000);
                     break;
             }
@@ -284,7 +267,7 @@ public class FeedViewModel extends BaseViewModel {
     public void updateSet(boolean showAllArticles) {
         this.showAllArticles = showAllArticles;
 
-        mAdapter.setmData(getBaseData());
+        mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
         updateFeed();
     }
 }

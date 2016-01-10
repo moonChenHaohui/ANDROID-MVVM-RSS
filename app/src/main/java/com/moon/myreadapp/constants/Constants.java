@@ -54,4 +54,10 @@ public class Constants {
     public static final String FEED_SHOW_ALL = "feed_show_all";
 
 
+    /**
+     * 单次加载文章的数量
+     */
+    public static int SINGLE_LOAD_SIZE = 10;
+
+
 }

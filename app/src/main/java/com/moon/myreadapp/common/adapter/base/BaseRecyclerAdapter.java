@@ -64,6 +64,15 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         notifyItemChanged(getHeaderSize() + getmData().size() + mFooterViews.size() - 1);
     }
 
+    /**
+     * 通过数据位置获取全局位置
+     * @param currentPos
+     * @return
+     */
+    public int getWholePosition(int currentPos){
+        return getHeaderSize() + currentPos;
+    }
+
     public Notify<E> getNotify() {
         return notify;
     }

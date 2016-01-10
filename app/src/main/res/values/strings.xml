@@ -162,4 +162,8 @@
     <string name="feed_item_delete_cancel">取消</string>
     <string name="feed_item_delete_commit">确定</string>
     <string name="feed_item_delete_success">删除成功!</string>
+
+
+    <string name="font_favor"><Data><![CDATA[<font color="#FF5500">#已收藏#</font>  ]]></Data></string>
+    <string name="font_delete"><Data><![CDATA[<font color="#0e508e">#已删除#</font>  ]]></Data></string>
 </resources>

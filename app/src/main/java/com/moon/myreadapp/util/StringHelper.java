@@ -1,6 +1,12 @@
 package com.moon.myreadapp.util;
 
+import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
+
 import com.moon.appframework.common.util.StringUtils;
+import com.moon.myreadapp.R;
+import com.moon.myreadapp.mvvm.models.dao.Article;
 
 import java.util.ArrayList;
 
@@ -37,5 +43,32 @@ public class StringHelper {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 根据状态生成对应的html string
+     * @param status
+     * @param title
+     * @return
+     */
+    public static Spanned converTitleByStatus(String title, int statusInt){
+        Article.Status status = Article.Status.find(statusInt);
+        StringBuilder sb = new StringBuilder("");
+        switch ((status)){
+            case FAVOR:
+                //收藏
+                sb.append(Globals.getApplication().getResources().getString(R.string.font_favor));
+                break;
+            case DELETE:
+                //已删除
+                sb.append(Globals.getApplication().getResources().getString(R.string.font_delete));
+                break;
+            case NORMAL:
+                //普通
+                break;
+            default:
+                break;
+        }
+        return Html.fromHtml(sb.append(title).toString());
     }
 }

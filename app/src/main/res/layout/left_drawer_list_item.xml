@@ -18,12 +18,12 @@
         android:background="@drawable/left_drawer_list"
         >
 
-        <TextView
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/action"
             android:paddingLeft="40dp"
             android:textColor="@color/text_drak"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_h3"
-            android:text="@{item.title}"/>
+            android:textSize="@dimen/text_h3"/>
     </LinearLayout>
 </layout>

@@ -23,7 +23,10 @@ import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
+import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
+
+import java.util.Date;
 
 import de.halfbit.tinybus.Subscribe;
 
@@ -116,6 +119,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                binding.mainList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
                 //下拉刷新
                 //binding.mainList.onPullDownRefreshComplete();
                 binding.mainList.post(new Runnable() {
@@ -130,6 +134,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                //TODO feed 页相对比较少,所以就没有做分页了,后面要加上
                 binding.mainList.setHasMoreData(false);
                 //上拉加载
                 binding.mainList.onPullUpRefreshComplete();

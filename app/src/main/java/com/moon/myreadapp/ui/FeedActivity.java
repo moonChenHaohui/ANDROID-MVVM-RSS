@@ -20,8 +20,11 @@ import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityFeedBinding;
 import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
+import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ThemeUtils;
+
+import java.util.Date;
 
 import de.halfbit.tinybus.Subscribe;
 
@@ -51,6 +54,7 @@ public class FeedActivity extends BaseActivity {
         binding.feedList.setAdapter(feedViewModel.getmAdapter());
         binding.feedList.setPullLoadEnabled(false);
         binding.feedList.setScrollLoadEnabled(true);
+        binding.feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
         binding.feedList.getRefreshableView().addOnItemTouchListener(feedViewModel.getArticleClickListener());
         binding.feedList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
@@ -62,15 +66,15 @@ public class FeedActivity extends BaseActivity {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 //上拉加载
-                //binding.mainList.onPullUpRefreshComplete();
-                //binding.mainList.setShowEmptyLayout(true);
-                binding.feedList.postDelayed(new Runnable() {
+                binding.feedList.post(new Runnable() {
                     @Override
                     public void run() {
-                        // mainViewModel.getFeedRecAdapter().add(new Feed(null, "this is added raw", 2, "珠海", "no type", "http://www.baidu.com/", new Date(), "China", "2015 copy rights", "", "moon creater", 1));
+                        boolean hasMoreData = feedViewModel.loadMore();
                         binding.feedList.onPullUpRefreshComplete();
+                        binding.feedList.setHasMoreData(hasMoreData);
                     }
-                }, 3000);
+                });
+
             }
         });
     }

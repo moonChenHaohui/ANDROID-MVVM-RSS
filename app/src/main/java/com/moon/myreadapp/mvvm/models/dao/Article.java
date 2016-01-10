@@ -20,6 +20,16 @@ public class Article extends BmobObject {
         public int status;
 
         Status(int s){ status = s;}
+
+        public static Status find(int status){
+            Status[] s = values();
+            for (int i = 0;i < s.length;i++){
+                if (status == s[i].status){
+                    return s[i];
+                }
+            }
+            return NORMAL;
+        }
     }
 
     private Long id;

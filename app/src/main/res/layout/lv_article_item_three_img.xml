@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="com.moon.myreadapp.util.Conver"/>
-        <import type="android.text.Html"/>
+        <import type="com.moon.myreadapp.util.StringHelper"/>
         <variable
             name="article"
             type="com.moon.myreadapp.mvvm.models.dao.Article" />
@@ -27,7 +27,7 @@
 
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
-            android:text="@{Html.fromHtml(article.title)}"
+            android:text="@{StringHelper.converTitleByStatus(article.title,article.status)}"
             android:textColor="@{article.use_count == 0 ? @color/txt_black : @color/txt_active}"
             android:textSize="@dimen/text_h2" />
         <com.moon.myreadapp.ui.helper.ImagesView

@@ -125,7 +125,7 @@ public class DBHelper {
             return getDAO().getArticleDao().queryBuilder().list();
         }
 
-        public static List<Article> getArticlesByID(long id,Article.Status status){
+        public static List<Article> getArticlesByID(long id,Article.Status status,int start,int size){
             QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(id));
             if (status != null){
                 WhereCondition wc;
@@ -138,9 +138,9 @@ public class DBHelper {
                 if (status == Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD){
                     res = res.where(ArticleDao.Properties.Use_count.le(0));
                 }
-                return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).list();
+                return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
             }
-            return res.orderDesc(ArticleDao.Properties.Publishtime).list();
+            return res.orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
         }
 
         public static Article getArticle (long id){
@@ -230,7 +230,7 @@ public class DBHelper {
             if (f != null) {
                 //先删除feed内文章
                 deleteArticlesByFeed(f);
-                //再删除feed
+
                 getDAO().getFeedDao().delete(f);
             }
             return true;

@@ -1,6 +1,7 @@
 package com.moon.myreadapp.common.adapter;
 
 import android.databinding.DataBindingUtil;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,9 +31,8 @@ public class DrawerAdapter extends BaseListAdapter<MenuItem> {
         }
         binding = (LeftDrawerListItemBinding)convertView.getTag();
 
-
         binding.setItem(getmData().get(position));
-
+        binding.action.setText(Html.fromHtml(getmData().get(position).getTitle()));
         return convertView;
     }
 
