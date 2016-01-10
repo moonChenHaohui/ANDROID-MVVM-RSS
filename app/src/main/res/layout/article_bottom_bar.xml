@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="com.moon.myreadapp.mvvm.models.dao.Article"/>
         <variable
             name="articleViewModel"
             type="com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel" />
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/ButtomBarItem"
-            android:textColor="@color/txt_active"
+            android:textColor="@{articleViewModel.article.status == Article.Status.FAVOR.status ? @color/favor : @color/unfavor}"
             android:onClick="@{articleViewModel.onClickButtomBar}"
             android:text="{fa-star}"/>
         <com.joanzapata.iconify.widget.IconTextView

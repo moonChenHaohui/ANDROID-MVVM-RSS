@@ -166,4 +166,8 @@
 
     <string name="font_favor"><Data><![CDATA[<font color="#FF5500">#已收藏#</font>  ]]></Data></string>
     <string name="font_delete"><Data><![CDATA[<font color="#0e508e">#已删除#</font>  ]]></Data></string>
+    
+    
+    <string name="article_view_orignal_web">查看原文</string>
+    <string name="article_web_view_error_url">网页请求错误</string>
 </resources>

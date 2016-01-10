@@ -17,6 +17,7 @@
 package com.moon.myreadapp.common.components.scroll;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -73,7 +74,9 @@ public class ObservableWebView extends WebView implements Scrollable {
         setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
+                if (listener != null) {
+                    listener.start(view,url);
+                }
                 return false;
 
             }

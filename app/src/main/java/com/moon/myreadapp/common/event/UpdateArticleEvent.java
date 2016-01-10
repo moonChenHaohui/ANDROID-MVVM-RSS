@@ -11,7 +11,6 @@ public class UpdateArticleEvent implements XEvent {
     private int fontSize;
 
 
-
     public UpdateArticleEvent(int size){
         fontSize = size;
     }

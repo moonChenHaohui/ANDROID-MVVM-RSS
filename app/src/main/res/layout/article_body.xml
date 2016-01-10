@@ -3,7 +3,7 @@
 
     <data>
         <import type="com.moon.myreadapp.util.Conver"/>
-        <import type="android.text.Html" />
+        <import type="com.moon.myreadapp.util.StringHelper"/>
         <variable
             name="articleViewModel"
             type="com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel" />
@@ -35,7 +35,6 @@
                     android:layout_height="wrap_content"
                     android:text="@{Conver.ConverToString(articleViewModel.article.publishtime)}"
                     android:singleLine="true"
-                    android:hint="2015/22/33"
                     android:textColor="@color/txt_black"
                     android:textSize="@dimen/text_h5" />
                 <TextView
@@ -43,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/normal_half_padding"
-                    android:text="@{Html.fromHtml(articleViewModel.article.title)}"
+                    android:text="@{StringHelper.converTitleByStatus(articleViewModel.article.title,articleViewModel.article.status)}"
                     android:maxLines="3"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/text_h1" />
@@ -85,15 +84,18 @@
                 android:textSize="@dimen/text_h2" />
 
             <com.joanzapata.iconify.widget.IconTextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:padding="@dimen/normal_half_padding"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
                 android:layout_marginBottom="@dimen/normal_list_item_regular"
-                android:gravity="right|center_vertical"
+                android:padding="@dimen/normal_half_padding"
+                android:gravity="center"
+                android:textSize="@dimen/text_h2"
                 android:onClick="@{articleViewModel.onClickWebArticle}"
-                android:text="查看原文"
-                android:background="@drawable/activated_background"/>
+                android:text="@string/article_view_orignal_web"
+                android:background="@drawable/btn_gray_normal"/>
 
         </com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout>
     </ScrollView>

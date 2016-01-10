@@ -270,4 +270,12 @@ public class FeedViewModel extends BaseViewModel {
         mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
         updateFeed();
     }
+
+    public void updateArticleByPosition(int pos, Article article){
+        if (mAdapter.getmData() == null) return;
+        if (pos >=0 && pos < mAdapter.getmData().size()) {
+            mAdapter.getmData().set(pos,article);
+            mAdapter.notifyItemChanged(mAdapter.getWholePosition(pos));
+        }
+    }
 }

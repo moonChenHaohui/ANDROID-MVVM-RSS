@@ -1,5 +1,8 @@
 package com.moon.myreadapp.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -53,16 +56,21 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         webView.setListener(new ILoad() {
+
+            @Override
+            public void start(WebView view, String url) {
+                ArticleWebActivity.this.url = url;
+                mToolbar.setTitle(getString(R.string.xsearch_loading));
+            }
+
             @Override
             public void success(WebView view, String u) {
                 mToolbar.setTitle(view.getTitle());
-                url = u;
             }
 
             @Override
             public void error(WebView view, int errorCode, String description, String failingUrl) {
-                mToolbar.setTitle(view.getTitle());
-                url = view.getUrl();
+                mToolbar.setTitle(getString(R.string.article_web_view_error_url));
             }
         });
     }
@@ -80,6 +88,7 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
     private void load (String url){
         if (url != null) {
             webView.loadUrl(url);
+            mToolbar.setTitle(getResources().getString(R.string.xsearch_loading));
         }
     }
     @Override
@@ -102,8 +111,6 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
             finish();
         } else if (id == R.id.action_refresh) {
             webView.loadUrl(url);
-        } else if (id == R.id.action_read_favor){
-            //TODO 将这个url加入收藏列表
         }
 
         return super.onOptionsItemSelected(item);

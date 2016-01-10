@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -80,8 +81,7 @@ public class ArticleActivity extends BaseActivity {
             public void run() {
                 binding.articleBottomBar.back.performClick() ;
             }
-        },1000);
-
+        },500);
 
 
     }

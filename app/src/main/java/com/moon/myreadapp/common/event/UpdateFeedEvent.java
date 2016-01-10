@@ -18,6 +18,8 @@ public class UpdateFeedEvent implements XEvent {
     private int status = NORMAL;
     private boolean showAllArticles;
     private String notice;
+    private int updatePosition = -1;
+    private Article article;
 
     /** 更新状态*/
     public static int ON_UPDATE = 1<<10;
@@ -66,5 +68,21 @@ public class UpdateFeedEvent implements XEvent {
 
     public void setNotice(String notice) {
         this.notice = notice;
+    }
+
+    public int getUpdatePosition() {
+        return updatePosition;
+    }
+
+    public void setUpdatePosition(int updatePosition) {
+        this.updatePosition = updatePosition;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 }

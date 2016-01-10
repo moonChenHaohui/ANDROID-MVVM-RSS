@@ -47,7 +47,7 @@ public class StringHelper {
 
     /**
      * 根据状态生成对应的html string
-     * @param status
+     * @param statusInt
      * @param title
      * @return
      */

@@ -119,6 +119,11 @@ public class FeedActivity extends BaseActivity {
     public void onUpdateEvent(UpdateFeedEvent event) {
         if (event.getType() == UpdateFeedEvent.TYPE.SET){
             feedViewModel.updateSet(event.isShowAllArticles());
+        } else if (event.getType() == UpdateFeedEvent.TYPE.STATUS){
+            //更新单个article 状态
+            if (event.getUpdatePosition() >= 0) {
+                feedViewModel.updateArticleByPosition(event.getUpdatePosition(),event.getArticle());
+            }
         }
 
     }

@@ -5,18 +5,25 @@ import android.databinding.Bindable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.dialog.ReadSetDialog;
 import com.moon.myreadapp.common.components.dialog.ShareDialog;
+import com.moon.myreadapp.common.components.toast.TastyToast;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
+import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleWebActivity;
+import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.ScreenUtils;
@@ -37,7 +44,7 @@ public class ArticleViewModel extends BaseViewModel {
     private int position;
 
 
-    public ArticleViewModel(Activity view, long id,int pos) {
+    public ArticleViewModel(Activity view, long id, int pos) {
         this.mView = view;
         articleId = id;
         position = pos;
@@ -95,7 +102,6 @@ public class ArticleViewModel extends BaseViewModel {
                 }
                 boolean isOpen = (boolean) itv.getTag();
 
-
                 //获取在屏幕中位置,来确定切换的位置
                 int[] position = new int[2];
                 view.getLocationOnScreen(position);
@@ -117,24 +123,43 @@ public class ArticleViewModel extends BaseViewModel {
                 break;
             case R.id.favor:
                 //收藏
-                if (itv.getTag() == null) {
-                    itv.setTag(false);
-                }
-                boolean isFavor = (boolean) itv.getTag();
-                itv.setTag(!isFavor);
 
-                TypedValue typedValue = new TypedValue();
-                view.getContext().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-                int colorPrimary = typedValue.data;
-                int colorDown = Globals.getApplication().getResources().getColor(R.color.txt_active);
+                boolean isFavor = article.getStatus() == Article.Status.NORMAL.status;
+
+                boolean beFavor = !isFavor;
+                //动画
+                int colorDown = Globals.getApplication().getResources().getColor(R.color.unfavor);
+                int colorPrimary = Globals.getApplication().getResources().getColor(R.color.favor);
 
                 com.nineoldandroids.animation.ValueAnimator colorAnim = ObjectAnimator.ofInt(view, "textColor",
-                        isFavor ? colorPrimary : colorDown,
-                        isFavor ? colorDown : colorPrimary);
-                colorAnim.setDuration(500);
+                        beFavor ? colorPrimary : colorDown,
+                        beFavor ? colorDown : colorPrimary);
+
+                colorAnim.setDuration(1000);
 
                 colorAnim.setEvaluator(new ArgbEvaluator());
-                colorAnim.start();
+
+
+                com.nineoldandroids.animation.AnimatorSet favorSet = new com.nineoldandroids.animation.AnimatorSet();
+                favorSet.playTogether(
+                        colorAnim,
+                        ObjectAnimator.ofFloat(view, "scaleX", 1, 2f, 1).setDuration(1000),
+                        ObjectAnimator.ofFloat(view, "scaleY", 1, 2f, 1).setDuration(1000)
+                );
+                favorSet.setInterpolator(new AnticipateOvershootInterpolator());
+                favorSet.start();
+
+
+
+
+                if (isFavor) {
+                    article.setStatus(Article.Status.FAVOR.status);
+                    ToastHelper.showToast(BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success));
+                } else {
+                    article.setStatus(Article.Status.NORMAL.status);
+                    ToastHelper.showToast(BuiltConfig.getString(R.string.action_favor_back) + BuiltConfig.getString(R.string.success));
+                }
+                updateArticle(article);
                 break;
             case R.id.font_set:
                 new ReadSetDialog(mView).showWithView(view);
@@ -146,5 +171,15 @@ public class ArticleViewModel extends BaseViewModel {
         }
     }
 
+    private void updateArticle(Article article){
+        DBHelper.UpDate.saveArticle(article);
+        setArticle(article);
+        if (position >= 0){
+            UpdateFeedEvent event = new UpdateFeedEvent(null,UpdateFeedEvent.TYPE.STATUS);
+            event.setUpdatePosition(position);
+            event.setArticle(article);
+            XApplication.getInstance().bus.post(event);
+        }
+    }
 
 }

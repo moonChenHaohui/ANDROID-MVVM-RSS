@@ -36,7 +36,6 @@ public class HtmlRemoteImageGetter implements Html.ImageGetter {
 
     public Drawable getDrawable(String source) {
         final UrlDrawable urlDrawable = new UrlDrawable();
-
         urlDrawable.setDrawable(Globals.getApplication().getResources().getDrawable(R.drawable.bg_empty_image), container.getMeasuredWidth() - container.getPaddingLeft() - container.getPaddingRight());
         /**
          * 使用volley进行图片加载
@@ -54,6 +53,7 @@ public class HtmlRemoteImageGetter implements Html.ImageGetter {
                 }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
             }
         });
         Volley.newRequestQueue(container.getContext()).add(imageRequest);
