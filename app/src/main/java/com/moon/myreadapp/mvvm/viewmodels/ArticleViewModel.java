@@ -30,6 +30,8 @@ import com.moon.myreadapp.util.ScreenUtils;
 import com.nineoldandroids.animation.ArgbEvaluator;
 import com.nineoldandroids.animation.ObjectAnimator;
 
+import java.util.Date;
+
 /**
  * Created by moon on 15/11/14.
  */

@@ -59,24 +59,15 @@ public class MainViewModel extends BaseViewModel {
     @Override
     public void initEvents() {
         final List<Feed> feeds = DBHelper.Query.getFeeds();
-        feedRecAdapter = new FeedRecAdapter(mView,feeds, new BaseRecyclerAdapter.Notify<Feed>() {
-            @Override
-            public void onDataReSet(List<Feed> data) {
-                if (data != null && data.size() > 0){
-                    //有数据的情况
-                    //不显示empty
-                } else {
-                    //没数据的情况
-                    //显示empty,点击可以加载数据
-                }
-            }
-        });
+        feedRecAdapter = new FeedRecAdapter(mView,feeds);
 
         readItemClickListener = new RecyclerItemClickListener(mView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 //应当减去 head 的size 作为正确的pos
                 int pos = position -feedRecAdapter.getHeaderSize();
+                if (feedRecAdapter.getmData() == null) return;
+                if (pos < 0 || pos >= feedRecAdapter.getmData().size()) return;
                 Feed feed = feedRecAdapter.getItem(pos);
                 if (feed == null) return;
 
@@ -89,15 +80,17 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onItemLongClick(View view, int position) {
+                //应当减去 head 的size 作为正确的pos
+                int pos = position -feedRecAdapter.getHeaderSize();
                 //非空判断
                 if (feedRecAdapter.getmData() == null) return;
-                if (position < 0 || position >= feedRecAdapter.getmData().size()) return;
+                if (pos < 0 || pos >= feedRecAdapter.getmData().size()) return;
 
-                Feed feed = feedRecAdapter.getmData().get(position);
+                Feed feed = feedRecAdapter.getmData().get(pos);
                 //XLog.d("onItemLongClick execute!");
                 //短震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
-                currentPosition = position;
+                currentPosition = pos;
                 //TODO 弹出对话框:标记全部已读|刷新|删除|置顶
                 mDialog = new Dialog(mView).
                         contentView(mView.getLayoutInflater().inflate(R.layout.menu_singer_feed,null)).

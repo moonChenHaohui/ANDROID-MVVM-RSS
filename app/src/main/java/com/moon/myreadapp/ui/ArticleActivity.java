@@ -75,14 +75,6 @@ public class ArticleActivity extends BaseActivity {
         XLog.d(articleViewModel.getArticle().getContainer());
         //设置文本大小
         binding.articleBody.feedContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, PreferenceUtils.getInstance(this).getIntParam(Constants.ARTICLE_FONT_SIZE, (int)Globals.getApplication().getResources().getDimension(TextFont.H3.size)));
-        //设置一个隐藏效果
-        binding.articleBottomBar.back.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.articleBottomBar.back.performClick() ;
-            }
-        },500);
-
 
     }
 
@@ -107,5 +99,14 @@ public class ArticleActivity extends BaseActivity {
     @Subscribe
     public void onUpdateEvent(UpdateArticleEvent event) {
         binding.articleBody.feedContent.setTextSize(TypedValue.COMPLEX_UNIT_PX,event.getFontSize());
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (articleViewModel != null){
+            articleViewModel.clear();
+            articleViewModel = null;
+        }
+        super.onDestroy();
     }
 }

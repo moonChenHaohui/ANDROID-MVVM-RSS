@@ -7,6 +7,8 @@ import android.text.Spanned;
 import com.moon.appframework.common.util.StringUtils;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.mvvm.models.dao.Article;
+import com.moon.myreadapp.mvvm.models.dao.Feed;
+import com.moon.myreadapp.mvvm.viewmodels.ViewArticleViewModel;
 
 import java.util.ArrayList;
 
@@ -71,4 +73,28 @@ public class StringHelper {
         }
         return Html.fromHtml(sb.append(title).toString());
     }
+
+    public static Spanned converInfoByStyle(Article article, ViewArticleViewModel.Style style,Feed feed){
+        StringBuilder sb = new StringBuilder("");
+        if (style != null) {
+            switch ((style)) {
+                case VIEW_FAVOR:
+                    if (feed !=null && feed.getTitle() != null){
+                        sb.append(Globals.getApplication().getResources().getString(R.string.font_feed_title,feed.getTitle()));
+                    }
+                    break;
+                case VIEW_READ_HISTORY:
+                    if (feed !=null && feed.getTitle() != null){
+                        sb.append(Globals.getApplication().getResources().getString(R.string.font_feed_last_read_time,feed.getTitle(),article.getUse_count()));
+                    } else {
+                        sb.append(Globals.getApplication().getResources().getString(R.string.font_feed_last_read_time_no_feed,article.getUse_count()));
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return Html.fromHtml(sb.append(article.getCreator()).toString());
+    }
+
 }

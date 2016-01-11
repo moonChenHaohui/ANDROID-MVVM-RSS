@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="feedViewModel"
-            type="com.moon.myreadapp.mvvm.viewmodels.FeedViewModel" />
+            name="viewmodel"
+            type="com.moon.myreadapp.mvvm.viewmodels.ViewArticleViewModel" />
     </data>
 
 
@@ -17,11 +17,9 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:orientation="vertical">
-
             <include layout="@layout/common_tool_bar"/>
-
             <com.moon.myreadapp.common.components.pulltorefresh.impl.FeedPTPRecyclerView
-                android:id="@+id/feed_list"
+                android:id="@+id/article_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -29,6 +27,20 @@
                 android:divider="@null"
                 android:fadingEdge="none"
                 android:listSelector="@android:color/transparent" />
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/fuc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normal_list_item_small"
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginBottom="@dimen/normal_half_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:background="@drawable/btn_normal"
+                android:text="@{viewmodel.fucText}"
+                android:onClick="@{viewmodel.OnFucBtnClick}"
+                android:clickable="true"
+                android:gravity="center"
+                android:textColor="@color/txt_black"
+                android:textSize="@dimen/text_h2" />
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>

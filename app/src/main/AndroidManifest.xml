@@ -10,8 +10,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 震动功能 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!--写系统设置-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <!-- 写系统设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <!-- bmob add -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -78,7 +78,12 @@
             android:name=".ui.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_welcome"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".ui.ViewArticleActivity"
+            android:label="@string/title_activity_view_artilce"
+            android:launchMode="singleTop"
+            android:theme="@style/RedTheme" />
     </application>
 
 </manifest>

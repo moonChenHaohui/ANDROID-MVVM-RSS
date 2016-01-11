@@ -7,6 +7,9 @@
         <variable
             name="article"
             type="com.moon.myreadapp.mvvm.models.dao.Article" />
+        <variable
+            name="style"
+            type="com.moon.myreadapp.mvvm.viewmodels.ViewArticleViewModel.Style" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:text="@{StringHelper.converTitleByStatus(article.title,article.status)}"
@@ -45,9 +47,8 @@
             android:layout_below="@id/article_images"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{article.creator}"
+            android:text="@{style == null ? article.creator : StringHelper.converInfoByStyle(article,style,article.feed)}"
             android:ellipsize="end"
-            android:hint="creator"
             android:singleLine="true"
             android:textColor="@color/txt_active"
             android:textSize="@dimen/text_h4" />

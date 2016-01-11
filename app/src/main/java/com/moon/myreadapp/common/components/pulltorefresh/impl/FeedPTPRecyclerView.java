@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
+import com.moon.myreadapp.databinding.WidgetEmptyFeedBinding;
 import com.moon.myreadapp.databinding.WidgetEmptyHomeBinding;
 
 /**
@@ -16,7 +17,7 @@ import com.moon.myreadapp.databinding.WidgetEmptyHomeBinding;
  */
 public class FeedPTPRecyclerView extends PullToRefreshRecyclerView{
 
-    private WidgetEmptyHomeBinding emptyHomeBinding;
+    private WidgetEmptyFeedBinding emptyHomeBinding;
 
     public FeedPTPRecyclerView(Context context) {
         super(context);
@@ -33,16 +34,16 @@ public class FeedPTPRecyclerView extends PullToRefreshRecyclerView{
 
     @Override
     protected View createEmptyLayout(Context context, AttributeSet attrs) {
-        emptyHomeBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.widget_empty_home,null,false);
-//        emptyHomeBinding.addFeed.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setShowEmptyLayout(false);
-//                //刷新
-//                doPullRefreshing(true,500);
-//
-//            }
-//        });
+        emptyHomeBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.widget_empty_feed,null,false);
+        emptyHomeBinding.refresh.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setShowEmptyLayout(false);
+                //刷新
+                doPullRefreshing(true,300);
+
+            }
+        });
         return emptyHomeBinding.getRoot();
     }
 }

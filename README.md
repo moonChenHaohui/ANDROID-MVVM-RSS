@@ -21,7 +21,19 @@ Email:moon4chen@163.com
 
 ###Log
 
+1.11
+
+－ 添加收藏、最近阅读页面以及相关操作；
+
+
+1.10
+
+- 增加empty event；
+- 增加下拉刷新、加载更多的操作；
+- 增加文章收藏功能 和事件通知；
+
 1.9
+
 - 在下拉刷新控件中增加了emptyview，支持自定义，对recyclerview adapter的数据变更做了自动通知，当没有数据时显示emptyview ；
 - 增加主页emptyview ui;
 

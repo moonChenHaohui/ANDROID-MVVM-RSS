@@ -1,19 +1,17 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
-import android.app.Activity;
+import android.databinding.Bindable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.view.Menu;
+import android.support.annotation.StringRes;
 import android.view.View;
-
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.PopupMenu;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
+import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
@@ -28,51 +26,105 @@ import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.FeedActivity;
+import com.moon.myreadapp.ui.LoginActivity;
+import com.moon.myreadapp.ui.ViewArticleActivity;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.VibratorHelper;
-import com.moon.myreadapp.util.ViewUtils;
 import com.rey.material.app.Dialog;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by moon on 15/10/23.
- */
-public class FeedViewModel extends BaseViewModel {
+import de.halfbit.tinybus.Subscribe;
 
-    private FeedActivity mView;
+/**
+ * Created by moon on 16/1/10.
+ */
+public class ViewArticleViewModel extends BaseViewModel {
+
+
+    public enum Style {
+        /**
+         * 查看收藏
+         */
+        VIEW_FAVOR(R.string.view_artilce_title_favor),
+        /**
+         * 查看历史
+         */
+        VIEW_READ_HISTORY(R.string.view_artilce_title_history);
+        @StringRes int title;
+
+        Style(@StringRes int t){
+            title = t;
+        }
+
+        public static Style find (int ordinal){
+            Style[] styles = values();
+            for (int i = 0; i < styles.length;i++){
+                if (ordinal == styles[i].ordinal()){
+                    return styles[i];
+                }
+            }
+            return VIEW_FAVOR;
+        }
+
+    }
+
+    private ViewArticleActivity mView;
 
     private RecyclerItemClickListener articleClickListener;
     private ArticleRecAdapter mAdapter;
 
-    private long feedId;
-    private Feed feed;
     private int currentPosition = -1;
     private Dialog mDialog;
-    private boolean showAllArticles;
 
-    public FeedViewModel(FeedActivity view, long feedId) {
+    private Style mStyle;
+
+    /**
+     * 功能按钮文字
+     */
+    private String fucText;
+
+    private boolean onPregress;
+
+    public ViewArticleViewModel(ViewArticleActivity view,Style style) {
         this.mView = view;
-        this.feedId = feedId;
-        this.feed = DBHelper.Query.getFeed(feedId);
+        mStyle = style;
         initViews();
         initEvents();
     }
 
     @Override
     public void initViews() {
-        this.mView.setTitle(feed.getTitle());
-        showAllArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,true);
-        mAdapter = new ArticleRecAdapter(mView,getBaseData(0,10));
+        mAdapter = new ArticleRecAdapter(mView,getBaseData(0,Constants.SINGLE_LOAD_SIZE),mStyle);
+        mView.setTitle(mStyle.title);
+
+
+        //初始化底部文字
+        if (mStyle == Style.VIEW_FAVOR){
+            if (DBHelper.Query.getUser() != null){
+                setFucText("现在同步存储.");
+            } else {
+                setFucText("登录后可以云存储");
+            }
+        } else if(mStyle == Style.VIEW_READ_HISTORY){
+            setFucText("删除全部文章");
+        }
     }
 
     private List<Article> getBaseData(int start,int size) {
-        return DBHelper.Query.getArticlesByID(feedId, showAllArticles?Article.Status.NORMAL_AND_FAVOR:Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD,start,size);
+        if (mStyle == Style.VIEW_FAVOR){
+            //获取收藏数据
+            return DBHelper.Query.getArticles(Article.Status.FAVOR,start,size);
+        } else if (mStyle == Style.VIEW_READ_HISTORY){
+            //获取历史数据
+            return DBHelper.Query.getArticlesReadHistory(start,size);
+        }
+        return null;
     }
 
 
@@ -126,6 +178,8 @@ public class FeedViewModel extends BaseViewModel {
     @Override
     public void clear() {
         mView = null;
+        mAdapter = null;
+        articleClickListener = null;
     }
 
 
@@ -135,58 +189,13 @@ public class FeedViewModel extends BaseViewModel {
      * @param feedList
      */
     public void refresh(final PullToRefreshRecyclerView feedList) {
-        RssHelper.getMostRecentNews(feed.getUrl(), new RssHelper.IRssListener() {
+        feedList.post(new Runnable() {
             @Override
-            public void onSuccess(final SyndFeed syndFeed) {
-                feedList.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        //设置刷新时间
-                        feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
-                        //完成刷新
-                        feedList.onPullDownRefreshComplete();
-
-
-                        //获取的文章list
-                        Feed feed = DBHelper.Util.feedConert(syndFeed, DBHelper.Query.getUserId());
-                        ArrayList<Article> articles = DBHelper.Util.getArticles(syndFeed);
-                        if (articles == null || articles.size() == 0) {
-                            //没有获取到数据
-                            return;
-                        }
-
-                        //result 为获取新更新的文章
-                        ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feedId, articles);
-
-
-                        boolean haveNewDate = result != null && result.size() > 0;
-
-                        //插入数据库
-                        if (haveNewDate) {
-                            DBHelper.Insert.articles(result);
-                        }
-                        articles = null;
-
-                        //设置提示
-                        ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
-
-                        //重新设置数据
-                        if (haveNewDate) {
-                            mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
-                        }
-                        updateFeed();
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onError(final String msg) {
-                ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
+            public void run() {
+                mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
+                feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
+                //完成刷新
                 feedList.onPullDownRefreshComplete();
-//
             }
         });
     }
@@ -214,7 +223,7 @@ public class FeedViewModel extends BaseViewModel {
 
 
     private void readArticle(Article article, int position) {
-        if (article == null) return;
+        if (article == null)return;
         article.setLast_read_time(new Date());
         article.setUse_count(article.getUse_count() + 1);
         DBHelper.UpDate.saveArticle(article);
@@ -222,9 +231,20 @@ public class FeedViewModel extends BaseViewModel {
     }
 
     private void updateFeed() {
-        UpdateFeedEvent event = new UpdateFeedEvent(feed,UpdateFeedEvent.TYPE.STATUS);
+        UpdateFeedEvent event = new UpdateFeedEvent(null,UpdateFeedEvent.TYPE.STATUS);
         event.setStatus(UpdateFeedEvent.NORMAL);
         XApplication.getInstance().bus.post(event);
+    }
+
+    @Bindable
+    public String getFucText() {
+        return fucText;
+    }
+
+
+    public void setFucText(String fucText) {
+        this.fucText = fucText;
+        notifyPropertyChanged(BR.fucText);
     }
 
     public void btnOnClick(View v) {
@@ -266,18 +286,45 @@ public class FeedViewModel extends BaseViewModel {
         }
     }
 
-    public void updateSet(boolean showAllArticles) {
-        this.showAllArticles = showAllArticles;
-
-        mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
-        updateFeed();
-    }
 
     public void updateArticleByPosition(int pos, Article article){
         if (mAdapter.getmData() == null) return;
         if (pos >=0 && pos < mAdapter.getmData().size()) {
             mAdapter.getmData().set(pos,article);
             mAdapter.notifyItemChanged(mAdapter.getWholePosition(pos));
+        }
+    }
+
+    /**
+     * 底部按钮click
+     * @param view
+     */
+    public void OnFucBtnClick (View view){
+        if (onPregress) return;
+        if (mStyle == Style.VIEW_FAVOR){
+            if (DBHelper.Query.getUser() != null){
+                onPregress = true;
+                setFucText("同步中...");
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onPregress = false;
+                        setFucText("同步完成.");
+                    }
+                },200);
+            } else {
+                XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class,null,true));
+            }
+        } else if(mStyle == Style.VIEW_READ_HISTORY){
+            onPregress = true;
+            setFucText("删除中...");
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onPregress = false;
+                    setFucText("删除完成.");
+                }
+            }, 200);
         }
     }
 }

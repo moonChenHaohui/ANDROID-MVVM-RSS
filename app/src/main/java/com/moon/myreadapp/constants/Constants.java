@@ -33,6 +33,8 @@ public class Constants {
 
     public static final String IMAGES_NOW_POSITION = "images_now_position";
 
+    public static final String VIEW_ARTICLE_TYPE = "view_article_type";
+
 
     /**
      * 配置类

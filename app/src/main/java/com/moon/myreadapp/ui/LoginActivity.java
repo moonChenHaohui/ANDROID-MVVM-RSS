@@ -131,8 +131,10 @@ public class LoginActivity extends BaseActivity{
 
     @Override
     protected void onDestroy() {
-        viewModel.clear();
-        viewModel = null;
+        if (viewModel != null) {
+            viewModel.clear();
+            viewModel = null;
+        }
         super.onDestroy();
     }
 

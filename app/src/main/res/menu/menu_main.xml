@@ -7,10 +7,4 @@
         android:title="@string/title_reflash"
         app:showAsAction="ifRoom|collapseActionView">
     </item>
-    <item
-        android:id="@+id/action_add"
-        android:icon="@android:drawable/ic_input_add"
-        android:title="@string/title_sub"
-        app:showAsAction="ifRoom|collapseActionView">
-    </item>
 </menu>

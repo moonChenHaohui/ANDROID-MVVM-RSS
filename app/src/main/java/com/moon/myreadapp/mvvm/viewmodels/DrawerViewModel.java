@@ -2,6 +2,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.app.Activity;
 import android.databinding.Bindable;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -11,12 +12,14 @@ import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.mvvm.models.dao.UserDao;
 import com.moon.myreadapp.ui.AddFeedActivity;
 import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.SettingActivity;
+import com.moon.myreadapp.ui.ViewArticleActivity;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 
@@ -58,17 +61,21 @@ public class DrawerViewModel extends BaseViewModel {
         menus.add(new MenuItem.Builder().title("最近阅读").build());
         menus.add(new MenuItem.Builder().title("清除缓存").build());
         drawerAdapter = new DrawerAdapter(menus);
-
         drawerItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
                         DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
-                        //DialogFractory.create((Activity)mView, DialogFractory.Type.AddSubscrible).show();
                         break;
                     case 1:
-                        XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class,true));
+                        XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
+                        break;
+                    case 2:
+                    case 3:
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.VIEW_ARTICLE_TYPE, position == 2 ? ViewArticleViewModel.Style.VIEW_FAVOR.ordinal() : ViewArticleViewModel.Style.VIEW_READ_HISTORY.ordinal());
+                        XDispatcher.from(mView).dispatch(new RouterAction(ViewArticleActivity.class,bundle,true));
                         break;
                 }
             }

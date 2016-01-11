@@ -95,7 +95,7 @@
                 android:textSize="@dimen/text_h2"
                 android:onClick="@{articleViewModel.onClickWebArticle}"
                 android:text="@string/article_view_orignal_web"
-                android:background="@drawable/btn_gray_normal"/>
+                android:background="@drawable/btn_normal"/>
 
         </com.moon.myreadapp.common.components.scrollview.BouncyLinearLayout>
     </ScrollView>

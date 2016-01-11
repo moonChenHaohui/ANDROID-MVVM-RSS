@@ -156,7 +156,6 @@
     <string name="emptyview_fuc_login">{fa-user} 去登录</string>
 
 
-
     <string name="feed_item_load">{fa-spinner spin}</string>
     <string name="feed_item_delete_title">确定删除 "%1$s" 吗?</string>
     <string name="feed_item_delete_cancel">取消</string>
@@ -166,8 +165,18 @@
 
     <string name="font_favor"><Data><![CDATA[<font color="#FF5500">#已收藏#</font>  ]]></Data></string>
     <string name="font_delete"><Data><![CDATA[<font color="#0e508e">#已删除#</font>  ]]></Data></string>
-    
-    
+
+
     <string name="article_view_orignal_web">查看原文</string>
     <string name="article_web_view_error_url">网页请求错误</string>
+
+
+
+
+    <string name="title_activity_view_artilce">查看文章</string>
+    <string name="view_artilce_title_favor">收藏的文章</string>
+    <string name="view_artilce_title_history">阅读历史记录</string>
+    <string name="font_feed_title"><Data><![CDATA[来自<font color="#0e508e"> %1$s </font>  ]]></Data></string>
+    <string name="font_feed_last_read_time"><Data><![CDATA[来自<font color="#0e508e"> %1$s | 已阅 %2$s 次</font>  ]]></Data></string>
+    <string name="font_feed_last_read_time_no_feed"><Data><![CDATA[<font color="#0e508e">已阅 %1$s 次</font>  ]]></Data></string>
 </resources>

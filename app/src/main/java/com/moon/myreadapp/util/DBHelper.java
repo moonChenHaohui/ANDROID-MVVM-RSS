@@ -90,6 +90,7 @@ public class DBHelper {
             if (article.getPublishtime() == null){
                 article.setPublishtime(new Date());
             }
+
             long id = getDAO().getArticleDao().insertOrReplace(article);
             return id;
         }
@@ -141,6 +142,33 @@ public class DBHelper {
                 return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
             }
             return res.orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
+        }
+
+        /**
+         * 根据状态查询文章
+         * @param status
+         * @param start
+         * @param size
+         * @return
+         */
+        public static List<Article> getArticles(Article.Status status,int start,int size){
+            QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder();
+            if (status != null){
+                WhereCondition wc  = ArticleDao.Properties.Status.eq(status.status);
+                return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
+            }
+            return res.orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
+        }
+
+        /**
+         * 获取文章阅读历史
+         * @param start
+         * @param size
+         * @return
+         */
+        public static List<Article> getArticlesReadHistory(int start,int size){
+            QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status));
+            return res.orderDesc(ArticleDao.Properties.Last_read_time).offset(start).limit(size).list();
         }
 
         public static Article getArticle (long id){
@@ -212,8 +240,10 @@ public class DBHelper {
         }
         public static void readAllArticleFromFeed(Feed feed){
             List<Article> articles = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(feed.getId())).list();
+            Date date = new Date();
             for (Article a:articles){
                 a.setUse_count(1);
+                a.setLast_read_time(date);
                 saveArticle(a);
             }
         }

@@ -55,6 +55,14 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void onDestroy() {
+        if (drawerViewModel != null) {
+            drawerViewModel.clear();
+            drawerViewModel = null;
+        }
+        if (mainViewModel != null) {
+            mainViewModel.clear();
+            mainViewModel = null;
+        }
         super.onDestroy();
     }
 
@@ -111,9 +119,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     private void initMainView() {
         //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
-        //binding.mainList.getmAdapter().addHeader(LayoutInflater.from(binding.mainList.getContext()).inflate(R.layout.lv_feed_header, null));
-//        binding.mainList.setPullLoadEnabled(false);
-        binding.mainList.setScrollLoadEnabled(true);
+        binding.mainList.setPullLoadEnabled(false);
+        //binding.mainList.setScrollLoadEnabled(true);
 //        binding.mainList.setPullRefreshEnabled(false);
         binding.mainList.getRefreshableView().addOnItemTouchListener(mainViewModel.getReadItemClickListener());
         binding.mainList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
@@ -128,6 +135,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                         //加载本地数据
                         mainViewModel.updateFeeds();
                         binding.mainList.onPullDownRefreshComplete();
+                        binding.mainList.setHasMoreData(false);
                     }
                 });
             }
@@ -179,9 +187,10 @@ public class MainActivity extends BaseActivity implements IMainView {
         if (id == R.id.action_refresh) {
 
             mainViewModel.refreshAll();
-        } else if (id == R.id.action_add) {
-            mainViewModel.onAddButtonClick();
         }
+//        } else if (id == R.id.action_add) {
+//            mainViewModel.onAddButtonClick();
+//        }
         return super.onOptionsItemSelected(item);
     }
 

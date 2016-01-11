@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
 
     </data>
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/txt_white"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.rey.material.widget.Button
-            android:id="@+id/add_feed"
+        android:padding="@dimen/normal_padding">
+
+        <ImageView
+            android:id="@+id/empty_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+(去添加频道)"/>
-        <include layout="@layout/common_divider"/>
-        <com.rey.material.widget.Button
-            android:id="@+id/user_login"
+            android:padding="@dimen/normal_padding"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_empty" />
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+(去登录)"/>
+            android:gravity="center"
+            android:padding="@dimen/normal_half_padding"
+            android:text="@string/emptyview_default_notice"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/text_h2"
+            android:textStyle="bold" />
+
+        <com.joanzapata.iconify.widget.IconButton
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/normal_half_padding"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_normal"
+            android:text="@string/emptyview_reload"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/text_h2" />
     </LinearLayout>
 </layout>
