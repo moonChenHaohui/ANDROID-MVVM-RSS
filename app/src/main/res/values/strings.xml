@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">尽情RSS阅读</string>
+    <string name="app_name">读RSS叻</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_">Activity</string>
-    <string name="title_activity_main">尽情RSS阅读</string>
+    <string name="title_activity_main">读RSS叻</string>
 
     <string name="app_info">Enjoy RSS Read</string>
 
