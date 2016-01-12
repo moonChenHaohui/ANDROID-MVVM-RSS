@@ -49,7 +49,11 @@ public class DialogFractory {
         /**
          * 注册
          */
-        Register
+        Register,
+        /**
+         * 空页面
+         */
+        EmptyView,
     }
 
 //    public static MaterialDialog create(Context context, Type type) {
@@ -111,6 +115,9 @@ public class DialogFractory {
                 break;
             case AddSubscrible:
                 dialog = new AddSubDialog(context);
+                break;
+            case EmptyView:
+                dialog = new Dialog(context).cancelable(false).canceledOnTouchOutside(false).positiveAction(R.string.action_conform);
                 break;
             default:
                 dialog = new Dialog(context);

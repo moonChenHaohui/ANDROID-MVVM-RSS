@@ -25,12 +25,11 @@ import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleWebActivity;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.ScreenUtils;
 import com.nineoldandroids.animation.ArgbEvaluator;
 import com.nineoldandroids.animation.ObjectAnimator;
-
-import java.util.Date;
 
 /**
  * Created by moon on 15/11/14.

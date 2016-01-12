@@ -179,4 +179,10 @@
     <string name="font_feed_title"><Data><![CDATA[来自<font color="#0e508e"> %1$s </font>  ]]></Data></string>
     <string name="font_feed_last_read_time"><Data><![CDATA[来自<font color="#0e508e"> %1$s | 已阅 %2$s 次</font>  ]]></Data></string>
     <string name="font_feed_last_read_time_no_feed"><Data><![CDATA[<font color="#0e508e">已阅 %1$s 次</font>  ]]></Data></string>
+
+
+    <string name="action_conform">确定</string>
+
+    <string name="empty_feed">抱歉,当前频道不存在.</string>
+    <string name="empty_article">抱歉,当前文章不存在.</string>
 </resources>

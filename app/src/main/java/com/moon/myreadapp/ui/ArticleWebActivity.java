@@ -48,6 +48,11 @@ public class ArticleWebActivity extends ToolBarExpandActivity<ObservableWebView>
     }
 
     @Override
+    protected boolean isOpenSlidingBack() {
+        return false;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -19,6 +20,7 @@ import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityArticleBinding;
 import com.moon.myreadapp.mvvm.viewmodels.ArticleViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
+import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.PreferenceUtils;
 
@@ -53,9 +55,20 @@ public class ArticleActivity extends BaseActivity {
 
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this, getLayoutView());
-
         articleViewModel = new ArticleViewModel(this, getIntent().getExtras().getLong(Constants.ARTICLE_ID, -1),getIntent().getExtras().getInt(Constants.ARTICLE_POS, -1));
+        if (articleViewModel.getArticle() == null){
+            setContentView(new View(this));
+            DialogFractory.createDialog(this, DialogFractory.Type.EmptyView).
+                    title(R.string.empty_article).
+                    positiveActionClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    }).show();
+            return;
+        }
+        binding = DataBindingUtil.setContentView(this, getLayoutView());
         binding.setArticleViewModel(articleViewModel);
 
 
@@ -70,12 +83,13 @@ public class ArticleActivity extends BaseActivity {
 
             }
         });
-        //富文本显示
-        binding.articleBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
-        XLog.d(articleViewModel.getArticle().getContainer());
+        if (articleViewModel.getArticle()!= null) {
+            //富文本显示
+            binding.articleBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
+        }
+
         //设置文本大小
         binding.articleBody.feedContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, PreferenceUtils.getInstance(this).getIntParam(Constants.ARTICLE_FONT_SIZE, (int)Globals.getApplication().getResources().getDimension(TextFont.H3.size)));
-
     }
 
     @Override

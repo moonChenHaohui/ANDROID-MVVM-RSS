@@ -60,6 +60,7 @@ public abstract class BaseActivity extends XActivity{
     private int defaultTranslationX = 100;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         //配置主题
@@ -240,10 +241,15 @@ public abstract class BaseActivity extends XActivity{
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         injectView(this);
-        initLayout();
+        if (isOpenSlidingBack()) {
+            initLayout();
+        }
         //event bus init
         XDispatcher.register(this);
         checkEvent();
+    }
+    protected boolean isOpenSlidingBack (){
+        return true;
     }
 
     private void initTheme() {

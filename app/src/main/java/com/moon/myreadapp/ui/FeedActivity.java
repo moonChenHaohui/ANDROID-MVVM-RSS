@@ -21,6 +21,7 @@ import com.moon.myreadapp.databinding.ActivityFeedBinding;
 import com.moon.myreadapp.mvvm.viewmodels.FeedViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.util.Conver;
+import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ThemeUtils;
 
@@ -45,9 +46,11 @@ public class FeedActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        initToolBar(toolbar);
-        initBusiness();
+        if (feedViewModel.getFeed() != null) {
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            initToolBar(toolbar);
+            initBusiness();
+        }
     }
 
     private void initBusiness (){
@@ -105,8 +108,20 @@ public class FeedActivity extends BaseActivity {
 
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this, getLayoutView());
         feedViewModel = new FeedViewModel(this,getIntent().getExtras().getLong(Constants.FEED_ID,-1));
+        if (feedViewModel.getFeed() == null){
+            setContentView(new View(this));
+            DialogFractory.createDialog(this, DialogFractory.Type.EmptyView).
+                    title(R.string.empty_feed).
+                    positiveActionClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    }).show();
+            return;
+        }
+        binding = DataBindingUtil.setContentView(this, getLayoutView());
         binding.setFeedViewModel(feedViewModel);
     }
 

@@ -1,6 +1,7 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.app.Activity;
+import android.databinding.Bindable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
+import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
@@ -31,6 +33,7 @@ import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.moon.myreadapp.util.ViewUtils;
@@ -60,12 +63,17 @@ public class FeedViewModel extends BaseViewModel {
         this.mView = view;
         this.feedId = feedId;
         this.feed = DBHelper.Query.getFeed(feedId);
+        if (feed == null ) {
+            return;
+        }
         initViews();
         initEvents();
     }
 
     @Override
     public void initViews() {
+
+
         this.mView.setTitle(feed.getTitle());
         showAllArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,true);
         mAdapter = new ArticleRecAdapter(mView,getBaseData(0,10));
@@ -279,5 +287,15 @@ public class FeedViewModel extends BaseViewModel {
             mAdapter.getmData().set(pos,article);
             mAdapter.notifyItemChanged(mAdapter.getWholePosition(pos));
         }
+    }
+
+    @Bindable
+    public Feed getFeed() {
+        return feed;
+    }
+
+    public void setFeed(Feed feed) {
+        this.feed = feed;
+        notifyPropertyChanged(BR.feed);
     }
 }
