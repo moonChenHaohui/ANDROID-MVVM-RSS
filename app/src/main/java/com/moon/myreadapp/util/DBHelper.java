@@ -167,8 +167,15 @@ public class DBHelper {
          * @return
          */
         public static List<Article> getArticlesReadHistory(int start,int size){
-            QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status));
+            QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status),
+                    ArticleDao.Properties.Use_count.gt(0));
             return res.orderDesc(ArticleDao.Properties.Last_read_time).offset(start).limit(size).list();
+        }
+
+        public static List<Article> getArticlesUnRead(int start,int size){
+            QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status),
+                    ArticleDao.Properties.Use_count.eq(0));
+            return res.orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
         }
 
         public static Article getArticle (long id){

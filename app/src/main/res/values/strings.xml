@@ -176,6 +176,7 @@
     <string name="title_activity_view_artilce">查看文章</string>
     <string name="view_artilce_title_favor">收藏的文章</string>
     <string name="view_artilce_title_history">阅读历史记录</string>
+    <string name="view_artilce_title_unread">全部未读</string>
     <string name="font_feed_title"><Data><![CDATA[来自<font color="#0e508e"> %1$s </font>  ]]></Data></string>
     <string name="font_feed_last_read_time"><Data><![CDATA[来自<font color="#0e508e"> %1$s | 已阅 %2$s 次</font>  ]]></Data></string>
     <string name="font_feed_last_read_time_no_feed"><Data><![CDATA[<font color="#0e508e">已阅 %1$s 次</font>  ]]></Data></string>
@@ -185,4 +186,51 @@
 
     <string name="empty_feed">抱歉,当前频道不存在.</string>
     <string name="empty_article">抱歉,当前文章不存在.</string>
+
+
+    <string name="drawer_setting">{fa-cog} 设置</string>
+    <string name="drawer_theme">{fa-moon-o} 夜间</string>
+
+
+
+    <!--设置-->
+
+    <string name="set_read_title">阅读设置</string>
+
+    <string name="set_auto_scroll_unread_key">set_auto_scroll_unread_key</string>
+    <string name="set_auto_scroll_unread_title">自动跳转到未读文章</string>
+    <string name="set_auto_scroll_unread_summary">进入频道后自动滚动到第一个未读文章</string>
+
+    <string name="set_auto_show_unread_key">set_auto_scroll_show_unread_key</string>
+    <string name="set_auto_show_unread_title">只显示未读文章</string>
+
+    <string name="set_open_source_key">set_auto_scroll_unread_key</string>
+    <string name="set_open_source_title">智能打开原文</string>
+    <string name="set_open_source_summary">当文章内容过少,排版过乱时直接打开原文</string>
+
+
+    <string name="set_open_in_browser_key">set_open_in_browser_key</string>
+    <string name="set_open_in_browser_title">使用内置浏览器打开链接</string>
+
+
+    <string name="set_system">系统设置</string>
+
+    <string name="set_no_graph_model_key">set_no_graph_model_key</string>
+    <string name="set_no_graph_model_title">无图模式</string>
+
+    <string name="set_loading_pic_under_WIIF_key">set_loading_pic_under_WIIF_key</string>
+    <string name="set_loading_pic_under_WIIF_title">WIFI下自动加载图片</string>
+
+    <string name="set_push_message_key">set_push_message_key</string>
+    <string name="set_push_message_title">消息推送</string>
+
+    <string name="set_clear_cache_key">set_clear_cache_key</string>
+    <string name="set_clear_cache_title">清空缓存</string>
+    <string name="set_clear_cache_summary">当前缓存:%1$s</string>
+
+    <string name="set_other">其他</string>
+
+    <string name="set_about_author_key">set_about_author_key</string>
+    <string name="set_about_author_title">关于作者</string>
+
 </resources>

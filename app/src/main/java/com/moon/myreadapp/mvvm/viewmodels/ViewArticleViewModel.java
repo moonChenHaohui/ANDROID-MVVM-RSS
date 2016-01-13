@@ -55,7 +55,11 @@ public class ViewArticleViewModel extends BaseViewModel {
         /**
          * 查看历史
          */
-        VIEW_READ_HISTORY(R.string.view_artilce_title_history);
+        VIEW_READ_HISTORY(R.string.view_artilce_title_history),
+        /**
+         * 查看全部未读
+         */
+        VIEW_UNREAD(R.string.view_artilce_title_unread);
         @StringRes int title;
 
         Style(@StringRes int t){
@@ -113,6 +117,8 @@ public class ViewArticleViewModel extends BaseViewModel {
             }
         } else if(mStyle == Style.VIEW_READ_HISTORY){
             setFucText("删除全部文章");
+        } else if (mStyle == Style.VIEW_UNREAD){
+            setFucText("一键全部已读");
         }
     }
 
@@ -123,6 +129,9 @@ public class ViewArticleViewModel extends BaseViewModel {
         } else if (mStyle == Style.VIEW_READ_HISTORY){
             //获取历史数据
             return DBHelper.Query.getArticlesReadHistory(start,size);
+        } else if (mStyle == Style.VIEW_UNREAD){
+            //获取未读列表
+            return DBHelper.Query.getArticlesUnRead(start,size);
         }
         return null;
     }
@@ -325,6 +334,8 @@ public class ViewArticleViewModel extends BaseViewModel {
                     setFucText("删除完成.");
                 }
             }, 200);
+        } else if (mStyle == Style.VIEW_UNREAD){
+            onPregress = true;
         }
     }
 }

@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
  */
 public class PreferenceUtils {
 
+    public static String PREFRENCE_NAME = "SETTING";
+
     private SharedPreferences sharedPreferences;
 
     private SharedPreferences.Editor shareEditor;
@@ -17,7 +19,7 @@ public class PreferenceUtils {
 
 
     protected PreferenceUtils(Context context){
-        sharedPreferences = context.getSharedPreferences("setting", Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(PREFRENCE_NAME, Context.MODE_PRIVATE);
         shareEditor = sharedPreferences.edit();
     }
 

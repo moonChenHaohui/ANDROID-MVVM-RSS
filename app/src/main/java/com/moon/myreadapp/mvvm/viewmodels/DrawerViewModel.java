@@ -56,25 +56,31 @@ public class DrawerViewModel extends BaseViewModel {
     public void initViews() {
         List<MenuItem> menus = new ArrayList<>();
         menus.add(new MenuItem.Builder().title("添加订阅").build());
-        menus.add(new MenuItem.Builder().title("推荐频道").build());
+        menus.add(new MenuItem.Builder().title("全部未读").build());
         menus.add(new MenuItem.Builder().title("我的收藏").build());
         menus.add(new MenuItem.Builder().title("最近阅读").build());
-        menus.add(new MenuItem.Builder().title("清除缓存").build());
+        menus.add(new MenuItem.Builder().title("反馈").build());
         drawerAdapter = new DrawerAdapter(menus);
         drawerItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
-                        break;
-                    case 1:
                         XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
                         break;
+                    case 1:
                     case 2:
                     case 3:
+                        int type = -1;
+                        if (position == 1){
+                            type = ViewArticleViewModel.Style.VIEW_UNREAD.ordinal();
+                        } else if (position == 2){
+                            type = ViewArticleViewModel.Style.VIEW_FAVOR.ordinal();
+                        } else if (position == 3){
+                            type =  ViewArticleViewModel.Style.VIEW_READ_HISTORY.ordinal();
+                        }
                         Bundle bundle = new Bundle();
-                        bundle.putInt(Constants.VIEW_ARTICLE_TYPE, position == 2 ? ViewArticleViewModel.Style.VIEW_FAVOR.ordinal() : ViewArticleViewModel.Style.VIEW_READ_HISTORY.ordinal());
+                        bundle.putInt(Constants.VIEW_ARTICLE_TYPE, type);
                         XDispatcher.from(mView).dispatch(new RouterAction(ViewArticleActivity.class,bundle,true));
                         break;
                 }
@@ -130,12 +136,6 @@ public class DrawerViewModel extends BaseViewModel {
         notifyChange();
     }
 
-    public void onClickFriend(View view) {
-        XDispatcher.from((Activity)mView).dispatch(new RouterAction(SettingActivity.class, true));
-    }
-    public void onLongClick (View view){}
-
-
 
 
     public void requestUser(){
@@ -156,6 +156,15 @@ public class DrawerViewModel extends BaseViewModel {
             XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, true));
             return;
         }
+    }
+
+
+    public void onClickSetting(View view) {
+        XDispatcher.from((Activity)mView).dispatch(new RouterAction(SettingActivity.class, true));
+    }
+
+    public void onClickTheme(View view) {
+        DialogFractory.createDialog(mView, DialogFractory.Type.ThemeChoose).show();
     }
 
     public void updateUser(User user) {

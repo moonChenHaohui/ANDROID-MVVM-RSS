@@ -111,10 +111,16 @@
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/setting"
-                android:layout_width="wrap_content"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:background="@drawable/selectable_background"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textSize="@dimen/text_h2"
+                android:onClick="@{drawerViewModel.onClickSetting}"
                 android:layout_height="match_parent"
                 android:padding="@dimen/normal_half_padding"
-                android:text="{fa-cog} 设置" />
+                android:text="@string/drawer_setting" />
 
             <View
                 android:layout_width="1px"
@@ -125,10 +131,17 @@
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/changeTheme"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:textSize="@dimen/text_h2"
+
+                android:onClick="@{drawerViewModel.onClickTheme}"
+                android:background="@drawable/selectable_background"
                 android:layout_height="match_parent"
                 android:padding="@dimen/normal_half_padding"
-                android:text="{fa-moon-o} 夜间" />
+                android:text="@string/drawer_theme" />
         </LinearLayout>
     </LinearLayout>
 </layout>

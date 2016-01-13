@@ -1,10 +1,12 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.databinding.Bindable;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.AddSubViewPagerAdapter;
 import com.moon.myreadapp.common.adapter.SystemRecAdapter;
@@ -13,6 +15,8 @@ import com.moon.myreadapp.ui.AddFeedActivity;
 import com.moon.myreadapp.ui.fragments.OPMLFragment;
 import com.moon.myreadapp.ui.fragments.RecommendFragment;
 import com.moon.myreadapp.util.DialogFractory;
+import com.moon.myreadapp.util.Globals;
+import com.moon.myreadapp.util.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;

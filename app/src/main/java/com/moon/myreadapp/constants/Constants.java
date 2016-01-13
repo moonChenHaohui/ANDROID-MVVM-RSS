@@ -1,5 +1,8 @@
 package com.moon.myreadapp.constants;
 
+import com.moon.myreadapp.R;
+import com.moon.myreadapp.util.Globals;
+
 /**
  * Created by moon on 15/10/22.
  */
@@ -53,7 +56,7 @@ public class Constants {
     /**
      * 频道内文章显示
      */
-    public static final String FEED_SHOW_ALL = "feed_show_all";
+    public static final String FEED_SHOW_ALL = Globals.getApplication().getString(R.string.set_auto_show_unread_key);
 
 
     /**

@@ -91,10 +91,11 @@ public class StringHelper {
                     }
                     break;
                 default:
+                    sb.append(article.getCreator());
                     break;
             }
         }
-        return Html.fromHtml(sb.append(article.getCreator()).toString());
+        return Html.fromHtml(sb.toString());
     }
 
 }
