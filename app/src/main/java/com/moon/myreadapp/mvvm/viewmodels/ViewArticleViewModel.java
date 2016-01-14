@@ -1,5 +1,6 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
+import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -25,6 +26,7 @@ import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.ArticleActivity;
+import com.moon.myreadapp.ui.ArticleWebActivity;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.ViewArticleActivity;
@@ -60,16 +62,17 @@ public class ViewArticleViewModel extends BaseViewModel {
          * 查看全部未读
          */
         VIEW_UNREAD(R.string.view_artilce_title_unread);
-        @StringRes int title;
+        @StringRes
+        int title;
 
-        Style(@StringRes int t){
+        Style(@StringRes int t) {
             title = t;
         }
 
-        public static Style find (int ordinal){
+        public static Style find(int ordinal) {
             Style[] styles = values();
-            for (int i = 0; i < styles.length;i++){
-                if (ordinal == styles[i].ordinal()){
+            for (int i = 0; i < styles.length; i++) {
+                if (ordinal == styles[i].ordinal()) {
                     return styles[i];
                 }
             }
@@ -95,7 +98,7 @@ public class ViewArticleViewModel extends BaseViewModel {
 
     private boolean onPregress;
 
-    public ViewArticleViewModel(ViewArticleActivity view,Style style) {
+    public ViewArticleViewModel(ViewArticleActivity view, Style style) {
         this.mView = view;
         mStyle = style;
         initViews();
@@ -104,34 +107,34 @@ public class ViewArticleViewModel extends BaseViewModel {
 
     @Override
     public void initViews() {
-        mAdapter = new ArticleRecAdapter(mView,getBaseData(0,Constants.SINGLE_LOAD_SIZE),mStyle);
+        mAdapter = new ArticleRecAdapter(mView, getBaseData(0, Constants.SINGLE_LOAD_SIZE), mStyle);
         mView.setTitle(mStyle.title);
 
 
         //初始化底部文字
-        if (mStyle == Style.VIEW_FAVOR){
-            if (DBHelper.Query.getUser() != null){
+        if (mStyle == Style.VIEW_FAVOR) {
+            if (DBHelper.Query.getUser() != null) {
                 setFucText("现在同步存储.");
             } else {
                 setFucText("登录后可以云存储");
             }
-        } else if(mStyle == Style.VIEW_READ_HISTORY){
+        } else if (mStyle == Style.VIEW_READ_HISTORY) {
             setFucText("删除全部文章");
-        } else if (mStyle == Style.VIEW_UNREAD){
+        } else if (mStyle == Style.VIEW_UNREAD) {
             setFucText("一键全部已读");
         }
     }
 
-    private List<Article> getBaseData(int start,int size) {
-        if (mStyle == Style.VIEW_FAVOR){
+    private List<Article> getBaseData(int start, int size) {
+        if (mStyle == Style.VIEW_FAVOR) {
             //获取收藏数据
-            return DBHelper.Query.getArticles(Article.Status.FAVOR,start,size);
-        } else if (mStyle == Style.VIEW_READ_HISTORY){
+            return DBHelper.Query.getArticles(Article.Status.FAVOR, start, size);
+        } else if (mStyle == Style.VIEW_READ_HISTORY) {
             //获取历史数据
-            return DBHelper.Query.getArticlesReadHistory(start,size);
-        } else if (mStyle == Style.VIEW_UNREAD){
+            return DBHelper.Query.getArticlesReadHistory(start, size);
+        } else if (mStyle == Style.VIEW_UNREAD) {
             //获取未读列表
-            return DBHelper.Query.getArticlesUnRead(start,size);
+            return DBHelper.Query.getArticlesUnRead(start, size);
         }
         return null;
     }
@@ -144,10 +147,19 @@ public class ViewArticleViewModel extends BaseViewModel {
             public void onItemClick(View view, int position) {
                 readArticle(mAdapter.getItem(position), position);
                 updateFeed();
-                Bundle bundle = new Bundle();
-                bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
-                bundle.putInt(Constants.ARTICLE_POS, position);
-                XDispatcher.from(mView).dispatch(new RouterAction(ArticleActivity.class, bundle, true));
+                //打开原文还是链接
+                boolean isOpenSource = PreferenceUtils.getInstance(mView).getBooleanParam(mView.getString(R.string.set_open_source_key, false));
+                if (isOpenSource && mAdapter.getItem(position).getContainer().length() < Constants.MIN_CONTAINER_SIZE) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.ARTICLE_TITLE, mAdapter.getItem(position).getTitle());
+                    bundle.putString(Constants.ARTICLE_URL, mAdapter.getItem(position).getLink());
+                    XDispatcher.from((Activity) mView).dispatch(new RouterAction(ArticleWebActivity.class, bundle, true));
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
+                    bundle.putInt(Constants.ARTICLE_POS, position);
+                    XDispatcher.from(mView).dispatch(new RouterAction(ArticleActivity.class, bundle, true));
+                }
             }
 
             @Override
@@ -201,7 +213,7 @@ public class ViewArticleViewModel extends BaseViewModel {
         feedList.post(new Runnable() {
             @Override
             public void run() {
-                mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
+                mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
                 feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
                 //完成刷新
                 feedList.onPullDownRefreshComplete();
@@ -212,17 +224,17 @@ public class ViewArticleViewModel extends BaseViewModel {
     /**
      * 加载更多
      */
-    public boolean loadMore(){
+    public boolean loadMore() {
         List<Article> loadData;
-        if (mAdapter.getmData() == null || mAdapter.getmData().size() == 0){
-            loadData = getBaseData(0,Constants.SINGLE_LOAD_SIZE);
+        if (mAdapter.getmData() == null || mAdapter.getmData().size() == 0) {
+            loadData = getBaseData(0, Constants.SINGLE_LOAD_SIZE);
         } else {
-            loadData = getBaseData(mAdapter.getmData().size(),Constants.SINGLE_LOAD_SIZE);
+            loadData = getBaseData(mAdapter.getmData().size(), Constants.SINGLE_LOAD_SIZE);
         }
         if (loadData != null) {
             mAdapter.addAll(loadData);
         }
-        if (loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE){
+        if (loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE) {
             //没有获得足够的数据,下次加载没有数据了.
             return false;
         } else {
@@ -232,7 +244,7 @@ public class ViewArticleViewModel extends BaseViewModel {
 
 
     private void readArticle(Article article, int position) {
-        if (article == null)return;
+        if (article == null) return;
         article.setLast_read_time(new Date());
         article.setUse_count(article.getUse_count() + 1);
         DBHelper.UpDate.saveArticle(article);
@@ -240,7 +252,7 @@ public class ViewArticleViewModel extends BaseViewModel {
     }
 
     private void updateFeed() {
-        UpdateFeedEvent event = new UpdateFeedEvent(null,UpdateFeedEvent.TYPE.STATUS);
+        UpdateFeedEvent event = new UpdateFeedEvent(null, UpdateFeedEvent.TYPE.STATUS);
         event.setStatus(UpdateFeedEvent.NORMAL);
         XApplication.getInstance().bus.post(event);
     }
@@ -271,7 +283,7 @@ public class ViewArticleViewModel extends BaseViewModel {
                     if (article.getStatus() == Article.Status.NORMAL.status) {
                         article.setStatus(Article.Status.FAVOR.status);
                         DBHelper.UpDate.saveArticle(article);
-                        ToastHelper.showNotice(mView,BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success),TastyToast.STYLE_ALERT).setDuration(1000);
+                        ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success), TastyToast.STYLE_ALERT).setDuration(1000);
                     } else {
                         article.setStatus(Article.Status.NORMAL.status);
                         DBHelper.UpDate.saveArticle(article);
@@ -290,28 +302,29 @@ public class ViewArticleViewModel extends BaseViewModel {
             }
 
         }
-        if(mDialog != null && mDialog.isShowing()){
+        if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
 
 
-    public void updateArticleByPosition(int pos, Article article){
+    public void updateArticleByPosition(int pos, Article article) {
         if (mAdapter.getmData() == null) return;
-        if (pos >=0 && pos < mAdapter.getmData().size()) {
-            mAdapter.getmData().set(pos,article);
+        if (pos >= 0 && pos < mAdapter.getmData().size()) {
+            mAdapter.getmData().set(pos, article);
             mAdapter.notifyItemChanged(mAdapter.getWholePosition(pos));
         }
     }
 
     /**
      * 底部按钮click
+     *
      * @param view
      */
-    public void OnFucBtnClick (View view){
+    public void OnFucBtnClick(View view) {
         if (onPregress) return;
-        if (mStyle == Style.VIEW_FAVOR){
-            if (DBHelper.Query.getUser() != null){
+        if (mStyle == Style.VIEW_FAVOR) {
+            if (DBHelper.Query.getUser() != null) {
                 onPregress = true;
                 setFucText("同步中...");
                 view.postDelayed(new Runnable() {
@@ -320,11 +333,11 @@ public class ViewArticleViewModel extends BaseViewModel {
                         onPregress = false;
                         setFucText("同步完成.");
                     }
-                },200);
+                }, 200);
             } else {
-                XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class,null,true));
+                XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, null, true));
             }
-        } else if(mStyle == Style.VIEW_READ_HISTORY){
+        } else if (mStyle == Style.VIEW_READ_HISTORY) {
             onPregress = true;
             setFucText("删除中...");
             view.postDelayed(new Runnable() {
@@ -334,7 +347,7 @@ public class ViewArticleViewModel extends BaseViewModel {
                     setFucText("删除完成.");
                 }
             }, 200);
-        } else if (mStyle == Style.VIEW_UNREAD){
+        } else if (mStyle == Style.VIEW_UNREAD) {
             onPregress = true;
         }
     }

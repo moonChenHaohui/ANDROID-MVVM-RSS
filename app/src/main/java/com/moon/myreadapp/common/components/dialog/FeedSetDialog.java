@@ -2,22 +2,16 @@ package com.moon.myreadapp.common.components.dialog;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
-import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.FragmentFeedSetBinding;
-import com.moon.myreadapp.databinding.FragmentReadSetBinding;
-import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.PreferenceUtils;
-import com.moon.myreadapp.util.ScreenUtils;
-import com.rey.material.widget.Slider;
 import com.rey.material.widget.Switch;
 
 /**
@@ -27,7 +21,7 @@ public class FeedSetDialog extends BaseButtomDialog implements View.OnClickListe
 
     private FragmentFeedSetBinding binding;
     private TextFont textFont;
-    private static boolean showAllArticles = true;
+    private static boolean showUnReadArticles = Constants.showUnReadArticles;
 
     public FeedSetDialog(Activity context) {
         super(context);
@@ -66,14 +60,14 @@ public class FeedSetDialog extends BaseButtomDialog implements View.OnClickListe
         });
         binding.commit.setOnClickListener(this);
 
-        showAllArticles = PreferenceUtils.getInstance(context).getBooleanParam(Constants.FEED_SHOW_ALL, showAllArticles);
-        binding.readSwitch.setChecked(!showAllArticles);
+        showUnReadArticles = PreferenceUtils.getInstance(context).getBooleanParam(Constants.FEED_SHOW_ALL, showUnReadArticles);
+        binding.readSwitch.setChecked(showUnReadArticles);
         binding.readSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(Switch view, boolean checked) {
-                showAllArticles = !checked;
+                showUnReadArticles = checked;
                 UpdateFeedEvent event = new UpdateFeedEvent(null, UpdateFeedEvent.TYPE.SET);
-                event.setShowAllArticles(showAllArticles);
+                event.setShowAllArticles(showUnReadArticles);
                 XApplication.getInstance().bus.post(event);
 
                 //做一个延迟
@@ -95,7 +89,7 @@ public class FeedSetDialog extends BaseButtomDialog implements View.OnClickListe
     @Override
     void onDimiss() {
         //保存
-        PreferenceUtils.getInstance(context).saveParam(Constants.FEED_SHOW_ALL, showAllArticles);
+        PreferenceUtils.getInstance(context).saveParam(Constants.FEED_SHOW_ALL, showUnReadArticles);
     }
 
 }

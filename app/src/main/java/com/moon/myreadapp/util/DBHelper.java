@@ -126,6 +126,8 @@ public class DBHelper {
             return getDAO().getArticleDao().queryBuilder().list();
         }
 
+
+
         public static List<Article> getArticlesByID(long id,Article.Status status,int start,int size){
             QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(id));
             if (status != null){
@@ -177,6 +179,23 @@ public class DBHelper {
                     ArticleDao.Properties.Use_count.eq(0));
             return res.orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
         }
+        public static List<Article> getArticlesReadedAndUnFavor(){
+            List<Article> list =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.in(Article.Status.NORMAL.status, Article.Status.DELETE.status),
+                    ArticleDao.Properties.Use_count.gt(0)).list();
+            if (null == list || list.size() == 0){
+                return null;
+            }
+            return list;
+        }
+        public static int getArticlesCountReadedAndUnFavor(){
+            List<Article> list =  getArticlesReadedAndUnFavor();
+            if (list == null){
+                return 0;
+            }
+            return list.size();
+        }
+
+
 
         public static Article getArticle (long id){
             List<Article> list = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Id.eq(id)).list();
@@ -274,6 +293,12 @@ public class DBHelper {
         }
         private static boolean deleteArticlesByFeed(Feed feed){
             List<Article> articles = Query.getArticlesByFeedId(feed.getId());
+            getDAO().getArticleDao().deleteInTx(articles);
+            return true;
+        }
+
+        public static boolean deleteArticleReadedAndUnFavor(){
+            List<Article> articles = Query.getArticlesReadedAndUnFavor();
             getDAO().getArticleDao().deleteInTx(articles);
             return true;
         }

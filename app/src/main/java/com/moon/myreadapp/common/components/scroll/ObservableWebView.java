@@ -78,7 +78,6 @@ public class ObservableWebView extends WebView implements Scrollable {
                     listener.start(view,url);
                 }
                 return false;
-
             }
 
             @Override

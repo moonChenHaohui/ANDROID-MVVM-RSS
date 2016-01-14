@@ -45,6 +45,7 @@ public class ArticleViewModel extends BaseViewModel {
     private int position;
 
 
+
     public ArticleViewModel(Activity view, long id, int pos) {
         this.mView = view;
         articleId = id;

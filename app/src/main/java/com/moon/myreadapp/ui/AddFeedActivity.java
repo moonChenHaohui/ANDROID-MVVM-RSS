@@ -35,10 +35,6 @@ public class AddFeedActivity extends BaseActivity {
     private ActivityAddFeedBinding binding;
     private AddFeedViewModel addFeedViewModel;
 
-    @Override
-    protected boolean isOpenSlidingBack() {
-        return false;
-    }
 
     @Override
     protected Toolbar getToolBar() {

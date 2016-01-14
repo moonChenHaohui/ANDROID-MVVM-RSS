@@ -14,6 +14,7 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseListAdapter;
+import com.moon.myreadapp.common.components.dialog.AboutMeDialog;
 import com.moon.myreadapp.common.components.dialog.AddSubDialog;
 import com.moon.myreadapp.common.components.dialog.RegisterDialog;
 import com.moon.myreadapp.ui.helper.SubDialog;
@@ -54,6 +55,10 @@ public class DialogFractory {
          * 空页面
          */
         EmptyView,
+        /**
+         * 关于我
+         */
+        AboutMe
     }
 
 //    public static MaterialDialog create(Context context, Type type) {
@@ -118,6 +123,9 @@ public class DialogFractory {
                 break;
             case EmptyView:
                 dialog = new Dialog(context).cancelable(false).canceledOnTouchOutside(false).positiveAction(R.string.action_conform);
+                break;
+            case AboutMe:
+                dialog = new AboutMeDialog(context);
                 break;
             default:
                 dialog = new Dialog(context);

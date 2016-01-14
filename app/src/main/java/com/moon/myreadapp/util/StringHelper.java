@@ -79,6 +79,7 @@ public class StringHelper {
         if (style != null) {
             switch ((style)) {
                 case VIEW_FAVOR:
+                case VIEW_UNREAD:
                     if (feed !=null && feed.getTitle() != null){
                         sb.append(Globals.getApplication().getResources().getString(R.string.font_feed_title,feed.getTitle()));
                     }

@@ -3,13 +3,14 @@ package com.moon.myreadapp.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.moon.myreadapp.ui.fragments.PrefFragment;
+
 
 /**
  * Created by moon on 15/10/18.
  */
 public class PreferenceUtils {
 
-    public static String PREFRENCE_NAME = "SETTING";
 
     private SharedPreferences sharedPreferences;
 
@@ -19,7 +20,7 @@ public class PreferenceUtils {
 
 
     protected PreferenceUtils(Context context){
-        sharedPreferences = context.getSharedPreferences(PREFRENCE_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(PrefFragment.PREFRENCE_NAME, Context.MODE_PRIVATE);
         shareEditor = sharedPreferences.edit();
     }
 

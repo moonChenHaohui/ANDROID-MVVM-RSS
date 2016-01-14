@@ -3,13 +3,9 @@ package com.moon.myreadapp.mvvm.viewmodels;
 import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.view.Menu;
 import android.view.View;
 
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.PopupMenu;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.action.RouterAction;
@@ -29,14 +25,13 @@ import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.ArticleActivity;
+import com.moon.myreadapp.ui.ArticleWebActivity;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
-import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.VibratorHelper;
-import com.moon.myreadapp.util.ViewUtils;
 import com.rey.material.app.Dialog;
 
 import java.util.ArrayList;
@@ -57,7 +52,7 @@ public class FeedViewModel extends BaseViewModel {
     private Feed feed;
     private int currentPosition = -1;
     private Dialog mDialog;
-    private boolean showAllArticles;
+    private boolean showUnReadArticles;
 
     public FeedViewModel(FeedActivity view, long feedId) {
         this.mView = view;
@@ -75,12 +70,12 @@ public class FeedViewModel extends BaseViewModel {
 
 
         this.mView.setTitle(feed.getTitle());
-        showAllArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,true);
+        showUnReadArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,Constants.showUnReadArticles);
         mAdapter = new ArticleRecAdapter(mView,getBaseData(0,10));
     }
 
     private List<Article> getBaseData(int start,int size) {
-        return DBHelper.Query.getArticlesByID(feedId, showAllArticles?Article.Status.NORMAL_AND_FAVOR:Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD,start,size);
+        return DBHelper.Query.getArticlesByID(feedId, showUnReadArticles ? Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD: Article.Status.NORMAL_AND_FAVOR,start,size);
     }
 
 
@@ -91,10 +86,19 @@ public class FeedViewModel extends BaseViewModel {
             public void onItemClick(View view, int position) {
                 readArticle(mAdapter.getItem(position), position);
                 updateFeed();
-                Bundle bundle = new Bundle();
-                bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
-                bundle.putInt(Constants.ARTICLE_POS, position);
-                XDispatcher.from(mView).dispatch(new RouterAction(ArticleActivity.class, bundle, true));
+                //打开原文还是链接
+                boolean isOpenSource = PreferenceUtils.getInstance(mView).getBooleanParam(mView.getString(R.string.set_open_source_key, false));
+                if (isOpenSource && mAdapter.getItem(position).getContainer().length() < Constants.MIN_CONTAINER_SIZE) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.ARTICLE_TITLE, mAdapter.getItem(position).getTitle());
+                    bundle.putString(Constants.ARTICLE_URL, mAdapter.getItem(position).getLink());
+                    XDispatcher.from(mView).dispatch(new RouterAction(ArticleWebActivity.class, bundle, true));
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
+                    bundle.putInt(Constants.ARTICLE_POS, position);
+                    XDispatcher.from(mView).dispatch(new RouterAction(ArticleActivity.class, bundle, true));
+                }
             }
 
             @Override
@@ -275,7 +279,7 @@ public class FeedViewModel extends BaseViewModel {
     }
 
     public void updateSet(boolean showAllArticles) {
-        this.showAllArticles = showAllArticles;
+        this.showUnReadArticles = showAllArticles;
 
         mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
         updateFeed();

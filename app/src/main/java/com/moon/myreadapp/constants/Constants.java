@@ -57,6 +57,12 @@ public class Constants {
      * 频道内文章显示
      */
     public static final String FEED_SHOW_ALL = Globals.getApplication().getString(R.string.set_auto_show_unread_key);
+    public static boolean showUnReadArticles = false;
+
+    /**
+     * 最小的文章内容大小,当开启智能打开原文时,小于这个值会直接打开原文链接
+     */
+    public static int MIN_CONTAINER_SIZE = 100;
 
 
     /**

@@ -3,40 +3,46 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:title="@string/set_read_title">
-        <CheckBoxPreference
-            android:key="@string/set_auto_scroll_unread_key"
-            android:title="@string/set_auto_scroll_unread_title"
-            android:summary="@string/set_auto_scroll_unread_summary"/>
+        <!--<CheckBoxPreference-->
+            <!--android:key="@string/set_auto_scroll_unread_key"-->
+            <!--android:title="@string/set_auto_scroll_unread_title"-->
+            <!--android:defaultValue="true"-->
+            <!--android:summary="@string/set_auto_scroll_unread_summary"/>-->
         <CheckBoxPreference
             android:key="@string/set_auto_show_unread_key"
             android:title="@string/set_auto_show_unread_title"
+            android:defaultValue="true"
             />
         <CheckBoxPreference
             android:key="@string/set_open_source_key"
             android:title="@string/set_open_source_title"
+            android:defaultValue="true"
             android:summary="@string/set_open_source_summary"
             />
-        <CheckBoxPreference
-            android:key="@string/set_open_in_browser_key"
-            android:title="@string/set_open_in_browser_title"
-            />
+        <!--<CheckBoxPreference-->
+            <!--android:key="@string/set_open_in_browser_key"-->
+            <!--android:defaultValue="true"-->
+            <!--android:title="@string/set_open_in_browser_title"-->
+            <!--/>-->
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/set_system">
-        <CheckBoxPreference
-            android:key="@string/set_no_graph_model_key"
-            android:title="@string/set_no_graph_model_title"/>
-        <CheckBoxPreference
-            android:key="@string/set_loading_pic_under_WIIF_key"
-            android:dependency="@string/set_no_graph_model_key"
-            android:layout="?android:attr/preferenceLayoutChild"
-            android:title="@string/set_loading_pic_under_WIIF_title" />
+        <!--<CheckBoxPreference-->
+            <!--android:key="@string/set_no_graph_model_key"-->
+            <!--android:defaultValue="false"-->
+            <!--android:title="@string/set_no_graph_model_title"/>-->
+        <!--<CheckBoxPreference-->
+            <!--android:key="@string/set_loading_pic_under_WIIF_key"-->
+            <!--android:dependency="@string/set_no_graph_model_key"-->
+            <!--android:layout="?android:attr/preferenceLayoutChild"-->
+            <!--android:title="@string/set_loading_pic_under_WIIF_title" />-->
         <CheckBoxPreference
             android:key="@string/set_push_message_key"
+            android:defaultValue="true"
             android:title="@string/set_push_message_title"/>
-        <Preference android:key="@string/set_clear_cache_key"
-            android:title="@string/set_clear_cache_title"
-            android:summary="@string/set_clear_cache_summary"/>
+        <Preference android:key="@string/set_clean_cache_key"
+            android:title="@string/set_clean_cache_title"
+            android:summary="@string/set_clean_cache_summary_load"/>
 
     </PreferenceCategory>
 
