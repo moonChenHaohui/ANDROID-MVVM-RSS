@@ -102,9 +102,7 @@ public class ArticleActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.content) {
-            finish();
-        } else if (id == R.id.action_read_all) {
+        if (id == R.id.action_read_all) {
             XDispatcher.from(this).dispatch(new RouterAction(ArticleWebActivity.class, true));
         }
         return super.onOptionsItemSelected(item);

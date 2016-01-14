@@ -8,19 +8,17 @@ android毕业设计项目－一款清爽的rss阅读器
 Email:moon4chen@163.com
 
 
-##使用组件
-* tinyBus
-* fresco
-* iconify
-* volley
-* greendao
-* Bmob
-* material Design Libs
-
-
 
 ###Log
 
+1.14
+
+- 增加了设置act 的功能；
+- 增加用户信息的查看；
+
+1.13
+
+- 增加了设置act ui；
 
 1.12
 

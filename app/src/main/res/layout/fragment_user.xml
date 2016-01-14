@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.moon.myreadapp.mvvm.models.dao.User" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/normal_padding"
+            android:background="@drawable/edit_corners"
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.rey.material.widget.Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normal_list_item_small"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:textSize="@dimen/text_h3"
+                android:text="@{@string/user_name(user.account)}"
+                android:background="@color/txt_white"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divde_line" />
+            <com.rey.material.widget.Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normal_list_item_small"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/normal_padding"
+
+                android:text="@{@string/user_register_time(user.createdAt)}"
+                android:textSize="@dimen/text_h3"
+                android:background="@color/txt_white"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divde_line" />
+            <com.rey.material.widget.Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normal_list_item_small"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@{@string/user_info}"
+                android:textSize="@dimen/text_h3"
+                android:background="@color/txt_white"/>
+        </LinearLayout>
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/progress"
+            android:layout_gravity="center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="invisible"
+            app:pv_autostart="true"
+            app:pv_circular="true"
+            app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+            app:pv_progressMode="indeterminate"/>
+    </FrameLayout>
+</layout>

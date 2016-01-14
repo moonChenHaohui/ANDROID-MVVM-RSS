@@ -261,6 +261,12 @@ public class DBHelper {
         public static long saveArticle(Article article){
             return getDAO().getArticleDao().insertOrReplace(article);
         }
+        public static void saveArticles(List<Article> articles){
+            if (articles != null && articles.size() > 0) {
+                getDAO().getArticleDao().insertOrReplaceInTx(articles);
+            }
+        }
+
         public static long saveFeed(Feed feed){
             return getDAO().getFeedDao().insertOrReplace(feed);
         }
@@ -281,6 +287,11 @@ public class DBHelper {
     }
 
     public static class Delete {
+
+        public static void deleteUser(){
+            getDAO().getUserDao().deleteAll();
+        }
+
         public static boolean deleteFeed(Feed feed){
             Feed f =Query.findFeedByURL(feed.getUrl());
             if (f != null) {

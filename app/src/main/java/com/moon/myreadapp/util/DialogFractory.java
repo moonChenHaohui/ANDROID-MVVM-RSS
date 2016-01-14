@@ -2,6 +2,7 @@ package com.moon.myreadapp.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.moon.myreadapp.common.adapter.base.BaseListAdapter;
 import com.moon.myreadapp.common.components.dialog.AboutMeDialog;
 import com.moon.myreadapp.common.components.dialog.AddSubDialog;
 import com.moon.myreadapp.common.components.dialog.RegisterDialog;
+import com.moon.myreadapp.common.components.dialog.UserDialog;
 import com.moon.myreadapp.ui.helper.SubDialog;
 import com.rey.material.app.Dialog;
 
@@ -58,7 +60,11 @@ public class DialogFractory {
         /**
          * 关于我
          */
-        AboutMe
+        AboutMe,
+        /**
+         * 用户信息
+         */
+        UserInfo,
     }
 
 //    public static MaterialDialog create(Context context, Type type) {
@@ -126,6 +132,25 @@ public class DialogFractory {
                 break;
             case AboutMe:
                 dialog = new AboutMeDialog(context);
+                break;
+            case UserInfo:
+                dialog = new UserDialog(context);
+                break;
+            case YesNo:
+                dialog = new Dialog(context){
+                    @Override
+                    protected void onCreate(Bundle savedInstanceState) {
+                        super.onCreate(savedInstanceState);
+                        positiveAction(R.string.action_conform).
+                                negativeAction(R.string.action_cancel).
+                                negativeActionClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dismiss();
+                            }
+                        });
+                    }
+                };
                 break;
             default:
                 dialog = new Dialog(context);

@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewmodel"
             type="com.moon.myreadapp.mvvm.viewmodels.ViewArticleViewModel" />
@@ -35,10 +36,11 @@
                 android:layout_marginBottom="@dimen/normal_half_padding"
                 android:layout_marginRight="@dimen/normal_padding"
                 android:background="@drawable/btn_normal"
-                android:text="@{viewmodel.fucText}"
+                android:text='@{viewmodel.fucText ==null ? "" : viewmodel.fucText}'
                 android:onClick="@{viewmodel.OnFucBtnClick}"
                 android:clickable="true"
                 android:gravity="center"
+                android:visibility="@{viewmodel.fucText == null ? View.GONE:View.VISIBLE}"
                 android:textColor="@color/txt_black"
                 android:textSize="@dimen/text_h2" />
         </LinearLayout>

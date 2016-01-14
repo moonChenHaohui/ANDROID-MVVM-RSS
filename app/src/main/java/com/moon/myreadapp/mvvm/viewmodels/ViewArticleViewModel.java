@@ -114,14 +114,14 @@ public class ViewArticleViewModel extends BaseViewModel {
         //初始化底部文字
         if (mStyle == Style.VIEW_FAVOR) {
             if (DBHelper.Query.getUser() != null) {
-                setFucText("现在同步存储.");
+                setFucText(mView.getString(R.string.option_sync_storge_now));
             } else {
-                setFucText("登录后可以云存储");
+                setFucText(mView.getString(R.string.option_sync_storge_after_login));
             }
         } else if (mStyle == Style.VIEW_READ_HISTORY) {
-            setFucText("删除全部文章");
+            setFucText(mView.getString(R.string.option_delete_all_read_articles));
         } else if (mStyle == Style.VIEW_UNREAD) {
-            setFucText("一键全部已读");
+            setFucText(mView.getString(R.string.option_read_all));
         }
     }
 
@@ -326,29 +326,44 @@ public class ViewArticleViewModel extends BaseViewModel {
         if (mStyle == Style.VIEW_FAVOR) {
             if (DBHelper.Query.getUser() != null) {
                 onPregress = true;
-                setFucText("同步中...");
+                setFucText(mView.getString(R.string.option_sync_storge_doing));
                 view.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         onPregress = false;
-                        setFucText("同步完成.");
+                        setFucText(mView.getString(R.string.option_sync_storge_last_time,"现在"));
                     }
                 }, 200);
             } else {
                 XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, null, true));
             }
         } else if (mStyle == Style.VIEW_READ_HISTORY) {
+            //查看历史记录
             onPregress = true;
-            setFucText("删除中...");
+            setFucText(mView.getString(R.string.option_delete_all_read_articles_doing));
             view.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    DBHelper.Delete.deleteArticleReadedAndUnFavor();
+                    mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
                     onPregress = false;
-                    setFucText("删除完成.");
+                    setFucText(null);
+                    ToastHelper.showToast(R.string.set_clean_cache_summary_down);
                 }
             }, 200);
         } else if (mStyle == Style.VIEW_UNREAD) {
+            //查看未读
             onPregress = true;
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    DBHelper.UpDate.saveArticles(mAdapter.getmData());
+                    mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
+                    onPregress = false;
+                    setFucText(null);
+                    ToastHelper.showToast(R.string.option_read_all_down);
+                }
+            }, 200);
         }
     }
 }

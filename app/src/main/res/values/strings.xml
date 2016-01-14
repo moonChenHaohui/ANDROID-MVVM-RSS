@@ -8,6 +8,15 @@
 
     <string name="time_today">今天</string>
     <string name="time_yesterday">昨天</string>
+    <string name="time_monment_ago">刚刚</string>
+    <string name="time_night">晚上</string>
+    <string name="time_midnight">凌晨</string>
+    <string name="time_morning">上午</string>
+    <string name="time_afternoon">下午</string>
+
+    <string name="time_monment_ago_by_minute">%d分钟之前</string>
+
+    
     <string name="time_before_yesterday">前天</string>
     <string name="time_bbefore_yesterday">三天前</string>
     <string name="time_more_before">更久</string>
@@ -52,7 +61,7 @@
     <string name="action_sign_in">登录</string>
     <string name="action_find_psw">忘记密码了?</string>
     <string name="action_new_user">新用户注册</string>
-    <string name="go_sign_in">前往登录或者注册吧!</string>
+    <string name="go_sign_in">登录后可以保存文章</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">账号格式不合法.</string>
     <string name="error_invalid_password">请输入4个以上的字符</string>
@@ -175,13 +184,14 @@
 
 
     <string name="action_conform">确定</string>
+    <string name="action_cancel">取消</string>
 
     <string name="empty_feed">抱歉,当前频道不存在.</string>
     <string name="empty_article">抱歉,当前文章不存在.</string>
 
 
     <string name="drawer_setting">{fa-cog} 设置</string>
-    <string name="drawer_theme">{fa-moon-o} 夜间</string>
+    <string name="drawer_theme">{fa-moon-o} 主题</string>
 
 
 
@@ -239,4 +249,24 @@
  &nbsp; &nbsp;
 </p>]]></Data></string>
 
+    
+    <string name="option_sync_storge_now">现在同步</string>
+    <string name="option_sync_storge_doing">正在同步..</string>
+    <string name="option_sync_storge_after_login">登录后可以同步</string>
+    <string name="option_sync_storge_last_time">上次同步时间:%1$s</string>
+    
+    <string name="option_delete_all_read_articles">@string/set_clean_cache_title</string>
+    <string name="option_delete_all_read_articles_doing">正在删除..</string>
+    <string name="option_read_all">一键全部已读</string>
+    <string name="option_read_all_down">已全部已读</string>
+
+
+    <string name="user_title">用户信息</string>
+    <string name="user_quit_user">退出用户</string>
+    <string name="user_quit_user_check">真的要退出吗?</string>
+    <string name="user_exit">关闭</string>
+    <string name="user_name">用户:%1$s</string>
+    <string name="user_register_time">注册时间:%1$s</string>
+    <string name="user_info">储存: 1 频道 | 共 2 篇收藏文章</string>
+    <string name="user_check_fail">用户:%1$s</string>
 </resources>

@@ -20,18 +20,10 @@
         <RelativeLayout
             android:layout_width="@dimen/left_drawer_width"
             android:layout_height="@dimen/left_header_height"
-            android:background="@drawable/normal_bg"
-            android:onClick="@{drawerViewModel.onClickLogin}"
+            android:background="?attr/colorPrimary"
+            android:onClick="@{drawerViewModel.onClickUserAction}"
             android:padding="@dimen/normal_padding">
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/user_logo"
-                android:layout_width="@dimen/img_size_48"
-                android:layout_height="@dimen/img_size_48"
-                android:layout_alignParentLeft="true"
-                android:layout_marginRight="@dimen/normal_half_padding"
-                android:layout_alignParentBottom="true"
-                fresco:placeholderImage="@color/background_gray"
-                fresco:roundAsCircle="true" />
+
 
             <!--<TextView-->
                 <!--android:id="@+id/user_name"-->
@@ -48,33 +40,52 @@
                 <!--android:textSize="@dimen/text_sp14"-->
                 <!--android:textStyle="bold" />-->
 
-            <TextView
-                android:id="@+id/user_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/user_logo"
-                android:layout_marginLeft="@dimen/normal_padding"
-                android:layout_toRightOf="@id/user_logo"
-                android:gravity="center_vertical"
-                android:layout_alignTop="@id/user_logo"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@{drawerViewModel.user.account}"
-                android:visibility="@{drawerViewModel.user.account != null ? View.VISIBLE : View.GONE}"
-                android:textColor="@color/txt_white"
-                android:textSize="@dimen/text_h1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{drawerViewModel.user != null ? View.VISIBLE : View.GONE}"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                >
+                <TextView
+                    android:id="@+id/user_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{drawerViewModel.user.account}"
+                    android:textColor="@color/txt_white"
+                    android:textSize="@dimen/text_h1"/>
+                <View
+                    android:layout_marginTop="@dimen/normal_half_padding"
+                    android:layout_marginBottom="@dimen/normal_half_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/txt_white"/>
+                <TextView
+                    android:id="@+id/user_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{drawerViewModel.notice}"
+                    android:textColor="@color/txt_white"
+                    android:textSize="@dimen/text_h3"/>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/go_sign_in"
                 android:textStyle="bold"
-                android:layout_toRightOf="@id/user_logo"
                 android:gravity="center_vertical"
-                android:layout_alignTop="@id/user_logo"
                 android:textColor="@color/txt_white"
-                android:textSize="@dimen/text_sp14"
+                android:textSize="@dimen/text_h1"
                 android:visibility="@{drawerViewModel.user == null ? View.VISIBLE : View.GONE}"
                 />
         </RelativeLayout>
@@ -106,8 +117,7 @@
             android:layout_height="@dimen/left_bottom_height"
             android:background="@color/background_gray"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/normal_padding">
+            android:orientation="horizontal">
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/setting"
@@ -116,17 +126,14 @@
                 android:background="@drawable/selectable_background"
                 android:layout_width="0dp"
                 android:gravity="center"
-                android:textSize="@dimen/text_h2"
+                android:textSize="@dimen/text_h3"
                 android:onClick="@{drawerViewModel.onClickSetting}"
                 android:layout_height="match_parent"
-                android:padding="@dimen/normal_half_padding"
                 android:text="@string/drawer_setting" />
 
             <View
                 android:layout_width="1px"
                 android:layout_height="14dp"
-                android:layout_marginLeft="@dimen/normal_padding"
-                android:layout_marginRight="@dimen/normal_padding"
                 android:background="@color/divde_line" />
 
             <com.joanzapata.iconify.widget.IconTextView
@@ -135,8 +142,7 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:gravity="center"
-                android:textSize="@dimen/text_h2"
-
+                android:textSize="@dimen/text_h3"
                 android:onClick="@{drawerViewModel.onClickTheme}"
                 android:background="@drawable/selectable_background"
                 android:layout_height="match_parent"

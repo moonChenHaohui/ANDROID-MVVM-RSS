@@ -36,14 +36,16 @@ public class DrawerViewModel extends BaseViewModel {
 
     private User user;
 
+    /**
+     * 用户消息
+     */
+    private String notice;
+
     private DrawerAdapter drawerAdapter;
 
     private AdapterView.OnItemClickListener drawerItemClickListener;
 
     private Activity mView;
-
-
-    private UserDao userDao;
 
 
     public DrawerViewModel(Activity view) {
@@ -90,13 +92,7 @@ public class DrawerViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
-        this.userDao = DBHelper.getDAO().getUserDao();
-        if (userDao.queryBuilder().list().size() > 0){
-            //有本地用户存在
-            setUser(userDao.queryBuilder().list().get(0));
-        } else {
-
-        }
+        setUser(DBHelper.Query.getUser());
         requestUser();
     }
 
@@ -139,25 +135,39 @@ public class DrawerViewModel extends BaseViewModel {
 
 
     public void requestUser(){
-        //user = new User(null,"123","123","123");
         if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
             //没有用户缓存
             return;
         }
-        BmobQuery<User> bmobQuery = new BmobQuery<User>();
+        //TODO 验证用户有效性
     }
 
 
     /**
-     * 用户点击登陆
+     * 用户点击窗口
      */
-    public void onClickLogin (View view ){
+    public void onClickUserAction (View view ){
+        //无用户则弹出登录
         if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
             XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, true));
             return;
+        } else {
+            //打开用户设置
+            //这里要先验证一遍用户有效性
+            DialogFractory.createDialog(mView, DialogFractory.Type.UserInfo).show();
         }
     }
 
+
+    @Bindable
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+        notifyPropertyChanged(BR.notice);
+    }
 
     public void onClickSetting(View view) {
         XDispatcher.from((Activity)mView).dispatch(new RouterAction(SettingActivity.class, true));

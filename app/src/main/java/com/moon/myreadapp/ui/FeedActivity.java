@@ -92,9 +92,7 @@ public class FeedActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.content) {
-            finish();
-        } else if (id == R.id.action_settings){
+        if (id == R.id.action_settings){
             //频道设置
             new FeedSetDialog(this).showWithView(binding.feedList);
         }
