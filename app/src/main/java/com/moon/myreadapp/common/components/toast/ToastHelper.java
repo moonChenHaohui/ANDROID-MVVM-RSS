@@ -29,6 +29,9 @@ public class ToastHelper {
     public static void showToast(@StringRes int strid) {
         showToast(Globals.getApplication().getString(strid));
     }
+    public static void showToast(@StringRes int strid,Object ... objs) {
+        showToast(Globals.getApplication().getString(strid,objs));
+    }
 
     public static TastyToast showNotice(Activity view, String txt, TastyToast.Style style) {
         TastyToast toast = TastyToast.makeText(view, txt, style).enableSwipeDismiss().setLayoutBelow(view.findViewById(R.id.toolbar));

@@ -21,6 +21,7 @@ import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
+import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
@@ -357,11 +358,15 @@ public class ViewArticleViewModel extends BaseViewModel {
             view.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    DBHelper.UpDate.saveArticles(mAdapter.getmData());
+                    //数据库标记已读
+                    int count = DBHelper.UpDate.readAllArticles();
+                    //更改视图数据
                     mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
+                    //消息通知
+                    XApplication.getInstance().bus.post(new UpdateFeedListEvent());
                     onPregress = false;
                     setFucText(null);
-                    ToastHelper.showToast(R.string.option_read_all_down);
+                    ToastHelper.showToast(R.string.option_read_all_down,count);
                 }
             }, 200);
         }

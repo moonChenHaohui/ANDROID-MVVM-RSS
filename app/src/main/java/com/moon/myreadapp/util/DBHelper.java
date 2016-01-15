@@ -270,8 +270,13 @@ public class DBHelper {
         public static long saveFeed(Feed feed){
             return getDAO().getFeedDao().insertOrReplace(feed);
         }
+
+        /**
+         * 阅读频道内所有未读文章
+         * @param feed
+         */
         public static void readAllArticleFromFeed(Feed feed){
-            List<Article> articles = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(feed.getId())).list();
+            List<Article> articles = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Feed_id.eq(feed.getId()),ArticleDao.Properties.Use_count.le(0)).list();
             Date date = new Date();
             for (Article a:articles){
                 a.setUse_count(1);
@@ -279,6 +284,22 @@ public class DBHelper {
                 saveArticle(a);
             }
         }
+
+        /**
+         * 阅读所有未读文章
+         * @return
+         */
+        public static int readAllArticles(){
+            List<Article> articles = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Use_count.le(0)).list();
+            Date date = new Date();
+            for (Article a:articles){
+                a.setUse_count(1);
+                a.setLast_read_time(date);
+                saveArticle(a);
+            }
+            return articles.size();
+        }
+
         public static long saveUser(User user){
             //只保存一个用户信息
             getDAO().getUserDao().deleteAll();
