@@ -5,6 +5,7 @@ import android.databinding.Bindable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -27,6 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.BmobUpdateListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
+import cn.bmob.v3.update.UpdateStatus;
 
 /**
  * Created by moon on 15/10/19.
@@ -84,6 +89,9 @@ public class DrawerViewModel extends BaseViewModel {
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constants.VIEW_ARTICLE_TYPE, type);
                         XDispatcher.from(mView).dispatch(new RouterAction(ViewArticleActivity.class,bundle,true));
+                        break;
+                    case 4:
+
                         break;
                 }
             }

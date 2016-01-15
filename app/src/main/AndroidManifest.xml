@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moon.myreadapp">
+    package="com.moon.myreadapp"
+    android:versionCode="2"
+    android:versionName="1.1">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 震动功能 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 写系统设置 -->
@@ -19,6 +17,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <meta-data android:value="Channel ID" android:name="BMOB_CHANNEL"/>
+
 
     <application
         android:name=".application.ReadApplication"
@@ -84,6 +85,12 @@
             android:label="@string/title_activity_view_artilce"
             android:launchMode="singleTop"
             android:theme="@style/RedTheme" />
+
+        <activity
+            android:name="cn.bmob.v3.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
     </application>
 
 </manifest>

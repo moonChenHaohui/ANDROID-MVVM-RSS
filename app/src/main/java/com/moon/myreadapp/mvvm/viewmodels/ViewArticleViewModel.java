@@ -7,9 +7,7 @@ import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.action.RouterAction;
-import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
@@ -17,18 +15,14 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
-import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.constants.Constants;
-import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
-import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.ArticleWebActivity;
-import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.ViewArticleActivity;
 import com.moon.myreadapp.util.BuiltConfig;
@@ -38,11 +32,8 @@ import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.rey.material.app.Dialog;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import de.halfbit.tinybus.Subscribe;
 
 /**
  * Created by moon on 16/1/10.
@@ -345,7 +336,7 @@ public class ViewArticleViewModel extends BaseViewModel {
             view.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    DBHelper.Delete.deleteArticleReadedAndUnFavor();
+                    DBHelper.Delete.deleteArticleReadAndUnFavor();
                     mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
                     onPregress = false;
                     setFucText(null);

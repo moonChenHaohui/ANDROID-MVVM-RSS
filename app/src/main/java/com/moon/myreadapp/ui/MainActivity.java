@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +23,6 @@ import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
 import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.Conver;
-import com.moon.myreadapp.util.DBHelper;
 
 import java.util.Date;
 
@@ -44,14 +42,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     private DrawerViewModel drawerViewModel;
     private MainViewModel mainViewModel;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        initToolBar(toolbar);
-        initBusiness();
-
-    }
 
     @Override
     protected void onDestroy() {
@@ -75,7 +65,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(LayoutInflater.from(this),getLayoutView(),null,false);
+        binding = DataBindingUtil.inflate(LayoutInflater.from(this), getLayoutView(), null, false);
 
         setContentView(binding.getRoot());
 
@@ -92,7 +82,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     private void initDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, 0,0) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, 0, 0) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu();
@@ -109,8 +99,8 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
                 //切换的效果
-                int dis = (int)(slideOffset * getScreenWidth() / 3.0);
-                binding.mainContent.scrollTo(-dis,0);
+                int dis = (int) (slideOffset * getScreenWidth() / 3.0);
+                binding.mainContent.scrollTo(-dis, 0);
             }
         };
         binding.drawerLayout.setDrawerListener(mDrawerToggle);
@@ -159,6 +149,9 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        initToolBar(toolbar);
+        initBusiness();
         mDrawerToggle.syncState();
     }
 
@@ -215,6 +208,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainViewModel.btnOnClick(v);
 
     }
+
     @Override
     public void onPullDownRefreshComplete() {
         binding.mainList.onPullDownRefreshComplete();

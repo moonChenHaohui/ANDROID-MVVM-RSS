@@ -226,6 +226,13 @@
     <string name="set_push_message_key">set_push_message_key</string>
     <string name="set_push_message_title">消息推送</string>
 
+
+    <string name="set_update_version_key">set_update_version_key</string>
+    <string name="set_update_version_title">版本更新</string>
+    <string name="set_update_version_summary_loading">检测中...</string>
+    <string name="set_update_version_title_loading">正在连接服务器...</string>
+    <string name="set_update_version_summary">当前版本 : %1$s</string>
+
     <string name="set_clean_cache_key">set_clear_cache_key</string>
     <string name="set_clean_cache_title">清空已读文章</string>
     <string name="set_clean_cache_summary">阅读历史:%1$s 篇(不包含收藏文章)</string>

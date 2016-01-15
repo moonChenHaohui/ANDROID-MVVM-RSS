@@ -179,7 +179,7 @@ public class DBHelper {
                     ArticleDao.Properties.Use_count.eq(0));
             return res.orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
         }
-        public static List<Article> getArticlesReadedAndUnFavor(){
+        public static List<Article> getArticlesReadAndUnFavor(){
             List<Article> list =  getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.in(Article.Status.NORMAL.status, Article.Status.DELETE.status),
                     ArticleDao.Properties.Use_count.gt(0)).list();
             if (null == list || list.size() == 0){
@@ -187,8 +187,8 @@ public class DBHelper {
             }
             return list;
         }
-        public static int getArticlesCountReadedAndUnFavor(){
-            List<Article> list =  getArticlesReadedAndUnFavor();
+        public static int getArticlesCountReadAndUnFavor(){
+            List<Article> list =  getArticlesReadAndUnFavor();
             if (list == null){
                 return 0;
             }
@@ -329,8 +329,8 @@ public class DBHelper {
             return true;
         }
 
-        public static boolean deleteArticleReadedAndUnFavor(){
-            List<Article> articles = Query.getArticlesReadedAndUnFavor();
+        public static boolean deleteArticleReadAndUnFavor(){
+            List<Article> articles = Query.getArticlesReadAndUnFavor();
             getDAO().getArticleDao().deleteInTx(articles);
             return true;
         }
