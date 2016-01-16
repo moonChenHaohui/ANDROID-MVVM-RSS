@@ -98,8 +98,11 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                //切换的效果
-                int dis = (int) (slideOffset * getScreenWidth() / 3.0);
+
+                //切换的效果 当使用整个屏幕宽度来算的话,如果屏幕过宽,可能出现leftdraw和miancontent之间出现空白
+                //int dis = (int) (slideOffset * getScreenWidth() / 3.0);
+                //所以直接使用leftdraw的宽度来计算
+                int dis = (int) (slideOffset * binding.leftDrawer.leftDrawerListview.getWidth()/3.0);
                 binding.mainContent.scrollTo(-dis, 0);
             }
         };
