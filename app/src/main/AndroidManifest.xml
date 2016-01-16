@@ -18,8 +18,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
-    <meta-data android:value="Channel ID" android:name="BMOB_CHANNEL"/>
-
+    <meta-data
+        android:name="BMOB_CHANNEL"
+        android:value="Channel ID" />
 
     <application
         android:name=".application.ReadApplication"
@@ -30,13 +31,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/RedTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/RedTheme"></activity>
         <activity
             android:name=".ui.FeedActivity"
             android:label="@string/title_activity_feed"
@@ -76,19 +71,22 @@
             android:launchMode="singleTop"
             android:theme="@style/RedTheme" />
         <activity
-            android:name=".ui.WelcomeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_welcome"
-            android:theme="@style/FullscreenTheme" />
-        <activity
             android:name=".ui.ViewArticleActivity"
             android:label="@string/title_activity_view_artilce"
             android:launchMode="singleTop"
             android:theme="@style/RedTheme" />
-
         <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/RedTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
     </application>

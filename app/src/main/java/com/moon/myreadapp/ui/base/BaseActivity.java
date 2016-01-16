@@ -246,7 +246,6 @@ public abstract class BaseActivity extends XActivity{
         }
         //event bus init
         XDispatcher.register(this);
-        checkEvent();
     }
     protected boolean isOpenSlidingBack (){
         return true;
@@ -312,19 +311,6 @@ public abstract class BaseActivity extends XActivity{
     }
     protected int getScreenWidth() {
         return findViewById(android.R.id.content).getWidth();
-    }
-
-    protected void checkEvent(){
-        boolean isFirstUse = PreferenceUtils.getInstance(this).getBooleanParam(Constants.APP_IS_FIRST_USE,true);
-        //第一次进入
-        //isFirstUse = true;
-        if (isFirstUse){
-            XLog.d("checkEvent: first");
-            XDispatcher.from(this).dispatch(new RouterAction(WelcomeActivity.class, true));
-            PreferenceUtils.getInstance(this).saveParam(Constants.APP_IS_FIRST_USE, false);
-        }else {
-            XLog.d("checkEvent: not first");
-        }
     }
 
 

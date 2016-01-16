@@ -16,7 +16,6 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.swipeback.SwipeBackLayout;
 import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
-import com.moon.myreadapp.ui.WelcomeActivity;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.ThemeUtils;
 
@@ -57,7 +56,6 @@ public abstract class Base1Activity extends XActivity{
         //event bus init
         XDispatcher.register(this);
         setContentViewAndBindVm(savedInstanceState);
-        checkEvent();
     }
     abstract void setContentViewAndBindVm(Bundle savedInstanceState);
     @Override
@@ -143,16 +141,4 @@ public abstract class Base1Activity extends XActivity{
         return findViewById(android.R.id.content).getHeight();
     }
 
-    protected void checkEvent(){
-        boolean isFirstUse = PreferenceUtils.getInstance(this).getBooleanParam(Constants.APP_IS_FIRST_USE,true);
-        //第一次进入
-        //isFirstUse = true;
-        if (isFirstUse){
-            XLog.d("checkEvent: first");
-            XDispatcher.from(this).dispatch(new RouterAction(WelcomeActivity.class, true));
-            PreferenceUtils.getInstance(this).saveParam(Constants.APP_IS_FIRST_USE, false);
-        }else {
-            XLog.d("checkEvent: not first");
-        }
-    }
 }

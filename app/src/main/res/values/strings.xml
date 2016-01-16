@@ -16,7 +16,7 @@
 
     <string name="time_monment_ago_by_minute">%d分钟之前</string>
 
-    
+
     <string name="time_before_yesterday">前天</string>
     <string name="time_bbefore_yesterday">三天前</string>
     <string name="time_more_before">更久</string>
@@ -121,9 +121,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_activity_welcome">欢迎您!</string>
+    <string name="welcome_word">欢迎回来</string>
+    <string name="welcome_smile">: )</string>
+    <string name="welcome_app_info"><Date><![CDATA[%1$s<br />Ver : %2$s]]></Date></string>
     <string name="dummy_button">进入主页</string>
-    <string name="dummy_content">Hello World ~</string>
+    <string name="dummy_content">@string/app_name</string>
 
     <string name="request_error">当前网络出了小差\n请稍后再试试哦~</string>
 
@@ -172,8 +175,6 @@
     <string name="article_web_view_error_url">网页请求错误</string>
 
 
-
-
     <string name="title_activity_view_artilce">查看文章</string>
     <string name="view_artilce_title_favor">收藏的文章</string>
     <string name="view_artilce_title_history">阅读历史记录</string>
@@ -192,7 +193,6 @@
 
     <string name="drawer_setting">{fa-cog} 设置</string>
     <string name="drawer_theme">{fa-moon-o} 主题</string>
-
 
 
     <!--设置-->
@@ -256,12 +256,12 @@
  &nbsp; &nbsp;
 </p>]]></Data></string>
 
-    
+
     <string name="option_sync_storge_now">现在同步</string>
     <string name="option_sync_storge_doing">正在同步..</string>
     <string name="option_sync_storge_after_login">登录后可以同步</string>
     <string name="option_sync_storge_last_time">上次同步时间:%1$s</string>
-    
+
     <string name="option_delete_all_read_articles">@string/set_clean_cache_title</string>
     <string name="option_delete_all_read_articles_doing">正在删除..</string>
     <string name="option_read_all">一键全部已读</string>
