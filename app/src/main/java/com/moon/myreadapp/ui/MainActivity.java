@@ -99,8 +99,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
                 //切换的效果
-                //int dis = (int) (slideOffset * getScreenWidth() / 3.0);
-                int dis = (int) (slideOffset * binding.leftDrawer.leftDrawerListview.getWidth());
+                int dis = (int) (slideOffset * getScreenWidth() / 3.0);
                 binding.mainContent.scrollTo(-dis, 0);
             }
         };
@@ -225,8 +224,4 @@ public class MainActivity extends BaseActivity implements IMainView {
         return toolbar;
     }
 
-    @Override
-    protected boolean isOpenSlidingBack() {
-        return false;
-    }
 }
