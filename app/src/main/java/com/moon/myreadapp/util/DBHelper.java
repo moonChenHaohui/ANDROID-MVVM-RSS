@@ -159,7 +159,14 @@ public class DBHelper {
                 WhereCondition wc  = ArticleDao.Properties.Status.eq(status.status);
                 return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
             }
-            return res.orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
+            res = res.orderDesc(ArticleDao.Properties.Publishtime);
+            if (start >= 0){
+                res = res.offset(start);
+            }
+            if (size > 0){
+                res = res.limit(size);
+            }
+            return res.list();
         }
 
         /**
@@ -303,6 +310,9 @@ public class DBHelper {
         public static long saveUser(User user){
             //只保存一个用户信息
             getDAO().getUserDao().deleteAll();
+            if (user == null){
+                return -1;
+            }
             return getDAO().getUserDao().insertOrReplace(user);
         }
     }

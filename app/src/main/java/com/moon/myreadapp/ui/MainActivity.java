@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
@@ -18,26 +17,27 @@ import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.common.event.UpdateUserEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
+import com.moon.myreadapp.databinding.NoticeBinding;
 import com.moon.myreadapp.mvvm.viewmodels.DrawerViewModel;
 import com.moon.myreadapp.mvvm.viewmodels.MainViewModel;
 import com.moon.myreadapp.ui.base.BaseActivity;
-import com.moon.myreadapp.ui.base.IViews.IMainView;
 import com.moon.myreadapp.util.Conver;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.util.Date;
 
 import de.halfbit.tinybus.Subscribe;
 
 
-public class MainActivity extends BaseActivity implements IMainView {
+public class MainActivity extends BaseActivity {
 
     private Toolbar toolbar;
 
-
     private ActionBarDrawerToggle mDrawerToggle;
 
-
     ActivityHomeBinding binding;
+
+    NoticeBinding noticeBinding;
 
     private DrawerViewModel drawerViewModel;
     private MainViewModel mainViewModel;
@@ -68,6 +68,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         binding = DataBindingUtil.inflate(LayoutInflater.from(this), getLayoutView(), null, false);
 
         setContentView(binding.getRoot());
+
+        noticeBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.notice,null,false);
 
         this.drawerViewModel = new DrawerViewModel(this);
         binding.setDrawerViewModel(drawerViewModel);
@@ -102,7 +104,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 //切换的效果 当使用整个屏幕宽度来算的话,如果屏幕过宽,可能出现leftdraw和miancontent之间出现空白
                 //int dis = (int) (slideOffset * getScreenWidth() / 3.0);
                 //所以直接使用leftdraw的宽度来计算
-                int dis = (int) (slideOffset * binding.leftDrawer.leftDrawerListview.getWidth()/3.0);
+                int dis = (int) (slideOffset * binding.leftDrawer.leftDrawerListview.getWidth() / 3.0);
                 binding.mainContent.scrollTo(-dis, 0);
             }
         };
@@ -112,6 +114,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     private void initMainView() {
         //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
+        binding.mainList.getmAdapter().addHeader(noticeBinding.getRoot());
+        showNoticeView(true);
         binding.mainList.setPullLoadEnabled(false);
         //binding.mainList.setScrollLoadEnabled(true);
 //        binding.mainList.setPullRefreshEnabled(false);
@@ -168,6 +172,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -183,10 +188,10 @@ public class MainActivity extends BaseActivity implements IMainView {
         if (id == R.id.action_refresh) {
 
             mainViewModel.refreshAll();
+        } else if (id == R.id.action_drap_down) {
+            item.setIcon(R.drawable.ic_favor);
+            triggerNoticeView();
         }
-//        } else if (id == R.id.action_add) {
-//            mainViewModel.onAddButtonClick();
-//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -212,19 +217,33 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     }
 
-    @Override
-    public void onPullDownRefreshComplete() {
-        binding.mainList.onPullDownRefreshComplete();
-    }
-
-    @Override
-    public void onPullUpRefreshComplete() {
-        binding.mainList.onPullUpRefreshComplete();
-    }
 
     @Override
     protected Toolbar getToolBar() {
         return toolbar;
     }
 
+
+    /**
+     * 控制notice 的显示
+     * 做法是把noticeview 作为recyclerview 的headview来显示
+     * @param isShow
+     */
+    private void showNoticeView(boolean isShow){
+        if(isShow){
+            //注意 recyclerview 的滚动事件都交给layoutmanager,使用了可以滚动到顶部的scroll方法
+           binding.mainList.getRefreshableView().smoothScrollToPosition(0);
+        } else {
+            binding.mainList.getRefreshableView().smoothScrollToPosition(1);
+        }
+        noticeBinding.getRoot().setTag(isShow);
+    }
+
+    private void triggerNoticeView(){
+        if (noticeBinding.getRoot().getTag() == null){
+            noticeBinding.getRoot().setTag(false);
+        }
+        boolean status = (boolean)noticeBinding.getRoot().getTag();
+        showNoticeView(!status);
+    }
 }

@@ -69,15 +69,14 @@ public class WelcomeActivity extends BaseActivity {
                 binding.sayHi.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        XDispatcher.from(WelcomeActivity.this).dispatch(new RouterAction(MainActivity.class, true));
                         finish();
+                        XDispatcher.from(WelcomeActivity.this).dispatch(new RouterAction(MainActivity.class, true));
                     }
                 }, delayEntryTime);
             }
         }, delayAnimTime);
 
     }
-
 
     private boolean isFirstEntry(){
         return PreferenceUtils.getInstance(this).getBooleanParam(Constants.APP_IS_FIRST_USE, true);

@@ -1,14 +1,9 @@
 package com.moon.myreadapp.ui.base;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.LayoutRes;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -16,8 +11,6 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.scroll.ObservableScrollViewCallbacks;
 import com.moon.myreadapp.common.components.scroll.ScrollState;
 import com.moon.myreadapp.common.components.scroll.Scrollable;
-import com.moon.myreadapp.ui.base.BaseActivity;
-import com.moon.myreadapp.ui.helper.ToolBarHelper;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 

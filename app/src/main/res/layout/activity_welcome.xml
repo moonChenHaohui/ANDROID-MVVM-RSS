@@ -55,10 +55,10 @@
                 android:paddingLeft="@dimen/normal_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="left"
+                android:gravity="left|center"
                 android:textSize="@dimen/text_h1"
                 android:textColor="@color/txt_white"
-                android:layout_gravity="left|center"/>
+                android:layout_gravity="left"/>
         </LinearLayout>
     </FrameLayout>
 </layout>

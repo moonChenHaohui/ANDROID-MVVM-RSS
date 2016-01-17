@@ -58,22 +58,7 @@
                     android:text="@{drawerViewModel.user.account}"
                     android:textColor="@color/txt_white"
                     android:textSize="@dimen/text_h1"/>
-                <View
-                    android:layout_marginTop="@dimen/normal_half_padding"
-                    android:layout_marginBottom="@dimen/normal_half_padding"
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/txt_white"/>
-                <TextView
-                    android:id="@+id/user_notice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@{drawerViewModel.notice}"
-                    android:textColor="@color/txt_white"
-                    android:textSize="@dimen/text_h3"/>
+
             </LinearLayout>
 
             <TextView
@@ -82,12 +67,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/go_sign_in"
-                android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:textColor="@color/txt_white"
+                android:ellipsize="end"
                 android:textSize="@dimen/text_h1"
                 android:visibility="@{drawerViewModel.user == null ? View.VISIBLE : View.GONE}"
                 />
+            <TextView
+                android:id="@+id/user_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:visibility="@{drawerViewModel.notice != null ? View.VISIBLE : View.GONE}"
+                android:text="@{drawerViewModel.notice}"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/text_h3"/>
         </RelativeLayout>
 
         <!--<include layout="@layout/common_divider" />-->
@@ -122,32 +119,27 @@
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/setting"
                 android:clickable="true"
-                android:layout_weight="1"
                 android:background="@drawable/selectable_background"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/left_bottom_height"
                 android:gravity="center"
-                android:textSize="@dimen/text_h3"
+                android:textSize="@dimen/text_h1"
                 android:onClick="@{drawerViewModel.onClickSetting}"
                 android:layout_height="match_parent"
-                android:text="@string/drawer_setting" />
+                android:text="{fa-cog}" />
 
-            <View
-                android:layout_width="1px"
-                android:layout_height="14dp"
-                android:background="@color/divde_line" />
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/changeTheme"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:gravity="center"
+                android:gravity="left|center"
                 android:textSize="@dimen/text_h3"
                 android:onClick="@{drawerViewModel.onClickTheme}"
                 android:background="@drawable/selectable_background"
                 android:layout_height="match_parent"
                 android:padding="@dimen/normal_half_padding"
-                android:text="@string/drawer_theme" />
+                android:text="马上同步" />
         </LinearLayout>
     </LinearLayout>
 </layout>

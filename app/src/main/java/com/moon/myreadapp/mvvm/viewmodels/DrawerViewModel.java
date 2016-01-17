@@ -12,7 +12,9 @@ import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
+import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.dao.User;
@@ -29,6 +31,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.BmobUpdateListener;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import cn.bmob.v3.update.UpdateResponse;
 import cn.bmob.v3.update.UpdateStatus;
@@ -147,7 +150,27 @@ public class DrawerViewModel extends BaseViewModel {
             //没有用户缓存
             return;
         }
-        //TODO 验证用户有效性
+
+        //验证用户有效性
+        BmobQuery<User> query = new BmobQuery<User>();
+        query.addWhereEqualTo("account", user.getAccount());
+        query.addWhereEqualTo("password", user.getPassword());
+        query.findObjects(mView, new FindListener<User>() {
+            @Override
+            public void onSuccess(List<User> list) {
+                if (list == null || list.size() == 0){
+                    setUser(null);
+                    setNotice(mView.getString(R.string.user_validate_fail));
+                } else {
+                    setUser(list.get(0));
+                }
+                DBHelper.UpDate.saveUser(user);
+            }
+
+            @Override
+            public void onError(int i, String s) {
+            }
+        });
     }
 
 
@@ -161,7 +184,6 @@ public class DrawerViewModel extends BaseViewModel {
             return;
         } else {
             //打开用户设置
-            //这里要先验证一遍用户有效性
             DialogFractory.createDialog(mView, DialogFractory.Type.UserInfo).show();
         }
     }

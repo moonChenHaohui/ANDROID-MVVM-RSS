@@ -30,28 +30,23 @@
         android:theme="@style/AppBaseTheme.Dark">
         <activity
             android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/RedTheme"></activity>
+            android:label="@string/title_activity_main"></activity>
         <activity
             android:name=".ui.FeedActivity"
             android:label="@string/title_activity_feed"
-            android:launchMode="singleTop"
-            android:theme="@style/RedTheme" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".ui.ArticleActivity"
             android:label="@string/title_activity_article"
-            android:launchMode="singleTop"
-            android:theme="@style/RedTheme" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".ui.ArticleWebActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".ui.SettingActivity"
-            android:label="@string/title_activity_setting"
-            android:theme="@style/AppBaseTheme.Dark.NoActionBar" />
+            android:label="@string/title_activity_setting" />
         <activity
-            android:name=".ui.LoginActivity"
-            android:theme="@style/AppBaseTheme.Dark.NoActionBar" />
+            android:name=".ui.LoginActivity"/>
         <activity
             android:name=".ui.ImageBrowserActivity"
             android:label="@string/title_activity_image_browser"
@@ -68,20 +63,17 @@
         <activity
             android:name=".ui.AddFeedActivity"
             android:label="@string/title_activity_add_feed"
-            android:launchMode="singleTop"
-            android:theme="@style/RedTheme" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".ui.ViewArticleActivity"
             android:label="@string/title_activity_view_artilce"
-            android:launchMode="singleTop"
-            android:theme="@style/RedTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
         <activity
             android:name=".ui.WelcomeActivity"
-            android:label="@string/app_name"
-            android:theme="@style/RedTheme">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

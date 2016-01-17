@@ -1,7 +1,6 @@
 package com.moon.myreadapp.common.components.pulltorefresh;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -11,6 +10,7 @@ import android.widget.Scroller;
 
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.common.components.pulltorefresh.ILoadingLayout.State;
+import com.moon.myreadapp.common.components.pulltorefresh.impl.MLayoutManager;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
     @Override
     protected void init(Context context, AttributeSet attrs) {
         super.init(context, attrs);
-        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mLinearLayoutManager = new MLayoutManager(getContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         if (mRecyclerView != null) {
             mRecyclerView.setLayoutManager(mLinearLayoutManager);

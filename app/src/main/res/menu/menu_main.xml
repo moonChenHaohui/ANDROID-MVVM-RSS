@@ -7,4 +7,10 @@
         android:title="@string/title_reflash"
         app:showAsAction="ifRoom|collapseActionView">
     </item>
+    <item
+        android:id="@+id/action_drap_down"
+        android:icon="@android:drawable/arrow_down_float"
+        android:title="@string/title_reflash"
+        app:showAsAction="ifRoom|collapseActionView">
+    </item>
 </menu>

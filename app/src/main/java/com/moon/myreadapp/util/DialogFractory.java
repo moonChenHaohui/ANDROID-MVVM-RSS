@@ -19,13 +19,10 @@ import com.moon.myreadapp.common.components.dialog.AboutMeDialog;
 import com.moon.myreadapp.common.components.dialog.AddSubDialog;
 import com.moon.myreadapp.common.components.dialog.RegisterDialog;
 import com.moon.myreadapp.common.components.dialog.UserDialog;
-import com.moon.myreadapp.ui.helper.SubDialog;
 import com.rey.material.app.Dialog;
 
 import java.util.Arrays;
 import java.util.List;
-
-import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by moon on 15/10/22.
@@ -67,20 +64,6 @@ public class DialogFractory {
         UserInfo,
     }
 
-//    public static MaterialDialog create(Context context, Type type) {
-//        MaterialDialog dialog = null;
-//        switch (type) {
-//            case YesNo:
-//            case InputValue:
-//            case AddSubscrible:
-//                dialog = new SubDialog(context);
-//                break;
-//            default:
-//                EditText contentView = new EditText(context);
-//                dialog = new MaterialDialog(context).setView(contentView);
-//        }
-//        return dialog;
-//    }
 
     public static Dialog createDialog(final Context context, Type type) {
         final Dialog dialog;
@@ -109,8 +92,8 @@ public class DialogFractory {
                         }
                         dialog.dismiss();
                         //切换当前act的主题
-                        if (context instanceof Activity){
-                            ((Activity)context).recreate();
+                        if (context instanceof Activity) {
+                            ((Activity) context).recreate();
                         }
                     }
                 });
@@ -137,18 +120,18 @@ public class DialogFractory {
                 dialog = new UserDialog(context);
                 break;
             case YesNo:
-                dialog = new Dialog(context){
+                dialog = new Dialog(context) {
                     @Override
                     protected void onCreate(Bundle savedInstanceState) {
                         super.onCreate(savedInstanceState);
                         positiveAction(R.string.action_conform).
                                 negativeAction(R.string.action_cancel).
                                 negativeActionClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dismiss();
-                            }
-                        });
+                                    @Override
+                                    public void onClick(View v) {
+                                        dismiss();
+                                    }
+                                });
                     }
                 };
                 break;
@@ -162,7 +145,9 @@ public class DialogFractory {
         public ColorAdapter(List<Integer> data) {
             super(data);
         }
+
         private int checkItem = -1;
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Holder holder;
@@ -176,7 +161,7 @@ public class DialogFractory {
                 holder = (Holder) convertView.getTag();
             }
 
-            GenericDraweeHierarchy hierarchy =  holder.imageView1.getHierarchy();
+            GenericDraweeHierarchy hierarchy = holder.imageView1.getHierarchy();
             hierarchy.setPlaceholderImage(getmData().get(position));
             if (checkItem == position) {
                 holder.imageView2.setImageResource(R.drawable.ic_check);

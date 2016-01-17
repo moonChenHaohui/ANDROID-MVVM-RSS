@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.common.util.CollectionUtils;
 import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
@@ -32,8 +34,11 @@ import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.rey.material.app.Dialog;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by moon on 16/1/10.
@@ -319,13 +324,31 @@ public class ViewArticleViewModel extends BaseViewModel {
             if (DBHelper.Query.getUser() != null) {
                 onPregress = true;
                 setFucText(mView.getString(R.string.option_sync_storge_doing));
-                view.postDelayed(new Runnable() {
+                List<Article> articles = DBHelper.Query.getArticles(Article.Status.FAVOR, -1,-1);
+                if (CollectionUtils.isEmptyList(articles)){
+                    setFucText("数据库内没有收藏的文章");
+                    return;
+                }
+                int len = articles.size();
+                SaveListener listener = new SaveListener() {
+
                     @Override
-                    public void run() {
-                        onPregress = false;
-                        setFucText(mView.getString(R.string.option_sync_storge_last_time,"现在"));
+                    public void onSuccess() {
+                        XLog.d("添加数据成功，");
                     }
-                }, 200);
+
+                    @Override
+                    public void onFailure(int code, String arg0) {
+                        // 添加失败
+                    }
+                };
+                for(int i = 0;i < len;i++){
+                    setFucText("当前进度:"+i+"/" + len +"");
+                    articles.get(i).save(mView,listener);
+                }
+                onPregress = false;
+                setFucText(mView.getString(R.string.option_sync_storge_last_time, Conver.formatDateTime(new Date())));
+
             } else {
                 XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, null, true));
             }

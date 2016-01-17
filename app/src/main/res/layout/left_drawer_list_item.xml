@@ -8,14 +8,34 @@
             type="com.moon.myreadapp.mvvm.models.MenuItem" />
     </data>
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/action"
-        android:textColor="@color/text_drak"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/left_list_item_height"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/normal_padding"
-        android:paddingRight="@dimen/normal_padding"
         android:background="@drawable/left_drawer_list"
-        android:textSize="@dimen/text_h2"/>
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/setting"
+            android:background="@drawable/selectable_background"
+            android:layout_width="@dimen/left_bottom_height"
+            android:gravity="center"
+            android:textSize="@dimen/text_h1"
+            android:textColor="@color/text_drak"
+            android:layout_height="match_parent"
+            android:text="{fa-cog}" />
+
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/action"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/text_drak"
+            android:gravity="left|center"
+            android:textSize="@dimen/text_h3"
+            android:background="@drawable/selectable_background"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
 </layout>
