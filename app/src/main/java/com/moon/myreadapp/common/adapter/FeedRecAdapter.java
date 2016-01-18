@@ -60,7 +60,6 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding>
         Feed feed = mData.get(truePos);
         //XLog.d("feed:" + feed.toString());
         holder.getBinding().setFeed(feed);
-
         String icon = feed.getIcon();
         XLog.d("unReadCount:" + icon);
         if (icon != null) {

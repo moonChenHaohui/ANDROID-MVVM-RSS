@@ -24,22 +24,6 @@
             android:onClick="@{drawerViewModel.onClickUserAction}"
             android:padding="@dimen/normal_padding">
 
-
-            <!--<TextView-->
-                <!--android:id="@+id/user_name"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignTop="@id/user_logo"-->
-                <!--android:layout_marginLeft="@dimen/normal_padding"-->
-                <!--android:layout_toRightOf="@id/user_logo"-->
-                <!--android:ellipsize="end"-->
-                <!--android:hint="user name"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="@{drawerViewModel.user.nickname}"-->
-                <!--android:visibility="@{drawerViewModel.user.nickname != null ? View.VISIBLE : View.GONE}"-->
-                <!--android:textSize="@dimen/text_sp14"-->
-                <!--android:textStyle="bold" />-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,20 +57,21 @@
                 android:textSize="@dimen/text_h1"
                 android:visibility="@{drawerViewModel.user == null ? View.VISIBLE : View.GONE}"
                 />
-            <TextView
-                android:id="@+id/user_notice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_alignParentBottom="true"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:visibility="@{drawerViewModel.notice != null ? View.VISIBLE : View.GONE}"
-                android:text="@{drawerViewModel.notice}"
-                android:textColor="@color/txt_white"
-                android:textSize="@dimen/text_h3"/>
-        </RelativeLayout>
 
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/user_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:visibility="@{drawerViewModel.notice != null ? View.VISIBLE : View.GONE}"
+            android:text="@{drawerViewModel.notice}"
+            android:textColor="@color/txt_white"
+            android:background="?attr/colorPrimaryDark"
+            android:textSize="@dimen/text_h3"/>
         <!--<include layout="@layout/common_divider" />-->
 
         <ListView
@@ -114,6 +99,7 @@
             android:layout_height="@dimen/left_bottom_height"
             android:background="@color/background_gray"
             android:gravity="center"
+            android:visibility="@{drawerViewModel.user != null ? View.VISIBLE : View.GONE}"
             android:orientation="horizontal">
 
             <com.joanzapata.iconify.widget.IconTextView
@@ -123,11 +109,10 @@
                 android:layout_width="@dimen/left_bottom_height"
                 android:gravity="center"
                 android:textSize="@dimen/text_h1"
-                android:onClick="@{drawerViewModel.onClickSetting}"
+                android:textColor="@color/txt_black"
+                android:onClick="@{drawerViewModel.onClickSynchro}"
                 android:layout_height="match_parent"
-                android:text="{fa-cog}" />
-
-
+                android:text="@{drawerViewModel.syncState.isSpin ? @string/drawer_sync_icon_spin : @string/drawer_sync_icon}" />
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/changeTheme"
                 android:layout_width="0dp"
@@ -135,11 +120,12 @@
                 android:clickable="true"
                 android:gravity="left|center"
                 android:textSize="@dimen/text_h3"
-                android:onClick="@{drawerViewModel.onClickTheme}"
+                android:onClick="@{drawerViewModel.onClickSynchro}"
                 android:background="@drawable/selectable_background"
                 android:layout_height="match_parent"
+                android:textColor="@color/txt_black"
                 android:padding="@dimen/normal_half_padding"
-                android:text="马上同步" />
+                android:text="@{drawerViewModel.syncState.notice ?? @string/drawer_sync_get_start}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

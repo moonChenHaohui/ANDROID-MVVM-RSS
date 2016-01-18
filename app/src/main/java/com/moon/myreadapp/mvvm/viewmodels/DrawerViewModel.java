@@ -1,6 +1,7 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.app.Activity;
+import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.MenuItem;
+import com.moon.myreadapp.mvvm.models.SyncState;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.mvvm.models.dao.UserDao;
 import com.moon.myreadapp.ui.AddFeedActivity;
@@ -44,20 +46,20 @@ public class DrawerViewModel extends BaseViewModel {
 
     private User user;
 
-    /**
-     * 用户消息
-     */
-    private String notice;
-
     private DrawerAdapter drawerAdapter;
 
     private AdapterView.OnItemClickListener drawerItemClickListener;
 
     private Activity mView;
 
+    private String notice;
+
+    private SyncState syncState;
+
 
     public DrawerViewModel(Activity view) {
         this.mView = view;
+        syncState = new SyncState();
         initViews();
         initEvents();
     }
@@ -65,11 +67,11 @@ public class DrawerViewModel extends BaseViewModel {
     @Override
     public void initViews() {
         List<MenuItem> menus = new ArrayList<>();
-        menus.add(new MenuItem.Builder().title("添加订阅").build());
-        menus.add(new MenuItem.Builder().title("全部未读").build());
-        menus.add(new MenuItem.Builder().title("我的收藏").build());
-        menus.add(new MenuItem.Builder().title("最近阅读").build());
-        menus.add(new MenuItem.Builder().title("反馈").build());
+        String[] fucs = mView.getResources().getStringArray(R.array.functions);
+        String[] fuc_icons = mView.getResources().getStringArray(R.array.functions_icon);
+        for (int i = 0; i< fucs.length && i < fuc_icons.length;i++){
+            menus.add(new MenuItem.Builder().title(fucs[i]).icon(fuc_icons[i]).build());
+        }
         drawerAdapter = new DrawerAdapter(menus);
         drawerItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -94,7 +96,10 @@ public class DrawerViewModel extends BaseViewModel {
                         XDispatcher.from(mView).dispatch(new RouterAction(ViewArticleActivity.class,bundle,true));
                         break;
                     case 4:
-
+                        XDispatcher.from(mView).dispatch(new RouterAction(SettingActivity.class, true));
+                        break;
+                    case 5:
+                        DialogFractory.createDialog(mView, DialogFractory.Type.ThemeChoose).show();
                         break;
                 }
             }
@@ -158,9 +163,9 @@ public class DrawerViewModel extends BaseViewModel {
         query.findObjects(mView, new FindListener<User>() {
             @Override
             public void onSuccess(List<User> list) {
-                if (list == null || list.size() == 0){
+                if (list == null || list.size() == 0) {
                     setUser(null);
-                    setNotice(mView.getString(R.string.user_validate_fail));
+                    ToastHelper.showToast(R.string.user_validate_fail);
                 } else {
                     setUser(list.get(0));
                 }
@@ -188,6 +193,16 @@ public class DrawerViewModel extends BaseViewModel {
         }
     }
 
+    /**
+     * 用户点击同步信息
+     * @param view
+     */
+    public void onClickSynchro(View view) {
+        if(user == null){
+            return;
+        }
+        setNotice("click worked !");
+    }
 
     @Bindable
     public String getNotice() {
@@ -199,12 +214,14 @@ public class DrawerViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.notice);
     }
 
-    public void onClickSetting(View view) {
-        XDispatcher.from((Activity)mView).dispatch(new RouterAction(SettingActivity.class, true));
+    @Bindable
+    public SyncState getSyncState() {
+        return syncState;
     }
 
-    public void onClickTheme(View view) {
-        DialogFractory.createDialog(mView, DialogFractory.Type.ThemeChoose).show();
+    public void setSyncState(SyncState syncState) {
+        this.syncState = syncState;
+        notifyPropertyChanged(BR.syncState);
     }
 
     public void updateUser(User user) {

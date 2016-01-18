@@ -19,6 +19,8 @@
             android:layout_margin="@dimen/normal_padding"
             android:background="@drawable/edit_corners"
             android:gravity="center"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout

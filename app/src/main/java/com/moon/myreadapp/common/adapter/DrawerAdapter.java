@@ -32,7 +32,6 @@ public class DrawerAdapter extends BaseListAdapter<MenuItem> {
         binding = (LeftDrawerListItemBinding)convertView.getTag();
 
         binding.setItem(getmData().get(position));
-        binding.action.setText(Html.fromHtml(getmData().get(position).getTitle()));
         return convertView;
     }
 

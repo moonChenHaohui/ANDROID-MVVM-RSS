@@ -24,7 +24,7 @@
             android:textSize="@dimen/text_h1"
             android:textColor="@color/text_drak"
             android:layout_height="match_parent"
-            android:text="{fa-cog}" />
+            android:text="@{item.icon}" />
 
 
         <com.joanzapata.iconify.widget.IconTextView
@@ -34,6 +34,7 @@
             android:textColor="@color/text_drak"
             android:gravity="left|center"
             android:textSize="@dimen/text_h3"
+            android:text="@{item.title}"
             android:background="@drawable/selectable_background"
             android:layout_height="match_parent"
             />

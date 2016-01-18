@@ -14,6 +14,7 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
+import com.moon.myreadapp.common.components.dialog.FeedSetDialog;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.common.components.rss.RssHelper;
@@ -108,12 +109,16 @@ public class FeedViewModel extends BaseViewModel {
                 currentPosition = position;
                 //震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
+
                 View v = mView.getLayoutInflater().inflate(R.layout.menu_singer_article, null);
 
-                mDialog = new Dialog(mView).
+                mDialog = new Dialog(mView){
+
+                }.
                         contentView(v).
                         cancelable(true).
                         layoutParams(-1, -2);
+
                 mDialog.show();
                 //已读
                 v.findViewById(R.id.action_read).setVisibility(article.getUse_count() <= 0 ? View.VISIBLE : View.GONE);

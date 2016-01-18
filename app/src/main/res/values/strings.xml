@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">RSS阅读神器</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_main">RSS阅读神器</string>
 
 
@@ -108,10 +106,7 @@
 
 
     <string name="title_activity_add_feed">添加订阅</string>
-    <string name="large_text">
-        "Material is the metaphor.\n\n"
 
-    </string>
     <string-array name="add_feed">
         <item>系统推荐</item>
         <item>OPML导入</item>
@@ -190,9 +185,6 @@
     <string name="empty_feed">抱歉,当前频道不存在.</string>
     <string name="empty_article">抱歉,当前文章不存在.</string>
 
-
-    <string name="drawer_setting">{fa-cog} 设置</string>
-    <string name="drawer_theme">{fa-moon-o} 主题</string>
 
 
     <!--设置-->
@@ -277,4 +269,31 @@
     <string name="user_info">储存: 1 频道 | 共 2 篇收藏文章</string>
     <string name="user_check_fail">用户:%1$s</string>
     <string name="user_validate_fail">用户信息已经过期</string>
+    
+    <string-array name="functions">
+        <item>添加订阅</item>
+        <item>全部未读</item>
+        <item>我的收藏</item>
+        <item>最近阅读</item>
+        <item>设置</item>
+        <item>主题</item>
+    </string-array>
+    <string-array name="functions_icon">
+        <item>{fa-plus-square}</item>
+        <item>{fa-eye}</item>
+        <item>{fa-star}</item>
+        <item>{fa-history}</item>
+        <item>{fa-cogs}</item>
+        <item>{fa-certificate}</item>
+    </string-array>
+
+
+    <string name="drawer_sync_icon">{fa-refresh}</string>
+    <string name="drawer_sync_icon_spin">{fa-refresh spin}</string>
+    <string name="drawer_sync_in_sync">正在同步</string>
+    <string name="drawer_sync_get_start">马上同步</string>
+    <string name="drawer_sync_in_sync_feed">同步频道:%1$s/%2$s</string>
+    <string name="drawer_sync_in_sync_favor">同步收藏文章:%1$s/%2$s</string>
+    <string name="drawer_sync_in_sync_cancel">用户已取消同步</string>
+    <string name="drawer_sync_in_sync_success">上次同步:%1$s</string>
 </resources>

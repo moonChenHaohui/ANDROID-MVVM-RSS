@@ -40,6 +40,7 @@ public class MainViewModel extends BaseViewModel {
 
     private RecyclerItemClickListener readItemClickListener;
 
+
     private boolean refresh = false;
     private int currentPosition = -1;
     private Dialog mDialog;
