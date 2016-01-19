@@ -19,21 +19,26 @@ import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.SyncState;
+import com.moon.myreadapp.mvvm.models.dao.Article;
+import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.models.dao.User;
 import com.moon.myreadapp.mvvm.models.dao.UserDao;
 import com.moon.myreadapp.ui.AddFeedActivity;
 import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.ui.ViewArticleActivity;
+import com.moon.myreadapp.util.BmobHelper;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import cn.bmob.v3.update.UpdateResponse;
 import cn.bmob.v3.update.UpdateStatus;
@@ -69,14 +74,14 @@ public class DrawerViewModel extends BaseViewModel {
         List<MenuItem> menus = new ArrayList<>();
         String[] fucs = mView.getResources().getStringArray(R.array.functions);
         String[] fuc_icons = mView.getResources().getStringArray(R.array.functions_icon);
-        for (int i = 0; i< fucs.length && i < fuc_icons.length;i++){
+        for (int i = 0; i < fucs.length && i < fuc_icons.length; i++) {
             menus.add(new MenuItem.Builder().title(fucs[i]).icon(fuc_icons[i]).build());
         }
         drawerAdapter = new DrawerAdapter(menus);
         drawerItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
                         break;
@@ -84,16 +89,16 @@ public class DrawerViewModel extends BaseViewModel {
                     case 2:
                     case 3:
                         int type = -1;
-                        if (position == 1){
+                        if (position == 1) {
                             type = ViewArticleViewModel.Style.VIEW_UNREAD.ordinal();
-                        } else if (position == 2){
+                        } else if (position == 2) {
                             type = ViewArticleViewModel.Style.VIEW_FAVOR.ordinal();
-                        } else if (position == 3){
-                            type =  ViewArticleViewModel.Style.VIEW_READ_HISTORY.ordinal();
+                        } else if (position == 3) {
+                            type = ViewArticleViewModel.Style.VIEW_READ_HISTORY.ordinal();
                         }
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constants.VIEW_ARTICLE_TYPE, type);
-                        XDispatcher.from(mView).dispatch(new RouterAction(ViewArticleActivity.class,bundle,true));
+                        XDispatcher.from(mView).dispatch(new RouterAction(ViewArticleActivity.class, bundle, true));
                         break;
                     case 4:
                         XDispatcher.from(mView).dispatch(new RouterAction(SettingActivity.class, true));
@@ -119,7 +124,6 @@ public class DrawerViewModel extends BaseViewModel {
     }
 
 
-
     @Bindable
     public DrawerAdapter getDrawerAdapter() {
         return drawerAdapter;
@@ -129,6 +133,7 @@ public class DrawerViewModel extends BaseViewModel {
         this.drawerAdapter = drawerAdapter;
         notifyPropertyChanged(BR.drawerAdapter);
     }
+
     @Bindable
     public AdapterView.OnItemClickListener getDrawerItemClickListener() {
         return drawerItemClickListener;
@@ -149,9 +154,8 @@ public class DrawerViewModel extends BaseViewModel {
     }
 
 
-
-    public void requestUser(){
-        if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
+    public void requestUser() {
+        if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())) {
             //没有用户缓存
             return;
         }
@@ -182,9 +186,9 @@ public class DrawerViewModel extends BaseViewModel {
     /**
      * 用户点击窗口
      */
-    public void onClickUserAction (View view ){
+    public void onClickUserAction(View view) {
         //无用户则弹出登录
-        if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())){
+        if (user == null || StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())) {
             XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, true));
             return;
         } else {
@@ -195,13 +199,14 @@ public class DrawerViewModel extends BaseViewModel {
 
     /**
      * 用户点击同步信息
+     *
      * @param view
      */
     public void onClickSynchro(View view) {
-        if(user == null){
+        if (user == null) {
             return;
         }
-        setNotice("click worked !");
+        synchroUserInfo();
     }
 
     @Bindable
@@ -224,7 +229,40 @@ public class DrawerViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.syncState);
     }
 
+    public void updateSyncState() {
+        notifyPropertyChanged(BR.syncState);
+    }
+
     public void updateUser(User user) {
         setUser(user);
+    }
+
+    /**
+     * 同步用户信息
+     */
+    private void synchroUserInfo() {
+        if (getUser() == null) {
+            return;
+        }
+        if (getSyncState() == null) {
+            return;
+        }
+        if (mView == null) {
+            return;
+        }
+        if (getSyncState().isSpin()) {
+            //用户取消同步
+            getSyncState().setNotice(mView.getString(R.string.drawer_sync_in_sync_cancel));
+            getSyncState().setIsSpin(false);
+            updateSyncState();
+            return;
+        } else {
+            //开始同步
+            getSyncState().setIsSpin(true);
+            getSyncState().setNotice(mView.getString(R.string.drawer_sync_in_sync));
+            //同步频道信息
+            BmobHelper.synchronizeUserFeeds(mView);
+            updateSyncState();
+        }
     }
 }

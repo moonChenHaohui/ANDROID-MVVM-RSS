@@ -1,6 +1,5 @@
 package com.moon.myreadapp.mvvm.models.dao;
 
-
 import cn.bmob.v3.BmobObject;
 import de.greenrobot.dao.DaoException;
 
@@ -8,7 +7,9 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table "ARTICLE".
  */
-public class Article extends BmobObject {
+public class Article extends BmobObject{
+
+
 
     public enum Status{
         NORMAL(0),
@@ -46,6 +47,7 @@ public class Article extends BmobObject {
     private String rights;
     private String creator;
     private long feed_id;
+    private long user_id;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -56,6 +58,9 @@ public class Article extends BmobObject {
     private Feed feed;
     private Long feed__resolvedKey;
 
+    private User user;
+    private Long user__resolvedKey;
+
 
     public Article() {
     }
@@ -64,7 +69,7 @@ public class Article extends BmobObject {
         this.id = id;
     }
 
-    public Article(Long id, String title, Integer use_count, String container, String link, String first_images, java.util.Date publishtime, java.util.Date last_read_time, Integer status, String uri, String rights, String creator, long feed_id) {
+    public Article(Long id, String title, Integer use_count, String container, String link, String first_images, java.util.Date publishtime, java.util.Date last_read_time, Integer status, String uri, String rights, String creator, long feed_id, long user_id) {
         this.id = id;
         this.title = title;
         this.use_count = use_count;
@@ -78,6 +83,7 @@ public class Article extends BmobObject {
         this.rights = rights;
         this.creator = creator;
         this.feed_id = feed_id;
+        this.user_id = user_id;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -192,6 +198,14 @@ public class Article extends BmobObject {
         this.feed_id = feed_id;
     }
 
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
+
     /** To-one relationship, resolved on first access. */
     public Feed getFeed() {
         long __key = this.feed_id;
@@ -220,6 +234,34 @@ public class Article extends BmobObject {
         }
     }
 
+    /** To-one relationship, resolved on first access. */
+    public User getUser() {
+        long __key = this.user_id;
+        if (user__resolvedKey == null || !user__resolvedKey.equals(__key)) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            UserDao targetDao = daoSession.getUserDao();
+            User userNew = targetDao.load(__key);
+            synchronized (this) {
+                user = userNew;
+            	user__resolvedKey = __key;
+            }
+        }
+        return user;
+    }
+
+    public void setUser(User user) {
+        if (user == null) {
+            throw new DaoException("To-one property 'user_id' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.user = user;
+            user_id = user.getId();
+            user__resolvedKey = user_id;
+        }
+    }
+
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
     public void delete() {
         if (myDao == null) {
@@ -244,22 +286,4 @@ public class Article extends BmobObject {
         myDao.refresh(this);
     }
 
-    @Override
-    public String toString() {
-        return "UpdateArticleEvent{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", use_count=" + use_count +
-                ", container='" + container + '\'' +
-                ", link='" + link + '\'' +
-                ", first_images='" + first_images + '\'' +
-                ", publishtime=" + publishtime +
-                ", last_read_time=" + last_read_time +
-                ", status=" + status +
-                ", uri='" + uri + '\'' +
-                ", rights='" + rights + '\'' +
-                ", creator='" + creator + '\'' +
-                ", feed_id=" + feed_id +
-                '}';
-    }
 }

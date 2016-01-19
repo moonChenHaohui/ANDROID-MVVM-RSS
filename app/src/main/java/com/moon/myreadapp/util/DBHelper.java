@@ -74,7 +74,7 @@ public class DBHelper {
                     ((DCModule) entry.getModules().get(0)).getUri(),
                     ((DCModule) entry.getModules().get(0)).getRights(),
                     ((DCModule) entry.getModules().get(0)).getCreator(),
-                    -1);
+                    -1,Query.getUserId());
             return article;
         }
     }
@@ -156,8 +156,7 @@ public class DBHelper {
         public static List<Article> getArticles(Article.Status status,int start,int size){
             QueryBuilder<Article> res =  getDAO().getArticleDao().queryBuilder();
             if (status != null){
-                WhereCondition wc  = ArticleDao.Properties.Status.eq(status.status);
-                return res.where(wc).orderDesc(ArticleDao.Properties.Publishtime).offset(start).limit(size).list();
+                res = res.where(ArticleDao.Properties.Status.eq(status.status));
             }
             res = res.orderDesc(ArticleDao.Properties.Publishtime);
             if (start >= 0){
@@ -276,6 +275,9 @@ public class DBHelper {
 
         public static long saveFeed(Feed feed){
             return getDAO().getFeedDao().insertOrReplace(feed);
+        }
+        public static void saveFeeds(List<Feed> feeds){
+            getDAO().getFeedDao().insertOrReplaceInTx(feeds);
         }
 
         /**
