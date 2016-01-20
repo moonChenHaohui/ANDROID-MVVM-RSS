@@ -319,7 +319,7 @@ public class ViewArticleViewModel extends BaseViewModel {
      *
      * @param view
      */
-    public void OnFucBtnClick(View view) {
+    public void OnFucBtnClick(final View view) {
         if (onPregress) return;
         if (mStyle == Style.VIEW_FAVOR) {
             if (DBHelper.Query.getUser() != null) {
@@ -330,7 +330,7 @@ public class ViewArticleViewModel extends BaseViewModel {
                     public void onDatasSyncOver() {
                         onPregress = false;
                         mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
-                        setFucText(mView.getString(R.string.option_sync_storge_last_time, Conver.formatDateTime(new Date())));
+                        setFucText(mView.getString(R.string.option_sync_storge_last_time));
                     }
 
                     @Override
@@ -377,18 +377,32 @@ public class ViewArticleViewModel extends BaseViewModel {
         } else if (mStyle == Style.VIEW_UNREAD) {
             //查看未读
             onPregress = true;
+            setFucText("操作中..");
             view.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //数据库标记已读
-                    int count = DBHelper.UpDate.readAllArticles();
-                    //更改视图数据
-                    mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
-                    //消息通知
-                    XApplication.getInstance().bus.post(new UpdateFeedListEvent());
+                    if (view.getTag() == null){
+                        List<Article> articles = DBHelper.UpDate.getAllUnReadArticles();
+                        if (articles == null || articles.size() ==0){
+                            setFucText(null);
+                            ToastHelper.showToast(R.string.option_read_all_none);
+                        } else {
+                            setFucText(mView.getString(R.string.option_read_all_go_on, articles.size()));
+                            view.setTag(articles);
+                        }
+                    } else {
+                        List<Article> articles = (List<Article>)view.getTag();
+                        DBHelper.UpDate.readAllArticles(articles);
+                        setFucText(null);
+                        view.setTag(null);
+
+                        ToastHelper.showToast(R.string.option_read_all_down,articles.size());
+                        //更改视图数据
+                        mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
+                        //消息通知
+                        XApplication.getInstance().bus.post(new UpdateFeedListEvent());
+                    }
                     onPregress = false;
-                    setFucText(null);
-                    ToastHelper.showToast(R.string.option_read_all_down,count);
                 }
             }, 200);
         }

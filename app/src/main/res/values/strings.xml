@@ -252,14 +252,15 @@
     <string name="option_sync_storge_now">现在同步</string>
     <string name="option_sync_storge_doing">正在同步..</string>
     <string name="option_sync_storge_after_login">登录后可以同步</string>
-    <string name="option_sync_storge_last_time">同步成功!同步时间:%1$s</string>
+    <string name="option_sync_storge_last_time">同步成功!</string>
     <string name="option_sync_storge_fial">同步失败,点击重试</string>
 
     <string name="option_delete_all_read_articles">@string/set_clean_cache_title</string>
     <string name="option_delete_all_read_articles_doing">正在删除..</string>
     <string name="option_read_all">一键全部已读</string>
+    <string name="option_read_all_none">当前没有文章未读</string>
     <string name="option_read_all_down">已全部已读,共计 %1$s 篇</string>
-
+    <string name="option_read_all_go_on">共计删除 %1$s 篇,请点击继续</string>
 
     <string name="user_title">用户信息</string>
     <string name="user_quit_user">退出用户</string>

@@ -387,6 +387,20 @@ public class DBHelper {
             }
             return articles.size();
         }
+        public static int readAllArticles(List<Article> articles) {
+            Date date = new Date();
+            for (Article a : articles) {
+                a.setUse_count(1);
+                a.setLast_read_time(date);
+                saveArticle(a);
+            }
+            return articles.size();
+        }
+        public static List<Article> getAllUnReadArticles() {
+            List<Article> articles = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Use_count.le(0)).list();
+            return articles;
+        }
+
 
         public static long saveUser(User user) {
             //只保存一个用户信息
