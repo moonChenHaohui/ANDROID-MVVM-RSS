@@ -12,10 +12,12 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table "FEED".
  */
-public class Feed extends BmobObject{
+public class Feed extends BmobObject {
 
     private Long id;
-    /** Not-null value. */
+    /**
+     * Not-null value.
+     */
     private String title;
     private String url;
     private Integer status;
@@ -33,10 +35,14 @@ public class Feed extends BmobObject{
     private String creator;
     private long user_id;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     private transient FeedDao myDao;
 
     private User user;
@@ -70,7 +76,15 @@ public class Feed extends BmobObject{
         this.user_id = user_id;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    public void clearBmobData(){
+        setCreatedAt(null);
+        //setObjectId(null);
+        setUpdatedAt(null);
+    }
+
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFeedDao() : null;
@@ -84,12 +98,16 @@ public class Feed extends BmobObject{
         this.id = id;
     }
 
-    /** Not-null value. */
+    /**
+     * Not-null value.
+     */
     public String getTitle() {
         return title;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -214,7 +232,9 @@ public class Feed extends BmobObject{
         this.user_id = user_id;
     }
 
-    /** To-one relationship, resolved on first access. */
+    /**
+     * To-one relationship, resolved on first access.
+     */
     public User getUser() {
         long __key = this.user_id;
         if (user__resolvedKey == null || !user__resolvedKey.equals(__key)) {
@@ -225,7 +245,7 @@ public class Feed extends BmobObject{
             User userNew = targetDao.load(__key);
             synchronized (this) {
                 user = userNew;
-            	user__resolvedKey = __key;
+                user__resolvedKey = __key;
             }
         }
         return user;
@@ -242,29 +262,45 @@ public class Feed extends BmobObject{
         }
     }
 
-    /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
+    /**
+     * Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context.
+     */
     public void delete() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
-        }    
+        }
         myDao.delete(this);
     }
 
-    /** Convenient call for {@link AbstractDao#update(Object)}. Entity must attached to an entity context. */
+    /**
+     * Convenient call for {@link AbstractDao#update(Object)}. Entity must attached to an entity context.
+     */
     public void update() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
-        }    
+        }
         myDao.update(this);
     }
 
-    /** Convenient call for {@link AbstractDao#refresh(Object)}. Entity must attached to an entity context. */
+    /**
+     * Convenient call for {@link AbstractDao#refresh(Object)}. Entity must attached to an entity context.
+     */
     public void refresh() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
-        }    
+        }
         myDao.refresh(this);
     }
 
-
+    @Override
+    public String toString() {
+        return "Feed{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", objid='" + getObjectId() + '\'' +
+                ", createdAt='" + getCreatedAt() + '\'' +
+                ", updatedAt='" + getUpdatedAt() + '\'' +
+                '}';
+    }
 }

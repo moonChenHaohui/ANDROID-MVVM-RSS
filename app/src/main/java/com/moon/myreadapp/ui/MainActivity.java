@@ -13,6 +13,7 @@ import android.view.View;
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
+import com.moon.myreadapp.common.event.SynchronizeStateEvent;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.common.event.UpdateUserEvent;
@@ -210,6 +211,10 @@ public class MainActivity extends BaseActivity {
     public void onUpdateEvent(UpdateUserEvent event) {
         XLog.d("get mes:" + "UpdateUserEvent");
         drawerViewModel.updateUser(event.getUser());
+    }
+    @Subscribe
+    public void onUpdateEvent(SynchronizeStateEvent event) {
+        drawerViewModel.setSyncState(event.getSyncState());
     }
 
     public void btnOnClick(View v) {

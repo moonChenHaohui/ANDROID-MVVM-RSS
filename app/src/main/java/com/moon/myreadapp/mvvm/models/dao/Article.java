@@ -62,6 +62,12 @@ public class Article extends BmobObject{
     private Long user__resolvedKey;
 
 
+    public void clearBmobData(){
+        setCreatedAt(null);
+        //setObjectId(null);
+        setUpdatedAt(null);
+    }
+
     public Article() {
     }
 

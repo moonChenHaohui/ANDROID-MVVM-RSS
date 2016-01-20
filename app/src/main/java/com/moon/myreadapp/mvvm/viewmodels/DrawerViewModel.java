@@ -16,6 +16,7 @@ import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
+import com.moon.myreadapp.common.event.SynchronizeStateEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.SyncState;
@@ -60,11 +61,12 @@ public class DrawerViewModel extends BaseViewModel {
     private String notice;
 
     private SyncState syncState;
+    private  int syncIconStatus = 0;
 
 
     public DrawerViewModel(Activity view) {
         this.mView = view;
-        syncState = new SyncState();
+        syncState = SynchronizeStateEvent.getInstance();
         initViews();
         initEvents();
     }
@@ -227,10 +229,23 @@ public class DrawerViewModel extends BaseViewModel {
     public void setSyncState(SyncState syncState) {
         this.syncState = syncState;
         notifyPropertyChanged(BR.syncState);
+        XLog.d("setSyncState: isspin:" + syncState.isSpin() + ",notice:" + syncState.getNotice());
+        if (getSyncIconStatus() ==0 && getSyncState().isSpin()){
+            setSyncIconStatus(1);
+        } else if (getSyncIconStatus() != 0 && !getSyncState().isSpin()){
+            setSyncIconStatus(0);
+        }
     }
 
-    public void updateSyncState() {
-        notifyPropertyChanged(BR.syncState);
+    @Bindable
+    public int getSyncIconStatus() {
+        return syncIconStatus;
+    }
+
+    public void setSyncIconStatus(int syncIconStatus) {
+        this.syncIconStatus = syncIconStatus;
+        notifyPropertyChanged(BR.syncIconStatus);
+        XLog.d("setSyncState: syncIconStatus:" + syncIconStatus);
     }
 
     public void updateUser(User user) {
@@ -252,17 +267,15 @@ public class DrawerViewModel extends BaseViewModel {
         }
         if (getSyncState().isSpin()) {
             //用户取消同步
-            getSyncState().setNotice(mView.getString(R.string.drawer_sync_in_sync_cancel));
-            getSyncState().setIsSpin(false);
-            updateSyncState();
+//            getSyncState().setNotice(mView.getString(R.string.drawer_sync_in_sync_cancel));
+//            getSyncState().setIsSpin(false);
+//            updateSyncState();
             return;
         } else {
             //开始同步
-            getSyncState().setIsSpin(true);
-            getSyncState().setNotice(mView.getString(R.string.drawer_sync_in_sync));
             //同步频道信息
-            BmobHelper.synchronizeUserFeeds(mView);
-            updateSyncState();
+            BmobHelper.updateUserFeeds(mView,-1,-1);
+            BmobHelper.updateUserFavors(mView,-1,-1);
         }
     }
 }
