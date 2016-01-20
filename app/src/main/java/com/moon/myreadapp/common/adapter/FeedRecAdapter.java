@@ -62,7 +62,7 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding>
         holder.getBinding().setCount((int)unread);
         holder.getBinding().setFeed(feed);
         String icon = feed.getIcon();
-        
+
         if (icon != null) {
             // holder.getBinding().feedIcon.set(Uri.parse(icon));
             /**

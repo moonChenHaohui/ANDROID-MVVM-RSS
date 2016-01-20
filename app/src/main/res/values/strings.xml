@@ -265,12 +265,13 @@
     <string name="user_title">用户信息</string>
     <string name="user_quit_user">退出用户</string>
     <string name="user_quit_user_check">真的要退出吗?</string>
+    <string name="user_quit_user_notice">退出后清空用户的频道 收藏文章数据.</string>
     <string name="user_exit">关闭</string>
     <string name="user_name">用户:%1$s</string>
     <string name="user_register_time">注册时间:%1$s</string>
     <string name="user_info">储存: 1 频道 | 共 2 篇收藏文章</string>
     <string name="user_check_fail">用户:%1$s</string>
-    <string name="user_validate_fail">用户信息已经过期</string>
+    <string name="user_validate_fail">用户信息已经过期,请重新登录.</string>
     
     <string-array name="functions">
         <item>添加订阅</item>

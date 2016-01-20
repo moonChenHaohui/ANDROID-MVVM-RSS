@@ -210,7 +210,7 @@ public class DrawerViewModel extends BaseViewModel {
             @Override
             public void onSuccess(List<User> list) {
                 if (list == null || list.size() == 0) {
-                    setUser(null);
+                    DBHelper.Delete.deleteUser();
                     ToastHelper.showToast(R.string.user_validate_fail);
                 } else {
                     setUser(list.get(0));
@@ -280,7 +280,7 @@ public class DrawerViewModel extends BaseViewModel {
     /**
      * 同步用户信息
      */
-    private void synchroUserInfo() {
+    public void synchroUserInfo() {
         if (getUser() == null) {
             return;
         }

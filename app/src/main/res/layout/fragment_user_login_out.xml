@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.joanzapata.iconify.widget.IconTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:padding="@dimen/normal_padding"
+    android:text="@string/user_quit_user_notice"
+    android:textSize="@dimen/text_h3"
+    android:textColor="@color/txt_black"/>
+
+

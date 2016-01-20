@@ -5,10 +5,12 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
+import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.common.event.UpdateUserEvent;
 import com.moon.myreadapp.databinding.FragmentRegisterBinding;
 import com.moon.myreadapp.databinding.FragmentUserBinding;
@@ -57,11 +59,12 @@ public class UserDialog extends Dialog {
                     if (dialog != null && dialog.isShowing()){
                         return;
                     }
-                    dialog = DialogFractory.createDialog(getContext(), DialogFractory.Type.YesNo).positiveActionClickListener(new View.OnClickListener() {
+                    dialog = DialogFractory.createDialog(getContext(), DialogFractory.Type.YesNo).contentView(R.layout.fragment_user_login_out).positiveActionClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             user = null;
                             DBHelper.Delete.deleteUser();
+
                             dialog.dismiss();
                             dismiss();
                         }
@@ -129,6 +132,7 @@ public class UserDialog extends Dialog {
     public void dismiss() {
         //通知用户更新
         XApplication.getInstance().bus.post(new UpdateUserEvent(user));
+        XApplication.getInstance().bus.post(new UpdateFeedListEvent());
         super.dismiss();
     }
 }

@@ -415,6 +415,19 @@ public class DBHelper {
     public static class Delete {
 
         public static void deleteUser() {
+            //删除用户之前,需要先删除用户同步过的频道和收藏的文章
+            List<Feed> feeds = Query.getFeeds();
+            for (Feed feed :feeds){
+                if (feed.getObjectId() != null){
+                    Delete.deleteFeed(feed);
+                }
+            }
+            List<Article> articles = Query.getArticles();
+            for (Article article:articles){
+                if (article.getObjectId() != null){
+                    Delete.deleteArticle(article);
+                }
+            }
             getDAO().getUserDao().deleteAll();
         }
 
@@ -426,6 +439,10 @@ public class DBHelper {
 
                 getDAO().getFeedDao().delete(f);
             }
+            return true;
+        }
+        public static boolean deleteArticle(Article article) {
+            getDAO().getArticleDao().delete(article);
             return true;
         }
 

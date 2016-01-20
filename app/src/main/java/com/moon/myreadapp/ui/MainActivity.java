@@ -217,6 +217,7 @@ public class MainActivity extends BaseActivity {
     public void onUpdateEvent(UpdateUserEvent event) {
         XLog.d("get mes:" + "UpdateUserEvent");
         drawerViewModel.updateUser(event.getUser());
+        drawerViewModel.synchroUserInfo();
     }
     @Subscribe
     public void onUpdateEvent(SynchronizeStateEvent event) {
