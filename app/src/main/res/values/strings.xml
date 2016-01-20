@@ -289,11 +289,8 @@
 
 
     <string name="drawer_sync_icon">{fa-refresh}</string>
-    <string name="drawer_sync_icon_spin">{fa-refresh spin}</string>
-    <string name="drawer_sync_in_sync">正在同步</string>
     <string name="drawer_sync_get_start">马上同步</string>
-    <string name="drawer_sync_in_sync_feed">同步频道:%1$s/%2$s</string>
-    <string name="drawer_sync_in_sync_favor">同步收藏文章:%1$s/%2$s</string>
-    <string name="drawer_sync_in_sync_cancel">用户已取消同步</string>
-    <string name="drawer_sync_in_sync_success">上次同步:%1$s</string>
+    <string name="drawer_sync_in_download_fail">数据异常</string>
+    <string name="drawer_sync_in_sync">同步中...</string>
+    <string name="drawer_sync_in_sync_success_msg">上次同步:%1$s</string>
 </resources>

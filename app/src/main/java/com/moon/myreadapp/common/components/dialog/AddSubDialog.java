@@ -136,6 +136,9 @@ public class AddSubDialog extends Dialog {
                 binding.login.setText(Globals.getApplication().getString(R.string.dialog_sub_search_load));
                 String icon = HtmlHelper.getIconUrlString(feed.getLink());
                 feed.setIcon(icon);
+                //取消bmob数据
+                feed.setObjectId(null);
+                feed.clearBmobData();
                 long id = DBHelper.Insert.feed(feed);
                 if (articles != null) {
                     for (int i = 0; i < articles.size(); i++) {

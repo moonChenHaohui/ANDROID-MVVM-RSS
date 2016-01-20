@@ -19,6 +19,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -31,17 +32,40 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class BmobHelper {
 
+    public interface SyncListener {
+        /**
+         * 同步完成调用-无论成功失败
+         */
+        void onDatasSyncOver();
+
+        /**
+         * 单个数据同步完成
+         */
+        void onDataSyncSuccess();
+
+        /**
+         *
+         */
+        void onDataDownloadSuccess();
+        void onDataSyncFailure(int i, String s);
+        void onDataDownloadFailure(int i, String s);
+    }
+
     public static String TAG = BmobHelper.class.getSimpleName();
 
     public static String USER_FEED = "User_Feed";
     public static String USER_ARTICLE_FAVOR = "User_Article_Favor";
 
+    private static AtomicInteger resultCount= new AtomicInteger();
+    private static AtomicInteger resultCount1= new AtomicInteger();
+
     /**
      * 同步频道信息
      * @param context
      */
-    private static void synchronizeUserFeeds(final Context context, boolean isUpdate) {
+    private static void synchronizeUserFeeds(final Context context, boolean isUpdate,final SyncListener listener) {
         final List<Feed> feeds = DBHelper.Query.getFeeds();
+        int mark = 0;
         User user = DBHelper.Query.getUser();
         if (user == null) {
             return;
@@ -49,26 +73,53 @@ public class BmobHelper {
         if (feeds == null || feeds.size() == 0) {
             return;
         }
+        resultCount.set(0);
         SaveListener saveListener = new SaveListener() {
+
+            private int count = feeds.size();
             @Override
             public void onSuccess() {
-                XLog.d("FEED SAVE onSuccess");
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncSuccess();
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
+
             }
 
             @Override
             public void onFailure(int i, String s) {
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncFailure(i,s);
                 XLog.d("FEED SAVE onFailure:" + s);
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
             }
         };
         UpdateListener updateListener = new UpdateListener() {
+            private int count = feeds.size();
             @Override
             public void onSuccess() {
-                XLog.d("FEED Update onSuccess");
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncSuccess();
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
+
             }
 
             @Override
             public void onFailure(int i, String s) {
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncFailure(i,s);
                 XLog.d("FEED Update onFailure:" + s);
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
             }
         };
 
@@ -97,7 +148,7 @@ public class BmobHelper {
      * @param start
      * @param size
      */
-    public static void updateUserFeeds(final Context context, int start, int size) {
+    public static void updateUserFeeds(final Context context, int start, int size,final SyncListener listener) {
         User user = DBHelper.Query.getUser();
         if (user == null) {
             return;
@@ -116,7 +167,7 @@ public class BmobHelper {
 
             @Override
             public void onSuccess(JSONArray arg0) {
-
+                if (listener != null) listener.onDataDownloadSuccess();
                 XLog.d(TAG + "find onSuccess");
                 Gson gson = new Gson();
                 List<Feed> feeds = new ArrayList<Feed>();
@@ -133,11 +184,12 @@ public class BmobHelper {
                 }
                 DBHelper.UpDate.saveFeedsIfNotExist(feeds);
                 //同步数据
-                synchronizeUserFeeds(context,true);
+                synchronizeUserFeeds(context,true,listener);
             }
 
             @Override
             public void onFailure(int i, String s) {
+                if (listener != null) listener.onDataDownloadFailure(i, s);
                 XLog.d(TAG + "find onFailure,msg:" + s);
             }
         });
@@ -151,7 +203,7 @@ public class BmobHelper {
      * 同步收藏信息
      * @param context
      */
-    private static void synchronizeUserFavors(final Context context, boolean isUpdate) {
+    private static void synchronizeUserFavors(final Context context, boolean isUpdate,final SyncListener listener) {
         final List<Article> favors = DBHelper.Query.getArticles(Article.Status.FAVOR,-1,-1);
         User user = DBHelper.Query.getUser();
         if (user == null) {
@@ -160,26 +212,53 @@ public class BmobHelper {
         if (favors == null || favors.size() == 0) {
             return;
         }
+        resultCount.set(0);
         SaveListener saveListener = new SaveListener() {
+
+            private int count = favors.size();
             @Override
             public void onSuccess() {
-                XLog.d("SAVE onSuccess");
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncSuccess();
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
+
             }
 
             @Override
             public void onFailure(int i, String s) {
-                XLog.d("SAVE onFailure:" + s);
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncFailure(i,s);
+                XLog.d("FEED SAVE onFailure:" + s);
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
             }
         };
         UpdateListener updateListener = new UpdateListener() {
+            private int count = favors.size();
             @Override
             public void onSuccess() {
-                XLog.d("Update onSuccess");
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncSuccess();
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
+
             }
 
             @Override
             public void onFailure(int i, String s) {
-                XLog.d("Update onFailure:" + s);
+                int val = resultCount.addAndGet(1);
+                if (listener != null) listener.onDataSyncFailure(i,s);
+                XLog.d("FEED Update onFailure:" + s);
+                if (listener != null && val>= count -1){
+                    listener.onDatasSyncOver();
+                }
             }
         };
         for (int i = 0; i < favors.size(); i++) {
@@ -209,7 +288,7 @@ public class BmobHelper {
      * @param start
      * @param size
      */
-    public static void updateUserFavors(final Context context, int start, int size) {
+    public static void updateUserFavors(final Context context, int start, int size,final SyncListener listener) {
         User user = DBHelper.Query.getUser();
         if (user == null) {
             return;
@@ -228,7 +307,7 @@ public class BmobHelper {
 
             @Override
             public void onSuccess(JSONArray arg0) {
-
+                if (listener != null) listener.onDataDownloadSuccess();
                 XLog.d(TAG + "find onSuccess");
                 Gson gson = new Gson();
                 List<Article> articles = new ArrayList<Article>();
@@ -245,11 +324,12 @@ public class BmobHelper {
                 }
                 DBHelper.UpDate.saveArticlesIfNotExist(articles);
                 //同步数据
-                synchronizeUserFavors(context, true);
+                synchronizeUserFavors(context, true,listener);
             }
 
             @Override
             public void onFailure(int i, String s) {
+                if (listener != null) listener.onDataDownloadFailure(i,s);
                 XLog.d(TAG + "find onFailure,msg:" + s);
             }
         });

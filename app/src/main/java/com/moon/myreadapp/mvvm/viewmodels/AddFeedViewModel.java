@@ -101,6 +101,10 @@ public class AddFeedViewModel extends BaseViewModel {
         query.findObjects(mView, new FindListener<Feed>() {
             @Override
             public void onSuccess(List<Feed> object) {
+                for(Feed feed:object){
+                    feed.setObjectId(null);
+                    feed.clearBmobData();
+                }
                 systemRecAdapter.setmData(object);
                 if (object.size() <= 0) {
                     emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_empty_data));

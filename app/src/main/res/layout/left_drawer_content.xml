@@ -109,10 +109,10 @@
                 android:layout_width="@dimen/left_bottom_height"
                 android:gravity="center"
                 android:textSize="@dimen/text_h1"
-                android:textColor="@color/txt_black"
+                android:textColor="@{drawerViewModel.syncState.isSpin ? @color/message : @color/txt_black}"
                 android:onClick="@{drawerViewModel.onClickSynchro}"
                 android:layout_height="match_parent"
-                android:text="@{drawerViewModel.syncIconStatus != 0 ? @string/drawer_sync_icon_spin : @string/drawer_sync_icon}" />
+                android:text="@string/drawer_sync_icon" />
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/changeTheme"
                 android:layout_width="0dp"
@@ -125,7 +125,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/txt_black"
                 android:padding="@dimen/normal_half_padding"
-                android:text="@string/drawer_sync_get_start" />
+                android:text="@{drawerViewModel.syncState.notice ?? @string/drawer_sync_get_start}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

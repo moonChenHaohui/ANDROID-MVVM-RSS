@@ -29,10 +29,12 @@ import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.SettingActivity;
 import com.moon.myreadapp.ui.ViewArticleActivity;
 import com.moon.myreadapp.util.BmobHelper;
+import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobObject;
@@ -61,7 +63,9 @@ public class DrawerViewModel extends BaseViewModel {
     private String notice;
 
     private SyncState syncState;
-    private  int syncIconStatus = 0;
+
+
+    private BmobHelper.SyncListener syncListener;
 
 
     public DrawerViewModel(Activity view) {
@@ -117,6 +121,38 @@ public class DrawerViewModel extends BaseViewModel {
     public void initEvents() {
         setUser(DBHelper.Query.getUser());
         requestUser();
+        syncListener = new BmobHelper.SyncListener() {
+            @Override
+            public void onDataSyncSuccess() {
+
+            }
+
+            @Override
+            public void onDataDownloadSuccess() {
+
+            }
+
+            @Override
+            public void onDataSyncFailure(int i, String s) {
+                syncState.setNotice(R.string.drawer_sync_in_download_fail);
+                syncState.setIsSpin(false);
+                notifyPropertyChanged(BR.syncState);
+            }
+
+            @Override
+            public void onDataDownloadFailure(int i, String s) {
+                syncState.setNotice(R.string.drawer_sync_in_download_fail);
+                syncState.setIsSpin(false);
+                notifyPropertyChanged(BR.syncState);
+            }
+
+            @Override
+            public void onDatasSyncOver() {
+                syncState.setNotice(mView.getString(R.string.drawer_sync_in_sync_success_msg, Conver.ConverToString(new Date())));
+                syncState.setIsSpin(false);
+                notifyPropertyChanged(BR.syncState);
+            }
+        };
     }
 
 
@@ -230,23 +266,8 @@ public class DrawerViewModel extends BaseViewModel {
         this.syncState = syncState;
         notifyPropertyChanged(BR.syncState);
         XLog.d("setSyncState: isspin:" + syncState.isSpin() + ",notice:" + syncState.getNotice());
-        if (getSyncIconStatus() ==0 && getSyncState().isSpin()){
-            setSyncIconStatus(1);
-        } else if (getSyncIconStatus() != 0 && !getSyncState().isSpin()){
-            setSyncIconStatus(0);
-        }
     }
 
-    @Bindable
-    public int getSyncIconStatus() {
-        return syncIconStatus;
-    }
-
-    public void setSyncIconStatus(int syncIconStatus) {
-        this.syncIconStatus = syncIconStatus;
-        notifyPropertyChanged(BR.syncIconStatus);
-        XLog.d("setSyncState: syncIconStatus:" + syncIconStatus);
-    }
 
     public void updateUser(User user) {
         setUser(user);
@@ -266,16 +287,14 @@ public class DrawerViewModel extends BaseViewModel {
             return;
         }
         if (getSyncState().isSpin()) {
-            //用户取消同步
-//            getSyncState().setNotice(mView.getString(R.string.drawer_sync_in_sync_cancel));
-//            getSyncState().setIsSpin(false);
-//            updateSyncState();
             return;
         } else {
-            //开始同步
-            //同步频道信息
-            BmobHelper.updateUserFeeds(mView,-1,-1);
-            BmobHelper.updateUserFavors(mView,-1,-1);
+            getSyncState().setIsSpin(true);
+            getSyncState().setNotice(R.string.drawer_sync_in_sync);
+            notifyPropertyChanged(BR.syncState);
+            BmobHelper.updateUserFeeds(mView, -1, -1, syncListener);
+            BmobHelper.updateUserFavors(mView, -1, -1, syncListener);
         }
     }
+
 }
