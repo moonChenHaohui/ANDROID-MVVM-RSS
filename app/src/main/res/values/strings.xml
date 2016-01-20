@@ -252,7 +252,8 @@
     <string name="option_sync_storge_now">现在同步</string>
     <string name="option_sync_storge_doing">正在同步..</string>
     <string name="option_sync_storge_after_login">登录后可以同步</string>
-    <string name="option_sync_storge_last_time">上次同步时间:%1$s</string>
+    <string name="option_sync_storge_last_time">同步成功!同步时间:%1$s</string>
+    <string name="option_sync_storge_fial">同步失败,点击重试</string>
 
     <string name="option_delete_all_read_articles">@string/set_clean_cache_title</string>
     <string name="option_delete_all_read_articles_doing">正在删除..</string>

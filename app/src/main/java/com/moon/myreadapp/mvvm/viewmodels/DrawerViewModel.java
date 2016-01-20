@@ -11,12 +11,14 @@ import android.widget.Toast;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.StringUtils;
+import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.DrawerAdapter;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.SynchronizeStateEvent;
+import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.MenuItem;
 import com.moon.myreadapp.mvvm.models.SyncState;
@@ -151,6 +153,8 @@ public class DrawerViewModel extends BaseViewModel {
                 syncState.setNotice(mView.getString(R.string.drawer_sync_in_sync_success_msg, Conver.ConverToString(new Date())));
                 syncState.setIsSpin(false);
                 notifyPropertyChanged(BR.syncState);
+                //更新feed 列表
+                XApplication.getInstance().bus.post(new UpdateFeedListEvent());
             }
         };
     }

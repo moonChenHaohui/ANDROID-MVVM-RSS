@@ -316,6 +316,7 @@ public class DBHelper {
                     } else {
                         //这里进行objid 的设置,否则再次同步的时候,会当成新数据来插入
                         temp.setObjectId(articles.get(i).getObjectId());
+                        temp.setStatus(articles.get(i).getStatus());
                         //XLog.d("FEED SAVE 更新数据");
                         UpDate.saveArticle(temp);
                     }

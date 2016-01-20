@@ -27,6 +27,7 @@ import com.moon.myreadapp.ui.ArticleActivity;
 import com.moon.myreadapp.ui.ArticleWebActivity;
 import com.moon.myreadapp.ui.LoginActivity;
 import com.moon.myreadapp.ui.ViewArticleActivity;
+import com.moon.myreadapp.util.BmobHelper;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
@@ -324,30 +325,37 @@ public class ViewArticleViewModel extends BaseViewModel {
             if (DBHelper.Query.getUser() != null) {
                 onPregress = true;
                 setFucText(mView.getString(R.string.option_sync_storge_doing));
-                List<Article> articles = DBHelper.Query.getArticles(Article.Status.FAVOR, -1,-1);
-                if (CollectionUtils.isEmptyList(articles)){
-                    setFucText("数据库内没有收藏的文章");
-                    return;
-                }
-                int len = articles.size();
-                SaveListener listener = new SaveListener() {
-
+                BmobHelper.updateUserFavors(mView, -1, -1, new BmobHelper.SyncListener() {
                     @Override
-                    public void onSuccess() {
-                        XLog.d("添加数据成功，");
+                    public void onDatasSyncOver() {
+                        onPregress = false;
+                        mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
+                        setFucText(mView.getString(R.string.option_sync_storge_last_time, Conver.formatDateTime(new Date())));
                     }
 
                     @Override
-                    public void onFailure(int code, String arg0) {
-                        // 添加失败
+                    public void onDataSyncSuccess() {
+
                     }
-                };
-                for(int i = 0;i < len;i++){
-                    setFucText("当前进度:"+i+"/" + len +"");
-                    articles.get(i).save(mView,listener);
-                }
-                onPregress = false;
-                setFucText(mView.getString(R.string.option_sync_storge_last_time, Conver.formatDateTime(new Date())));
+
+                    @Override
+                    public void onDataDownloadSuccess() {
+
+                    }
+
+                    @Override
+                    public void onDataSyncFailure(int i, String s) {
+                        onPregress = false;
+                        setFucText(mView.getString(R.string.option_sync_storge_fial));
+                    }
+
+                    @Override
+                    public void onDataDownloadFailure(int i, String s) {
+                        onPregress = false;
+                        setFucText(mView.getString(R.string.option_sync_storge_fial));
+                    }
+                });
+
 
             } else {
                 XDispatcher.from(mView).dispatch(new RouterAction(LoginActivity.class, null, true));
