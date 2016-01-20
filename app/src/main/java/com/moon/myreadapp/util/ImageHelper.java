@@ -27,7 +27,7 @@ public class ImageHelper {
     public static void initImage(SimpleDraweeView simpleDraweeView){
         GenericDraweeHierarchy hierarchy = getInstance().build();
         //设置占位图
-        hierarchy.setPlaceholderImage(R.drawable.bg_empty_image);
+        hierarchy.setPlaceholderImage(R.drawable.image_bg);
         //中心缩放
         hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP);
 

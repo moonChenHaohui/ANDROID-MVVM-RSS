@@ -270,6 +270,12 @@ public class FeedViewModel extends BaseViewModel {
                     break;
                 case R.id.action_read_delete:
                     //删除
+                    if (article.getStatus() == Article.Status.FAVOR.status){
+                        //如果在收藏情况下被删除,且有objid,那么需要通知服务端
+                        if (article.getObjectId() != null){
+                            article.delete(mView);
+                        }
+                    }
                     mAdapter.remove(currentPosition);
                     article.setStatus(Article.Status.DELETE.status);
                     DBHelper.UpDate.saveArticle(article);

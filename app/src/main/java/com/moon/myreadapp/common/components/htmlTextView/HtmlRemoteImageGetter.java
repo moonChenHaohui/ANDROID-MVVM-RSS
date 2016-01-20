@@ -36,7 +36,7 @@ public class HtmlRemoteImageGetter implements Html.ImageGetter {
 
     public Drawable getDrawable(String source) {
         final UrlDrawable urlDrawable = new UrlDrawable();
-        urlDrawable.setDrawable(Globals.getApplication().getResources().getDrawable(R.drawable.bg_empty_image), container.getMeasuredWidth() - container.getPaddingLeft() - container.getPaddingRight());
+        urlDrawable.setDrawable(Globals.getApplication().getResources().getDrawable(R.drawable.image_bg), container.getMeasuredWidth() - container.getPaddingLeft() - container.getPaddingRight());
         /**
          * 使用volley进行图片加载
          */

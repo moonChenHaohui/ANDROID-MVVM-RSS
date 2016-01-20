@@ -266,6 +266,10 @@ public class MainViewModel extends BaseViewModel {
                             feedRecAdapter.remove(currentPosition);
                             //删除订阅
                             DBHelper.Delete.deleteFeed(feed);
+                            //通知服务端删除
+                            if(feed.getObjectId() != null){
+                                feed.delete(mView);
+                            }
                             ToastHelper.showToast(R.string.feed_item_delete_success);
                             dialog.dismiss();
                         }

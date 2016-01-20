@@ -31,6 +31,7 @@ import com.moon.myreadapp.util.BmobHelper;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.Conver;
 import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.Globals;
 import com.moon.myreadapp.util.PreferenceUtils;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.rey.material.app.Dialog;
@@ -292,6 +293,12 @@ public class ViewArticleViewModel extends BaseViewModel {
                     break;
                 case R.id.action_read_delete:
                     //删除
+                    if (article.getStatus() == Article.Status.FAVOR.status){
+                        //如果在收藏情况下被删除,且有objid,那么需要通知服务端
+                        if (article.getObjectId() != null){
+                            article.delete(mView);
+                        }
+                    }
                     mAdapter.remove(currentPosition);
                     article.setStatus(Article.Status.DELETE.status);
                     DBHelper.UpDate.saveArticle(article);
@@ -330,7 +337,7 @@ public class ViewArticleViewModel extends BaseViewModel {
                     public void onDatasSyncOver() {
                         onPregress = false;
                         mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
-                        setFucText(mView.getString(R.string.option_sync_storge_last_time));
+                        setFucText(Globals.getApplication().getString(R.string.option_sync_storge_last_time));
                     }
 
                     @Override
@@ -346,13 +353,13 @@ public class ViewArticleViewModel extends BaseViewModel {
                     @Override
                     public void onDataSyncFailure(int i, String s) {
                         onPregress = false;
-                        setFucText(mView.getString(R.string.option_sync_storge_fial));
+                        setFucText(Globals.getApplication().getString(R.string.option_sync_storge_fial));
                     }
 
                     @Override
                     public void onDataDownloadFailure(int i, String s) {
                         onPregress = false;
-                        setFucText(mView.getString(R.string.option_sync_storge_fial));
+                        setFucText(Globals.getApplication().getString(R.string.option_sync_storge_fial));
                     }
                 });
 

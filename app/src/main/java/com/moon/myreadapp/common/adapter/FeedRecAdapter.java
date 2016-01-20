@@ -80,7 +80,7 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding>
                     }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    holder.getBinding().feedIcon.setImageResource(R.drawable.button_corners_unable);
+                    holder.getBinding().feedIcon.setImageResource(R.drawable.image_bg);
                 }
             });
             queue.add(imageRequest);
