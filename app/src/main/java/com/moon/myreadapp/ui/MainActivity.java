@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.event.SynchronizeStateEvent;
@@ -115,8 +118,13 @@ public class MainActivity extends BaseActivity {
     private void initMainView() {
         //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
-        binding.mainList.getmAdapter().addHeader(noticeBinding.getRoot());
-        showNoticeView(true);
+        binding.mainList.getmAdapter().addFooter(noticeBinding.getRoot());
+        noticeBinding.notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XDispatcher.from(MainActivity.this).dispatch(new RouterAction(AddFeedActivity.class,true));
+            }
+        });
         binding.mainList.setPullLoadEnabled(false);
         //binding.mainList.setScrollLoadEnabled(true);
 //        binding.mainList.setPullRefreshEnabled(false);
@@ -133,6 +141,7 @@ public class MainActivity extends BaseActivity {
                         //加载本地数据
                         mainViewModel.updateFeeds();
                         binding.mainList.onPullDownRefreshComplete();
+                        mainViewModel.refreshAll();
                         binding.mainList.setHasMoreData(false);
                     }
                 });
@@ -189,9 +198,6 @@ public class MainActivity extends BaseActivity {
         if (id == R.id.action_refresh) {
 
             mainViewModel.refreshAll();
-        } else if (id == R.id.action_drap_down) {
-            item.setIcon(R.drawable.ic_favor);
-            triggerNoticeView();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -219,7 +225,6 @@ public class MainActivity extends BaseActivity {
 
     public void btnOnClick(View v) {
         mainViewModel.btnOnClick(v);
-
     }
 
 
@@ -229,26 +234,4 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    /**
-     * 控制notice 的显示
-     * 做法是把noticeview 作为recyclerview 的headview来显示
-     * @param isShow
-     */
-    private void showNoticeView(boolean isShow){
-        if(isShow){
-            //注意 recyclerview 的滚动事件都交给layoutmanager,使用了可以滚动到顶部的scroll方法
-           binding.mainList.getRefreshableView().smoothScrollToPosition(0);
-        } else {
-            binding.mainList.getRefreshableView().smoothScrollToPosition(1);
-        }
-        noticeBinding.getRoot().setTag(isShow);
-    }
-
-    private void triggerNoticeView(){
-        if (noticeBinding.getRoot().getTag() == null){
-            noticeBinding.getRoot().setTag(false);
-        }
-        boolean status = (boolean)noticeBinding.getRoot().getTag();
-        showNoticeView(!status);
-    }
 }

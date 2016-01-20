@@ -68,6 +68,7 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
                                     updateFeed();
                                     ToastHelper.showNotice((Activity) context, view.getResources().getString(R.string.sub_notice_already_join, getmData().get(pos).getTitle()), TastyToast.STYLE_MESSAGE).setDuration(1000);
                                     view.setText(view.getResources().getString(R.string.sub_btn_cancel_sub));
+                                    view.setBackgroundResource(R.drawable.button_corners_unable);
                                     view.setEnabled(true);
                                 }
                             }, 500);
@@ -81,6 +82,7 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
                                     DBHelper.Delete.deleteFeed(getmData().get(pos));
                                     updateFeed();
                                     view.setText(view.getResources().getString(R.string.sub_btn_sub));
+                                    view.setBackgroundResource(R.drawable.button_corners);
                                     view.setEnabled(true);
                                     view.setTag(R.id.tag_sub_status, SUB_STATUS_UNSUB);
                                 }
@@ -111,17 +113,19 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
         if (DBHelper.Query.findFeedByURL(feed.getUrl()) == null) {
             //未订阅
             holder.getBinding().sub.setTag(R.id.tag_sub_status, SUB_STATUS_UNSUB);
-            holder.getBinding().sub.setText( holder.getBinding().sub.getResources().getString(R.string.sub_btn_sub));
+            holder.getBinding().sub.setText(holder.getBinding().sub.getResources().getString(R.string.sub_btn_sub));
+            holder.getBinding().sub.setBackgroundResource(R.drawable.button_corners);
         } else {
             //已订阅
             holder.getBinding().sub.setTag(R.id.tag_sub_status, SUB_STATUS_SUBED);
-            holder.getBinding().sub.setText( holder.getBinding().sub.getResources().getString(R.string.sub_btn_cancel_sub));
+            holder.getBinding().sub.setText(holder.getBinding().sub.getResources().getString(R.string.sub_btn_cancel_sub));
+            holder.getBinding().sub.setBackgroundResource(R.drawable.button_corners_unable);
         }
 
         //加载icon
         if (StringUtils.isNotEmpty(feed.getIcon())) {
             RequestQueue queue = Volley.newRequestQueue(holder.getBinding().feedIcon.getContext());
-
+            holder.getBinding().feedIcon.setImageResource(R.drawable.image_bg);
             ImageRequest imageRequest = new ImageRequest(
                     feed.getIcon(),
                     new Response.Listener<Bitmap>() {
@@ -133,7 +137,6 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
                     }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    holder.getBinding().feedIcon.setImageResource(R.drawable.button_corners_unable);
                 }
             });
             queue.add(imageRequest);

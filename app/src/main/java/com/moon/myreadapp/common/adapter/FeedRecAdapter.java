@@ -58,10 +58,11 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding>
     @Override
     protected void onBindCoreViewHolder(final BindingHolder<LvFeedItemBinding> holder, int truePos) {
         Feed feed = mData.get(truePos);
-        //XLog.d("feed:" + feed.toString());
+        long unread = DBHelper.Query.getFeedUnReadByFeedId(feed.getId());
+        holder.getBinding().setCount((int)unread);
         holder.getBinding().setFeed(feed);
         String icon = feed.getIcon();
-        XLog.d("unReadCount:" + icon);
+        
         if (icon != null) {
             // holder.getBinding().feedIcon.set(Uri.parse(icon));
             /**

@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data></data>
-    <com.joanzapata.iconify.widget.IconTextView
+
+    <ImageView
         android:id="@+id/notice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:paddingLeft="@dimen/normal_padding"
-        android:paddingRight="@dimen/normal_padding"
-        android:text="正在连接服务器....."
-        android:textColor="@color/txt_white"
-        android:textSize="@dimen/text_h4" />
+        android:layout_height="@dimen/main_list_item_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:padding="@dimen/normal_padding"
+
+        android:background="@drawable/feed_list_item"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_add" />
 </layout>
+

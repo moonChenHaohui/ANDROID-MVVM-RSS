@@ -8,6 +8,9 @@
         <variable
             name="feed"
             type="com.moon.myreadapp.mvvm.models.dao.Feed" />
+        <variable
+            name="count"
+            type="int"/>
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,8 +54,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:gravity="center"
             android:textStyle="bold"
-            android:text='@{DBHelper.Query.getFeedUnReadByFeedId(feed.id) + ""}'
+            android:textSize="@dimen/text_h3"
+            android:text='@{count + ""}'
+            android:visibility="@{count &lt; 1 ? View.GONE : View.VISIBLE}"
             android:layout_marginRight="@dimen/normal_padding"
             android:textColor="?attr/colorPrimary"/>
         <com.joanzapata.iconify.widget.IconTextView

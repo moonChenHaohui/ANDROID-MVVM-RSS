@@ -168,10 +168,7 @@ public class MainViewModel extends BaseViewModel {
         this.readItemClickListener = readItemClickListener;
     }
 
-    public void onAddButtonClick() {
-        DialogFractory.createDialog(mView, DialogFractory.Type.ThemeChoose).show();
-        //XDispatcher.from(mView).dispatch(new RouterAction(AddFeedActivity.class, true));
-    }
+
 
     @Override
     public void clear() {

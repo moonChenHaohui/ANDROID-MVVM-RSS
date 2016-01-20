@@ -20,7 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
-            fresco:placeholderImage="@drawable/button_corners_unable"
+            fresco:placeholderImage="@drawable/image_bg"
             android:layout_width="@dimen/img_size_32"
             android:layout_height="@dimen/img_size_32"/>
 
@@ -28,7 +28,7 @@
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_title"
             android:layout_marginLeft="@dimen/normal_half_padding"
-            android:layout_toStartOf="@id/feed_unread_size"
+            android:layout_toStartOf="@+id/sub"
             android:hint="feed title"
             android:layout_toRightOf="@id/feed_icon"
             android:layout_alignParentTop="true"
@@ -38,7 +38,8 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/txt_black"
-            android:textSize="@dimen/text_h2" />
+            android:textSize="@dimen/text_h2"
+            android:layout_toLeftOf="@+id/sub" />
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/sub"
             android:background="@drawable/button_corners"
@@ -53,7 +54,7 @@
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/feed_description"
             android:paddingTop="4dp"
-            android:layout_toStartOf="@id/feed_unread_size"
+            android:layout_toStartOf="@+id/sub"
             android:layout_alignLeft="@id/feed_title"
             android:layout_below="@id/feed_title"
             android:layout_width="match_parent"
@@ -64,7 +65,8 @@
             android:text="@{feed.description ?? feed.title}"
             android:visibility="@{feed.description == null ? View.GONE : View.VISIBLE}"
             android:textColor="@color/txt_gray_dark"
-            android:textSize="@dimen/text_h3" />
+            android:textSize="@dimen/text_h3"
+            android:layout_toLeftOf="@+id/sub" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

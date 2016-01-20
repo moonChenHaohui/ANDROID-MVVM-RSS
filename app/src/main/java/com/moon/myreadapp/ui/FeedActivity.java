@@ -82,20 +82,8 @@ public class FeedActivity extends BaseActivity {
 
             }
         });
-        final FloatingActionButton fab_image = (FloatingActionButton)findViewById(R.id.fab_image);
-        mDrawables[0] = getResources().getDrawable(R.drawable.ic_wx_logo);
-        mDrawables[1] = getResources().getDrawable(R.drawable.ic_sina_logo);
-        fab_image.setIcon(mDrawables[index], false);
-        fab_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                index = (index + 1) % 2;
-                fab_image.setIcon(mDrawables[index], true);
-            }
-        });
     }
-    private Drawable[] mDrawables = new Drawable[2];
-    private int index = 0;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
