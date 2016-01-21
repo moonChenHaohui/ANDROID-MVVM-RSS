@@ -33,11 +33,11 @@ public class RssHelper {
     }
 
 
-    public static synchronized void getMostRecentNews(final String feedUrl, IRssListener listener) {
-        if (listener == null) return;
-
+    public static synchronized RssTask getMostRecentNews(IRssListener listener) {
+        if (listener == null) return null;
+        RssTask rssTask = new RssTask(listener);
         //TODO 这里使用threadtool or RxAndroid?
-        new RssTask(listener).execute(feedUrl);
+        return rssTask;
     }
 
 

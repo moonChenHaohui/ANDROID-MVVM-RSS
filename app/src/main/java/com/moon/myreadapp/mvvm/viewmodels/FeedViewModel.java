@@ -2,6 +2,7 @@ package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.app.Activity;
 import android.databinding.Bindable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,6 +10,7 @@ import android.widget.Button;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.action.RouterAction;
+import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
@@ -54,6 +56,7 @@ public class FeedViewModel extends BaseViewModel {
     private int currentPosition = -1;
     private Dialog mDialog;
     private boolean showUnReadArticles;
+    private RssHelper.RssTask rssTask;
 
     public FeedViewModel(FeedActivity view, long feedId) {
         this.mView = view;
@@ -143,6 +146,11 @@ public class FeedViewModel extends BaseViewModel {
     @Override
     public void clear() {
         mView = null;
+        if (rssTask != null){
+            if (rssTask.getStatus() == AsyncTask.Status.RUNNING){
+                rssTask.cancel(true);
+            }
+        }
     }
 
 
@@ -152,7 +160,13 @@ public class FeedViewModel extends BaseViewModel {
      * @param feedList
      */
     public void refresh(final PullToRefreshRecyclerView feedList) {
-        RssHelper.getMostRecentNews(feed.getUrl(), new RssHelper.IRssListener() {
+        if (rssTask != null){
+            if (rssTask.getStatus() == AsyncTask.Status.RUNNING){
+                //正在执行中
+                return;
+            }
+        }
+        rssTask = RssHelper.getMostRecentNews(new RssHelper.IRssListener() {
             @Override
             public void onSuccess(final SyndFeed syndFeed) {
                 feedList.post(new Runnable() {
@@ -190,7 +204,7 @@ public class FeedViewModel extends BaseViewModel {
 
                         //重新设置数据
                         if (haveNewDate) {
-                            mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
+                            mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
                         }
                         updateFeed();
 
@@ -201,11 +215,14 @@ public class FeedViewModel extends BaseViewModel {
 
             @Override
             public void onError(final String msg) {
-                ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
+                XLog.d("onError" + msg);
+                mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
+                //ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
                 feedList.onPullDownRefreshComplete();
 //
             }
         });
+        rssTask.execute(feed.getUrl());
     }
 
     /**

@@ -2,6 +2,7 @@ package com.moon.myreadapp.common.components.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,6 +35,7 @@ public class AddSubDialog extends Dialog {
     private boolean isSearch = true;
     private Feed feed;
     private ArrayList<Article> articles;
+    private RssHelper.RssTask rssTask;
 
     public AddSubDialog(Context context) {
         super(context);
@@ -73,7 +75,7 @@ public class AddSubDialog extends Dialog {
                     showProgress(true);
                 }
             });
-            RssHelper.getMostRecentNews(binding.input.getText().toString(), new RssHelper.IRssListener() {
+            rssTask = RssHelper.getMostRecentNews(new RssHelper.IRssListener() {
                 @Override
                 public void onSuccess(final SyndFeed syndFeed) {
                     binding.getRoot().post(new Runnable() {
@@ -100,6 +102,7 @@ public class AddSubDialog extends Dialog {
                     });
                 }
             });
+            rssTask.execute(binding.input.getText().toString());
         }
     }
 
@@ -159,5 +162,16 @@ public class AddSubDialog extends Dialog {
         isSearch = true;
         binding.login.setText(Globals.getApplication().getString(show ? R.string.dialog_sub_search_load : R.string.dialog_sub_search));
         binding.input.setEnabled(!show);
+    }
+
+    @Override
+    public void dismiss() {
+        if (rssTask != null){
+            if (rssTask.getStatus() == AsyncTask.Status.RUNNING){
+                rssTask.cancel(true);
+            }
+            rssTask = null;
+        }
+        super.dismiss();
     }
 }

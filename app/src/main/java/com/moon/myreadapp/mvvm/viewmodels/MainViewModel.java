@@ -1,6 +1,7 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
 import android.databinding.Bindable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ public class MainViewModel extends BaseViewModel {
     private boolean refresh = false;
     private int currentPosition = -1;
     private Dialog mDialog;
+
+    private RefreshAsyncTask refreshAsyncTask;
 
     public MainViewModel(MainActivity view) {
         this.mView = view;
@@ -174,7 +177,12 @@ public class MainViewModel extends BaseViewModel {
 
     @Override
     public void clear() {
+        if (refreshAsyncTask != null && refreshAsyncTask.getStatus() == AsyncTask.Status.RUNNING){
+            refreshAsyncTask.cancel(true);
+            refreshAsyncTask = null;
+        }
         mView = null;
+
     }
 
     public boolean isRefresh() {
@@ -208,7 +216,10 @@ public class MainViewModel extends BaseViewModel {
             return;
         }
         setRefresh(true);
-        RefreshAsyncTask refreshAsyncTask = new RefreshAsyncTask(new RefreshAsyncTask.StatusListener() {
+        if (refreshAsyncTask != null && refreshAsyncTask.getStatus() == AsyncTask.Status.RUNNING){
+            return;
+        }
+        refreshAsyncTask = new RefreshAsyncTask(new RefreshAsyncTask.StatusListener() {
             @Override
             public void onSuccess() {
                 setRefresh(false);

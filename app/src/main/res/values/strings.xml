@@ -114,7 +114,7 @@
     <string name="add_feed_btn">自定义添加,输入URL</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">暂时不支持该功能</string>
 
     <string name="title_activity_welcome">欢迎您!</string>
     <string name="welcome_word">欢迎回来</string>
