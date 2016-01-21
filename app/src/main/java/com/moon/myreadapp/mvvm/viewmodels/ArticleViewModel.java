@@ -168,7 +168,7 @@ public class ArticleViewModel extends BaseViewModel {
                 break;
             case R.id.share:
                 //分享
-                new ShareDialog(mView).showWithView(view);
+                new ShareDialog(mView,article).showWithView(view);
                 break;
         }
     }

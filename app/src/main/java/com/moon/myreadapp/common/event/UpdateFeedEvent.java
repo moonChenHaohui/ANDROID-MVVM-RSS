@@ -25,7 +25,8 @@ public class UpdateFeedEvent implements XEvent {
     public static int ON_UPDATE = 1<<10;
     /** 正常状态*/
     public static int NORMAL    = 1<<11;
-
+    /** 失败状态*/
+    public static int FAIL    = 1<<12;
 
     private TYPE type;
 

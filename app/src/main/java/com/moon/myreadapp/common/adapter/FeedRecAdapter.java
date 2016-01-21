@@ -61,8 +61,9 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding>
         long unread = DBHelper.Query.getFeedUnReadByFeedId(feed.getId());
         holder.getBinding().setCount((int)unread);
         holder.getBinding().setFeed(feed);
-        String icon = feed.getIcon();
 
+        holder.getBinding().feedIcon.setImageResource(R.drawable.image_bg);
+        String icon = feed.getIcon();
         if (icon != null) {
             // holder.getBinding().feedIcon.set(Uri.parse(icon));
             /**
@@ -81,7 +82,6 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding>
                     }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    holder.getBinding().feedIcon.setImageResource(R.drawable.image_bg);
                 }
             });
             queue.add(imageRequest);

@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">RSS阅读神器</string>
+    <string name="app_name">简读RSS</string>
 
-    <string name="title_activity_main">RSS阅读神器</string>
+    <string name="title_activity_main">@string/app_name</string>
 
 
     <string name="time_today">今天</string>
@@ -133,7 +133,11 @@
         <item>新浪微博</item>
         <item>更多</item>
     </array>
+    <string name="share_not_install">请先安装相应客户端</string>
+    <string name="share_content">我在#%3$s#上发现一篇好文\r\n\r\n%1$s\r\n原文链接:%2$s\r\n\r\n我在用#%3$s#,快来下载!%4$s</string>
+    <string name="share_content_title">[%1$s]%2$s</string>
     <string name="share_cancel">取消</string>
+    <string name="share_fail">分享失败</string>
 
     <string name="set_title">阅读设置</string>
     <string name="set_mode">夜间模式</string>

@@ -24,13 +24,21 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_width="@dimen/img_size_32"
-            android:layout_height="@dimen/img_size_32">
+            android:layout_height="@dimen/main_list_item_height">
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/feed_icon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/img_size_32"
+                android:layout_height="@dimen/img_size_32"
+                android:layout_gravity="center"
                 />
-
+            <ImageView
+                android:id="@+id/feed_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:src="@drawable/update_fail"
+                android:visibility="@{(feed.status != null &#38;&#38; feed.status == UpdateFeedEvent.FAIL) ? View.VISIBLE : View.INVISIBLE}" />
+            />
         </FrameLayout>
 
         <com.joanzapata.iconify.widget.IconTextView

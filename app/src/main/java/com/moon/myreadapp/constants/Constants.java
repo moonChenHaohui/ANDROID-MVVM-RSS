@@ -11,10 +11,17 @@ public class Constants {
 
     public static boolean DEBUG = true;
 
+    public static String APP_URL =  "http://rssread.bmob.cn";
+
     /**
      * Bmob APP id
      */
     public static final String APP_ID = "1c56866927e32c7063d2179cc121a741";
+
+    /**
+     * 微信开发者id
+     */
+    public static String APP_WX_ID =  "null";
 
     public static final String DB_NAME         =   "eaasy-rss-db";
 

@@ -13,6 +13,7 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
+import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
@@ -134,6 +135,7 @@ public class MainViewModel extends BaseViewModel {
             int p = feedRecAdapter.getmData().indexOf(event.getFeed());
             if (p >= 0) {
                 feedRecAdapter.getmData().get(p).setStatus(event.getStatus());
+                //ToastHelper.showNotice(mView,event.getNotice(), TastyToast.STYLE_ALERT);
                 XLog.d("RefreshAsyncTaskfeed:status:" + event.getStatus());
                 //更新这个要加上header
                 feedRecAdapter.notifyItemChanged(feedRecAdapter.getHeaderSize() + p);
