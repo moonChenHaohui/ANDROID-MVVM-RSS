@@ -73,13 +73,13 @@ public class ReadSetDialog extends BaseButtomDialog implements View.OnClickListe
                 //XLog.d("Slider view, boolean fromUser," + fromUser + " float oldPos" + oldPos + ", float newPos" + newPos + ", int oldValue" + oldValue + ", int newValue" + newValue + "");
             }
         });
-        //夜间模式开关
-        binding.modeSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(Switch view, boolean checked) {
-                //ToastHelper.showToast("夜间模式:" + checked);
-            }
-        });
+//        //夜间模式开关
+//        binding.modeSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(Switch view, boolean checked) {
+//                //ToastHelper.showToast("夜间模式:" + checked);
+//            }
+//        });
 
         //字体设置
         //binding.fontSlider.setValue();

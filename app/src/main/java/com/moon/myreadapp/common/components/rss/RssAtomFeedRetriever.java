@@ -25,30 +25,6 @@ public class RssAtomFeedRetriever
         return feedFetcher;
     }
 
-    public SyndFeed getMostRecentNews( final String feedUrl )
-    {
-
-        try
-        {
-            return retrieveFeed( feedUrl );
-        }
-        catch ( Exception e )
-        {
-            String ex = e.toString();
-            if(ex != null && ex != ""){
-                String[] array = ex.split("[\\D]+");
-                String code = array[array.length-1];
-                int codeNumber = 404;
-                try{
-                    codeNumber =  Integer.valueOf(code);
-                } catch (Exception e1){
-
-                }
-                Log.e("getMostRecentNews","错误代码:" + codeNumber);
-            }
-            return null;
-        }
-    }
 
     public SyndFeed retrieveFeed( final String feedUrl )
         throws IOException, FeedException, FetcherException

@@ -20,8 +20,9 @@
     <color name="tab_bar_item_normal">#666</color>
     <color name="tab_bar_item_acvite">#11aa11</color>
 
-    <color name="background_gray">#11aa11</color>
-    <color name="background_selected">#c41411</color>
+    <color name="background_gray">#f7f6f4</color>
+    <color name="background_selected">#dcdcdc</color>
+
 
     <color name="confirm">#2ecc71</color>
     <color name="alert">#e74c3c</color>

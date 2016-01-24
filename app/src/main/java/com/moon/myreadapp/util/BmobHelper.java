@@ -102,11 +102,11 @@ public class BmobHelper {
             @Override
             public void onSuccess() {
                 int val = resultCount.addAndGet(1);
-                if (listener != null) listener.onDataSyncSuccess();
-                if (listener != null && val>= count -1){
+                if (listener != null && context != null) listener.onDataSyncSuccess();
+                if (listener != null && context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
-                if (listener != null && val>= count -1){
+                if (listener != null&& context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
 
@@ -115,9 +115,9 @@ public class BmobHelper {
             @Override
             public void onFailure(int i, String s) {
                 int val = resultCount.addAndGet(1);
-                if (listener != null) listener.onDataSyncFailure(i,s);
+                if (listener != null && context != null) listener.onDataSyncFailure(i,s);
                 XLog.d("FEED Update onFailure:" + s);
-                if (listener != null && val>= count -1){
+                if (listener != null && context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
             }
@@ -167,7 +167,7 @@ public class BmobHelper {
 
             @Override
             public void onSuccess(JSONArray arg0) {
-                if (listener != null) listener.onDataDownloadSuccess();
+                if (listener != null && context != null) listener.onDataDownloadSuccess();
                 XLog.d(TAG + "find onSuccess");
                 Gson gson = new Gson();
                 List<Feed> feeds = new ArrayList<Feed>();
@@ -189,7 +189,7 @@ public class BmobHelper {
 
             @Override
             public void onFailure(int i, String s) {
-                if (listener != null) listener.onDataDownloadFailure(i, s);
+                if (listener != null && context != null)  listener.onDataDownloadFailure(i, s);
                 XLog.d(TAG + "find onFailure,msg:" + s);
             }
         });
@@ -219,8 +219,8 @@ public class BmobHelper {
             @Override
             public void onSuccess() {
                 int val = resultCount.addAndGet(1);
-                if (listener != null) listener.onDataSyncSuccess();
-                if (listener != null && val>= count -1){
+                if (listener != null && context != null)  listener.onDataSyncSuccess();
+                if (listener != null && context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
 
@@ -229,9 +229,9 @@ public class BmobHelper {
             @Override
             public void onFailure(int i, String s) {
                 int val = resultCount.addAndGet(1);
-                if (listener != null) listener.onDataSyncFailure(i,s);
+                if (listener != null && context != null) listener.onDataSyncFailure(i,s);
                 XLog.d("FEED SAVE onFailure:" + s);
-                if (listener != null && val>= count -1){
+                if (listener != null && context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
             }
@@ -241,11 +241,11 @@ public class BmobHelper {
             @Override
             public void onSuccess() {
                 int val = resultCount.addAndGet(1);
-                if (listener != null) listener.onDataSyncSuccess();
-                if (listener != null && val>= count -1){
+                if (listener != null && context != null) listener.onDataSyncSuccess();
+                if (listener != null && context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
-                if (listener != null && val>= count -1){
+                if (listener != null && context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
 
@@ -254,9 +254,9 @@ public class BmobHelper {
             @Override
             public void onFailure(int i, String s) {
                 int val = resultCount.addAndGet(1);
-                if (listener != null) listener.onDataSyncFailure(i,s);
+                if (listener != null && context != null)  listener.onDataSyncFailure(i,s);
                 XLog.d("FEED Update onFailure:" + s);
-                if (listener != null && val>= count -1){
+                if (listener != null && context != null && val>= count -1){
                     listener.onDatasSyncOver();
                 }
             }
@@ -307,7 +307,7 @@ public class BmobHelper {
 
             @Override
             public void onSuccess(JSONArray arg0) {
-                if (listener != null) listener.onDataDownloadSuccess();
+                if (listener != null && context != null) listener.onDataDownloadSuccess();
                 XLog.d(TAG + "find onSuccess");
                 Gson gson = new Gson();
                 List<Article> articles = new ArrayList<Article>();
@@ -329,7 +329,7 @@ public class BmobHelper {
 
             @Override
             public void onFailure(int i, String s) {
-                if (listener != null) listener.onDataDownloadFailure(i,s);
+                if (listener != null && context != null) listener.onDataDownloadFailure(i,s);
                 XLog.d(TAG + "find onFailure,msg:" + s);
             }
         });

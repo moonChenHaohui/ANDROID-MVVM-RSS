@@ -70,7 +70,6 @@ public class MainActivity extends BaseActivity {
     public void setContentViewAndBindVm(Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(LayoutInflater.from(this), getLayoutView(), null, false);
-
         setContentView(binding.getRoot());
 
         noticeBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.notice,null,false);

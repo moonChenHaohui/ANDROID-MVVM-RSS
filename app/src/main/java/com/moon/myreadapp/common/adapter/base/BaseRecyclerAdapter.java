@@ -53,6 +53,7 @@ public abstract class BaseRecyclerAdapter<E, T> extends RecyclerView.Adapter<Bas
         mInflater = LayoutInflater.from(context);
         mData = data;
         this.notify =notify;
+        notifyDataChanged();
     }
 
 

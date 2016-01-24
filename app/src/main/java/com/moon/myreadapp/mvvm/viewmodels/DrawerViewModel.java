@@ -112,6 +112,10 @@ public class DrawerViewModel extends BaseViewModel {
                         XDispatcher.from(mView).dispatch(new RouterAction(SettingActivity.class, true));
                         break;
                     case 5:
+//                        if(syncState.isSpin()){
+//                            ToastHelper.showToast(R.string.drawer_sync_in_sync_wait);
+//                            break;
+//                        }
                         DialogFractory.createDialog(mView, DialogFractory.Type.ThemeChoose).show();
                         break;
                 }
@@ -211,7 +215,7 @@ public class DrawerViewModel extends BaseViewModel {
             public void onSuccess(List<User> list) {
                 if (list == null || list.size() == 0) {
                     DBHelper.Delete.deleteUser();
-                    ToastHelper.showToast(R.string.user_validate_fail);
+                    ToastHelper.showToast(R.string.action_cancel);
                 } else {
                     setUser(list.get(0));
                 }

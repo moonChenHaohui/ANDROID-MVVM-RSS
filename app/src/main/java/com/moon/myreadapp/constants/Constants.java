@@ -21,7 +21,7 @@ public class Constants {
     /**
      * 微信开发者id
      */
-    public static String APP_WX_ID =  "null";
+    public static String APP_WX_ID =  "wxf756a2b5b525d281";
 
     public static final String DB_NAME         =   "eaasy-rss-db";
 

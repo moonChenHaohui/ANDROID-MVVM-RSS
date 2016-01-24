@@ -68,7 +68,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     @Override
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         //XLog.d("onInterceptTouchEvent : 0 down;1 up;2 move:" + e.getAction());
-        mView = view;
+        if (mView == null) mView = view;
         if (e.getAction() == MotionEvent.ACTION_CANCEL){
             //当取消touch的时候需要标记,用来取消GestureDetector的onLongPress
             canelAction = true;

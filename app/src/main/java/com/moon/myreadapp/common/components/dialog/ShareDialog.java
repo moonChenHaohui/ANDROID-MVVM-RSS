@@ -26,6 +26,7 @@ import com.moon.myreadapp.mvvm.models.ShareItem;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -61,9 +62,10 @@ public class ShareDialog extends BaseButtomDialog implements View.OnClickListene
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_share, null, true);
         setContentView(binding.getRoot());
     }
-
+    private IWXAPI api;
     @Override
     void init() {
+        api = WXAPIFactory.createWXAPI(context, Constants.APP_WX_ID, true);
         final ShareAdapter adapter = new ShareAdapter(context);
         String[] array = context.getResources().getStringArray(R.array.share_dialog_text);
         adapter.add(new ShareItem.Builder(context)
@@ -182,22 +184,30 @@ public class ShareDialog extends BaseButtomDialog implements View.OnClickListene
 
 
     private void shareToWeChat(int scene) {
-        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.APP_WX_ID, true);
+
         if (!api.isWXAppInstalled()) {
             ToastHelper.showToast(R.string.share_not_install);
         }
         api.registerApp(Constants.APP_WX_ID);
-        WXWebpageObject object = new WXWebpageObject();
-        object.webpageUrl = article.getLink();
-        WXMediaMessage msg = new WXMediaMessage(object);
-        msg.mediaObject = object;
-        msg.thumbData = Bitmap2Bytes(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_rss_logo));
-        msg.title = context.getString(R.string.share_content_title,context.getString(R.string.app_name),article.getTitle());
-        msg.description = article.getCreator();
-        SendMessageToWX.Req request = new SendMessageToWX.Req();
-        request.message = msg;
-        request.scene = scene;
-        api.sendReq(request);
+        String text = context.getString(R.string.share_content,
+                article.getTitle(),
+                article.getLink(),
+                context.getString(R.string.app_name),
+                Constants.APP_URL
+        );
+
+        WXTextObject textObject = new WXTextObject();
+        textObject.text = text;
+
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = textObject;
+        msg.description = text;
+
+        SendMessageToWX.Req req=  new SendMessageToWX.Req();
+        req.transaction = article.getTitle();
+        req.message = msg;
+        req.scene = scene;
+        api.sendReq(req);
         api.unregisterApp();
     }
 

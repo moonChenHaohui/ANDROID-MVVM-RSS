@@ -25,17 +25,17 @@
         android:background="@color/txt_white"
         android:onClick="btnOnClick"/>
     <include layout="@layout/common_divider"/>
-    <com.rey.material.widget.Button
-        android:id="@+id/action_read_top"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/normal_list_item_small"
-        android:gravity="left|center_vertical"
-        android:padding="@dimen/normal_padding"
-        android:text="@string/action_read_top"
-        android:textSize="@dimen/text_h3"
-        android:background="@color/txt_white"
-        android:onClick="btnOnClick"/>
-    <include layout="@layout/common_divider"/>
+    <!--<com.rey.material.widget.Button-->
+        <!--android:id="@+id/action_read_top"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/normal_list_item_small"-->
+        <!--android:gravity="left|center_vertical"-->
+        <!--android:padding="@dimen/normal_padding"-->
+        <!--android:text="@string/action_read_top"-->
+        <!--android:textSize="@dimen/text_h3"-->
+        <!--android:background="@color/txt_white"-->
+        <!--android:onClick="btnOnClick"/>-->
+    <!--<include layout="@layout/common_divider"/>-->
     <com.rey.material.widget.Button
         android:id="@+id/action_read_delete_feed"
         android:layout_width="match_parent"

@@ -299,5 +299,6 @@
     <string name="drawer_sync_get_start">马上同步</string>
     <string name="drawer_sync_in_download_fail">数据异常</string>
     <string name="drawer_sync_in_sync">同步中...</string>
+    <string name="drawer_sync_in_sync_wait">同步中,请稍等.</string>
     <string name="drawer_sync_in_sync_success_msg">上次同步:%1$s</string>
 </resources>

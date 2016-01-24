@@ -255,10 +255,10 @@ public class MainViewModel extends BaseViewModel {
                     //刷新
                     refreshSingle(feed);
                     break;
-                case R.id.action_read_top:
-                    //置顶
-                    ToastHelper.showToast("top top top");
-                    break;
+//                case R.id.action_read_top:
+//                    //置顶
+//                    ToastHelper.showToast("top top top");
+//                    break;
                 case R.id.action_read_delete_feed:
                     //删除
                     final Dialog dialog = new Dialog(mView){

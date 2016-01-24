@@ -39,10 +39,10 @@
             <!--android:dependency="@string/set_no_graph_model_key"-->
             <!--android:layout="?android:attr/preferenceLayoutChild"-->
             <!--android:title="@string/set_loading_pic_under_WIIF_title" />-->
-        <CheckBoxPreference
-            android:key="@string/set_push_message_key"
-            android:defaultValue="true"
-            android:title="@string/set_push_message_title"/>
+        <!--<CheckBoxPreference-->
+            <!--android:key="@string/set_push_message_key"-->
+            <!--android:defaultValue="true"-->
+            <!--android:title="@string/set_push_message_title"/>-->
         <Preference android:key="@string/set_update_version_key"
             android:title="@string/set_update_version_title"
             android:summary="@string/set_update_version_summary_loading"/>

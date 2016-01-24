@@ -1,9 +1,11 @@
 package com.moon.myreadapp.ui.base;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -11,18 +13,23 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XActivity;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
+import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.WelcomeActivity;
@@ -69,6 +76,22 @@ public abstract class BaseActivity extends XActivity{
         super.onCreate(savedInstanceState);
 
         setContentViewAndBindVm(savedInstanceState);
+        /**
+         * 使用遮罩来实现夜间模式,是不好的方式
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_APPLICATION,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                        | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        lp.gravity = Gravity.BOTTOM;// 可以自定义显示的位置
+        lp.y = 10;// 距离底部的距离是10像素 如果是 top 就是距离top是10像素
+        TextView textView = new TextView(this);
+
+        textView.setBackgroundColor(0x99000000);
+        ( (WindowManager) getSystemService(Context.WINDOW_SERVICE)).addView(textView, lp);
+         **/
     }
 
 
@@ -363,6 +386,25 @@ public abstract class BaseActivity extends XActivity{
         } catch (Exception e) {
             Log.e(TAG, "statusBarHeight:" + e.toString());
 
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (isTaskRoot() && keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    private long exitTime = 0;
+
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 1000) {
+            ToastHelper.showToast("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
         }
     }
 }

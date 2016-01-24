@@ -22,32 +22,32 @@
             android:textSize="@dimen/text_h2"
             android:textStyle="bold"/>
         <include layout="@layout/common_divider"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/normal_list_item_small"
-            style="@style/normalLine">
-            <com.joanzapata.iconify.widget.IconTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_mode"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/txt_black"
-                android:textSize="@dimen/text_h2"
-                android:layout_centerVertical="true"
-                android:id="@+id/view1" />
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/normal_list_item_small"-->
+            <!--style="@style/normalLine">-->
+            <!--<com.joanzapata.iconify.widget.IconTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/set_mode"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:textColor="@color/txt_black"-->
+                <!--android:textSize="@dimen/text_h2"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:id="@+id/view1" />-->
 
-            <com.rey.material.widget.Switch
-                android:id="@+id/mode_switch"
-                style="@style/Material.Widget.Switch"
-                android:paddingLeft="@dimen/normal_padding"
-                android:paddingRight="@dimen/normal_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:checked="false"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
+            <!--<com.rey.material.widget.Switch-->
+                <!--android:id="@+id/mode_switch"-->
+                <!--style="@style/Material.Widget.Switch"-->
+                <!--android:paddingLeft="@dimen/normal_padding"-->
+                <!--android:paddingRight="@dimen/normal_padding"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center"-->
+                <!--android:checked="false"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"/>-->
+        <!--</RelativeLayout>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
