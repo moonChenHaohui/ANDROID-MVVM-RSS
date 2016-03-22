@@ -57,7 +57,7 @@ public class ReadApplication extends XApplication{
                 SQLiteDatabase db = helper.getWritableDatabase();
                 DaoMaster daoMaster = new DaoMaster(db);
                 daoSession = daoMaster.newSession();
-            }   
+            }
         }
         return daoSession;
     }
