@@ -19,7 +19,7 @@ import cn.bmob.v3.Bmob;
 public class ReadApplication extends XApplication{
 
 
-    private DaoSession daoSession;
+    private volatile DaoSession daoSession;
 
     @Override
     public void onCreate() {
@@ -50,12 +50,14 @@ public class ReadApplication extends XApplication{
         }
     }
 
-    public synchronized DaoSession getDaoSession() {
+    public DaoSession getDaoSession() {
         if (null == daoSession){
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), Constants.DB_NAME, null);
-            SQLiteDatabase db = helper.getWritableDatabase();
-            DaoMaster daoMaster = new DaoMaster(db);
-            daoSession = daoMaster.newSession();
+            synchronized (DaoSession.class) {
+                DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), Constants.DB_NAME, null);
+                SQLiteDatabase db = helper.getWritableDatabase();
+                DaoMaster daoMaster = new DaoMaster(db);
+                daoSession = daoMaster.newSession();
+            }   
         }
         return daoSession;
     }
