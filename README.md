@@ -30,7 +30,7 @@
 
 
 ##Log
-Click here [Log](http://example.com/ "Log") .
+Click here [Log](https://github.com/moonChenHaohui/easy-Read-for-RSS/blob/master/LOG.md "Log") .
 
 ## 欢迎联系我
 Moon，Java程序猿，moon4chen@163.com
