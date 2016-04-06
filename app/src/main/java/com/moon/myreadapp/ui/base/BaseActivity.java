@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.view.ViewPager;
@@ -92,6 +93,20 @@ public abstract class BaseActivity extends XActivity{
         textView.setBackgroundColor(0x99000000);
         ( (WindowManager) getSystemService(Context.WINDOW_SERVICE)).addView(textView, lp);
          **/
+
+        /**
+         * 4.4版本后设置不越过虚拟按键
+         * 因为有版本要求,最好使用代码来控制
+         *
+         * http://blog.mosil.biz/2014/01/android-transparent-kitkat/
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//A
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
     }
 
 
