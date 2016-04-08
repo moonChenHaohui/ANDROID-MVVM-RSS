@@ -3,6 +3,7 @@ package com.moon.myreadapp.ui.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
@@ -10,6 +11,8 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
@@ -106,7 +109,19 @@ public abstract class BaseActivity extends XActivity{
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-
+        /**
+         * android 6.0(targetSDK 23)上危险权限需要动态申请,这里就包括了READ_PHONE_STATE
+         * 因为之前没有考虑到将Bmob网络请求的部分进行封装,所以需要做权限处理的地方有几处,因此就这样处理了,在进入软件的时候进行申请
+         *
+         * 身体传感器/日历/摄像头/通讯录/地理位置/麦克风/电话/短信/存储空间 都是危险权限
+         *
+         */
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_PHONE_STATE},
+                    1);
+        }
     }
 
 
