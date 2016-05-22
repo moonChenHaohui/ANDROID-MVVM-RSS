@@ -69,7 +69,7 @@
             <!--android:text=""-->
             <!--android:textColor="@color/txt_black"-->
             <!--android:textSize="@dimen/text_h3" />-->
-            <com.moon.myreadapp.common.components.htmlTextView.RichText
+            <com.github.moon.RichText
                 android:id="@+id/feed_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

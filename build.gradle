@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
 
-        classpath 'com.android.tools.build:gradle:2.1.0-alpha5'
+        classpath 'com.android.tools.build:gradle:2.1.0'
 
         classpath "com.android.databinding:dataBinder:1.0-rc4"
     }
@@ -15,6 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
         //Bmob的maven仓库地址，必须填写
         maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
         maven {url "https://oss.sonatype.org/content/repositories/snapshots"}

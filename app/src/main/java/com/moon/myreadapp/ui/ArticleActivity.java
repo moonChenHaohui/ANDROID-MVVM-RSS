@@ -1,20 +1,20 @@
 package com.moon.myreadapp.ui;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
+import com.github.moon.HtmlRemoteImageGetter;
+import com.github.moon.listener.OnTextViewClickListener;
 import com.moon.appframework.action.RouterAction;
-import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.dialog.TextFont;
-import com.moon.myreadapp.common.components.htmlTextView.RichText;
 import com.moon.myreadapp.common.event.UpdateArticleEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.databinding.ActivityArticleBinding;
@@ -71,16 +71,33 @@ public class ArticleActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, getLayoutView());
         binding.setArticleViewModel(articleViewModel);
 
-
-        //图片浏览
-        binding.articleBody.feedContent.setOnImageClickListener(new RichText.OnImageClickListener() {
+        binding.articleBody.feedContent.setOnTextViewClickListener(new OnTextViewClickListener() {
             @Override
-            public void imageClicked(ArrayList<String> imageUrls, int position) {
+            public void imageClicked(ArrayList<String> arrayList, int i) {
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList(Constants.IMAGES_LIST, imageUrls);
-                bundle.putInt(Constants.IMAGES_NOW_POSITION, position);
+                bundle.putStringArrayList(Constants.IMAGES_LIST, arrayList);
+                bundle.putInt(Constants.IMAGES_NOW_POSITION, i);
                 XDispatcher.from(ArticleActivity.this).dispatch(new RouterAction(ImageBrowserActivity.class, bundle, true));
+            }
 
+            @Override
+            public void textLinkClicked(String s) {
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.ARTICLE_TITLE, getResources().getString(R.string.title_activity_article_web_link_title,s));
+                bundle.putString(Constants.ARTICLE_URL, s);
+                XDispatcher.from(ArticleActivity.this).dispatch(new RouterAction(ArticleWebActivity.class, bundle, true));
+
+            }
+        });
+        binding.articleBody.feedContent.setImageLoadAdapter(new HtmlRemoteImageGetter.Adapter() {
+            @Override
+            public Drawable getDefaultDrawable() {
+                return getDrawable(R.drawable.image_bg);
+            }
+
+            @Override
+            public Drawable getErrorDrawable() {
+                return getDrawable(R.drawable.image_bg);
             }
         });
         if (articleViewModel.getArticle()!= null) {

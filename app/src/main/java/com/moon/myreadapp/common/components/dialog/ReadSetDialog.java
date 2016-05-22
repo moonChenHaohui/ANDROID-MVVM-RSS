@@ -99,6 +99,7 @@ public class ReadSetDialog extends BaseButtomDialog implements View.OnClickListe
                 binding.fontText.setTextSize(TypedValue.COMPLEX_UNIT_PX,size);
                 XApplication.getInstance().bus.post(new UpdateArticleEvent(size));
                 textFont = newFont;
+                PreferenceUtils.getInstance(context).saveParam(Constants.ARTICLE_FONT_SIZE,(int)Globals.getApplication().getResources().getDimension(textFont.size));
             }
         });
 
@@ -107,7 +108,7 @@ public class ReadSetDialog extends BaseButtomDialog implements View.OnClickListe
     @Override
     void onDimiss() {
         //保存修改的亮度
-        //ScreenUtils.saveBrightness(context,binding.lightSlider.getValue());
+        ScreenUtils.saveBrightness(context,binding.lightSlider.getValue());
         //保存字体修改u
         PreferenceUtils.getInstance(context).saveParam(Constants.ARTICLE_FONT_SIZE,(int)Globals.getApplication().getResources().getDimension(textFont.size));
     }

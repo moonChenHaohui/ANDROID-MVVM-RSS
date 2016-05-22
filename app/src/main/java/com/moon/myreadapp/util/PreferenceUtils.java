@@ -3,6 +3,7 @@ package com.moon.myreadapp.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.ui.fragments.PrefFragment;
 
 
@@ -65,10 +66,13 @@ public class PreferenceUtils {
     }
 
     public int getIntParam(String key, int defaultInt){
+        int size = sharedPreferences.getInt(key, defaultInt);
+        XLog.d("INT size:" +size);
         return sharedPreferences.getInt(key, defaultInt);
     }
 
     public void saveParam(String key, int value){
+        XLog.d("INT size save:" +key + "," + value);
         shareEditor.putInt(key, value).commit();
     }
 
