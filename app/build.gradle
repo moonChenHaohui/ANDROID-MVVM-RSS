@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.android.databinding'
 android {
-    compileSdkVersion 'android-N'
+    compileSdkVersion 23
     buildToolsVersion '24.0.0-rc1'
 
     defaultConfig {
         applicationId "com.moon.myreadapp"
-        minSdkVersion 22
-        targetSdkVersion 'N'
+        minSdkVersion 18
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
