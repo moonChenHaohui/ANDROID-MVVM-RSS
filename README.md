@@ -7,10 +7,6 @@
 * 订阅模块:增加自定义的订阅(RSS)、系统推荐的频道展示。 
 * 系统设置:清理本地的存储空间、阅读方式等。
 
-##Apk Download  
-
- 
-[点击下载apk](/apk/app-easy-read.apk)
 
 ##效果图
  ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/start.gif)
