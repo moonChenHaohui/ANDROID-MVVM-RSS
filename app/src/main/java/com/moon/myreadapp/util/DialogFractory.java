@@ -2,6 +2,8 @@ package com.moon.myreadapp.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.moon.myreadapp.common.components.dialog.AboutMeDialog;
 import com.moon.myreadapp.common.components.dialog.AddSubDialog;
 import com.moon.myreadapp.common.components.dialog.RegisterDialog;
 import com.moon.myreadapp.common.components.dialog.UserDialog;
+import com.moon.myreadapp.ui.base.BaseActivity;
 import com.rey.material.app.Dialog;
 
 import java.util.Arrays;
@@ -93,6 +96,7 @@ public class DialogFractory {
                         dialog.dismiss();
                         //切换当前act的主题
                         if (context instanceof Activity) {
+                            ((Activity) context).overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                             ((Activity) context).recreate();
                         }
                     }

@@ -46,7 +46,6 @@ public class MainActivity extends BaseActivity {
     private DrawerViewModel drawerViewModel;
     private MainViewModel mainViewModel;
 
-
     @Override
     protected void onDestroy() {
         if (drawerViewModel != null) {

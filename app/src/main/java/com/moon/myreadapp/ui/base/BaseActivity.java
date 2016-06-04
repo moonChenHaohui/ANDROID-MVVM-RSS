@@ -376,6 +376,12 @@ public abstract class BaseActivity extends XActivity{
         return BitmapFactory.decodeFile(mFileTemp.getAbsolutePath());
     }
 
+    public String getBitmapPath(){
+        if (null != mFileTemp){
+            return mFileTemp.getAbsolutePath();
+        }
+        return null;
+    }
 
 
     /**
