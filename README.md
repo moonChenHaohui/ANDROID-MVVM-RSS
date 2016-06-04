@@ -1,11 +1,16 @@
 # 简读RSS
 使用Google Data Binding技术以MVVM模式来实现的一款Material Design风格的RSS阅读器。
-###功能点
-* 用户模块:用户信息的同步、登录、注册等操作。 
-* 频道模块:频道的下拉刷新、上拉加载、长按操作。 
-* 文章模块:文章列表的刷新、删除、详情的查看、延伸的阅读、分享等。 
-* 订阅模块:增加自定义的订阅、系统推荐的频道展示。 
+##功能点
+* 用户模块:（使用Bmob、greenDao实现）用户信息的同步、登录、注册等操作。 
+* 频道模块:（RecyclerView）频道的下拉刷新、上拉加载、长按操作。 
+* 文章模块:文章列表的刷新(RSS解析)、删除、详情的查看（RichTextView）、延伸的阅读(WebView)、分享(ShareSDK)等。 
+* 订阅模块:增加自定义的订阅(RSS)、系统推荐的频道展示。 
 * 系统设置:清理本地的存储空间、阅读方式等。
+
+##Apk Download  
+
+ 
+[点击下载apk](/apk/app-easy-read.apk)
 
 ##效果图
  ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/start.gif)
