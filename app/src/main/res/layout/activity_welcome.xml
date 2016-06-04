@@ -10,7 +10,12 @@
         android:padding="@dimen/normal_padding"
         android:fitsSystemWindows="true"
         tools:context="com.moon.myreadapp.ui.WelcomeActivity">
-
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/helloImage"
+            android:scaleType="matrix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:id="@+id/sayHi"
             android:alpha="0"

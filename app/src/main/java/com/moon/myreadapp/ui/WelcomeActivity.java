@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -54,31 +55,61 @@ public class WelcomeActivity extends BaseActivity {
 
     private void init() {
         if (binding == null) return;
+        if (isFirstEntry()){
+            binding.helloImage.setBackgroundResource(R.drawable.sayhi);
+            binding.helloImage.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //显示动画效果
+                    com.nineoldandroids.animation.AnimatorSet set = new com.nineoldandroids.animation.AnimatorSet();
+                    set.playTogether(
+                            ObjectAnimator.ofFloat(binding.helloImage, "alpha", 1, 0).setDuration(500)
+
+                    );
+                    set.setInterpolator(new AccelerateDecelerateInterpolator());
+                    set.start();
+                    binding.helloImage.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setFirstPass();
+                            XDispatcher.from(WelcomeActivity.this).dispatch(new RouterAction(MainActivity.class, true));
+                            finish();
+                        }
+                    }, delayEntryTime);
+                }
+            }, delayAnimTime);
+
+        } else {
+            binding.helloImage.setVisibility(View.GONE);
+            binding.sayHi.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //显示动画效果
+                    com.nineoldandroids.animation.AnimatorSet set = new com.nineoldandroids.animation.AnimatorSet();
+                    set.playTogether(
+                            ObjectAnimator.ofFloat(binding.sayHi, "alpha", 0, 1).setDuration(500)
+
+                    );
+                    set.setInterpolator(new AccelerateDecelerateInterpolator());
+                    set.start();
+                    binding.sayHi.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            XDispatcher.from(WelcomeActivity.this).dispatch(new RouterAction(MainActivity.class, true));
+                            finish();
+                        }
+                    }, delayEntryTime);
+                }
+            }, delayAnimTime);
+        }
         binding.appInfo.setText(Html.fromHtml(getString(R.string.welcome_app_info, getString(R.string.app_name), Globals.getVersionName())));
-        binding.sayHi.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //显示动画效果
-                com.nineoldandroids.animation.AnimatorSet set = new com.nineoldandroids.animation.AnimatorSet();
-                set.playTogether(
-                        ObjectAnimator.ofFloat(binding.sayHi, "alpha", 0, 1).setDuration(500)
-
-                );
-                set.setInterpolator(new AccelerateDecelerateInterpolator());
-                set.start();
-                binding.sayHi.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                        XDispatcher.from(WelcomeActivity.this).dispatch(new RouterAction(MainActivity.class, true));
-                    }
-                }, delayEntryTime);
-            }
-        }, delayAnimTime);
-
     }
 
     private boolean isFirstEntry(){
         return PreferenceUtils.getInstance(this).getBooleanParam(Constants.APP_IS_FIRST_USE, true);
+    }
+    private void setFirstPass(){
+        PreferenceUtils.getInstance(this).saveParam(Constants.APP_IS_FIRST_USE, false);
     }
 }

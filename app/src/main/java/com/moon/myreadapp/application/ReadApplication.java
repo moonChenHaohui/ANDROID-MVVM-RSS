@@ -1,5 +1,6 @@
 package com.moon.myreadapp.application;
 
+import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -10,6 +11,10 @@ import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.DaoMaster;
 import com.moon.myreadapp.mvvm.models.dao.DaoSession;
+import com.moon.myreadapp.mvvm.models.dao.Feed;
+import com.moon.myreadapp.util.DBHelper;
+import com.moon.myreadapp.util.HtmlHelper;
+import com.moon.myreadapp.util.PreferenceUtils;
 
 import cn.bmob.v3.Bmob;
 
@@ -41,6 +46,8 @@ public class ReadApplication extends XApplication{
             //Bmob init
             Bmob.initialize(ReadApplication.this, Constants.APP_ID);
 
+            //init start date
+            ReadApplication.this.initBeginData();
             return null;
         }
 
@@ -60,5 +67,43 @@ public class ReadApplication extends XApplication{
             }
         }
         return daoSession;
+    }
+    private void initBeginData(){
+        if (PreferenceUtils.getInstance(this).getBooleanParam(Constants.APP_IS_FIRST_USE, true)){//frist into
+            DBHelper.Insert.feed(new Feed(1l,
+                    "知乎每日精选",
+                    "http://www.zhihu.com/rss",
+                    0,
+                    0,
+                    "一个真实的网络问答社区，帮助你寻找答案，分享知识",
+                    "",
+                    "http://www.zhihu.com",
+                    HtmlHelper.getIconUrlString("http://www.zhihu.com"),//icon获取
+                    null,
+                    null,
+                    null,//最近的图片
+                    null,
+                    null,
+                    null,
+                    null,
+                    DBHelper.Query.getUserId()));
+            DBHelper.Insert.feed(new Feed(2l,
+                    "36氪",
+                    "http://www.36kr.com/feed",
+                    0,
+                    0,
+                    "36氪，让创业更简单",
+                    "",
+                    "http://36kr.com",
+                    HtmlHelper.getIconUrlString("http://www.36kr.com"),//icon获取
+                    null,
+                    null,
+                    null,//最近的图片
+                    null,
+                    null,
+                    null,
+                    null,
+                    DBHelper.Query.getUserId()));
+        }
     }
 }
