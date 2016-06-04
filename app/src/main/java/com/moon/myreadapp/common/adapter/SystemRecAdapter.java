@@ -123,24 +123,8 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
         }
 
         //加载icon
-        if (StringUtils.isNotEmpty(feed.getIcon())) {
-            RequestQueue queue = Volley.newRequestQueue(holder.getBinding().feedIcon.getContext());
-            holder.getBinding().feedIcon.setImageResource(R.drawable.image_bg);
-            ImageRequest imageRequest = new ImageRequest(
-                    feed.getIcon(),
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-
-                            holder.getBinding().feedIcon.setImageBitmap(response);
-                        }
-                    }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            queue.add(imageRequest);
-        }
+        holder.getBinding().feedIcon.setDefaultImageResId(R.drawable.image_bg);
+        holder.getBinding().feedIcon.setImageUrl(feed.getIcon(),XApplication.getInstance().getImageLoader());
     }
 
     @Override

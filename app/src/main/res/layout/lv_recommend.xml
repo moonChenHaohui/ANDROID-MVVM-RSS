@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/normal_padding"
         android:clickable="true"
         android:background="@drawable/feed_list_item">
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/feed_icon"
             android:layout_marginLeft="@dimen/normal_padding"
             android:layout_alignParentLeft="true"

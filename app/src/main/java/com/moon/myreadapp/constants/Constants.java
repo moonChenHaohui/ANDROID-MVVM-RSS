@@ -78,4 +78,8 @@ public class Constants {
     public static int SINGLE_LOAD_SIZE = 10;
 
 
+
+    public static String RSS_REQUEST_URL = "http://cloud.feedly.com//v3/search/feeds?query=";
+
+
 }

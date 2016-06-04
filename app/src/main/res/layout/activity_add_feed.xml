@@ -10,54 +10,67 @@
             type="com.moon.myreadapp.mvvm.viewmodels.AddFeedViewModel" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <FrameLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.moon.myreadapp.ui.AddFeedActivity">
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
+        android:background="?attr/colorPrimaryDark"
+        android:theme="@style/AppBaseTheme.Dark.AppBarOverlay">
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/progress"
+            android:layout_gravity="center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="invisible"
+            app:pv_autostart="true"
+            app:pv_circular="true"
+            app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+            app:pv_progressMode="indeterminate"/>
+        <android.support.v7.widget.CardView
+            android:id="@+id/add_source_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppBaseTheme.Dark.AppBarOverlay">
+            android:layout_margin="@dimen/normal_padding"
+            app:cardBackgroundColor="@color/window_background"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="3dp">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppBaseTheme.Dark.PopupOverlay" />
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tablayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabGravity="fill"
-                android:background="@color/txt_white"
-                app:tabTextColor="@color/txt_active"
-                app:tabSelectedTextColor="?attr/colorPrimary"
-                app:tabIndicatorColor="?attr/colorPrimary" />
-        </android.support.design.widget.AppBarLayout>
+                android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="50dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                <android.support.v7.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:background="?attr/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/normal_list_item_small"
+                    app:queryHint="@string/sub_search_hint"
+                    android:imeOptions="actionSearch|flagNoExtractUi" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divde_line"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divde_line"/>
+                <com.joanzapata.iconify.widget.IconTextView
+                    style="@style/ButtomBarItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="2dp"
+                    android:onClick="@{model.onClickAddSub}"
+                    android:text="@string/add_feed_btn"
+                    android:textSize="@dimen/text_h3" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
 
-
-        <com.joanzapata.iconify.widget.IconTextView
-            style="@style/ButtomBarItem"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/add_feed_btn"
-            app:layout_anchor="@id/viewpager"
-            android:textSize="@dimen/text_h3"
-            android:background="@drawable/sub_btn_background"
-            android:elevation="2dp"
-            android:onClick="@{model.onClickAddSub}"
-            app:layout_anchorGravity="bottom|end"/>
-    </android.support.design.widget.CoordinatorLayout>
 </layout>

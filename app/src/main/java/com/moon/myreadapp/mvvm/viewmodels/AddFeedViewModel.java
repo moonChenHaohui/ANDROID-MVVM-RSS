@@ -1,25 +1,44 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.databinding.Bindable;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XApplication;
+import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.AddSubViewPagerAdapter;
 import com.moon.myreadapp.common.adapter.SystemRecAdapter;
+import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.AddFeedActivity;
-import com.moon.myreadapp.ui.fragments.OPMLFragment;
+import com.moon.myreadapp.ui.fragments.SearchFragment;
 import com.moon.myreadapp.ui.fragments.RecommendFragment;
 import com.moon.myreadapp.util.DialogFractory;
-import com.moon.myreadapp.util.Globals;
-import com.moon.myreadapp.util.PreferenceUtils;
+import com.moon.myreadapp.util.StringHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
@@ -37,6 +56,7 @@ public class AddFeedViewModel extends BaseViewModel {
 
     private AddFeedActivity mView;
 
+    private SearchView.OnQueryTextListener searchListener;
     public AddFeedViewModel(AddFeedActivity mView) {
         this.mView = mView;
         initViews();
@@ -45,22 +65,60 @@ public class AddFeedViewModel extends BaseViewModel {
 
     @Override
     public void initViews() {
-        //添加页卡标题
-        mTitleList = mView.getResources().getStringArray(R.array.add_feed);
-        mFragments = new ArrayList<>();
 
-        // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
-        adapter = new AddSubViewPagerAdapter(mView.getSupportFragmentManager(), mTitleList, mFragments);
-        systemRecAdapter = new SystemRecAdapter(mView,null);
-
-        mFragments.add(RecommendFragment.newInstance().createWithViewModel(this));//系统推荐
-        mFragments.add(OPMLFragment.newInstance());//文件导入
     }
 
     @Override
     public void initEvents() {
+        searchListener = new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mView.getBinding().searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText)){
+                    search(newText);
+                }
+                return true;
+            }
+        };
+
     }
 
+    private void search(final String info){
+        //http://cloud.feedly.com//v3/search/feeds?query=科技
+        XApplication.getInstance().cancelPendingRequests(this);
+        final String requestUrl = Constants.RSS_REQUEST_URL + StringHelper.getStringUTF8(info);
+        StringRequest request = new StringRequest(requestUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        if (!input.equals(mSearchView.getQuery().toString())) {
+//                            return;
+//                        }
+                        XLog.d(response.toString());
+                        try {
+                            List<String> titleList = new ArrayList<>();
+                            JSONObject jsonObject = new JSONObject(response);
+                            String json = jsonObject.getString("results");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        XLog.d(error.toString());
+                    }
+                }
+        );
+        request.setTag(this);
+       Volley.newRequestQueue(mView).add(request);
+    }
     @Override
     public void clear() {
         mView = null;
@@ -84,17 +142,25 @@ public class AddFeedViewModel extends BaseViewModel {
         // DialogFractory.create(mView, DialogFractory.Type.AddSubscrible).show();
     }
 
+    @Bindable
+    public SearchView.OnQueryTextListener getSearchListener() {
+        return searchListener;
+    }
+
+    public void setSystemRecAdapter(SystemRecAdapter systemRecAdapter) {
+        this.systemRecAdapter = systemRecAdapter;
+        notifyPropertyChanged(BR.systemRecAdapter);
+    }
 
     /**
      * 加载服务端数据
      *
      * @param emptyView
      */
-    public void loadSystemData(final TextView emptyView) {
+    public void loadSystemData(final View emptyView) {
         if (emptyView == null){
             return;
         }
-        emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_loading));
         emptyView.setEnabled(false);
         emptyView.setVisibility(View.VISIBLE);
         BmobQuery<Feed> query = new BmobQuery<Feed>();
@@ -106,17 +172,15 @@ public class AddFeedViewModel extends BaseViewModel {
                     feed.clearBmobData();
                 }
                 systemRecAdapter.setmData(object);
+                AddFeedViewModel.this.setSystemRecAdapter(systemRecAdapter);
                 if (object.size() <= 0) {
-                    emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_empty_data));
+
                 }
-                emptyView.setEnabled(true);
                 emptyView.setVisibility(object.size() <= 0 ? View.VISIBLE : View.INVISIBLE);
             }
 
             @Override
             public void onError(int code, String msg) {
-                emptyView.setText(emptyView.getResources().getString(R.string.sub_notice_system_error));
-                emptyView.setEnabled(true);
             }
         });
     }

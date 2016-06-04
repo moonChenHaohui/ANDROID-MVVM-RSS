@@ -46,7 +46,7 @@
     <string name="sub_btn_sub">订阅</string>
     <string name="sub_btn_cancel_sub">取消订阅</string>
     <string name="sub_notice_already_join">订阅 " %1$s " 成功</string>
-
+    <string name="sub_search_hint">喜欢的标题,网址,关键字</string>
     <string name="title_activity_feed">频道</string>
     <string name="title_activity_article">文章</string>
 
@@ -108,8 +108,8 @@
     <string name="title_activity_add_feed">添加订阅</string>
 
     <string-array name="add_feed">
+        <item>搜索</item>
         <item>系统推荐</item>
-        <item>OPML导入</item>
     </string-array>
     <string name="add_feed_btn">自定义添加,输入URL</string>
 
