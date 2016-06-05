@@ -43,10 +43,11 @@
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/sub"
             android:background="@drawable/button_corners"
-            android:layout_width="70dp"
+            android:layout_width="48dp"
             android:layout_height="32dp"
             android:text="@string/dialog_sub_action"
             android:gravity="center"
+            android:singleLine="true"
             android:layout_centerInParent="true"
             android:textColor="@color/txt_white"
             android:layout_alignParentRight="true"
@@ -61,11 +62,11 @@
             android:layout_height="wrap_content"
 
             android:ellipsize="end"
-            android:singleLine="true"
+            android:maxLines="2"
             android:text="@{feed.description ?? feed.title}"
             android:visibility="@{feed.description == null ? View.GONE : View.VISIBLE}"
             android:textColor="@color/txt_gray_dark"
-            android:textSize="@dimen/text_h3"
+            android:textSize="@dimen/text_h4"
             android:layout_toLeftOf="@+id/sub" />
         <View
             android:layout_width="match_parent"

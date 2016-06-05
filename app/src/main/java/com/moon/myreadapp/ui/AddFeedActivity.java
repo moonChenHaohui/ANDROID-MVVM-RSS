@@ -5,7 +5,9 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
 
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.databinding.ActivityAddFeedBinding;
@@ -47,6 +49,9 @@ public class AddFeedActivity extends BaseActivity {
         binding.searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         //binding.searchView.setIconified(false);
         binding.searchView.setOnQueryTextListener(addFeedViewModel.getSearchListener());
+        binding.result.setLayoutManager(new LinearLayoutManager(this));
+        binding.result.setAdapter(addFeedViewModel.getSystemRecAdapter());
+        addFeedViewModel.loadSystemData(binding.progress);
     }
 
     @Override

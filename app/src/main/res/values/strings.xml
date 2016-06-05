@@ -44,7 +44,7 @@
     <string name="sub_notice_loading">数据加载中...</string>
     <string name="sub_notice_system_error">服务器繁忙,请点击屏幕重试..</string>
     <string name="sub_btn_sub">订阅</string>
-    <string name="sub_btn_cancel_sub">取消订阅</string>
+    <string name="sub_btn_cancel_sub">取订</string>
     <string name="sub_notice_already_join">订阅 " %1$s " 成功</string>
     <string name="sub_search_hint">喜欢的标题,网址,关键字</string>
     <string name="title_activity_feed">频道</string>

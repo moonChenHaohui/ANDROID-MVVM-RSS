@@ -16,6 +16,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.BR;
@@ -23,15 +25,19 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.AddSubViewPagerAdapter;
 import com.moon.myreadapp.common.adapter.SystemRecAdapter;
 import com.moon.myreadapp.constants.Constants;
+import com.moon.myreadapp.mvvm.models.RequestFeed;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.AddFeedActivity;
 import com.moon.myreadapp.ui.fragments.SearchFragment;
 import com.moon.myreadapp.ui.fragments.RecommendFragment;
+import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.StringHelper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -65,7 +71,7 @@ public class AddFeedViewModel extends BaseViewModel {
 
     @Override
     public void initViews() {
-
+        systemRecAdapter = new SystemRecAdapter(mView,null);
     }
 
     @Override
@@ -89,24 +95,35 @@ public class AddFeedViewModel extends BaseViewModel {
     }
 
     private void search(final String info){
-        //http://cloud.feedly.com//v3/search/feeds?query=科技
         XApplication.getInstance().cancelPendingRequests(this);
         final String requestUrl = Constants.RSS_REQUEST_URL + StringHelper.getStringUTF8(info);
         StringRequest request = new StringRequest(requestUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        if (!input.equals(mSearchView.getQuery().toString())) {
-//                            return;
-//                        }
-                        XLog.d(response.toString());
+                        if (!info.equals(mView.getBinding().searchView.getQuery().toString())) {
+                            return;
+                        }
+                        //XLog.d(response.toString());
+                        List<RequestFeed> requestFeeds = null;
                         try {
                             List<String> titleList = new ArrayList<>();
                             JSONObject jsonObject = new JSONObject(response);
                             String json = jsonObject.getString("results");
+                            requestFeeds = new Gson().fromJson(json, new TypeToken<List<RequestFeed>>() {}.getType());
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            //e.printStackTrace();
                         }
+                        if (null == requestFeeds || requestFeeds.size() == 0){
+                            //
+                        }
+
+                        List<Feed> searchFeeds = new ArrayList<Feed>();
+                        for (RequestFeed feed :requestFeeds){
+                            searchFeeds.add(DBHelper.Util.feedConert(feed, DBHelper.Query.getUserId()));
+                        }
+                        systemRecAdapter.setmData(searchFeeds);
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -172,7 +189,6 @@ public class AddFeedViewModel extends BaseViewModel {
                     feed.clearBmobData();
                 }
                 systemRecAdapter.setmData(object);
-                AddFeedViewModel.this.setSystemRecAdapter(systemRecAdapter);
                 if (object.size() <= 0) {
 
                 }

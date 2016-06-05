@@ -218,7 +218,12 @@ public class FeedViewModel extends BaseViewModel {
                 XLog.d("onError" + msg);
                 mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
                 //ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
-                feedList.onPullDownRefreshComplete();
+                feedList.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        feedList.onPullDownRefreshComplete();
+                    }
+                });
 //
             }
         });
