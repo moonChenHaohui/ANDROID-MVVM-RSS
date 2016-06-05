@@ -66,7 +66,7 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
                                 public void run() {
                                     DBHelper.Insert.feed(getmData().get(pos));
                                     updateFeed();
-                                    ToastHelper.showNotice((Activity) context, view.getResources().getString(R.string.sub_notice_already_join, getmData().get(pos).getTitle()), TastyToast.STYLE_MESSAGE).setDuration(1000);
+                                    ToastHelper.showToast(view.getResources().getString(R.string.sub_notice_already_join, getmData().get(pos).getTitle()));
                                     view.setText(view.getResources().getString(R.string.sub_btn_cancel_sub));
                                     view.setBackgroundResource(R.drawable.button_corners_unable);
                                     view.setEnabled(true);
@@ -123,24 +123,8 @@ public class SystemRecAdapter extends BaseRecyclerAdapter<Feed, LvRecommendBindi
         }
 
         //加载icon
-        if (StringUtils.isNotEmpty(feed.getIcon())) {
-            RequestQueue queue = Volley.newRequestQueue(holder.getBinding().feedIcon.getContext());
-            holder.getBinding().feedIcon.setImageResource(R.drawable.image_bg);
-            ImageRequest imageRequest = new ImageRequest(
-                    feed.getIcon(),
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-
-                            holder.getBinding().feedIcon.setImageBitmap(response);
-                        }
-                    }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            queue.add(imageRequest);
-        }
+        holder.getBinding().feedIcon.setDefaultImageResId(R.drawable.image_bg);
+        holder.getBinding().feedIcon.setImageUrl(feed.getIcon(),XApplication.getInstance().getImageLoader());
     }
 
     @Override

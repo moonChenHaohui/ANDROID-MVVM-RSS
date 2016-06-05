@@ -6,8 +6,10 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.moon.appframework.util.LruImageCache;
 
 import de.halfbit.tinybus.TinyBus;
 
@@ -22,6 +24,7 @@ public class XApplication extends Application{
     public static final String TAG = "VolleyPatterns";
 
     private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
 
     public static synchronized XApplication getInstance(){
         return application;
@@ -42,8 +45,14 @@ public class XApplication extends Application{
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-
         return mRequestQueue;
+    }
+    public ImageLoader getImageLoader() {
+        if (mImageLoader == null) {
+            LruImageCache lruImageCache = LruImageCache.instance();
+            mImageLoader = new ImageLoader(getRequestQueue(),lruImageCache);
+        }
+        return mImageLoader;
     }
     /**
      * Adds the specified request to the global queue, if tag is specified

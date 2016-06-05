@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.databinding.LvFeedItemBinding;
@@ -62,30 +63,8 @@ public class FeedRecAdapter extends BaseRecyclerAdapter<Feed, LvFeedItemBinding>
         holder.getBinding().setCount((int)unread);
         holder.getBinding().setFeed(feed);
 
-        holder.getBinding().feedIcon.setImageResource(R.drawable.image_bg);
-        String icon = feed.getIcon();
-        if (icon != null) {
-            // holder.getBinding().feedIcon.set(Uri.parse(icon));
-            /**
-             * 使用volley进行图片加载.首先使用cache,无cache再用网络
-             */
-            RequestQueue queue = Volley.newRequestQueue(holder.getBinding().feedIcon.getContext());
-
-            ImageRequest imageRequest = new ImageRequest(
-                    icon,
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-
-                            holder.getBinding().feedIcon.setImageBitmap(response);
-                        }
-                    }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            queue.add(imageRequest);
-        }
+        holder.getBinding().feedIcon.setDefaultImageResId(R.drawable.image_bg);
+        holder.getBinding().feedIcon.setImageUrl(feed.getIcon(),XApplication.getInstance().getImageLoader());
     }
 
 

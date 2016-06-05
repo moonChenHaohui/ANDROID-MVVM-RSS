@@ -25,7 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_width="@dimen/img_size_32"
             android:layout_height="@dimen/main_list_item_height">
-            <com.facebook.drawee.view.SimpleDraweeView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/feed_icon"
                 android:layout_width="@dimen/img_size_32"
                 android:layout_height="@dimen/img_size_32"

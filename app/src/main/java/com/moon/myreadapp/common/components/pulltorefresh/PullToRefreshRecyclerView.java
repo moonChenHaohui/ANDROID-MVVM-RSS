@@ -310,12 +310,18 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
         if (mNotify == null) {
             mNotify = new BaseRecyclerAdapter.Notify() {
                 @Override
-                public void onDataReSet(List data) {
-                    if (data == null || data.size() == 0) {
-                        setShowEmptyLayout(true);
-                    } else {
-                        setShowEmptyLayout(false);
-                    }
+                public void onDataReSet(final List data) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (data == null || data.size() == 0) {
+                                setShowEmptyLayout(true);
+                            } else {
+                                setShowEmptyLayout(false);
+                            }
+                        }
+                    });
+
                 }
             };
         }

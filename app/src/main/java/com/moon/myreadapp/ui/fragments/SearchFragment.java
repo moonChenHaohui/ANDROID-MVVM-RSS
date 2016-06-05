@@ -1,7 +1,5 @@
 package com.moon.myreadapp.ui.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,14 +11,14 @@ import com.moon.myreadapp.R;
 /**
  * Created by moon on 15/12/17.
  */
-public class OPMLFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
 
-    public OPMLFragment() {
+    public SearchFragment() {
     }
 
-    public static OPMLFragment newInstance() {
-        OPMLFragment fragment = new OPMLFragment();
+    public static SearchFragment newInstance() {
+        SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

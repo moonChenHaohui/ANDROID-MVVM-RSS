@@ -230,7 +230,7 @@
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">@dimen/text_margin</item>
         <item name="android:paddingRight">@dimen/text_margin</item>
-        <item name="android:background">@drawable/selectable_background</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppBaseTheme.Dark">

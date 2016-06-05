@@ -5,6 +5,7 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.application.ReadApplication;
+import com.moon.myreadapp.mvvm.models.RequestFeed;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.ArticleDao;
 import com.moon.myreadapp.mvvm.models.dao.DaoSession;
@@ -50,7 +51,26 @@ public class DBHelper {
                     userID);
             return feed;
         }
-
+        public static Feed feedConert(RequestFeed requestFeed, long userID) {
+            Feed feed = new Feed(null,
+                    requestFeed.title,
+                    requestFeed.feedId.substring(5),//url
+                    0,
+                    0,
+                    requestFeed.description,
+                    requestFeed.contentType,
+                    requestFeed.website,
+                    requestFeed.iconUrl,//icon获取
+                    new Date(requestFeed.lastUpdated),
+                    null,
+                    null,//最近的图片
+                    requestFeed.language,
+                    null,
+                    null,
+                    requestFeed.facebookUsername,
+                    userID);
+            return feed;
+        }
         public static ArrayList<Article> getArticles(SyndFeed syndFeed) {
             List<SyndEntry> list = syndFeed.getEntries();
             ArrayList<Article> article = new ArrayList<>();

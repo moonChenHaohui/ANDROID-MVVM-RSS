@@ -9,10 +9,7 @@
 
 
 ##效果图
- ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/start.gif)
- ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/login.gif)
- ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/back.gif)
- ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/set.gif)
+ ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/Screenshot-1.jpg)
 
 ##依赖
 * 数据绑定==>Android Data Binding，1.0-rc4 : [data binding home page](http://developer.android.com/tools/data-binding/guide.html)

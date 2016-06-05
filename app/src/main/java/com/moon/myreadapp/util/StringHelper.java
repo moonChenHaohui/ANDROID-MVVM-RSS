@@ -10,6 +10,8 @@ import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.viewmodels.ViewArticleViewModel;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -98,5 +100,15 @@ public class StringHelper {
         }
         return Html.fromHtml(sb.toString());
     }
+
+    public static String getStringUTF8(String s){
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+
+        }
+        return s;
+    }
+
 
 }
