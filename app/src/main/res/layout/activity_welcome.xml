@@ -6,7 +6,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/bg"
         android:padding="@dimen/normal_padding"
         android:fitsSystemWindows="true"
         tools:context="com.moon.myreadapp.ui.WelcomeActivity">

@@ -54,7 +54,7 @@ public class DBHelper {
         public static Feed feedConert(RequestFeed requestFeed, long userID) {
             Feed feed = new Feed(null,
                     requestFeed.title,
-                    requestFeed.website,//url
+                    requestFeed.feedId.substring(5),//url
                     0,
                     0,
                     requestFeed.description,
