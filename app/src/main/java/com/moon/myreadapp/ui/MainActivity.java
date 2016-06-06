@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity {
         binding = DataBindingUtil.inflate(LayoutInflater.from(this), getLayoutView(), null, false);
         setContentView(binding.getRoot());
 
-        noticeBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.notice,null,false);
+       // noticeBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.notice,null,false);
 
         this.drawerViewModel = new DrawerViewModel(this);
         binding.setDrawerViewModel(drawerViewModel);
@@ -116,13 +116,13 @@ public class MainActivity extends BaseActivity {
     private void initMainView() {
         //必须先设置了adapter,才能进行add head\footer,设置刷新等等操作.
         binding.mainList.setAdapter(mainViewModel.getFeedRecAdapter());
-        binding.mainList.getmAdapter().addFooter(noticeBinding.getRoot());
-        noticeBinding.notice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                XDispatcher.from(MainActivity.this).dispatch(new RouterAction(AddFeedActivity.class,true));
-            }
-        });
+//        binding.mainList.getmAdapter().addFooter(noticeBinding.getRoot());
+//        noticeBinding.notice.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                XDispatcher.from(MainActivity.this).dispatch(new RouterAction(AddFeedActivity.class,true));
+//            }
+//        });
         binding.mainList.setPullLoadEnabled(false);
         //binding.mainList.setScrollLoadEnabled(true);
 //        binding.mainList.setPullRefreshEnabled(false);
@@ -193,9 +193,10 @@ public class MainActivity extends BaseActivity {
         }
         // Handle your other action bar items...
         int id = item.getItemId();
-        if (id == R.id.action_refresh) {
-
-            mainViewModel.refreshAll();
+        if (id == R.id.action_addsub) {
+            //
+            //mainViewModel.refreshAll();
+            XDispatcher.from(this).dispatch(new RouterAction(AddFeedActivity.class,true));
         }
         return super.onOptionsItemSelected(item);
     }
