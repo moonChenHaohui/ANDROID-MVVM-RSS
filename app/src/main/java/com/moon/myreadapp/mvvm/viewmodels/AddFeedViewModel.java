@@ -97,6 +97,7 @@ public class AddFeedViewModel extends BaseViewModel {
     private void search(final String info){
         XApplication.getInstance().cancelPendingRequests(this);
         final String requestUrl = Constants.RSS_REQUEST_URL + StringHelper.getStringUTF8(info);
+        mView.getBinding().progress.setVisibility(View.VISIBLE);
         StringRequest request = new StringRequest(requestUrl,
                 new Response.Listener<String>() {
                     @Override
@@ -123,6 +124,7 @@ public class AddFeedViewModel extends BaseViewModel {
                             searchFeeds.add(DBHelper.Util.feedConert(feed, DBHelper.Query.getUserId()));
                         }
                         systemRecAdapter.setmData(searchFeeds);
+                        mView.getBinding().progress.setVisibility(View.INVISIBLE);
 
                     }
                 },
@@ -130,6 +132,7 @@ public class AddFeedViewModel extends BaseViewModel {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         XLog.d(error.toString());
+                        mView.getBinding().progress.setVisibility(View.INVISIBLE);
                     }
                 }
         );
