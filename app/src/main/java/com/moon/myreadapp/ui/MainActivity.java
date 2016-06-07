@@ -153,6 +153,12 @@ public class MainActivity extends BaseActivity {
                 binding.mainList.onPullUpRefreshComplete();
             }
         });
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainViewModel.refreshAll();
+            }
+        });
     }
 
     @Override
