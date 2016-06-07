@@ -60,6 +60,9 @@ public class RefreshAsyncTask extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 event1.setStatus(UpdateFeedEvent.NORMAL);
                 event1.setNotice("更新完毕....");
                 publishProgress(event1);
+                if(isCancelled()){
+                    throw new Exception("update cancel!");
+                }
             } catch (Exception e) {
                 XLog.d(TAG + "feed :" + e);
                 //更新失败...

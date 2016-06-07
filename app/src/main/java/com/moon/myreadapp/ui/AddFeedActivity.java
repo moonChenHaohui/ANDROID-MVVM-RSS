@@ -52,6 +52,7 @@ public class AddFeedActivity extends BaseActivity {
         binding.result.setLayoutManager(new LinearLayoutManager(this));
         binding.result.setAdapter(addFeedViewModel.getSystemRecAdapter());
         addFeedViewModel.loadSystemData(binding.progress);
+        
     }
 
     @Override

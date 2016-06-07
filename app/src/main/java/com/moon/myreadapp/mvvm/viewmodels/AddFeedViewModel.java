@@ -24,6 +24,9 @@ import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.AddSubViewPagerAdapter;
 import com.moon.myreadapp.common.adapter.SystemRecAdapter;
+import com.moon.myreadapp.common.components.rss.FeedNetwork;
+import com.moon.myreadapp.common.components.rss.FeedReadException;
+import com.moon.myreadapp.common.components.rss.FeedReader;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.RequestFeed;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
@@ -159,6 +162,12 @@ public class AddFeedViewModel extends BaseViewModel {
      */
     public void onClickAddSub(View view) {
         DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
+        FeedNetwork.getInstance().verifySource("https://www.zhihu.com/rss", new FeedNetwork.OnVerifyListener() {
+            @Override
+            public void onResult(boolean isValid, Feed feedSource) {
+
+            }
+        });
         // DialogFractory.create(mView, DialogFractory.Type.AddSubscrible).show();
     }
 
