@@ -17,16 +17,6 @@
         android:fitsSystemWindows="true"
         android:background="?attr/colorPrimaryDark"
         android:theme="@style/AppBaseTheme.Dark.AppBarOverlay">
-        <com.rey.material.widget.ProgressView
-            android:id="@+id/progress"
-            android:layout_gravity="center"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:visibility="invisible"
-            app:pv_autostart="true"
-            app:pv_circular="true"
-            app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
-            app:pv_progressMode="indeterminate"/>
         <android.support.v7.widget.CardView
             android:id="@+id/add_source_panel"
             android:layout_width="match_parent"
@@ -71,7 +61,19 @@
                     android:text="@string/add_feed_btn"
                     android:textSize="@dimen/text_h3" />
             </LinearLayout>
+            <com.joanzapata.iconify.widget.IconTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/feed_item_load"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:id="@+id/progress"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/text_h1"
+                android:background="?attr/colorPrimaryDark"
+                android:alpha=".2"/>
         </android.support.v7.widget.CardView>
+
     </FrameLayout>
 
 </layout>

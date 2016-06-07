@@ -211,13 +211,14 @@ public class MainViewModel extends BaseViewModel {
         refresh(feeds);
     }
     public void refresh(ArrayList<Feed> feeds){
-        if (isRefresh()) {
-            XLog.d("RefreshAsyncTask 正在刷新!");
-            return;
-        }
+//        if (isRefresh()) {
+//            XLog.d("RefreshAsyncTask 正在刷新!");
+//            return;
+//        }
         setRefresh(true);
         if (refreshAsyncTask != null && refreshAsyncTask.getStatus() == AsyncTask.Status.RUNNING){
-            return;
+            refreshAsyncTask.cancel(true);
+            refreshAsyncTask = null;
         }
         refreshAsyncTask = new RefreshAsyncTask(new RefreshAsyncTask.StatusListener() {
             @Override
