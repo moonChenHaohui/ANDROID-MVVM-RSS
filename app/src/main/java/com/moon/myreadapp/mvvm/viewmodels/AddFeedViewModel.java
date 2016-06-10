@@ -161,13 +161,14 @@ public class AddFeedViewModel extends BaseViewModel {
      * 点击自定义输入 url 的dialog
      */
     public void onClickAddSub(View view) {
-        DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
-        FeedNetwork.getInstance().verifySource("https://www.zhihu.com/rss", new FeedNetwork.OnVerifyListener() {
-            @Override
-            public void onResult(boolean isValid, Feed feedSource) {
+       DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
+//        FeedNetwork.getInstance().verifySource("https://www.zhihu.com/rss", new FeedNetwork.OnVerifyListener() {
+//            @Override
+//            public void onResult(boolean isValid, Feed feedSource) {
+//
+//            }
+//        });
 
-            }
-        });
         // DialogFractory.create(mView, DialogFractory.Type.AddSubscrible).show();
     }
 

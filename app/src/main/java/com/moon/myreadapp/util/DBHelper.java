@@ -1,5 +1,7 @@
 package com.moon.myreadapp.util;
 
+import android.net.Uri;
+
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.module.DCModule;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
@@ -13,6 +15,8 @@ import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.models.dao.FeedDao;
 import com.moon.myreadapp.mvvm.models.dao.User;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -117,8 +121,14 @@ public class DBHelper {
         }
 
         public static void articles(List<Article> articles) {
+            articles(articles,-1);
+        }
+        public static void articles(List<Article> articles,long feedId) {
             if (articles == null) return;
             for (int i = 0; i < articles.size(); i++) {
+                if (feedId > 0){
+                    articles.get(i).setFeed_id(feedId);
+                }
                 article(articles.get(i));
             }
         }

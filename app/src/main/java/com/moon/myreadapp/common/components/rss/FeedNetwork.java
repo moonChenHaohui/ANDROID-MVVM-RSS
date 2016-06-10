@@ -153,49 +153,51 @@ public class FeedNetwork {
     }
 
     public void addSource(String url, final String reTitle, final OnAddListener listener) {
-        if (null != DBHelper.Query.findFeedByURL(url)) {
-            if (listener != null) {
-                listener.onError(BuiltConfig.getString(R.string.sub_notice_already_exist));
-            }
-            return;
-        }
-        if (!RssHelper.isURL(url)){
-            if (listener != null) {
-                listener.onError(BuiltConfig.getString(R.string.dialog_sub_search_error));
-            }
-            return;
-        }
-        final  String curl = RssHelper.adapterURL(url);
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    Feed feedSource = mFeedReader.load(curl);
-                    if (null == feedSource){
-                        if (listener != null) {
-                            listener.onError(BuiltConfig.getString(R.string.dialog_sub_search_error));
-                        }
-                        return null;
-                    }
-                    if (null != reTitle) {
-                        feedSource.setTitle(reTitle);
-                    }
-                    long id = DBHelper.Insert.feed(feedSource);
-                    List<Article> articles = feedSource.getArticles();
-                    if (null != articles && articles.size() > 0){
-                        DBHelper.Insert.articles(articles,id);
-                    }
-                    if (null != listener){
-                        listener.onSuccess();
-                    }
-                    notifyUI();
-                } catch (FeedReadException e) {
-                    e.printStackTrace();
+        synchronized (listener) {
+            if (null != DBHelper.Query.findFeedByURL(url)) {
+                if (listener != null) {
+                    listener.onError(BuiltConfig.getString(R.string.sub_notice_already_exist));
                 }
-                return null;
+                return;
             }
-        }.execute();
+            if (!RssHelper.isURL(url)) {
+                if (listener != null) {
+                    listener.onError(BuiltConfig.getString(R.string.dialog_sub_search_error));
+                }
+                return;
+            }
+            final String curl = RssHelper.adapterURL(url);
+
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    try {
+                        Feed feedSource = mFeedReader.load(curl);
+                        if (null == feedSource) {
+                            if (listener != null) {
+                                listener.onError(BuiltConfig.getString(R.string.dialog_sub_search_error));
+                            }
+                            return null;
+                        }
+                        if (null != reTitle) {
+                            feedSource.setTitle(reTitle);
+                        }
+                        long id = DBHelper.Insert.feed(feedSource);
+                        List<Article> articles = feedSource.getArticles();
+                        if (null != articles && articles.size() > 0) {
+                            DBHelper.Insert.articles(articles, id);
+                        }
+                        if (null != listener) {
+                            listener.onSuccess();
+                        }
+                        notifyUI();
+                    } catch (FeedReadException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            }.execute();
+        }
     }
 
     private void notifyUI() {

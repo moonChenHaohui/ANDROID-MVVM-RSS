@@ -33,6 +33,7 @@ public class Feed extends BmobObject {
     private String rights;
     private String uri;
     private String creator;
+    private List<Article> articles;
     private long user_id;
 
     /**
@@ -230,6 +231,14 @@ public class Feed extends BmobObject {
 
     public void setUser_id(long user_id) {
         this.user_id = user_id;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     /**

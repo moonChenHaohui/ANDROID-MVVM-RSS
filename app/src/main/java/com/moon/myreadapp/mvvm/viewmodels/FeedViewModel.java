@@ -19,6 +19,7 @@ import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
 import com.moon.myreadapp.common.components.dialog.FeedSetDialog;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
+import com.moon.myreadapp.common.components.rss.FeedNetwork;
 import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
@@ -62,7 +63,7 @@ public class FeedViewModel extends BaseViewModel {
         this.mView = view;
         this.feedId = feedId;
         this.feed = DBHelper.Query.getFeed(feedId);
-        if (feed == null ) {
+        if (feed == null) {
             return;
         }
         initViews();
@@ -74,12 +75,12 @@ public class FeedViewModel extends BaseViewModel {
 
 
         this.mView.setTitle(feed.getTitle());
-        showUnReadArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL,Constants.showUnReadArticles);
-        mAdapter = new ArticleRecAdapter(mView,getBaseData(0,10));
+        showUnReadArticles = PreferenceUtils.getInstance(mView).getBooleanParam(Constants.FEED_SHOW_ALL, Constants.showUnReadArticles);
+        mAdapter = new ArticleRecAdapter(mView, getBaseData(0, 10));
     }
 
-    private List<Article> getBaseData(int start,int size) {
-        return DBHelper.Query.getArticlesByID(feedId, showUnReadArticles ? Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD: Article.Status.NORMAL_AND_FAVOR,start,size);
+    private List<Article> getBaseData(int start, int size) {
+        return DBHelper.Query.getArticlesByID(feedId, showUnReadArticles ? Article.Status.NORMAL_AND_FAVOR_BUT_UNREAD : Article.Status.NORMAL_AND_FAVOR, start, size);
     }
 
 
@@ -115,7 +116,7 @@ public class FeedViewModel extends BaseViewModel {
 
                 View v = mView.getLayoutInflater().inflate(R.layout.menu_singer_article, null);
 
-                mDialog = new Dialog(mView){
+                mDialog = new Dialog(mView) {
 
                 }.
                         contentView(v).
@@ -146,8 +147,8 @@ public class FeedViewModel extends BaseViewModel {
     @Override
     public void clear() {
         mView = null;
-        if (rssTask != null){
-            if (rssTask.getStatus() == AsyncTask.Status.RUNNING){
+        if (rssTask != null) {
+            if (rssTask.getStatus() == AsyncTask.Status.RUNNING) {
                 rssTask.cancel(true);
             }
         }
@@ -160,8 +161,29 @@ public class FeedViewModel extends BaseViewModel {
      * @param feedList
      */
     public void refresh(final PullToRefreshRecyclerView feedList) {
-        if (rssTask != null){
-            if (rssTask.getStatus() == AsyncTask.Status.RUNNING){
+        FeedNetwork.getInstance().refresh(feed.getId(), new FeedNetwork.OnRefreshListener() {
+            @Override
+            public void onError(String msg) {
+                //完成刷新
+                feedList.onPullDownRefreshComplete();
+                ToastHelper.showNotice(mView,msg, TastyToast.STYLE_ALERT);
+                updateFeed();
+            }
+
+            @Override
+            public void onSuccess(Feed feed,ArrayList<Article> list) {
+                //设置刷新时间
+                feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
+                //完成刷新
+                feedList.onPullDownRefreshComplete();
+                boolean haveNewDate = list != null && list.size() > 0;
+                ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), list.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
+                updateFeed();
+            }
+        });
+        /*
+        if (rssTask != null) {
+            if (rssTask.getStatus() == AsyncTask.Status.RUNNING) {
                 //正在执行中
                 return;
             }
@@ -228,22 +250,23 @@ public class FeedViewModel extends BaseViewModel {
             }
         });
         rssTask.execute(feed.getUrl());
+        */
     }
 
     /**
      * 加载更多
      */
-    public boolean loadMore(){
+    public boolean loadMore() {
         List<Article> loadData;
-        if (mAdapter.getmData() == null || mAdapter.getmData().size() == 0){
-            loadData = getBaseData(0,Constants.SINGLE_LOAD_SIZE);
+        if (mAdapter.getmData() == null || mAdapter.getmData().size() == 0) {
+            loadData = getBaseData(0, Constants.SINGLE_LOAD_SIZE);
         } else {
-            loadData = getBaseData(mAdapter.getmData().size(),Constants.SINGLE_LOAD_SIZE);
+            loadData = getBaseData(mAdapter.getmData().size(), Constants.SINGLE_LOAD_SIZE);
         }
         if (loadData != null) {
             mAdapter.addAll(loadData);
         }
-        if (loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE){
+        if (loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE) {
             //没有获得足够的数据,下次加载没有数据了.
             return false;
         } else {
@@ -261,7 +284,7 @@ public class FeedViewModel extends BaseViewModel {
     }
 
     private void updateFeed() {
-        UpdateFeedEvent event = new UpdateFeedEvent(feed,UpdateFeedEvent.TYPE.STATUS);
+        UpdateFeedEvent event = new UpdateFeedEvent(feed, UpdateFeedEvent.TYPE.STATUS);
         event.setStatus(UpdateFeedEvent.NORMAL);
         XApplication.getInstance().bus.post(event);
     }
@@ -281,7 +304,7 @@ public class FeedViewModel extends BaseViewModel {
                     if (article.getStatus() == Article.Status.NORMAL.status) {
                         article.setStatus(Article.Status.FAVOR.status);
                         DBHelper.UpDate.saveArticle(article);
-                        ToastHelper.showNotice(mView,BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success),TastyToast.STYLE_ALERT).setDuration(1000);
+                        ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.action_favor) + BuiltConfig.getString(R.string.success), TastyToast.STYLE_ALERT).setDuration(1000);
                     } else {
                         article.setStatus(Article.Status.NORMAL.status);
                         DBHelper.UpDate.saveArticle(article);
@@ -292,9 +315,9 @@ public class FeedViewModel extends BaseViewModel {
                     break;
                 case R.id.action_read_delete:
                     //删除
-                    if (article.getStatus() == Article.Status.FAVOR.status){
+                    if (article.getStatus() == Article.Status.FAVOR.status) {
                         //如果在收藏情况下被删除,且有objid,那么需要通知服务端
-                        if (article.getObjectId() != null){
+                        if (article.getObjectId() != null) {
                             article.delete(mView);
                         }
                     }
@@ -306,7 +329,7 @@ public class FeedViewModel extends BaseViewModel {
             }
 
         }
-        if(mDialog != null && mDialog.isShowing()){
+        if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
@@ -314,14 +337,14 @@ public class FeedViewModel extends BaseViewModel {
     public void updateSet(boolean showAllArticles) {
         this.showUnReadArticles = showAllArticles;
 
-        mAdapter.setmData(getBaseData(0,Constants.SINGLE_LOAD_SIZE));
+        mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
         updateFeed();
     }
 
-    public void updateArticleByPosition(int pos, Article article){
+    public void updateArticleByPosition(int pos, Article article) {
         if (mAdapter.getmData() == null) return;
-        if (pos >=0 && pos < mAdapter.getmData().size()) {
-            mAdapter.getmData().set(pos,article);
+        if (pos >= 0 && pos < mAdapter.getmData().size()) {
+            mAdapter.getmData().set(pos, article);
             mAdapter.notifyItemChanged(mAdapter.getWholePosition(pos));
         }
     }

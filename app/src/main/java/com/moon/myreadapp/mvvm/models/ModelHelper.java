@@ -5,6 +5,7 @@ import com.moon.myreadapp.util.DBHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by moon on 15/12/15.
@@ -18,7 +19,7 @@ public class ModelHelper {
      * @param articles
      * @return
      */
-    public static ArrayList<Article> getUpDateArticlesByFeedId (long feedId,ArrayList<Article> articles){
+    public static ArrayList<Article> getUpDateArticlesByFeedId (long feedId,List<Article> articles){
         if(articles == null ||articles.size() ==0){
             return null;
         }
