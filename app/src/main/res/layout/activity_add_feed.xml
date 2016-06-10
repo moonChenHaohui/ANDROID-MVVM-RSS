@@ -48,18 +48,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divde_line"/>
-                <com.joanzapata.iconify.widget.IconTextView
-                    style="@style/ButtomBarItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:elevation="2dp"
-                    android:onClick="@{model.onClickAddSub}"
-                    android:text="@string/add_feed_btn"
-                    android:textSize="@dimen/text_h3" />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1px"-->
+                    <!--android:background="@color/divde_line"/>-->
+                <!--<com.joanzapata.iconify.widget.IconTextView-->
+                    <!--style="@style/ButtomBarItem"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:elevation="2dp"-->
+                    <!--android:onClick="@{model.onClickAddSub}"-->
+                    <!--android:text="@string/add_feed_btn"-->
+                    <!--android:textSize="@dimen/text_h3" />-->
             </LinearLayout>
             <com.joanzapata.iconify.widget.IconTextView
                 android:layout_width="match_parent"

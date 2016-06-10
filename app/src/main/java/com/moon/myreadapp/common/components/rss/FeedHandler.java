@@ -231,6 +231,7 @@ public class FeedHandler extends DefaultHandler {
     }
 
     Feed getFeedSource() {
+        source.setArticles(articles);
         return source;
     }
 }

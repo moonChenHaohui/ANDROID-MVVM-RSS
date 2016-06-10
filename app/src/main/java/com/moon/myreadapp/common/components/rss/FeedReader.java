@@ -1,5 +1,6 @@
 package com.moon.myreadapp.common.components.rss;
 
+import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 
 import java.io.Closeable;
@@ -8,6 +9,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 /**
  * @description:
