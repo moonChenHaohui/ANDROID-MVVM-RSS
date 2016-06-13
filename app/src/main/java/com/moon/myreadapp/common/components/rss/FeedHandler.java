@@ -88,9 +88,9 @@ public class FeedHandler extends DefaultHandler {
         @Override
         public void set(String description) {
             if (item == null) {
-                //source.setDescription(description);
+                source.setDescription(description);
             } else {
-                //item.setContainer(description);
+                item.setContainer(description);
             }
         }
     };
@@ -147,6 +147,17 @@ public class FeedHandler extends DefaultHandler {
         }
     };
 
+    private final Setter SET_CREATOR = new ContentSetter() {
+        @Override
+        public void set(String pubDate) {
+            if (item == null) {
+                source.setCreator(pubDate);
+            } else {
+                item.setCreator(pubDate);
+            }
+        }
+    };
+
     private Feed source;
 
     /**
@@ -169,9 +180,11 @@ public class FeedHandler extends DefaultHandler {
         setters = new java.util.HashMap<String, Setter>(/* 2^3 */16);
         setters.put("title", SET_TITLE);
         setters.put("description", SET_DESCRIPTION);
-        setters.put("content:encoded", SET_CONTENT);
+        setters.put("content", SET_CONTENT);
         setters.put("link", SET_LINK);
         setters.put("pubDate", SET_PUBDATE);
+        setters.put("creator", SET_CREATOR);
+
 
         // TODO: 8/29/15 parse other useful
 //        setters.put("category", ADD_CATEGORY);

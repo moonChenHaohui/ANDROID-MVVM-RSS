@@ -69,6 +69,9 @@ public class Article extends BmobObject{
     }
 
     public Article() {
+        status = Status.NORMAL.status;
+        use_count = 0;
+        creator = "佚名";
     }
 
     public Article(Long id) {

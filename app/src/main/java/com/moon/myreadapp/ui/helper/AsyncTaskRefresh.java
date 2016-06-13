@@ -55,7 +55,7 @@ public class AsyncTaskRefresh extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feeds.get(i).getId(),articles);
                 XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + "id : " + feeds.get(i).getId()+ " 更新完毕,共获得更新的文章:" + result.size());
                 //插入数据
-                DBHelper.Insert.articles(result);
+                DBHelper.Insert.articles(result,feeds.get(i).getId());
                 //DBHelper.Insert.feed(feed);
                 //通知更新结束
                 UpdateFeedEvent event1 =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
