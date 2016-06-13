@@ -161,27 +161,27 @@ public class FeedViewModel extends BaseViewModel {
      * @param feedList
      */
     public void refresh(final PullToRefreshRecyclerView feedList) {
-        FeedNetwork.getInstance().refresh(feed.getId(), new FeedNetwork.OnRefreshListener() {
-            @Override
-            public void onError(String msg) {
-                //完成刷新
-                feedList.onPullDownRefreshComplete();
-                ToastHelper.showNotice(mView,msg, TastyToast.STYLE_ALERT);
-                updateFeed();
-            }
+//        FeedNetwork.getInstance().refresh(feed.getId(), new FeedNetwork.OnRefreshListener() {
+//            @Override
+//            public void onError(String msg) {
+//                //完成刷新
+//                feedList.onPullDownRefreshComplete();
+//                ToastHelper.showNotice(mView,msg, TastyToast.STYLE_ALERT);
+//                updateFeed();
+//            }
+//
+//            @Override
+//            public void onSuccess(Feed feed,ArrayList<Article> list) {
+//                //设置刷新时间
+//                feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
+//                //完成刷新
+//                feedList.onPullDownRefreshComplete();
+//                boolean haveNewDate = list != null && list.size() > 0;
+//                ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), list.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
+//                updateFeed();
+//            }
+//        });
 
-            @Override
-            public void onSuccess(Feed feed,ArrayList<Article> list) {
-                //设置刷新时间
-                feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
-                //完成刷新
-                feedList.onPullDownRefreshComplete();
-                boolean haveNewDate = list != null && list.size() > 0;
-                ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), list.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
-                updateFeed();
-            }
-        });
-        /*
         if (rssTask != null) {
             if (rssTask.getStatus() == AsyncTask.Status.RUNNING) {
                 //正在执行中
@@ -190,7 +190,7 @@ public class FeedViewModel extends BaseViewModel {
         }
         rssTask = RssHelper.getMostRecentNews(new RssHelper.IRssListener() {
             @Override
-            public void onSuccess(final SyndFeed syndFeed) {
+            public void onSuccess(final Feed feed) {
                 feedList.post(new Runnable() {
                     @Override
                     public void run() {
@@ -200,10 +200,7 @@ public class FeedViewModel extends BaseViewModel {
                         //完成刷新
                         feedList.onPullDownRefreshComplete();
 
-
-                        //获取的文章list
-                        Feed feed = DBHelper.Util.feedConert(syndFeed, DBHelper.Query.getUserId());
-                        ArrayList<Article> articles = DBHelper.Util.getArticles(syndFeed);
+                        List<Article> articles =feed.getArticles();
                         if (articles == null || articles.size() == 0) {
                             //没有获取到数据
                             return;
@@ -250,7 +247,7 @@ public class FeedViewModel extends BaseViewModel {
             }
         });
         rssTask.execute(feed.getUrl());
-        */
+
     }
 
     /**

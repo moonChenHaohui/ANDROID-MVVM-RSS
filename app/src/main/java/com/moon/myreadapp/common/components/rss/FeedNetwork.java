@@ -14,6 +14,7 @@ import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
+import com.moon.myreadapp.mvvm.models.dao.FeedDao;
 import com.moon.myreadapp.util.BuiltConfig;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.Globals;
@@ -35,18 +36,7 @@ public class FeedNetwork {
     private static FeedNetwork sInstance;
     private Handler mUIHandler = new Handler(Looper.getMainLooper());
     private FeedReader mFeedReader;
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case MSG_NOTIFY_FEED_DB_UPDATED:
-                    XApplication.getInstance().bus.post(new UpdateFeedListEvent());
-                    break;
-                default:
-            }
-        }
-    };
+
 
     private FeedNetwork() {
     }
@@ -200,8 +190,14 @@ public class FeedNetwork {
         }
     }
 
+    public Feed load (String url){
+        try {
+            return mFeedReader.load(url);
+        } catch (FeedReadException e) {
+            return null;
+        }
+    }
     private void notifyUI() {
-        mHandler.removeMessages(MSG_NOTIFY_FEED_DB_UPDATED);
-        mHandler.sendEmptyMessageDelayed(MSG_NOTIFY_FEED_DB_UPDATED, DELAY_NOTIFY_FEED_DB_UPDATED);
+        XApplication.getInstance().bus.post(new UpdateFeedListEvent());
     }
 }

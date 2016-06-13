@@ -21,6 +21,7 @@ import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
+import com.moon.myreadapp.ui.helper.AsyncTaskRefresh;
 import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
@@ -47,7 +48,7 @@ public class MainViewModel extends BaseViewModel {
     private int currentPosition = -1;
     private Dialog mDialog;
 
-    private RefreshAsyncTask refreshAsyncTask;
+    private AsyncTaskRefresh refreshAsyncTask;
 
     public MainViewModel(MainActivity view) {
         this.mView = view;
@@ -220,7 +221,7 @@ public class MainViewModel extends BaseViewModel {
             refreshAsyncTask.cancel(true);
             refreshAsyncTask = null;
         }
-        refreshAsyncTask = new RefreshAsyncTask(new RefreshAsyncTask.StatusListener() {
+        refreshAsyncTask = new AsyncTaskRefresh(new AsyncTaskRefresh.StatusListener() {
             @Override
             public void onSuccess() {
                 setRefresh(false);

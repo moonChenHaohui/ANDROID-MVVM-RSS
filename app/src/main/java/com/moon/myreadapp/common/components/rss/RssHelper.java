@@ -10,10 +10,12 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.common.log.XLog;
+import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,13 +48,13 @@ public class RssHelper {
      */
     public interface IRssListener {
 
-        void onSuccess(SyndFeed syndFeed);
+        void onSuccess(Feed feed);
 
         void onError(String msg);
     }
 
     public static class RssTask extends AsyncTask<String, Integer, SyndFeed> {
-        private SyndFeed feed;
+        private Feed feed;
         private IRssListener listener;
 
         String url;
@@ -73,7 +75,7 @@ public class RssHelper {
             url = adapterURL(url);
             XLog.d(url);
             try {
-                feed = getRetriever().retrieveFeed(url);
+                feed = FeedNetwork.getInstance().load(url);
             } catch (Exception e) {
                 String ex = e.toString();
                 if (ex != null && ex != "") {
