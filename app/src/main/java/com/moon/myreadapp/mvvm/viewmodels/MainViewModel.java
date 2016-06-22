@@ -4,7 +4,6 @@ import android.databinding.Bindable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
@@ -12,9 +11,7 @@ import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.FeedRecAdapter;
-import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
-import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.constants.Constants;
@@ -22,9 +19,7 @@ import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.FeedActivity;
 import com.moon.myreadapp.ui.MainActivity;
 import com.moon.myreadapp.ui.helper.AsyncTaskRefresh;
-import com.moon.myreadapp.ui.helper.RefreshAsyncTask;
 import com.moon.myreadapp.util.DBHelper;
-import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.VibratorHelper;
 import com.rey.material.app.Dialog;
 

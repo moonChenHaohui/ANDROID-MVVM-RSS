@@ -1,12 +1,9 @@
 package com.moon.myreadapp.ui.helper;
 
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.SafeAsyncTask;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.common.components.rss.FeedNetwork;
-import com.moon.myreadapp.common.components.rss.FeedReader;
-import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
@@ -16,7 +13,6 @@ import com.moon.myreadapp.util.DBHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by moon on 16/06/13.

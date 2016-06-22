@@ -1,6 +1,5 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
-import android.app.Activity;
 import android.databinding.Bindable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,19 +7,17 @@ import android.view.View;
 
 import android.widget.Button;
 
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.common.log.XLog;
+import com.moon.appframework.common.util.SafeAsyncTask;
 import com.moon.appframework.core.XApplication;
 import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.BR;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.ArticleRecAdapter;
-import com.moon.myreadapp.common.components.dialog.FeedSetDialog;
 import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshRecyclerView;
 import com.moon.myreadapp.common.components.recyclerview.RecyclerItemClickListener;
 import com.moon.myreadapp.common.components.rss.FeedNetwork;
-import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
@@ -57,7 +54,7 @@ public class FeedViewModel extends BaseViewModel {
     private int currentPosition = -1;
     private Dialog mDialog;
     private boolean showUnReadArticles;
-    private RssHelper.RssTask rssTask;
+
 
     public FeedViewModel(FeedActivity view, long feedId) {
         this.mView = view;
@@ -147,11 +144,6 @@ public class FeedViewModel extends BaseViewModel {
     @Override
     public void clear() {
         mView = null;
-        if (rssTask != null) {
-            if (rssTask.getStatus() == AsyncTask.Status.RUNNING) {
-                rssTask.cancel(true);
-            }
-        }
     }
 
 
@@ -161,92 +153,58 @@ public class FeedViewModel extends BaseViewModel {
      * @param feedList
      */
     public void refresh(final PullToRefreshRecyclerView feedList) {
-//        FeedNetwork.getInstance().refresh(feed.getId(), new FeedNetwork.OnRefreshListener() {
-//            @Override
-//            public void onError(String msg) {
-//                //完成刷新
-//                feedList.onPullDownRefreshComplete();
-//                ToastHelper.showNotice(mView,msg, TastyToast.STYLE_ALERT);
-//                updateFeed();
-//            }
-//
-//            @Override
-//            public void onSuccess(Feed feed,ArrayList<Article> list) {
-//                //设置刷新时间
-//                feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
-//                //完成刷新
-//                feedList.onPullDownRefreshComplete();
-//                boolean haveNewDate = list != null && list.size() > 0;
-//                ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), list.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
-//                updateFeed();
-//            }
-//        });
 
-        if (rssTask != null) {
-            if (rssTask.getStatus() == AsyncTask.Status.RUNNING) {
-                //正在执行中
-                return;
-            }
-        }
-        rssTask = RssHelper.getMostRecentNews(new RssHelper.IRssListener() {
+        new AsyncTask<String, String, String>() {
             @Override
-            public void onSuccess(final Feed feed) {
-                feedList.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        //设置刷新时间
-                        feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
-                        //完成刷新
-                        feedList.onPullDownRefreshComplete();
-
-                        List<Article> articles =feed.getArticles();
-                        if (articles == null || articles.size() == 0) {
-                            //没有获取到数据
-                            return;
-                        }
-
-                        //result 为获取新更新的文章
-                        ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feedId, articles);
-
-
-                        boolean haveNewDate = result != null && result.size() > 0;
-
-                        //插入数据库
-                        if (haveNewDate) {
-                            DBHelper.Insert.articles(result);
-                        }
-                        articles = null;
-
-                        //设置提示
-                        ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
-
-                        //重新设置数据
-                        if (haveNewDate) {
-                            mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
-                        }
-                        updateFeed();
-
+            protected String doInBackground(String... params) {
+                try {
+                    Feed newFeed = FeedNetwork.getInstance().load(feed.getUrl());
+                    List<Article> articles =feed.getArticles();
+                    if (articles == null || articles.size() == 0) {
+                        //没有获取到数据
+                        return "success";
                     }
-                });
 
+                    //result 为获取新更新的文章
+                    ArrayList<Article> result = ModelHelper.getUpDateArticlesByFeedId(feedId, articles);
+
+
+                    boolean haveNewDate = result != null && result.size() > 0;
+
+                    //插入数据库
+                    if (haveNewDate) {
+                        DBHelper.Insert.articles(result);
+                    }
+                    articles = null;
+
+                    //设置提示
+                    ToastHelper.showNotice(mView, haveNewDate ? BuiltConfig.getString(R.string.notice_update, feed.getTitle(), result.size()) : BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
+
+                    //重新设置数据
+                    if (haveNewDate) {
+                        mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
+                    }
+
+                }catch (Exception e){
+                    mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
+                    return "error";
+                }
+                return "success";
             }
 
             @Override
-            public void onError(final String msg) {
-                XLog.d("onError" + msg);
-                mAdapter.setmData(getBaseData(0, Constants.SINGLE_LOAD_SIZE));
-                //ToastHelper.showNotice(mView, BuiltConfig.getString(R.string.notice_update_none), TastyToast.STYLE_MESSAGE);
-                feedList.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        feedList.onPullDownRefreshComplete();
-                    }
-                });
-//
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //完成刷新
+                feedList.onPullDownRefreshComplete();
+                if (s.endsWith("success")){
+                    //设置刷新时间
+                    feedList.getHeaderLoadingLayout().setLastUpdatedLabel(Conver.ConverToString(new Date(), "HH:mm"));
+                    updateFeed();
+                }
+
             }
-        });
-        rssTask.execute(feed.getUrl());
+        }.execute();
 
     }
 

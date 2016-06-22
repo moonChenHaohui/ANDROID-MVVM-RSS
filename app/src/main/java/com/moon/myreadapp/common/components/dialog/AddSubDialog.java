@@ -2,18 +2,14 @@ package com.moon.myreadapp.common.components.dialog;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
-import com.google.code.rome.android.repackaged.org.apache.harmony.beans.Handler;
 import com.moon.appframework.common.util.StringUtils;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.rss.FeedNetwork;
-import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
 import com.moon.myreadapp.databinding.FragmentAddSubBinding;
@@ -38,7 +34,7 @@ public class AddSubDialog extends Dialog {
     private boolean isSearch = true;
     private Feed feed;
     private ArrayList<Article> articles;
-    private RssHelper.RssTask rssTask;
+    //private RssHelper.RssTask rssTask;
     private android.os.Handler mHandler = new android.os.Handler(Looper.getMainLooper());
 
     public AddSubDialog(Context context) {
@@ -79,36 +75,6 @@ public class AddSubDialog extends Dialog {
                     showProgress(true);
                 }
             });
-            /*
-            rssTask = RssHelper.getMostRecentNews(new RssHelper.IRssListener() {
-                @Override
-                public void onSuccess(final SyndFeed syndFeed) {
-                    binding.getRoot().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            showProgress(false);
-                            Feed feed = DBHelper.Util.feedConert(syndFeed, DBHelper.Query.getUserId());
-                            feed.setUrl(binding.input.getText().toString());
-                            ArrayList<Article> articles = DBHelper.Util.getArticles(syndFeed);
-                            success(feed, articles);
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onError(final String msg) {
-                    binding.getRoot().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            showProgress(false);
-                            wrong(BuiltConfig.getString(R.string.dialog_sub_search_error) + msg);
-                        }
-                    });
-                }
-            });
-            rssTask.execute(binding.input.getText().toString());
-*/
             showProgress(true);
             FeedNetwork.getInstance().addSource(binding.input.getText().toString(), null, new FeedNetwork.OnAddListener() {
                 @Override
@@ -195,14 +161,4 @@ public class AddSubDialog extends Dialog {
         binding.input.setEnabled(!show);
     }
 
-    @Override
-    public void dismiss() {
-        if (rssTask != null) {
-            if (rssTask.getStatus() == AsyncTask.Status.RUNNING) {
-                rssTask.cancel(true);
-            }
-            rssTask = null;
-        }
-        super.dismiss();
-    }
 }

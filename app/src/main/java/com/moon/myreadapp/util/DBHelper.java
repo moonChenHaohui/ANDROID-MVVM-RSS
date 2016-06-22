@@ -1,10 +1,5 @@
 package com.moon.myreadapp.util;
 
-import android.net.Uri;
-
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.module.DCModule;
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
 import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.application.ReadApplication;
 import com.moon.myreadapp.mvvm.models.RequestFeed;
@@ -15,9 +10,6 @@ import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.models.dao.FeedDao;
 import com.moon.myreadapp.mvvm.models.dao.User;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,26 +27,7 @@ public class DBHelper {
 
 
     public static class Util {
-        public static Feed feedConert(SyndFeed syndFeed, long userID) {
-            Feed feed = new Feed(null,
-                    syndFeed.getTitle(),
-                    null,//url
-                    0,
-                    0,
-                    syndFeed.getDescription(),
-                    syndFeed.getFeedType(),
-                    syndFeed.getLink(),
-                    HtmlHelper.getIconUrlString(syndFeed.getLink()),//icon获取
-                    syndFeed.getPublishedDate(),
-                    null,
-                    null,//最近的图片
-                    syndFeed.getLanguage(),
-                    ((DCModule) syndFeed.getModules().get(0)).getRights(),
-                    ((DCModule) syndFeed.getModules().get(0)).getUri(),
-                    ((DCModule) syndFeed.getModules().get(0)).getCreator(),
-                    userID);
-            return feed;
-        }
+
         public static Feed feedConert(RequestFeed requestFeed, long userID) {
             Feed feed = new Feed(null,
                     requestFeed.title,
@@ -75,32 +48,8 @@ public class DBHelper {
                     userID);
             return feed;
         }
-        public static ArrayList<Article> getArticles(SyndFeed syndFeed) {
-            List<SyndEntry> list = syndFeed.getEntries();
-            ArrayList<Article> article = new ArrayList<>();
-            for (int i = 0; i < list.size(); i++) {
-                article.add(articleConvert(list.get(i)));
-            }
-            return article;
-        }
 
-        public static Article articleConvert(SyndEntry entry) {
-            Article article = new Article(
-                    null,
-                    entry.getTitle(),
-                    0,
-                    entry.getDescription() == null ? "" : entry.getDescription().getValue(),
-                    entry.getLink(),
-                    entry.getDescription() == null ? null : StringHelper.convertListToSrring(HtmlHelper.getImgStr(entry.getDescription().getValue(), 3)),//获取最开始的3张图片
-                    entry.getPublishedDate(),
-                    null,//最近阅读时间
-                    0,//状态
-                    ((DCModule) entry.getModules().get(0)).getUri(),
-                    ((DCModule) entry.getModules().get(0)).getRights(),
-                    ((DCModule) entry.getModules().get(0)).getCreator(),
-                    -1, Query.getUserId());
-            return article;
-        }
+
     }
 
     public static class Insert {
@@ -121,12 +70,13 @@ public class DBHelper {
         }
 
         public static void articles(List<Article> articles) {
-            articles(articles,-1);
+            articles(articles, -1);
         }
-        public static void articles(List<Article> articles,long feedId) {
+
+        public static void articles(List<Article> articles, long feedId) {
             if (articles == null) return;
             for (int i = 0; i < articles.size(); i++) {
-                if (feedId > 0){
+                if (feedId > 0) {
                     articles.get(i).setFeed_id(feedId);
                 }
                 article(articles.get(i));
@@ -340,7 +290,7 @@ public class DBHelper {
                 Article temp;
                 for (int i = 0; i < articles.size(); i++) {
                     temp = Query.find(articles.get(i));
-                    if (temp ==null){
+                    if (temp == null) {
                         saveArticle(articles.get(i));
                         //XLog.d("FEED SAVE 插入新数据");
                     } else {
@@ -373,7 +323,7 @@ public class DBHelper {
                 Feed temp;
                 for (int i = 0; i < feeds.size(); i++) {
                     temp = Query.find(feeds.get(i));
-                    if (temp ==null){
+                    if (temp == null) {
                         saveFeed(feeds.get(i));
                         //XLog.d("FEED SAVE 插入新数据");
                     } else {
@@ -417,6 +367,7 @@ public class DBHelper {
             }
             return articles.size();
         }
+
         public static int readAllArticles(List<Article> articles) {
             Date date = new Date();
             for (Article a : articles) {
@@ -426,6 +377,7 @@ public class DBHelper {
             }
             return articles.size();
         }
+
         public static List<Article> getAllUnReadArticles() {
             List<Article> articles = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Use_count.le(0)).list();
             return articles;
@@ -447,14 +399,14 @@ public class DBHelper {
         public static void deleteUser() {
             //删除用户之前,需要先删除用户同步过的频道和收藏的文章
             List<Feed> feeds = Query.getFeeds();
-            for (Feed feed :feeds){
-                if (feed.getObjectId() != null){
+            for (Feed feed : feeds) {
+                if (feed.getObjectId() != null) {
                     Delete.deleteFeed(feed);
                 }
             }
             List<Article> articles = Query.getArticles();
-            for (Article article:articles){
-                if (article.getObjectId() != null){
+            for (Article article : articles) {
+                if (article.getObjectId() != null) {
                     Delete.deleteArticle(article);
                 }
             }
@@ -471,6 +423,7 @@ public class DBHelper {
             }
             return true;
         }
+
         public static boolean deleteArticle(Article article) {
             getDAO().getArticleDao().delete(article);
             return true;
