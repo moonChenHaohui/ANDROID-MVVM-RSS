@@ -2,14 +2,16 @@ package com.moon.myreadapp.ui;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.github.moon.HtmlRemoteImageGetter;
+import com.github.moon.MoonHtmlRemoteImageGetter;
 import com.github.moon.listener.OnTextViewClickListener;
 import com.moon.appframework.action.RouterAction;
 import com.moon.appframework.core.XDispatcher;
@@ -71,7 +73,7 @@ public class ArticleActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, getLayoutView());
         binding.setArticleViewModel(articleViewModel);
 
-        binding.articleBody.feedContent.setOnTextViewClickListener(new OnTextViewClickListener() {
+        binding.articleBody.feedContent.textViewClickListener(new OnTextViewClickListener() {
             @Override
             public void imageClicked(ArrayList<String> arrayList, int i) {
                 Bundle bundle = new Bundle();
@@ -88,21 +90,20 @@ public class ArticleActivity extends BaseActivity {
                 XDispatcher.from(ArticleActivity.this).dispatch(new RouterAction(ArticleWebActivity.class, bundle, true));
 
             }
-        });
-        binding.articleBody.feedContent.setImageLoadAdapter(new HtmlRemoteImageGetter.Adapter() {
+        }).imageLoadAdapter(new MoonHtmlRemoteImageGetter.Adapter() {
             @Override
             public Drawable getDefaultDrawable() {
-                return getDrawable(R.drawable.image_bg);
+                return ContextCompat.getDrawable(ArticleActivity.this,R.drawable.image_bg);
             }
 
             @Override
             public Drawable getErrorDrawable() {
-                return getDrawable(R.drawable.image_bg);
+                return ContextCompat.getDrawable(ArticleActivity.this,R.drawable.image_bg);
             }
-        });
+        }).fullImage(true);
         if (articleViewModel.getArticle()!= null) {
             //富文本显示
-            binding.articleBody.feedContent.setRichText(articleViewModel.getArticle().getContainer());
+            binding.articleBody.feedContent.text(articleViewModel.getArticle().getContainer());
         }
 
         //设置文本大小
