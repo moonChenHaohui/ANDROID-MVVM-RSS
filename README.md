@@ -1,5 +1,5 @@
 # 简读RSS
- ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/ic_rss_logo.png)  
+ ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/rss-logo.png)  
  
  
 使用Google Data Binding技术以MVVM模式来实现的一款Material Design风格的RSS阅读器。
