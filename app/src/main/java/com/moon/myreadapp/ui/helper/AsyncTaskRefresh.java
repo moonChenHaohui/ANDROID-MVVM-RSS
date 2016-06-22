@@ -5,6 +5,7 @@ import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.common.util.SafeAsyncTask;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.common.components.rss.FeedNetwork;
+import com.moon.myreadapp.common.components.rss.FeedReader;
 import com.moon.myreadapp.common.components.rss.RssHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.mvvm.models.ModelHelper;
@@ -14,6 +15,8 @@ import com.moon.myreadapp.util.DBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by moon on 16/06/13.
@@ -35,7 +38,8 @@ public class AsyncTaskRefresh extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
         if(feeds == null || feeds.size() == 0){
             return "";
         }
-        for (int i = 0; i < feeds.size(); i++) {
+        Timer timer;
+        for (int i = 0; i < feeds.size() && !isCancelled(); i++) {
             if (isCancelled()){
                 return "";
             }
@@ -43,12 +47,10 @@ public class AsyncTaskRefresh extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 //原来的feed feeds.get(i);
                 XLog.d(TAG + "feed :" + feeds.get(i).getTitle() + " 开始更新");
                 //通知正在更新这个feed
-                UpdateFeedEvent event =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
-                event.setStatus(UpdateFeedEvent.ON_UPDATE);
-                event.setNotice("开始更新....");
-                publishProgress(event);
+                sentEvent(feeds.get(i),UpdateFeedEvent.ON_UPDATE,"开始更新....");
 
                 Feed feed = FeedNetwork.getInstance().load(feeds.get(i).getUrl());
+
                 //转换出文章list
                 List<Article> articles = feed.getArticles();
                 //过滤,获取新数据;
@@ -58,26 +60,24 @@ public class AsyncTaskRefresh extends SafeAsyncTask<ArrayList<Feed>, UpdateFeedE
                 DBHelper.Insert.articles(result,feeds.get(i).getId());
                 //DBHelper.Insert.feed(feed);
                 //通知更新结束
-                UpdateFeedEvent event1 =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
-                event1.setStatus(UpdateFeedEvent.NORMAL);
-                event1.setNotice("更新完毕....");
-                publishProgress(event1);
-                if(isCancelled()){
-                    throw new Exception("update cancel!");
-                }
+                sentEvent(feeds.get(i),UpdateFeedEvent.NORMAL,"更新完毕....");
             } catch (Exception e) {
                 XLog.d(TAG + "feed :" + e);
                 //更新失败...
-                UpdateFeedEvent event1 =  new UpdateFeedEvent(feeds.get(i), UpdateFeedEvent.TYPE.STATUS);
-                event1.setStatus(UpdateFeedEvent.FAIL);
-                event1.setNotice("更新失败....");
-                publishProgress(event1);
+                sentEvent(feeds.get(i),UpdateFeedEvent.FAIL,"更新失败....");
             }
 
         }
         return "";
     }
 
+
+    private void sentEvent(Feed feed,final int status,final String notice){
+        UpdateFeedEvent event1 =  new UpdateFeedEvent(feed, UpdateFeedEvent.TYPE.STATUS);
+        event1.setStatus(status);
+        event1.setNotice(notice);
+        publishProgress(event1);
+    }
     @Override
     protected void onSafePostExecute(String s) {
         super.onSafePostExecute(s);

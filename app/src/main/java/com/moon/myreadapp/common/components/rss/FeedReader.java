@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class FeedReader implements Closeable {
 
+    public static final int TIME_OUT = 2;//
     private FeedParser mParser = new FeedParser();
 
     public FeedReader() {
@@ -31,6 +32,8 @@ public class FeedReader implements Closeable {
                 throw new IllegalArgumentException("null is not a valid URL");
             } else {
                 URLConnection connection = feedUrl.openConnection();
+                connection.setReadTimeout(TIME_OUT*1000);//网络超时
+                connection.setConnectTimeout(TIME_OUT*1000);//网络超时
                 if (!(connection instanceof HttpURLConnection)) {
                     throw new IllegalArgumentException(feedUrl.toExternalForm() + " is not a valid HTTP Url");
                 } else {
