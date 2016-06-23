@@ -47,9 +47,10 @@
             android:gravity="center"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
+            android:minWidth="24dp"
             android:textSize="@dimen/text_h2"
             android:textColor="@color/txt_white"
-            android:layout_height="28dp"
+            android:layout_height="24dp"
             android:visibility='@{null ==  item.tips ? View.GONE : View.VISIBLE }'
             android:text='@{null ==  item.tips ? "" : item.tips }' />
     </LinearLayout>

@@ -21,6 +21,7 @@ import com.moon.myreadapp.common.components.rss.FeedNetwork;
 import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
+import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.ModelHelper;
 import com.moon.myreadapp.mvvm.models.dao.Article;
@@ -287,6 +288,7 @@ public class FeedViewModel extends BaseViewModel {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
+        fireUIEvent();
     }
 
     public void updateSet(boolean showAllArticles) {
@@ -312,5 +314,9 @@ public class FeedViewModel extends BaseViewModel {
     public void setFeed(Feed feed) {
         this.feed = feed;
         notifyPropertyChanged(BR.feed);
+    }
+    private void fireUIEvent() {
+        UpdateUIEvent event = new UpdateUIEvent(UpdateUIEvent.ARTIVIE_COUNT_CHANGE);
+        XApplication.getInstance().bus.post(event);
     }
 }

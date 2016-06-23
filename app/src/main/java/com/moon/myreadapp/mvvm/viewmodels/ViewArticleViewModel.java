@@ -311,6 +311,7 @@ public class ViewArticleViewModel extends BaseViewModel {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
+        fireUIEvent();
     }
 
 
@@ -414,5 +415,11 @@ public class ViewArticleViewModel extends BaseViewModel {
                 }
             }, 200);
         }
+        fireUIEvent();
+    }
+
+    private void fireUIEvent() {
+        UpdateUIEvent event = new UpdateUIEvent(UpdateUIEvent.ARTIVIE_COUNT_CHANGE);
+        XApplication.getInstance().bus.post(event);
     }
 }
