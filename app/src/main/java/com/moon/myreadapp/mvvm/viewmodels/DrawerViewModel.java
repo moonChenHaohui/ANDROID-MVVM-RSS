@@ -305,4 +305,7 @@ public class DrawerViewModel extends BaseViewModel {
         }
     }
 
+    public void updateTips() {
+        drawerAdapter.notifyDataSetChanged();
+    }
 }

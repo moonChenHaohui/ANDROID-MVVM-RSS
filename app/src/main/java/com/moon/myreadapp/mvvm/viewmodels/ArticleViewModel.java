@@ -20,6 +20,7 @@ import com.moon.myreadapp.common.components.dialog.ShareDialog;
 import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
+import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleWebActivity;
@@ -84,6 +85,7 @@ public class ArticleViewModel extends BaseViewModel {
 
     @Override
     public void initEvents() {
+        fireUIEvent();
     }
 
     @Override
@@ -181,7 +183,12 @@ public class ArticleViewModel extends BaseViewModel {
             event.setUpdatePosition(position);
             event.setArticle(article);
             XApplication.getInstance().bus.post(event);
+            fireUIEvent();
         }
     }
 
+    private void fireUIEvent() {
+        UpdateUIEvent event = new UpdateUIEvent(UpdateUIEvent.ARTIVIE_COUNT_CHANGE);
+        XApplication.getInstance().bus.post(event);
+    }
 }

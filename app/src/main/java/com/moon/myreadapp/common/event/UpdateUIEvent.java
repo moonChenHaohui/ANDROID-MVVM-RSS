@@ -11,6 +11,10 @@ public class UpdateUIEvent implements XEvent {
 
     /** 主题更改*/
     public static int THEME_CHANGE = 1<<10;
+    /**
+     * 文章数量 修改
+     */
+    public static int ARTIVIE_COUNT_CHANGE = 1<<11;
 
     private int status;
     public UpdateUIEvent(int status) {

@@ -131,7 +131,6 @@ public abstract class Base1Activity extends XActivity{
 
     @Subscribe
     public void onUpdateEvent(UpdateUIEvent event) {
-
         if (event.getStatus() == UpdateUIEvent.THEME_CHANGE) {
             recreate();
         }

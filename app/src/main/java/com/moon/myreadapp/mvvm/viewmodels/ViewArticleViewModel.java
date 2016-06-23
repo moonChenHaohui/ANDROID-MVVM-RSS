@@ -21,6 +21,7 @@ import com.moon.myreadapp.common.components.toast.TastyToast;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
+import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.dao.Article;
 import com.moon.myreadapp.ui.ArticleActivity;

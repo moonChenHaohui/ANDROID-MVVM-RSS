@@ -19,6 +19,7 @@ import com.moon.myreadapp.common.components.pulltorefresh.PullToRefreshBase;
 import com.moon.myreadapp.common.event.SynchronizeStateEvent;
 import com.moon.myreadapp.common.event.UpdateFeedEvent;
 import com.moon.myreadapp.common.event.UpdateFeedListEvent;
+import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.common.event.UpdateUserEvent;
 import com.moon.myreadapp.databinding.ActivityHomeBinding;
 import com.moon.myreadapp.databinding.NoticeBinding;
@@ -224,6 +225,15 @@ public class MainActivity extends BaseActivity {
         drawerViewModel.updateUser(event.getUser());
         drawerViewModel.synchroUserInfo();
     }
+    @Subscribe
+    @Override
+    public void onUpdateEvent(UpdateUIEvent event) {
+        super.onUpdateEvent(event);
+        if (event.getStatus() == UpdateUIEvent.ARTIVIE_COUNT_CHANGE){
+            drawerViewModel.updateTips();
+        }
+    }
+
     @Subscribe
     public void onUpdateEvent(SynchronizeStateEvent event) {
         drawerViewModel.setSyncState(event.getSyncState());
