@@ -210,6 +210,7 @@ public class AddFeedViewModel extends BaseViewModel {
 
             @Override
             public void onError(int code, String msg) {
+                emptyView.setVisibility(View.INVISIBLE);
             }
         });
     }

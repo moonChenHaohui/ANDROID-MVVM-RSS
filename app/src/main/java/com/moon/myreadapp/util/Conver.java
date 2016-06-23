@@ -18,6 +18,8 @@ import java.util.Locale;
  */
 public class Conver {
 
+    private static final Calendar CALENDAR = Calendar.getInstance();
+
     //把日期转为字符串
     public static String ConverToString(Date date)
     {
@@ -97,19 +99,19 @@ public class Conver {
     }
 
     private static boolean isSameDay(long time) {
-        long startTime = floorDay(Calendar.getInstance()).getTimeInMillis();
-        long endTime = ceilDay(Calendar.getInstance()).getTimeInMillis();
+        long startTime = floorDay(CALENDAR).getTimeInMillis();
+        long endTime = ceilDay(CALENDAR).getTimeInMillis();
         return time > startTime && time < endTime;
     }
 
     private static boolean isYesterday(long time) {
         Calendar startCal;
-        startCal = floorDay(Calendar.getInstance());
+        startCal = floorDay(CALENDAR);
         startCal.add(Calendar.DAY_OF_MONTH, -1);
         long startTime = startCal.getTimeInMillis();
 
         Calendar endCal;
-        endCal = ceilDay(Calendar.getInstance());
+        endCal = ceilDay(CALENDAR);
         endCal.add(Calendar.DAY_OF_MONTH, -1);
         long endTime = endCal.getTimeInMillis();
         return time > startTime && time < endTime;
@@ -117,7 +119,7 @@ public class Conver {
 
     private static boolean isSameYear(long time) {
         Calendar startCal;
-        startCal = floorDay(Calendar.getInstance());
+        startCal = floorDay(CALENDAR);
         startCal.set(Calendar.MONTH, Calendar.JANUARY);
         startCal.set(Calendar.DAY_OF_MONTH, 1);
         return time >= startCal.getTimeInMillis();

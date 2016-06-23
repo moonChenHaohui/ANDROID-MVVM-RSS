@@ -27,7 +27,7 @@ public class VibratorHelper {
         }
         return vibrator;
     }
-    public static void shock(TIME time){
+    public synchronized static void shock(TIME time){
      getInstance().vibrate(time.time);
     }
 }

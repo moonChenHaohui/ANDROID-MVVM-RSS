@@ -52,7 +52,8 @@ public class AddFeedActivity extends BaseActivity {
         binding.result.setLayoutManager(new LinearLayoutManager(this));
         binding.result.setAdapter(addFeedViewModel.getSystemRecAdapter());
         addFeedViewModel.loadSystemData(binding.progress);
-        
+        //get focus
+        binding.searchView.requestFocus();
     }
 
     @Override
