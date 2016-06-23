@@ -1,5 +1,14 @@
 ###Log
 
+~6.23
+
+- 修复虚拟按键遮挡布局
+- 增加6.0 动态权限获取
+- 修复webbrowser bug
+- 添加新的搜索页面（增加文章页）
+- 移除rome.jar，全部rss获取方法改为自定义的rss get method ，感谢 Match 
+
+
 1.21
 
 - 在feed更新失败后给出提示;
