@@ -9,6 +9,9 @@ import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseListAdapter;
 import com.moon.myreadapp.databinding.LeftDrawerListItemBinding;
 import com.moon.myreadapp.mvvm.models.MenuItem;
+import com.moon.myreadapp.mvvm.viewmodels.ViewArticleViewModel;
+import com.moon.myreadapp.util.BuiltConfig;
+import com.moon.myreadapp.util.DBHelper;
 
 import java.util.List;
 
@@ -30,9 +33,27 @@ public class DrawerAdapter extends BaseListAdapter<MenuItem> {
             convertView.setTag(binding);
         }
         binding = (LeftDrawerListItemBinding)convertView.getTag();
-
+        adapaterDataTips(getmData().get(position));
         binding.setItem(getmData().get(position));
         return convertView;
+    }
+
+
+    private static void adapaterDataTips (MenuItem item){
+        final String title = item.getTitle();
+        long count = -1;
+        if (title.equals(BuiltConfig.getString(R.string.allunread))){
+            count = DBHelper.Query.getArticlesCountByStyle(ViewArticleViewModel.Style.VIEW_UNREAD);
+        } else if (title.equals(BuiltConfig.getString(R.string.myfavor))){
+            count = DBHelper.Query.getArticlesCountByStyle(ViewArticleViewModel.Style.VIEW_FAVOR);
+        } else if (title.equals(BuiltConfig.getString(R.string.readhistory))){
+            count = DBHelper.Query.getArticlesCountByStyle(ViewArticleViewModel.Style.VIEW_READ_HISTORY);
+        }
+        if (count > 0) {
+            item.setTips(Long.toString(count));
+        }else {
+            item.setTips(null);
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import com.moon.myreadapp.mvvm.models.dao.DaoSession;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.mvvm.models.dao.FeedDao;
 import com.moon.myreadapp.mvvm.models.dao.User;
+import com.moon.myreadapp.mvvm.viewmodels.ViewArticleViewModel;
 
 import java.util.Date;
 import java.util.List;
@@ -182,6 +183,19 @@ public class DBHelper {
             QueryBuilder<Article> res = getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status),
                     ArticleDao.Properties.Use_count.gt(0));
             return res.orderDesc(ArticleDao.Properties.Last_read_time).offset(start).limit(size).list();
+        }
+
+        public static long getArticlesCountByStyle(final ViewArticleViewModel.Style style){
+            if (style == ViewArticleViewModel.Style.VIEW_UNREAD){
+                return getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status),
+                        ArticleDao.Properties.Use_count.eq(0)).count();
+            } else if (style == ViewArticleViewModel.Style.VIEW_FAVOR){
+                return getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.eq(Article.Status.FAVOR.status)).count();
+            } else if (style == ViewArticleViewModel.Style.VIEW_READ_HISTORY){
+                return getDAO().getArticleDao().queryBuilder().where(ArticleDao.Properties.Status.notEq(Article.Status.DELETE.status),
+                        ArticleDao.Properties.Use_count.gt(0)).count();
+            }
+            return -1;
         }
 
         public static List<Article> getArticlesUnRead(int start, int size) {

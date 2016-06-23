@@ -277,15 +277,20 @@
     <string name="user_info">储存: 1 频道 | 共 2 篇收藏文章</string>
     <string name="user_check_fail">用户:%1$s</string>
     <string name="user_validate_fail">用户信息已经过期,请重新登录.</string>
-    
+
+
+    <string name="allunread">全部未读</string>
+    <string name="myfavor">我的收藏</string>
+    <string name="readhistory">最近阅读</string>
     <string-array name="functions">
         <item>添加订阅</item>
-        <item>全部未读</item>
-        <item>我的收藏</item>
-        <item>最近阅读</item>
+        <item>@string/allunread</item>
+        <item>@string/myfavor</item>
+        <item>@string/readhistory</item>
         <item>设置</item>
         <item>主题</item>
     </string-array>
+
     <string-array name="functions_icon">
         <item>{fa-plus-square}</item>
         <item>{fa-eye}</item>

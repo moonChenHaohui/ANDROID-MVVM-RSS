@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="item"
             type="com.moon.myreadapp.mvvm.models.MenuItem" />
@@ -14,6 +14,8 @@
         android:layout_height="@dimen/left_list_item_height"
         android:background="@drawable/left_drawer_list"
         android:gravity="center"
+        android:paddingLeft="@dimen/normal_padding"
+        android:paddingRight="@dimen/normal_padding"
         android:orientation="horizontal">
 
         <com.joanzapata.iconify.widget.IconTextView
@@ -38,5 +40,17 @@
             android:background="@drawable/selectable_background"
             android:layout_height="match_parent"
             />
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/tips"
+            android:background="@drawable/left_tips_corners"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textSize="@dimen/text_h2"
+            android:textColor="@color/txt_white"
+            android:layout_height="28dp"
+            android:visibility='@{null ==  item.tips ? View.GONE : View.VISIBLE }'
+            android:text='@{null ==  item.tips ? "" : item.tips }' />
     </LinearLayout>
 </layout>
