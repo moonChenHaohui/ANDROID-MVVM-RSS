@@ -3,12 +3,10 @@ package com.moon.myreadapp.common.adapter;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
-import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.moon.appframework.common.log.XLog;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.base.BaseRecyclerAdapter;
 import com.moon.myreadapp.databinding.LvArticleItemNoImgBinding;

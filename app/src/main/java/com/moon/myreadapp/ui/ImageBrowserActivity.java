@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.ui.fragments.ImageDetailFragment;
+import com.moon.myreadapp.util.ThemeUtils;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public class ImageBrowserActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ThemeUtils.Theme theme = ThemeUtils.getCurrentTheme(this);
+        ThemeUtils.changTheme(this, theme);
         setContentView(R.layout.activity_image_browser);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         ArrayList<String> urls = getIntent().getExtras().getStringArrayList(Constants.IMAGES_LIST);
@@ -88,7 +91,9 @@ public class ImageBrowserActivity extends FragmentActivity {
 
     @Override
     public void finish() {
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         super.finish();
 
     }
+
 }
