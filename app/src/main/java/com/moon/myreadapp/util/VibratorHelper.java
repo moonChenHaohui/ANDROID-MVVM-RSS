@@ -14,7 +14,7 @@ public class VibratorHelper {
         LONG(400);
 
         long time;
-        private TIME(long t){
+        TIME(long t){
             this.time = t;
         }
     }

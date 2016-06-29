@@ -165,11 +165,8 @@ public class PullToRefreshGridView extends PullToRefreshBase<GridView> implement
      * @return true表示还有更多数据
      */
     private boolean hasMoreData() {
-        if ((null != mFooterLayout) && (mFooterLayout.getState() == State.NO_MORE_DATA)) {
-            return false;
-        }
-        
-        return true;
+        return !((null != mFooterLayout) && (mFooterLayout.getState() == State.NO_MORE_DATA));
+
     }
     
     /**
@@ -185,11 +182,8 @@ public class PullToRefreshGridView extends PullToRefreshBase<GridView> implement
         }
 
         int mostTop = (mGridView.getChildCount() > 0) ? mGridView.getChildAt(0).getTop() : 0;
-        if (mostTop >= 0) {
-            return true;
-        }
+        return mostTop >= 0;
 
-        return false;
     }
 
     /**

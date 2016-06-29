@@ -186,11 +186,8 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
      * @return true表示还有更多数据
      */
     private boolean hasMoreData() {
-        if ((null != mLoadMoreFooterLayout) && (mLoadMoreFooterLayout.getState() == State.NO_MORE_DATA)) {
-            return false;
-        }
-        
-        return true;
+        return !((null != mLoadMoreFooterLayout) && (mLoadMoreFooterLayout.getState() == State.NO_MORE_DATA));
+
     }
     
     /**
@@ -206,11 +203,8 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
         }
 
         int mostTop = (mListView.getChildCount() > 0) ? mListView.getChildAt(0).getTop() : 0;
-        if (mostTop >= 0) {
-            return true;
-        }
+        return mostTop >= 0;
 
-        return false;
     }
 
     /**

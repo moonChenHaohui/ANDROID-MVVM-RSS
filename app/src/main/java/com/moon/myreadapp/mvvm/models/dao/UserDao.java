@@ -26,7 +26,7 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Account = new Property(1, String.class, "account", false, "ACCOUNT");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
         public final static Property Nickname = new Property(3, String.class, "nickname", false, "NICKNAME");
-    };
+    }
 
 
     public UserDao(DaoConfig config) {

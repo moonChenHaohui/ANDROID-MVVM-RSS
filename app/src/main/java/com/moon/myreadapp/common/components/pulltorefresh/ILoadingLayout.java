@@ -10,7 +10,7 @@ public interface ILoadingLayout {
     /**
      * 当前的状态
      */
-    public enum State {
+    enum State {
         
         /**
          * Initial state
@@ -57,26 +57,26 @@ public interface ILoadingLayout {
      * 
      * @param state 状态
      */
-    public void setState(State state);
+    void setState(State state);
     
     /**
      * 得到当前的状态
      *  
      * @return 状态
      */
-    public State getState();
+    State getState();
     
     /**
      * 得到当前Layout的内容大小，它将作为一个刷新的临界点
      * 
      * @return 高度
      */
-    public int getContentSize();
+    int getContentSize();
     
     /**
      * 在拉动时调用
      * 
      * @param scale 拉动的比例
      */
-    public void onPull(float scale);
+    void onPull(float scale);
 }

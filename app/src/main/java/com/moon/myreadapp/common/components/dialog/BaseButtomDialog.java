@@ -52,7 +52,6 @@ public abstract class BaseButtomDialog extends PopupWindow{
 
     public void showWithView(View v) {
         WindowManager.LayoutParams lp = mWindow.getAttributes();
-        //TODO some thing
         lp.alpha = 0.4f;
         mWindow.setAttributes(lp);
         showAtLocation(v, Gravity.BOTTOM, 0, 0);

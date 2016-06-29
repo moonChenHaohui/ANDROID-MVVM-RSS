@@ -222,12 +222,7 @@ public class FeedViewModel extends BaseViewModel {
         if (loadData != null) {
             mAdapter.addAll(loadData);
         }
-        if (loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE) {
-            //没有获得足够的数据,下次加载没有数据了.
-            return false;
-        } else {
-            return true;
-        }
+        return !(loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE);
     }
 
 

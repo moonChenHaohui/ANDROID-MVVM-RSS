@@ -153,7 +153,7 @@ public class ViewArticleViewModel extends BaseViewModel {
                     Bundle bundle = new Bundle();
                     bundle.putString(Constants.ARTICLE_TITLE, mAdapter.getItem(position).getTitle());
                     bundle.putString(Constants.ARTICLE_URL, mAdapter.getItem(position).getLink());
-                    XDispatcher.from((Activity) mView).dispatch(new RouterAction(ArticleWebActivity.class, bundle, true));
+                    XDispatcher.from(mView).dispatch(new RouterAction(ArticleWebActivity.class, bundle, true));
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putLong(Constants.ARTICLE_ID, mAdapter.getItem(position).getId());
@@ -234,12 +234,7 @@ public class ViewArticleViewModel extends BaseViewModel {
         if (loadData != null) {
             mAdapter.addAll(loadData);
         }
-        if (loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE) {
-            //没有获得足够的数据,下次加载没有数据了.
-            return false;
-        } else {
-            return true;
-        }
+        return !(loadData == null || loadData.size() < Constants.SINGLE_LOAD_SIZE);
     }
 
 

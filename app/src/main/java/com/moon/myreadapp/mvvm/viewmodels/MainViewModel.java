@@ -92,7 +92,7 @@ public class MainViewModel extends BaseViewModel {
                 //短震动
                 VibratorHelper.shock(VibratorHelper.TIME.SHORT);
                 currentPosition = pos;
-                //TODO 弹出对话框:标记全部已读|刷新|删除|置顶
+                //弹出对话框:标记全部已读|刷新|删除|置顶
                 mDialog = new Dialog(mView).
                         contentView(mView.getLayoutInflater().inflate(R.layout.menu_singer_feed,null)).
                         cancelable(true).

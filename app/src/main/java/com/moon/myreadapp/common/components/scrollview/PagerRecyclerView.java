@@ -60,11 +60,7 @@ public class PagerRecyclerView extends ObservableRecyclerView {
                 if (xDistance > yDistance) {
                     return false;
                 }
-                if (curY - yLast <= 0){
-                    mIsScrollUp = false;
-                }else{
-                    mIsScrollUp = true;
-                }
+                mIsScrollUp = curY - yLast > 0;
                 break;
             case MotionEvent.ACTION_UP:
                 xLast = ev.getX();

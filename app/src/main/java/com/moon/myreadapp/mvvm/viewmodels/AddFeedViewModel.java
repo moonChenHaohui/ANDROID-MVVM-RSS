@@ -1,19 +1,13 @@
 package com.moon.myreadapp.mvvm.viewmodels;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -21,33 +15,21 @@ import com.google.gson.reflect.TypeToken;
 import com.moon.appframework.common.log.XLog;
 import com.moon.appframework.core.XApplication;
 import com.moon.myreadapp.BR;
-import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.adapter.AddSubViewPagerAdapter;
 import com.moon.myreadapp.common.adapter.SystemRecAdapter;
-import com.moon.myreadapp.common.components.rss.FeedNetwork;
-import com.moon.myreadapp.common.components.rss.FeedReadException;
-import com.moon.myreadapp.common.components.rss.FeedReader;
 import com.moon.myreadapp.constants.Constants;
 import com.moon.myreadapp.mvvm.models.RequestFeed;
 import com.moon.myreadapp.mvvm.models.dao.Feed;
 import com.moon.myreadapp.ui.AddFeedActivity;
-import com.moon.myreadapp.ui.fragments.SearchFragment;
-import com.moon.myreadapp.ui.fragments.RecommendFragment;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.StringHelper;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
@@ -56,7 +38,6 @@ import cn.bmob.v3.listener.FindListener;
  * Created by moon on 15/12/17.
  */
 public class AddFeedViewModel extends BaseViewModel {
-
     private AddSubViewPagerAdapter adapter;
     private SystemRecAdapter systemRecAdapter;
 
@@ -66,6 +47,7 @@ public class AddFeedViewModel extends BaseViewModel {
     private AddFeedActivity mView;
 
     private SearchView.OnQueryTextListener searchListener;
+
     public AddFeedViewModel(AddFeedActivity mView) {
         this.mView = mView;
         initViews();
@@ -74,7 +56,7 @@ public class AddFeedViewModel extends BaseViewModel {
 
     @Override
     public void initViews() {
-        systemRecAdapter = new SystemRecAdapter(mView,null);
+        systemRecAdapter = new SystemRecAdapter(mView, null);
     }
 
     @Override
@@ -88,7 +70,7 @@ public class AddFeedViewModel extends BaseViewModel {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (!TextUtils.isEmpty(newText)){
+                if (!TextUtils.isEmpty(newText)) {
                     search(newText);
                 }
                 return true;
@@ -97,7 +79,7 @@ public class AddFeedViewModel extends BaseViewModel {
 
     }
 
-    private void search(final String info){
+    private void search(final String info) {
         XApplication.getInstance().cancelPendingRequests(this);
         final String requestUrl = Constants.RSS_REQUEST_URL + StringHelper.getStringUTF8(info);
         mView.getBinding().progress.setVisibility(View.VISIBLE);
@@ -114,16 +96,17 @@ public class AddFeedViewModel extends BaseViewModel {
                             List<String> titleList = new ArrayList<>();
                             JSONObject jsonObject = new JSONObject(response);
                             String json = jsonObject.getString("results");
-                            requestFeeds = new Gson().fromJson(json, new TypeToken<List<RequestFeed>>() {}.getType());
+                            requestFeeds = new Gson().fromJson(json, new TypeToken<List<RequestFeed>>() {
+                            }.getType());
                         } catch (JSONException e) {
                             //e.printStackTrace();
                         }
-                        if (null == requestFeeds || requestFeeds.size() == 0){
+                        if (null == requestFeeds || requestFeeds.size() == 0) {
                             //
                         }
 
                         List<Feed> searchFeeds = new ArrayList<Feed>();
-                        for (RequestFeed feed :requestFeeds){
+                        for (RequestFeed feed : requestFeeds) {
                             searchFeeds.add(DBHelper.Util.feedConert(feed, DBHelper.Query.getUserId()));
                         }
                         systemRecAdapter.setmData(searchFeeds);
@@ -140,8 +123,9 @@ public class AddFeedViewModel extends BaseViewModel {
                 }
         );
         request.setTag(this);
-       Volley.newRequestQueue(mView).add(request);
+        Volley.newRequestQueue(mView).add(request);
     }
+
     @Override
     public void clear() {
         mView = null;
@@ -161,7 +145,7 @@ public class AddFeedViewModel extends BaseViewModel {
      * 点击自定义输入 url 的dialog
      */
     public void onClickAddSub(View view) {
-       DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
+        DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
 //        FeedNetwork.getInstance().verifySource("https://www.zhihu.com/rss", new FeedNetwork.OnVerifyListener() {
 //            @Override
 //            public void onResult(boolean isValid, Feed feedSource) {
@@ -188,7 +172,7 @@ public class AddFeedViewModel extends BaseViewModel {
      * @param emptyView
      */
     public void loadSystemData(final View emptyView) {
-        if (emptyView == null){
+        if (emptyView == null) {
             return;
         }
         emptyView.setEnabled(false);
@@ -197,7 +181,7 @@ public class AddFeedViewModel extends BaseViewModel {
         query.findObjects(mView, new FindListener<Feed>() {
             @Override
             public void onSuccess(List<Feed> object) {
-                for(Feed feed:object){
+                for (Feed feed : object) {
                     feed.setObjectId(null);
                     feed.clearBmobData();
                 }

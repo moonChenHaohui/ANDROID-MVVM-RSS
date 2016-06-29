@@ -253,10 +253,7 @@ public class PullToRefreshRecyclerView extends PullToRefreshBase<RecyclerView> {
      * @return true表示还有更多数据
      */
     private boolean hasMoreData() {
-        if ((null != mLoadMoreFooterLayout) && (mLoadMoreFooterLayout.getState() == State.NO_MORE_DATA)) {
-            return false;
-        }
-        return true;
+        return !((null != mLoadMoreFooterLayout) && (mLoadMoreFooterLayout.getState() == State.NO_MORE_DATA));
     }
 
     /**

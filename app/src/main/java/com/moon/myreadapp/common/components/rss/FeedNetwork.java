@@ -31,8 +31,6 @@ import java.util.List;
  * 修改  moon
  */
 public class FeedNetwork {
-    private static final int MSG_NOTIFY_FEED_DB_UPDATED = 0;
-    private static final int DELAY_NOTIFY_FEED_DB_UPDATED = 1000;
     private static FeedNetwork sInstance;
     private Handler mUIHandler = new Handler(Looper.getMainLooper());
     private FeedReader mFeedReader;

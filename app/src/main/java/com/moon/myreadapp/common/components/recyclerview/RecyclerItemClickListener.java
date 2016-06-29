@@ -25,8 +25,8 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     private boolean canelAction;
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-        public void onItemLongClick(View view, int position);
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
     }
 
     private RecyclerView mView;
@@ -69,12 +69,8 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         //XLog.d("onInterceptTouchEvent : 0 down;1 up;2 move:" + e.getAction());
         if (mView == null) mView = view;
-        if (e.getAction() == MotionEvent.ACTION_CANCEL){
-            //当取消touch的时候需要标记,用来取消GestureDetector的onLongPress
-            canelAction = true;
-        } else {
-            canelAction = false;
-        }
+        //当取消touch的时候需要标记,用来取消GestureDetector的onLongPress
+        canelAction = e.getAction() == MotionEvent.ACTION_CANCEL;
         return mGestureDetector.onTouchEvent(e);
     }
 

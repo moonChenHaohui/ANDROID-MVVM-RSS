@@ -34,12 +34,12 @@ public class FeedHandler extends DefaultHandler {
     /**
      * Interface to store information about RSS elements.
      */
-    private static interface Setter {}
+    private interface Setter {}
 
     /**
      * Closure to change fields in POJOs which store RSS content.
      */
-    private static interface ContentSetter extends Setter {
+    private interface ContentSetter extends Setter {
 
         /**
          * Set the field of an object which represents an RSS element.
@@ -52,7 +52,7 @@ public class FeedHandler extends DefaultHandler {
      * Closure to change fields in POJOs which store information
      * about RSS elements which have only attributes.
      */
-    private static interface AttributeSetter extends Setter {
+    private interface AttributeSetter extends Setter {
 
         /**
          * Set the XML attributes.

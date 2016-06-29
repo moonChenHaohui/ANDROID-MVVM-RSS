@@ -42,7 +42,7 @@ public class FeedDao extends AbstractDao<Feed, Long> {
         public final static Property Uri = new Property(14, String.class, "uri", false, "URI");
         public final static Property Creator = new Property(15, String.class, "creator", false, "CREATOR");
         public final static Property User_id = new Property(16, long.class, "user_id", false, "USER_ID");
-    };
+    }
 
     private DaoSession daoSession;
 

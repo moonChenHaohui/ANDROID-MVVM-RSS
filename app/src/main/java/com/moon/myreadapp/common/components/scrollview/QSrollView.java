@@ -69,7 +69,7 @@ class QSrollView extends ViewGroup {
         int y = (int) ev.getY();
         switch (action) {
             case MotionEvent.ACTION_MOVE:
-                final int xDiff = (int) Math.abs(mLastMontionY - y);
+                final int xDiff = Math.abs(mLastMontionY - y);
                 // 超过了最小滑动距离
                 if (xDiff > mTouchSlop) {
                     mTouchState = TOUCH_STATE_SROLLING;
@@ -180,11 +180,9 @@ class QSrollView extends ViewGroup {
      * @return
      */
     boolean checkIsBroad() {
-        if (getScrollY() < 0 || getScrollY() + getHeight() > mTotalLength) // 顶部回弹)
-            // //顶部回弹
-            return true;
-        else
-            return false;
+        // 顶部回弹)
+// //顶部回弹
+        return getScrollY() < 0 || getScrollY() + getHeight() > mTotalLength;
     }
 
     /**

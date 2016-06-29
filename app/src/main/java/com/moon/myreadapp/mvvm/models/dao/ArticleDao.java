@@ -38,7 +38,7 @@ public class ArticleDao extends AbstractDao<Article, Long> {
         public final static Property Creator = new Property(11, String.class, "creator", false, "CREATOR");
         public final static Property Feed_id = new Property(12, long.class, "feed_id", false, "FEED_ID");
         public final static Property User_id = new Property(13, long.class, "user_id", false, "USER_ID");
-    };
+    }
 
     private DaoSession daoSession;
 

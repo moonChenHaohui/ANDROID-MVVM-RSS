@@ -91,13 +91,13 @@ public class RequestHelper {
          * 请求正确返回的数据
          * @param response
          */
-        public void onResponse(JSONObject response);
+        void onResponse(JSONObject response);
 
 
         /**
          * error返回的字符串,已经在VolleyErrorHelper作出处理
          * @param error
          */
-        public void onErrorResponse(String error);
+        void onErrorResponse(String error);
     }
 }

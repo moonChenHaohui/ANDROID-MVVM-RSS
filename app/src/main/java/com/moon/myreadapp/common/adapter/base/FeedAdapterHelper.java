@@ -12,7 +12,7 @@ import com.moon.myreadapp.util.Globals;
 public class FeedAdapterHelper {
 
 
-    public static enum TimeType {
+    public enum TimeType {
         TODATY(1,R.string.time_today),
         YESTORY(2,R.string.time_yesterday),
         BEFORE_YESTORY(3,R.string.time_before_yesterday),
@@ -37,16 +37,5 @@ public class FeedAdapterHelper {
         }
 
     }
-    /**
-     * 转换时间类型->list type
-     * @param time
-     * @return
-     */
-    public static TimeType getDayType (String time){
-        //TODO 根据今天的时间与获取的时间做对比,得到相对应的类型
-        if (time.equals("1")){
-            return TimeType.TODATY;
-        }
-        return TimeType.YESTORY;
-    }
+
 }
