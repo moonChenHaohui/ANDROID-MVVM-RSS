@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
+import com.moon.appframework.core.XApplication;
+import com.moon.appframework.core.XDispatcher;
 import com.moon.myreadapp.R;
 import com.moon.myreadapp.common.components.toast.ToastHelper;
+import com.moon.myreadapp.common.event.UpdateUIEvent;
 import com.moon.myreadapp.util.DBHelper;
 import com.moon.myreadapp.util.DialogFractory;
 import com.moon.myreadapp.util.Globals;
@@ -64,6 +67,7 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
             if (!inClaen) {
                 inClaen = true;
                 DBHelper.Delete.deleteArticleReadAndUnFavor();
+                XApplication.getInstance().bus.post(new UpdateUIEvent(UpdateUIEvent.ARTIVIE_COUNT_CHANGE));
                 int count = DBHelper.Query.getArticlesCountReadAndUnFavor();
                 cleanCache.setSummary(getString(R.string.set_clean_cache_summary, count));
                 ToastHelper.showToast(R.string.set_clean_cache_summary_down);

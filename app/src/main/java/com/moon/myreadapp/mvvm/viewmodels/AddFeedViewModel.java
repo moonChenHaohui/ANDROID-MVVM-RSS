@@ -38,11 +38,9 @@ import cn.bmob.v3.listener.FindListener;
  * Created by moon on 15/12/17.
  */
 public class AddFeedViewModel extends BaseViewModel {
-    private AddSubViewPagerAdapter adapter;
+
     private SystemRecAdapter systemRecAdapter;
 
-    private String[] mTitleList;//页卡标题集合
-    private List<Fragment> mFragments;//页卡视图集合
 
     private AddFeedActivity mView;
 
@@ -131,10 +129,7 @@ public class AddFeedViewModel extends BaseViewModel {
         mView = null;
     }
 
-    @Bindable
-    public AddSubViewPagerAdapter getAdapter() {
-        return adapter;
-    }
+
 
     @Bindable
     public SystemRecAdapter getSystemRecAdapter() {
@@ -146,14 +141,6 @@ public class AddFeedViewModel extends BaseViewModel {
      */
     public void onClickAddSub(View view) {
         DialogFractory.createDialog(mView, DialogFractory.Type.AddSubscrible).show();
-//        FeedNetwork.getInstance().verifySource("https://www.zhihu.com/rss", new FeedNetwork.OnVerifyListener() {
-//            @Override
-//            public void onResult(boolean isValid, Feed feedSource) {
-//
-//            }
-//        });
-
-        // DialogFractory.create(mView, DialogFractory.Type.AddSubscrible).show();
     }
 
     @Bindable
