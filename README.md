@@ -4,10 +4,10 @@
  
 使用Google Data Binding技术以MVVM模式来实现的一款Material Design风格的RSS阅读器。
 
-##效果图
- ![image](https://github.com/moonChenHaohui/blog/blob/gh-pages/image/Screenshot-1.jpg)
+## 效果图
+ ![image](http://oidnhvewg.bkt.clouddn.com/Screenshot-1.jpg)
 
-##依赖
+## 依赖
 * Android Data Binding，1.0-rc4 : [data binding home page](http://developer.android.com/tools/data-binding/guide.html)
 * design:23.1.1、recyclerview-v7:23.1.1、cardview-v7:23.1.1
 * GreenDao，V2.0.0
@@ -22,7 +22,7 @@
 
 
 
-##Log
+## Log
 Click here [Log](https://github.com/moonChenHaohui/easy-Read-for-RSS/blob/master/LOG.md "Log") .
 
 ## 欢迎联系我
